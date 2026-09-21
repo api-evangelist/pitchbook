@@ -1,0 +1,224 @@
+generated: '2026-09-21'
+method: derived
+generator: derive-mcp-candidate.py
+source:
+- openapi/pitchbook-account-information-api-openapi.yml
+- openapi/pitchbook-companies-api-openapi.yml
+- openapi/pitchbook-credit-analysis-api-openapi.yml
+- openapi/pitchbook-deals-api-openapi.yml
+- openapi/pitchbook-fundamentals-api-openapi.yml
+- openapi/pitchbook-funds-api-openapi.yml
+- openapi/pitchbook-general-api-openapi.yml
+- openapi/pitchbook-investors-api-openapi.yml
+- openapi/pitchbook-limited-partners-api-openapi.yml
+- openapi/pitchbook-patents-api-openapi.yml
+- openapi/pitchbook-people-api-openapi.yml
+- openapi/pitchbook-service-providers-api-openapi.yml
+status: candidate
+deployment:
+  mode: none
+  auth: unknown
+  verified: probed
+note: No MCP server was found. The pre-flight posted tools/list to /mcp on api.pitchbook.com, pitchbook.com; verdict absent. Candidate tools below
+  are derived from the 130 operation(s) in the provider's own OpenAPI (40 listed); they describe what a server WOULD expose, not one that exists.
+tools:
+- name: get_contracts_history
+  operationId: getContractsHistory
+  method: GET
+  path: /contracts/history
+  description: Contracts History
+- name: company_search
+  operationId: companySearch
+  method: GET
+  path: /companies/search
+  description: Company Search
+- name: credit_news_search
+  operationId: creditNewsSearch
+  method: GET
+  path: /credit-analysis/credit-news/search
+  description: Credit News Search
+- name: deal_search
+  operationId: dealSearch
+  method: GET
+  path: /deals/search
+  description: Deal Search
+- name: get_sandbox_entities
+  operationId: getSandboxEntities
+  method: GET
+  path: /sandbox-entities
+  description: Sandbox Entities
+- name: fund_search
+  operationId: fundSearch
+  method: GET
+  path: /funds/search
+  description: Fund Search
+- name: general_search
+  operationId: generalSearch
+  method: GET
+  path: /search
+  description: General Search
+- name: investor_search
+  operationId: investorSearch
+  method: GET
+  path: /investors/search
+  description: Investor Search
+- name: limited_partner_search
+  operationId: limitedPartnerSearch
+  method: GET
+  path: /limited-partners/search
+  description: Limited Partner Search
+- name: patent_search
+  operationId: patentSearch
+  method: GET
+  path: /companies/{pbId}/patents/search
+  description: Patent Search
+- name: people_search
+  operationId: peopleSearch
+  method: GET
+  path: /people/search
+  description: People Search
+- name: service_provider_search
+  operationId: serviceProviderSearch
+  method: GET
+  path: /service-providers/search
+  description: Service Provider Search
+- name: get_credits_balance_state_by_period
+  operationId: getCreditsBalanceStateByPeriod
+  method: GET
+  path: /credits/history
+  description: Credits History
+- name: get_company
+  operationId: getCompany
+  method: GET
+  path: /companies/{pbId}
+  description: Company
+- name: get_most_recent_credit_news
+  operationId: getMostRecentCreditNews
+  method: GET
+  path: /credit-analysis/credit-news/most-recent
+  description: Most Recent Credit News
+- name: get_deal_bio
+  operationId: getDealBio
+  method: GET
+  path: /deals/{pbId}/bio
+  description: Deal Bio
+- name: get_lookup_tables
+  operationId: getLookupTables
+  method: GET
+  path: /lookup-tables
+  description: Lookup Tables
+- name: get_fund_bio
+  operationId: getFundBio
+  method: GET
+  path: /funds/{pbId}/bio
+  description: Fund Bio
+- name: shared_search
+  operationId: sharedSearch
+  method: GET
+  path: /{entityType}/search
+  description: Shared Search
+- name: get_investor
+  operationId: getInvestor
+  method: GET
+  path: /investors/{pbId}
+  description: Investor
+- name: get_limited_partner
+  operationId: getLimitedPartner
+  method: GET
+  path: /limited-partners/{pbId}
+  description: Limited Partner
+- name: get_patent_detailed
+  operationId: getPatentDetailed
+  method: GET
+  path: /companies/patents/{patentId}/detailed
+  description: Patent Detailed
+- name: get_person
+  operationId: getPerson
+  method: GET
+  path: /people/{pbId}/bio
+  description: People Bio
+- name: get_service_provider_bio
+  operationId: getServiceProviderBio
+  method: GET
+  path: /service-providers/{pbId}/bio
+  description: Service Provider Bio
+- name: get_endpoint_usage_report
+  operationId: getEndpointUsageReport
+  method: GET
+  path: /calls/history
+  description: Usage Report
+- name: get_company_bulk
+  operationId: getCompanyBulk
+  method: POST
+  path: /companies
+  description: '[Bulk] Company'
+- name: get_credit_news_by_id
+  operationId: getCreditNewsById
+  method: GET
+  path: /credit-analysis/credit-news/{articleId}
+  description: Credit News
+- name: get_deal_detailed
+  operationId: getDealDetailed
+  method: GET
+  path: /deals/{pbId}/detailed
+  description: Deal Detailed
+- name: get_lookup_tables_structure
+  operationId: getLookupTablesStructure
+  method: GET
+  path: /lookup-tables/structure
+  description: Lookup Tables Structure
+- name: get_bulk_fund_bio
+  operationId: getBulkFundBio
+  method: POST
+  path: /funds/bio
+  description: '[Bulk] Fund Bio'
+- name: get_entity_bio
+  operationId: getEntityBio
+  method: GET
+  path: /entities/{pbId}/bio
+  description: Entity Bio
+- name: get_bulk_investor
+  operationId: getBulkInvestor
+  method: POST
+  path: /investors
+  description: '[Bulk] Investor'
+- name: get_bulk_limited_partner
+  operationId: getBulkLimitedPartner
+  method: POST
+  path: /limited-partners
+  description: '[Bulk] Limited Partner'
+- name: download_patent
+  operationId: downloadPatent
+  method: GET
+  path: /companies/patents/{patentId}/download
+  description: Patent File Download
+- name: get_bulk_person_bio
+  operationId: getBulkPersonBio
+  method: POST
+  path: /people/bio
+  description: '[Bulk] People Bio'
+- name: get_bulk_service_provider_bio
+  operationId: getBulkServiceProviderBio
+  method: POST
+  path: /service-providers/bio
+  description: '[Bulk] Service Provider Bio'
+- name: get_enabled_calls_info
+  operationId: getEnabledCallsInfo
+  method: GET
+  path: /calls/costs
+  description: Cost of Calls
+- name: get_company_bio
+  operationId: getCompanyBio
+  method: GET
+  path: /companies/{pbId}/bio
+  description: Company Bio
+- name: get_batch_credit_news
+  operationId: getBatchCreditNews
+  method: POST
+  path: /credit-analysis/credit-news
+  description: '[Bulk] Credit News'
+- name: get_deal_investors_exiters
+  operationId: getDealInvestorsExiters
+  method: GET
+  path: /deals/{pbId}/investors/exiters
+  description: Deal Investors/Exiters

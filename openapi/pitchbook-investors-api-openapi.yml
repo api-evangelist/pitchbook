@@ -1,0 +1,2601 @@
+openapi: 3.2.0
+info:
+  title: OpenAPI definition Investors API
+  version: v0
+  description: Investors
+servers:
+- url: https://api.pitchbook.com
+tags:
+- name: Investors
+  description: Investors
+paths:
+  /investors/search:
+    get:
+      tags:
+      - Investors
+      summary: Investor Search
+      description: Retrieves investors matching the specified criteria
+      operationId: investorSearch
+      parameters:
+      - name: investorNames
+        in: query
+        description: Accepts investor names, pbIds, websites, and tickers. Returns a list of investors that are an exact match. Use a comma to separate multiple values
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 11111-11, Name
+      - name: investorType
+        in: query
+        description: Investors can be found by their <a href="https://my.pitchbook.com/api/lookup-tables/Investors#INVESTOR_TYPE_TREE" target="_blank">investor type code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: ACINC
+      - name: aum
+        in: query
+        description: Search for investors by their amount of assets under management. Search for investors with AUM over a certain amount using the > operator, investors with AUM under a certain amount with the < operator or investors within a range using the ^ operator. Amounts in millions
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 10^15
+      - name: dryPowder
+        in: query
+        description: Find investors that have a certain amount of dry powder. Search for investors with dry powder more than an amount using the > operator, investors with dry powder less  than an amount using the < operator or investors with dry powder within a range using the ^ operator. Amounts in millions
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 10^15
+      - name: city
+        in: query
+        description: Search for investors by their city location
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: Seattle
+      - name: stateProvince
+        in: query
+        description: Search for investors by <a href="https://my.pitchbook.com/api/lookup-tables/Location#US_STATE_TREE" target="_blank">state code</a> or <a href="https://my.pitchbook.com/api/lookup-tables/Location#CANADIAN_PROVINCE_TREE" target="_blank">province code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: AL
+      - name: country
+        in: query
+        description: Search for investors by <a href="https://my.pitchbook.com/api/lookup-tables/Location#COUNTRY_TREE" target="_blank">country code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: ABW
+      - name: postCode
+        in: query
+        description: Search for investors by their postcode, included to support searching for both US postal code and foreign
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '98765'
+      - name: locationType
+        in: query
+        description: Search for investors by additional parameter specifying HQ Only (HQ_ONLY), Non-HQ Only (NON_HQ_ONLY) or any office location (ANY) values. Set this parameter in pair with city, stateProvince, country, postCode options
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: ANY
+      - name: fundNames
+        in: query
+        description: Search for investors by their underlying funds with exact match. Accepts fund names, and pbIds. Returns a list of investors associated with that funds. Use a comma to separate multiple values
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 22222-22F, Name
+      - name: fundStrategy
+        in: query
+        description: Search for investors by the fund strategy of their underlying funds. Pass a <a href="https://my.pitchbook.com/api/lookup-tables/Funds#FUND_STRATEGY" target="_blank">fund strategy code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: AN
+      - name: fundSize
+        in: query
+        description: Search for investors by the fund size of their underlying funds. Search for funds with a larger fund size than an amount using the > operator, funds with a smaller fund size than an amount using the < operator or funds within a range using the ^ operator. Amounts in millions
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 10^15
+      - name: fundStatus
+        in: query
+        description: Search for investors by the fund status of their underlying funds. Pass a <a href="https://my.pitchbook.com/api/lookup-tables/Funds#FUND_STATUS_TREE" target="_blank">fund status code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: CLOS
+      - name: fundDate
+        in: query
+        description: 'Search for investors by the date of the fund status of their underlying funds. Search for funds with a status date after a certain date using the > operator, funds with a status date after a certain date using the < operator and funds with a status date in a range using the ^ operator. Format: YYYY-MM-DD'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: <2026-09-16
+      - name: verticalsPreferences
+        in: query
+        description: Find investors by their verticals preferences. Pass a <a href="https://my.pitchbook.com/api/lookup-tables/Industries, Verticals & Emerging Spaces#VERTICAL_TREE" target="_blank">vertical code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 3D
+      - name: industryPreferences
+        in: query
+        description: Find investors by their industry preferences. Pass an <a href="https://my.pitchbook.com/api/lookup-tables/Industries, Verticals & Emerging Spaces#INDUSTRY_TREE" target="_blank">industry code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '10'
+      - name: additionalPreferences
+        in: query
+        description: Find investors by <a href="https://my.pitchbook.com/api/lookup-tables/Investors#OTHER_INVESTMENT_PREFERENCES_TREE" target="_blank">additional investment preferences code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: IGPS
+      - name: geographicalPreferences
+        in: query
+        description: Find investors by their geographical preferences. Pass a <a href="https://my.pitchbook.com/api/lookup-tables/Location#US_STATE_TREE" target="_blank">state code</a>, <a href="https://my.pitchbook.com/api/lookup-tables/Location#US_AREA_TREE" target="_blank">area code</a>, <a href="https://my.pitchbook.com/api/lookup-tables/Location#CANADIAN_PROVINCE_TREE" target="_blank">province code</a>, <a href="https://my.pitchbook.com/api/lookup-tables/Location#UK_TERRITORY_TREE" target="_blank">territory code</a>, <a href="https://my.pitchbook.com/api/lookup-tables/Location#COUNTRY_TREE" target="_blank">country code</a> or <a href="https://my.pitchbook.com/api/lookup-tables/Location#REGION_TREE" target="_blank">regions code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: UK_CI
+      - name: preferredInvestmentAmount
+        in: query
+        description: Find investors by their preferred investment amount. Search for investors with preferred investment more than an amount using the > operator, investors with preferred investment less than an amount using the < operator or investors with preferred investment within a range using the ^ operator. Amounts in millions
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '>10'
+      - name: preferredDealTypes
+        in: query
+        description: Find investors by their preferred <a href="https://my.pitchbook.com/api/lookup-tables/Deals#DEAL_TYPE_TREE" target="_blank">deal type code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: SeedA
+      - name: companyNames
+        in: query
+        description: Find investors by the exact matched companies they have invested in. Accepts company names, pbIds, websites, and tickers. Use a comma to separate multiple values
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: IT
+      - name: onlyMostRecentTransaction
+        in: query
+        description: Find investors by their most recent company transactions. To use this parameter set it as True
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 'TRUE'
+      - name: dealType
+        in: query
+        description: Find investors by the types of deals and investments they have done. Pass a <a href="https://my.pitchbook.com/api/lookup-tables/Deals#DEAL_TYPE_TREE" target="_blank">deal type code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: SeedA
+      - name: dealStatus
+        in: query
+        description: Find investors by status of their past deals and investments. Distinguish between failed, upcoming, completed deals and more. Pass a <a href="https://my.pitchbook.com/api/lookup-tables/Deals#DEAL_STATUS_TREE" target="_blank">deal status code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: ANNO
+      - name: dealSize
+        in: query
+        description: Find investors who have done a deal of a certain size. Search for investors with a deal larger than an amount using the > operator, investors with a deal smaller than a certain amount using the < operator and investors with a deal size in a range using the ^ operator. Amounts in millions
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 10^15
+      - name: includeDealsWithoutDealSize
+        in: query
+        description: Include investors made investments without a known deal size. Set this parameter as True only when Deal Size parameter is applied. False by default
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 'TRUE'
+      - name: excludeDealsWithoutDealSize
+        in: query
+        description: Exclude investors made investments without a known deal size. Set this parameter as True only when Deal Size parameter is not applied. False by default
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 'TRUE'
+      - name: dealDate
+        in: query
+        description: 'Find investors who have had a deal within a certain time frame. Search for investors with a deal after a certain date using the > operator, investors with a deal before a certain date using the < operator and investors with a deal between 2 dates using the ^ operator. Format: YYYY-MM-DD'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: <2026-09-16
+      - name: dealIndustry
+        in: query
+        description: Find investors by the <a href="https://my.pitchbook.com/api/lookup-tables/Industries, Verticals & Emerging Spaces#INDUSTRY_TREE" target="_blank">industry code</a> of companies they have invested in
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '10'
+      - name: dealVerticals
+        in: query
+        description: Find investors by the <a href="https://my.pitchbook.com/api/lookup-tables/Industries, Verticals & Emerging Spaces#VERTICAL_TREE" target="_blank">vertical code</a> of companies they have invested in
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 3D
+      - name: dealIndustryAndVertical
+        in: query
+        description: When using both deal industry and deal vertical parameters, "OR" logic is used by default. To use "AND" logic, set this parameter to True
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 'TRUE'
+      - name: dealKeywords
+        in: query
+        description: Find investors by the keywords of companies they have invested in
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: IT
+      - name: dealCity
+        in: query
+        description: Find investors by the city of the companies they have invested in
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: Seattle
+      - name: dealStateProvince
+        in: query
+        description: Find investors by the <a href="https://my.pitchbook.com/api/lookup-tables/Location#US_STATE_TREE" target="_blank">state code</a> or <a href="https://my.pitchbook.com/api/lookup-tables/Location#CANADIAN_PROVINCE_TREE" target="_blank">province code</a> of the companies they have invested in
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: AL
+      - name: dealCountry
+        in: query
+        description: Find investors by the <a href="https://my.pitchbook.com/api/lookup-tables/Location#COUNTRY_TREE" target="_blank">country code</a> of the companies they have invested in
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: ABW
+      - name: dealPostCode
+        in: query
+        description: Find investors by the post code of the companies they have invested in, included to support searching for both US postal code and foreign
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '98765'
+      - name: dealLocationType
+        in: query
+        description: Search for investors by additional parameter (related to the companies they have invested in) specifying HQ Only (HQ_ONLY), Non-HQ Only (NON_HQ_ONLY) or any office location (ANY) values. Set this parameter in pair with dealCity, dealStateProvince, dealCountry, dealPostCode options
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: ANY
+      - name: limitedPartnerNames
+        in: query
+        description: Find investors by the exact match of limited partners invested in their funds. Accepts limited partner names, pbIds, websites, and tickers. Use a comma to separate multiple values
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 11111-11, Name
+      - name: currency
+        in: query
+        description: Specify the currency that your other parameters, such as dealSize, are entered as. It depends on the <a href="https://my.pitchbook.com/api/lookup-tables/Currency#CURRENCY_CODE_TREE" target="_blank">currency</a> in user preferences
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: AFN
+      - name: page
+        in: query
+        description: Results are returned so that they can be paged through. Set this parameter to increment the page
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '1'
+      - name: perPage
+        in: query
+        description: How many returned results show on page
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '25'
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/AdvancedSearchPageDtoInvestorEntityAdvancedSearchResultDto_SearchView'
+      security:
+      - pbToken: []
+  /investors/{pbId}:
+    get:
+      tags:
+      - Investors
+      summary: Investor
+      description: Retrieves all the data points about specific investor
+      operationId: getInvestor
+      parameters:
+      - name: pbId
+        in: path
+        description: Investor pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          58377-16:
+            summary: 58377-16
+            value: 58377-16
+          125461-09:
+            summary: 125461-09
+            value: 125461-09
+          62181-28:
+            summary: 62181-28
+            value: 62181-28
+          52385-14:
+            summary: 52385-14
+            value: 52385-14
+          11193-94:
+            summary: 11193-94
+            value: 11193-94
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/InvestorDto'
+      security:
+      - pbToken: []
+  /investors:
+    post:
+      tags:
+      - Investors
+      summary: '[Bulk] Investor'
+      description: Retrieves all the data points about specific investor. This bulk call allows you to send multiple pbIds within a single API call.
+      operationId: getBulkInvestor
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequestDto'
+            example:
+              items:
+              - id: 11193-94
+              - id: 52385-14
+              - id: 58377-16
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BulkResultDtoInvestorDto'
+      security:
+      - pbToken: []
+  /investors/{pbId}/bio:
+    get:
+      tags:
+      - Investors
+      summary: Investor Bio
+      description: Retrieves key data points about specific investor
+      operationId: getInvestorBio
+      parameters:
+      - name: pbId
+        in: path
+        description: Investor pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          58377-16:
+            summary: 58377-16
+            value: 58377-16
+          125461-09:
+            summary: 125461-09
+            value: 125461-09
+          62181-28:
+            summary: 62181-28
+            value: 62181-28
+          52385-14:
+            summary: 52385-14
+            value: 52385-14
+          11193-94:
+            summary: 11193-94
+            value: 11193-94
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/InvestorBioDto'
+      security:
+      - pbToken: []
+  /investors/bio:
+    post:
+      tags:
+      - Investors
+      summary: '[Bulk] Investor Bio'
+      description: Retrieves key data points about specific investor. This bulk call allows you to send multiple pbIds within a single API call.
+      operationId: getBulkInvestorBio
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequestDto'
+            example:
+              items:
+              - id: 11193-94
+              - id: 52385-14
+              - id: 58377-16
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BulkResultDtoInvestorBioDto'
+      security:
+      - pbToken: []
+  /investors/{pbId}/active-investments:
+    get:
+      tags:
+      - Investors
+      summary: Active Investments
+      description: Retrieves active investments of the specific investor
+      operationId: getActiveInvestments
+      parameters:
+      - name: pbId
+        in: path
+        description: Investor pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          58377-16:
+            summary: 58377-16
+            value: 58377-16
+          125461-09:
+            summary: 125461-09
+            value: 125461-09
+          62181-28:
+            summary: 62181-28
+            value: 62181-28
+          52385-14:
+            summary: 52385-14
+            value: 52385-14
+          11193-94:
+            summary: 11193-94
+            value: 11193-94
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ActiveInvestmentDto'
+      security:
+      - pbToken: []
+  /investors/active-investments:
+    post:
+      tags:
+      - Investors
+      summary: '[Bulk] Active Investments'
+      description: Retrieves active investments of the specific investor. This bulk call allows you to send multiple pbIds within a single API call.
+      operationId: getBulkActiveInvestments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequestDto'
+            example:
+              items:
+              - id: 11193-94
+              - id: 52385-14
+              - id: 58377-16
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BulkResultDtoListActiveInvestmentDto'
+      security:
+      - pbToken: []
+  /investors/{pbId}/investments:
+    get:
+      tags:
+      - Investors
+      summary: All Investments
+      description: Retrieves details of completed investments of the specific investor
+      operationId: getAllInvestments
+      parameters:
+      - name: pbId
+        in: path
+        description: Investor pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          58377-16:
+            summary: 58377-16
+            value: 58377-16
+          125461-09:
+            summary: 125461-09
+            value: 125461-09
+          62181-28:
+            summary: 62181-28
+            value: 62181-28
+          52385-14:
+            summary: 52385-14
+            value: 52385-14
+          11193-94:
+            summary: 11193-94
+            value: 11193-94
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AllInvestmentsDto'
+      security:
+      - pbToken: []
+  /investors/{pbId}/investment-preferences:
+    get:
+      tags:
+      - Investors
+      summary: Investment Preferences
+      description: Retrieves key investment preferences of the specific investor
+      operationId: getInvestmentPreferences
+      parameters:
+      - name: pbId
+        in: path
+        description: Investor pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          58377-16:
+            summary: 58377-16
+            value: 58377-16
+          125461-09:
+            summary: 125461-09
+            value: 125461-09
+          62181-28:
+            summary: 62181-28
+            value: 62181-28
+          52385-14:
+            summary: 52385-14
+            value: 52385-14
+          11193-94:
+            summary: 11193-94
+            value: 11193-94
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/InvestorInvestmentPreferenceDto'
+      security:
+      - pbToken: []
+  /investors/investment-preferences:
+    post:
+      tags:
+      - Investors
+      summary: '[Bulk] Investment Preferences'
+      description: Retrieves key investment preferences of the specific investor. This bulk call allows you to send multiple pbIds within a single API call.
+      operationId: getBulkInvestmentPreferences
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequestDto'
+            example:
+              items:
+              - id: 11193-94
+              - id: 52385-14
+              - id: 58377-16
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BulkResultDtoInvestorInvestmentPreferenceDto'
+      security:
+      - pbToken: []
+  /investors/{pbId}/funds:
+    get:
+      tags:
+      - Investors
+      summary: Investor Funds
+      description: Retrieves open and closed funds managed by the specified investor
+      operationId: getInvestorFunds
+      parameters:
+      - name: pbId
+        in: path
+        description: Investor pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          58377-16:
+            summary: 58377-16
+            value: 58377-16
+          125461-09:
+            summary: 125461-09
+            value: 125461-09
+          62181-28:
+            summary: 62181-28
+            value: 62181-28
+          52385-14:
+            summary: 52385-14
+            value: 52385-14
+          11193-94:
+            summary: 11193-94
+            value: 11193-94
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/InvestorFundsDto'
+      security:
+      - pbToken: []
+  /investors/funds:
+    post:
+      tags:
+      - Investors
+      summary: '[Bulk] Investor Funds'
+      description: Retrieves open and closed funds of the specific investor. This bulk call allows you to send multiple pbIds within a single API call.
+      operationId: getBulkInvestorFunds
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequestDto'
+            example:
+              items:
+              - id: 11193-94
+              - id: 52385-14
+              - id: 58377-16
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BulkResultDtoInvestorFundsDto'
+      security:
+      - pbToken: []
+  /investors/{pbId}/last-closed-fund:
+    get:
+      tags:
+      - Investors
+      summary: Investor Last Closed Fund
+      description: Retrieves key data about last closed fund of the specific investor
+      operationId: getInvestorLastClosedFund
+      parameters:
+      - name: pbId
+        in: path
+        description: Investor pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          58377-16:
+            summary: 58377-16
+            value: 58377-16
+          125461-09:
+            summary: 125461-09
+            value: 125461-09
+          62181-28:
+            summary: 62181-28
+            value: 62181-28
+          52385-14:
+            summary: 52385-14
+            value: 52385-14
+          11193-94:
+            summary: 11193-94
+            value: 11193-94
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/LastClosedFundDto'
+      security:
+      - pbToken: []
+  /investors/{pbId}/general-service-providers:
+    get:
+      tags:
+      - Investors
+      summary: Investor General Service Providers
+      description: Retrieves current and former general service providers of the specific investor
+      operationId: getInvestorGeneralServiceProviders
+      parameters:
+      - name: pbId
+        in: path
+        description: Investor pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          58377-16:
+            summary: 58377-16
+            value: 58377-16
+          125461-09:
+            summary: 125461-09
+            value: 125461-09
+          62181-28:
+            summary: 62181-28
+            value: 62181-28
+          52385-14:
+            summary: 52385-14
+            value: 52385-14
+          11193-94:
+            summary: 11193-94
+            value: 11193-94
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/InvestorGeneralServiceProvidersDto'
+      security:
+      - pbToken: []
+  /investors/{pbId}/deal-service-providers:
+    get:
+      tags:
+      - Investors
+      summary: Investor Deal Service Providers
+      description: Retrieves service providers that serviced deals of the specific investor
+      operationId: getCompanyDealServiceProviders_1
+      parameters:
+      - name: pbId
+        in: path
+        description: Investor pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          58377-16:
+            summary: 58377-16
+            value: 58377-16
+          125461-09:
+            summary: 125461-09
+            value: 125461-09
+          62181-28:
+            summary: 62181-28
+            value: 62181-28
+          52385-14:
+            summary: 52385-14
+            value: 52385-14
+          11193-94:
+            summary: 11193-94
+            value: 11193-94
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InvestorDealServiceProviderDto'
+      security:
+      - pbToken: []
+  /investors/{pbId}/board-seats:
+    get:
+      tags:
+      - Investors
+      summary: Investor Board Seats
+      description: Retrieves current and former board seats of the specific investor
+      operationId: getInvestorBoardSeats
+      parameters:
+      - name: pbId
+        in: path
+        description: Investor pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          58377-16:
+            summary: 58377-16
+            value: 58377-16
+          125461-09:
+            summary: 125461-09
+            value: 125461-09
+          62181-28:
+            summary: 62181-28
+            value: 62181-28
+          52385-14:
+            summary: 52385-14
+            value: 52385-14
+          11193-94:
+            summary: 11193-94
+            value: 11193-94
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/InvestorBoardSeatsDto'
+      security:
+      - pbToken: []
+  /investors/{pbId}/updates:
+    get:
+      tags:
+      - Investors
+      summary: Investor Profile Updates
+      description: Retrieves changes for the specific investor for up to the last 90 days
+      operationId: getInvestorUpdates
+      parameters:
+      - name: pbId
+        in: path
+        description: Investor pbId. Required to specify time period using 'sinceDate' or 'trailingRange' parameter
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          58377-16:
+            summary: 58377-16
+            value: 58377-16
+          125461-09:
+            summary: 125461-09
+            value: 125461-09
+          62181-28:
+            summary: 62181-28
+            value: 62181-28
+          52385-14:
+            summary: 52385-14
+            value: 52385-14
+          11193-94:
+            summary: 11193-94
+            value: 11193-94
+      - name: sinceDate
+        in: query
+        description: 'Add this parameter to extract information about the entity updates after a certain date with the > operator, before a certain date with the < operator and between 2 dates with the ^ operator. Set this parameter in pair with pbId. Format: YYYY-MM-DD'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: <2026-09-16
+      - name: trailingRange
+        in: query
+        description: Add this parameter to extract information about the entity updates during last N days (up to 90). Set this parameter in pair with pbId
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+        example: '20'
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UpdateDto'
+      security:
+      - pbToken: []
+components:
+  schemas:
+    RangeDtoInteger:
+      type: object
+      properties:
+        min:
+          type: integer
+          format: int32
+        max:
+          type: integer
+          format: int32
+      example:
+        min: 25
+        max: 50
+    RequestItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+    InvestorBoardSeatsDto:
+      type: object
+      properties:
+        investorId:
+          type: string
+          example: 11193-94
+        current:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvestorBoardSeatDto'
+        former:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvestorBoardSeatDto'
+    FailedItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 420962-68
+        reason:
+          type: string
+          example: 429 TOO_MANY_REQUESTS
+          enum:
+          - 400 BAD_REQUEST
+          - 401 UNAUTHORIZED
+          - 402 PAYMENT_REQUIRED
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 405 METHOD_NOT_ALLOWED
+          - 415 UNSUPPORTED_MEDIA_TYPE
+          - 429 TOO_MANY_REQUESTS
+          - 500 INTERNAL_SERVER_ERROR
+          - 503 SERVICE_UNAVAILABLE
+        message:
+          type: string
+          example: '{LIMIT_TYPE} rate limit exceeded. Please wait until rate limit period is renewed'
+    BulkStatsDto:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+        matched:
+          type: integer
+          format: int32
+        noData:
+          type: integer
+          format: int32
+        unmatched:
+          type: integer
+          format: int32
+        duplicates:
+          type: integer
+          format: int32
+    NoDataItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+    BulkResultDtoInvestorBioDto:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/BulkStatsDto'
+        matched:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvestorBioDto'
+        noData:
+          type: array
+          items:
+            $ref: '#/components/schemas/NoDataItemDto'
+        unmatched:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailedItemDto'
+        duplicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicatedItemDto'
+    GeographicalPreferenceDto:
+      type: object
+      properties:
+        regionGroup:
+          $ref: '#/components/schemas/DictionaryDto'
+        regionSegment:
+          $ref: '#/components/schemas/DictionaryDto'
+        regionCode:
+          $ref: '#/components/schemas/DictionaryDto'
+        regionState:
+          $ref: '#/components/schemas/DictionaryDto'
+    BulkRequestDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RequestItemDto'
+    DuplicatedItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 420962-68
+        occurrence:
+          type: integer
+          format: int32
+          example: 1
+    BulkResultDtoInvestorFundsDto:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/BulkStatsDto'
+        matched:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvestorFundsDto'
+        noData:
+          type: array
+          items:
+            $ref: '#/components/schemas/NoDataItemDto'
+        unmatched:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailedItemDto'
+        duplicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicatedItemDto'
+    GeneralServiceProviderDto:
+      type: object
+      properties:
+        serviceProviderId:
+          type: string
+          example: 11356-75
+        serviceProviderName:
+          type: string
+          example: Wilson Sonsini Goodrich & Rosati
+        serviceProviderTypes:
+          type: array
+          example:
+            type:
+              code: IB
+              description: Investment Bank
+            primary: true
+          items:
+            $ref: '#/components/schemas/EntityTypeDto'
+        serviceProvided:
+          $ref: '#/components/schemas/DictionaryDto'
+    EntityTypeDto:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/DictionaryDto'
+        primary:
+          type: boolean
+          example: false
+      example:
+        type:
+          code: IB
+          description: Investment Bank
+        primary: true
+    InvestorInvestmentPreferenceDto:
+      type: object
+      properties:
+        investorId:
+          type: string
+          example: 11193-94
+        investorName:
+          type: string
+          example: Franklin Street Equity Partners
+        preferredInvestmentAmount:
+          $ref: '#/components/schemas/RangeDtoMoneyDto'
+        preferredDealSize:
+          $ref: '#/components/schemas/RangeDtoMoneyDto'
+        preferredCompanyValuation:
+          $ref: '#/components/schemas/RangeDtoMoneyDto'
+        preferredEbitda:
+          $ref: '#/components/schemas/RangeDtoMoneyDto'
+        preferredEbit:
+          $ref: '#/components/schemas/RangeDtoMoneyDto'
+        preferredRevenue:
+          $ref: '#/components/schemas/RangeDtoMoneyDto'
+        preferredInvestmentHorizon:
+          $ref: '#/components/schemas/RangeDtoInteger'
+        geographicalPreferences:
+          type: array
+          items:
+            $ref: '#/components/schemas/GeographicalPreferenceDto'
+        otherInvestmentPreferences:
+          type: array
+          items:
+            $ref: '#/components/schemas/DictionaryDto'
+        preferredIndustry:
+          type: array
+          items:
+            $ref: '#/components/schemas/IndustryPreferenceDto'
+        preferredDealTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/DictionaryDto'
+        preferredVerticals:
+          type: array
+          items:
+            $ref: '#/components/schemas/DictionaryDto'
+        assetPreferences:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssetPreferencesDto'
+    InvestorGeneralServiceProvidersDto:
+      type: object
+      properties:
+        investorId:
+          type: string
+          example: 54937-90
+        currentGeneralServices:
+          type: array
+          items:
+            $ref: '#/components/schemas/GeneralServiceProviderDto'
+        formerGeneralServices:
+          type: array
+          items:
+            $ref: '#/components/schemas/GeneralServiceProviderDto'
+    BulkResultDtoInvestorDto:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/BulkStatsDto'
+        matched:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvestorDto'
+        noData:
+          type: array
+          items:
+            $ref: '#/components/schemas/NoDataItemDto'
+        unmatched:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailedItemDto'
+        duplicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicatedItemDto'
+    EntityDescriptionDto:
+      type: object
+      properties:
+        brief:
+          type: string
+          example: Franklin Street Equity Partners is a private equity firm investing in middle market companies across a wide range of industries.
+        full:
+          type: string
+          example: Franklin Street Equity Partners is a private equity firm investing in middle market companies across a wide range of industries. FSEP was founded by the principals of Ablum, Brown & Company, a Chicago-based investment banking boutique specializing in leveraged acquisitions. The firm was founded in 1997 and is based in Chicago, Illinois.
+    MoneyDto:
+      type: object
+      properties:
+        amount:
+          type: number
+          example: 17039.27
+        currency:
+          type: string
+          example: USD
+        nativeAmount:
+          type: number
+          example: 15689
+        nativeCurrency:
+          type: string
+          example: EUR
+        estimated:
+          type: boolean
+          example: false
+    FundInfoDto:
+      type: object
+      properties:
+        fundId:
+          type: string
+          example: 11119-69F
+        fundName:
+          type: string
+          example: Franklin Street Equity Fund
+        fundType:
+          description: Deprecated. Always empty
+          deprecated: true
+          allOf:
+          - $ref: '#/components/schemas/DictionaryDto'
+        fundStrategy:
+          type: string
+          example: Buyout
+    InvestorDto:
+      type: object
+      properties:
+        investorId:
+          type: string
+          example: 11193-94
+        investorBio:
+          $ref: '#/components/schemas/InvestorBioDto'
+        activeInvestments:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActiveInvestmentDto'
+        investmentPreference:
+          $ref: '#/components/schemas/InvestorInvestmentPreferenceDto'
+        investorFunds:
+          $ref: '#/components/schemas/InvestorFundsDto'
+    ActiveInvestmentDto:
+      type: object
+      properties:
+        investorId:
+          type: string
+          example: 11193-94
+        companyId:
+          type: string
+          example: 164273-95
+        companyName:
+          type: string
+          example: Proxy
+        investorSince:
+          type: string
+          format: date
+          example: '2005-04-03'
+        investmentDealId:
+          type: string
+          example: 111009-52T
+        investmentDate:
+          type: string
+          format: date
+          example: '2005-04-03'
+    RangeDtoMoneyDto:
+      type: object
+      properties:
+        min:
+          $ref: '#/components/schemas/MoneyDto'
+        max:
+          $ref: '#/components/schemas/MoneyDto'
+    ErrorDto:
+      type: object
+      properties:
+        reason:
+          type: string
+          enum:
+          - 100 CONTINUE
+          - 101 SWITCHING_PROTOCOLS
+          - 102 PROCESSING
+          - 103 EARLY_HINTS
+          - 103 CHECKPOINT
+          - 200 OK
+          - 201 CREATED
+          - 202 ACCEPTED
+          - 203 NON_AUTHORITATIVE_INFORMATION
+          - 204 NO_CONTENT
+          - 205 RESET_CONTENT
+          - 206 PARTIAL_CONTENT
+          - 207 MULTI_STATUS
+          - 208 ALREADY_REPORTED
+          - 226 IM_USED
+          - 300 MULTIPLE_CHOICES
+          - 301 MOVED_PERMANENTLY
+          - 302 FOUND
+          - 302 MOVED_TEMPORARILY
+          - 303 SEE_OTHER
+          - 304 NOT_MODIFIED
+          - 305 USE_PROXY
+          - 307 TEMPORARY_REDIRECT
+          - 308 PERMANENT_REDIRECT
+          - 400 BAD_REQUEST
+          - 401 UNAUTHORIZED
+          - 402 PAYMENT_REQUIRED
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 405 METHOD_NOT_ALLOWED
+          - 406 NOT_ACCEPTABLE
+          - 407 PROXY_AUTHENTICATION_REQUIRED
+          - 408 REQUEST_TIMEOUT
+          - 409 CONFLICT
+          - 410 GONE
+          - 411 LENGTH_REQUIRED
+          - 412 PRECONDITION_FAILED
+          - 413 PAYLOAD_TOO_LARGE
+          - 413 REQUEST_ENTITY_TOO_LARGE
+          - 414 URI_TOO_LONG
+          - 414 REQUEST_URI_TOO_LONG
+          - 415 UNSUPPORTED_MEDIA_TYPE
+          - 416 REQUESTED_RANGE_NOT_SATISFIABLE
+          - 417 EXPECTATION_FAILED
+          - 418 I_AM_A_TEAPOT
+          - 419 INSUFFICIENT_SPACE_ON_RESOURCE
+          - 420 METHOD_FAILURE
+          - 421 DESTINATION_LOCKED
+          - 422 UNPROCESSABLE_ENTITY
+          - 423 LOCKED
+          - 424 FAILED_DEPENDENCY
+          - 425 TOO_EARLY
+          - 426 UPGRADE_REQUIRED
+          - 428 PRECONDITION_REQUIRED
+          - 429 TOO_MANY_REQUESTS
+          - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
+          - 451 UNAVAILABLE_FOR_LEGAL_REASONS
+          - 500 INTERNAL_SERVER_ERROR
+          - 501 NOT_IMPLEMENTED
+          - 502 BAD_GATEWAY
+          - 503 SERVICE_UNAVAILABLE
+          - 504 GATEWAY_TIMEOUT
+          - 505 HTTP_VERSION_NOT_SUPPORTED
+          - 506 VARIANT_ALSO_NEGOTIATES
+          - 507 INSUFFICIENT_STORAGE
+          - 508 LOOP_DETECTED
+          - 509 BANDWIDTH_LIMIT_EXCEEDED
+          - 510 NOT_EXTENDED
+          - 511 NETWORK_AUTHENTICATION_REQUIRED
+        message:
+          type: string
+    IndustryPreferenceDto:
+      type: object
+      properties:
+        industryCode:
+          $ref: '#/components/schemas/DictionaryDto'
+        industrySector:
+          $ref: '#/components/schemas/DictionaryDto'
+        industryGroup:
+          $ref: '#/components/schemas/DictionaryDto'
+        primary:
+          type: boolean
+    InvestorBioDto:
+      type: object
+      properties:
+        investorId:
+          type: string
+          example: 11193-94
+        investorName:
+          $ref: '#/components/schemas/EntityNameDto'
+        hqLocation:
+          $ref: '#/components/schemas/HqLocationDto'
+        description:
+          $ref: '#/components/schemas/EntityDescriptionDto'
+        investorStatus:
+          $ref: '#/components/schemas/DictionaryDto'
+        investorType:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityTypeDto'
+        assetsUnderManagement:
+          $ref: '#/components/schemas/MoneyDto'
+        dryPowder:
+          $ref: '#/components/schemas/MoneyDto'
+        yearFounded:
+          type: integer
+          format: int32
+          example: 1997
+        website:
+          type: string
+          example: www.franklinstreetequity.com
+        countInvestmentProfessionals:
+          type: integer
+          format: int32
+          example: 1
+        tradeAssociations:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvestorTradeAssociationDto'
+    HqLocationDto:
+      type: object
+      properties:
+        city:
+          type: string
+          example: Chicago
+        stateProvince:
+          type: string
+          example: IL
+        postCode:
+          type: string
+          example: '60661'
+        country:
+          type: string
+          example: United States
+    BulkResultDtoListActiveInvestmentDto:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/BulkStatsDto'
+        matched:
+          type: array
+          items:
+            type: array
+            items:
+              $ref: '#/components/schemas/ActiveInvestmentDto'
+        noData:
+          type: array
+          items:
+            $ref: '#/components/schemas/NoDataItemDto'
+        unmatched:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailedItemDto'
+        duplicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicatedItemDto'
+    LastClosedFundDto:
+      type: object
+      properties:
+        investorId:
+          type: string
+          example: 11193-94
+        fundId:
+          type: string
+          example: 11119-69F
+        fundName:
+          type: string
+          example: Franklin Street Equity Fund
+        fundVintage:
+          type: integer
+          format: int32
+          example: 2020
+        fundSize:
+          $ref: '#/components/schemas/MoneyDto'
+        fundType:
+          description: Deprecated. Always empty
+          deprecated: true
+          allOf:
+          - $ref: '#/components/schemas/DictionaryDto'
+        fundStrategy:
+          type: string
+          example: Buyout
+        fundCloseDate:
+          type: string
+          format: date
+          example: '2020-05-04'
+        fundOpenDate:
+          type: string
+          format: date
+          example: '2020-01-01'
+    EntityNameDto:
+      type: object
+      properties:
+        formalName:
+          type: string
+        alsoKnownAs:
+          type: string
+        legalName:
+          type: string
+        formerlyKnownAs:
+          type: string
+    SearchPageStatsDto_SearchView:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+          example: 1
+        perPage:
+          type: integer
+          format: int32
+          example: 25
+        page:
+          type: integer
+          format: int32
+          example: 1
+        lastPage:
+          type: integer
+          format: int32
+          example: 1
+    InvestorFundsDto:
+      type: object
+      properties:
+        investorId:
+          type: string
+          example: 11193-94
+        stats:
+          $ref: '#/components/schemas/FundStatsDto'
+        minFundSize:
+          $ref: '#/components/schemas/MoneyDto'
+        medianFundSize:
+          $ref: '#/components/schemas/MoneyDto'
+        maxFundSize:
+          $ref: '#/components/schemas/MoneyDto'
+        fundInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/FundInfoDto'
+    UpdateDto:
+      type: object
+      properties:
+        updates:
+          type: object
+          additionalProperties:
+            type: string
+            example: '{"Endpoint name":"Update Status (true/false)"}'
+          example:
+            Endpoint name: Update Status (true/false)
+    AllInvestmentsDto:
+      type: object
+      properties:
+        investorId:
+          type: string
+          example: 11193-94
+        companyId:
+          type: string
+          example: 164273-95
+        companyName:
+          type: string
+          example: Proxy
+        investorStatus:
+          type: string
+          example: Active Investor
+        investmentDate:
+          type: string
+          format: date
+          example: '2005-04-03'
+        investmentDealId:
+          type: string
+          example: 111009-52T
+        exitDate:
+          type: string
+          format: date
+          example: 20010-12-05
+        exitDealId:
+          type: string
+          example: 118126-90T
+    InvestorEntityAdvancedSearchResultDto_SearchView:
+      type: object
+      properties:
+        investorId:
+          type: string
+          example: 52385-14
+        investorName:
+          type: string
+          example: TriGate Capital
+        sandbox:
+          type: boolean
+          example: false
+        website:
+          type: string
+          example: www.trigate.com
+    AdvancedSearchPageDtoInvestorEntityAdvancedSearchResultDto_SearchView:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/SearchPageStatsDto_SearchView'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvestorEntityAdvancedSearchResultDto_SearchView'
+    FundStatsDto:
+      type: object
+      properties:
+        totalFundsOpen:
+          type: integer
+          format: int32
+          example: 5
+        totalFundsClosed:
+          type: integer
+          format: int32
+          example: 7
+    InvestorBoardSeatDto:
+      type: object
+      properties:
+        personId:
+          type: string
+          example: 35524-99P
+        personName:
+          type: string
+          example: David McClure
+        boardCompanyId:
+          type: string
+          example: 54960-67
+        boardCompanyName:
+          type: string
+          example: Keen Systems
+        onBoard:
+          type: boolean
+          example: false
+        boardStartDate:
+          type: string
+          format: date
+          example: '2012-08-09'
+        boardEndDate:
+          type: string
+          format: date
+          example: '2015-09-14'
+        role:
+          type: string
+          example: Board Member
+    InvestorDealServiceProviderDto:
+      type: object
+      properties:
+        investorId:
+          type: string
+          example: 54937-90
+        serviceProviderId:
+          type: string
+          example: 11356-75
+        serviceProviderName:
+          type: string
+          example: Wilson Sonsini Goodrich & Rosati
+        serviceProviderTypes:
+          type: array
+          example:
+            type:
+              code: IB
+              description: Investment Bank
+            primary: true
+          items:
+            $ref: '#/components/schemas/EntityTypeDto'
+        serviceProvided:
+          $ref: '#/components/schemas/DictionaryDto'
+        dealIdServiceProvided:
+          type: string
+          example: 13359-95T
+    AssetPreferencesDto:
+      type: object
+      properties:
+        assetClass:
+          $ref: '#/components/schemas/DictionaryDto'
+        subcategory:
+          $ref: '#/components/schemas/DictionaryDto'
+    DictionaryDto:
+      type: object
+      properties:
+        code:
+          type: string
+          example: Dictionary code
+        description:
+          type: string
+          example: Dictionary Code Description
+    InvestorTradeAssociationDto:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Evergreen Venture Capital Association
+    BulkResultDtoInvestorInvestmentPreferenceDto:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/BulkStatsDto'
+        matched:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvestorInvestmentPreferenceDto'
+        noData:
+          type: array
+          items:
+            $ref: '#/components/schemas/NoDataItemDto'
+        unmatched:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailedItemDto'
+        duplicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicatedItemDto'
+  securitySchemes:
+    pbToken:
+      type: apiKey
+      name: Authorization
+      in: header
+      scheme: bearer
+      bearerFormat: JWT

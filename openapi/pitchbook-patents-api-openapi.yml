@@ -1,0 +1,631 @@
+openapi: 3.2.0
+info:
+  title: OpenAPI definition Patents API
+  version: v0
+  description: Patents
+servers:
+- url: https://api.pitchbook.com
+tags:
+- name: Patents
+  description: Patents
+paths:
+  /companies/{pbId}/patents/search:
+    get:
+      tags:
+      - Patents
+      summary: Patent Search
+      description: Retrieves patents matching the specified criteria
+      operationId: patentSearch
+      parameters:
+      - name: pbId
+        in: path
+        description: Company pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          180436-42:
+            summary: 180436-42
+            value: 180436-42
+          51231-25:
+            summary: 51231-25
+            value: 51231-25
+          52803-64:
+            summary: 52803-64
+            value: 52803-64
+          54885-61:
+            summary: 54885-61
+            value: 54885-61
+          179806-69:
+            summary: 179806-69
+            value: 179806-69
+      - name: status
+        in: query
+        description: Search for patents by their status specifying Active, Pending and/or Inactive values. Use a comma to separate multiple values
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: Active, Pending
+      - name: publicationDate
+        in: query
+        description: 'Search for patents published after a certain date using the > operator, patents published before a certain date using the < operator, and patents published between 2 dates using the ^ operator. Format: YYYY-MM-DD'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '>2024-04-26'
+      - name: firstFilingDate
+        in: query
+        description: 'Search for patents first filed after a certain date using the > operator, patents first filed before a certain date using the < operator, and patents first filed between 2 dates using the ^ operator. Format: YYYY-MM-DD'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '>2024-04-26'
+      - name: filingAuthorityLocation
+        in: query
+        description: Patents can be found by their <a href="https://my.pitchbook.com/api/lookup-tables/Patents#FILING_AUTHORITY_LOCATION_TREE" target="_blank">filing authority location</a>. Use a comma to separate multiple values
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: US, GB
+      - name: cpcSectionCode
+        in: query
+        description: 'Description: Patents can be found by their <a href="https://my.pitchbook.com/api/lookup-tables/Patents#CPC_SECTIONS_TREE" target="_blank">CPC Section code</a>. Use a comma to separate multiple values'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: A, E
+      - name: cpcClassCode
+        in: query
+        description: Patents can be found by their <a href="https://my.pitchbook.com/api/lookup-tables/Patents#CPC_CLASSES_TREE" target="_blank">CPC Class code</a>. Use a comma to separate multiple values
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: A01, E01
+      - name: page
+        in: query
+        description: Results are returned so that they can be paged through. Set this parameter to increment the page. If nothing is specified, default value is 1.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '1'
+      - name: perPage
+        in: query
+        description: Set how many returned results will be shown on the page (between 1 and 250). If nothing is specified, default value is 25.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '25'
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PatentsPageDto'
+      security:
+      - pbToken: []
+  /companies/patents/{patentId}/detailed:
+    get:
+      tags:
+      - Patents
+      summary: Patent Detailed
+      description: Retrieves extended description of the specific patent
+      operationId: getPatentDetailed
+      parameters:
+      - name: patentId
+        in: path
+        description: Patent ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          US-9117220-B2:
+            summary: US-9117220-B2
+            value: US-9117220-B2
+          US-20130212494-A1:
+            summary: US-20130212494-A1
+            value: US-20130212494-A1
+          US-20190273627-A1:
+            summary: US-20190273627-A1
+            value: US-20190273627-A1
+          US-8904295-B2:
+            summary: US-8904295-B2
+            value: US-8904295-B2
+          US-20130219298-A9:
+            summary: US-20130219298-A9
+            value: US-20130219298-A9
+          US-20120179981-A1:
+            summary: US-20120179981-A1
+            value: US-20120179981-A1
+          US-20110289142-A1:
+            summary: US-20110289142-A1
+            value: US-20110289142-A1
+          US-20110289433-A1:
+            summary: US-20110289433-A1
+            value: US-20110289433-A1
+          US-10742433-B2:
+            summary: US-10742433-B2
+            value: US-10742433-B2
+          US-9654425-B2:
+            summary: US-9654425-B2
+            value: US-9654425-B2
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PatentDetailedDto'
+      security:
+      - pbToken: []
+  /companies/patents/{patentId}/download:
+    get:
+      tags:
+      - Patents
+      summary: Patent File Download
+      description: Retrieves an exact file of a specific patent
+      operationId: downloadPatent
+      parameters:
+      - name: patentId
+        in: path
+        description: Patent ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          US-9117220-B2:
+            summary: US-9117220-B2
+            value: US-9117220-B2
+          US-20130212494-A1:
+            summary: US-20130212494-A1
+            value: US-20130212494-A1
+          US-20190273627-A1:
+            summary: US-20190273627-A1
+            value: US-20190273627-A1
+          US-8904295-B2:
+            summary: US-8904295-B2
+            value: US-8904295-B2
+          US-20130219298-A9:
+            summary: US-20130219298-A9
+            value: US-20130219298-A9
+          US-20120179981-A1:
+            summary: US-20120179981-A1
+            value: US-20120179981-A1
+          US-20110289142-A1:
+            summary: US-20110289142-A1
+            value: US-20110289142-A1
+          US-20110289433-A1:
+            summary: US-20110289433-A1
+            value: US-20110289433-A1
+          US-10742433-B2:
+            summary: US-10742433-B2
+            value: US-10742433-B2
+          US-9654425-B2:
+            summary: US-9654425-B2
+            value: US-9654425-B2
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        default:
+          description: default response
+          content:
+            '*/*':
+              schema:
+                type: string
+                example: Binary file content
+      security:
+      - pbToken: []
+components:
+  schemas:
+    PatentsPageDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+          example: 11026-45
+        stats:
+          $ref: '#/components/schemas/SearchPageStatsDto'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PatentDto'
+    SearchPageStatsDto:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+          example: 1
+        perPage:
+          type: integer
+          format: int32
+          example: 25
+        page:
+          type: integer
+          format: int32
+          example: 1
+        lastPage:
+          type: integer
+          format: int32
+          example: 1
+    PatentDetailedDto:
+      type: object
+      properties:
+        patentId:
+          type: string
+          example: AU-1072201-A
+        patentTitle:
+          type: string
+          example: Method and apparatus for detecting the type of interface to which a device is connected
+        status:
+          type: string
+          example: Inactive
+        publicationDate:
+          type: string
+          format: date
+          example: '1999-10-01'
+        firstFilingDate:
+          type: string
+          format: date
+          example: '2000-09-29'
+        expirationDate:
+          type: string
+          format: date
+          example: '2001-05-10'
+        filingAuthorityLocation:
+          type: string
+          example: AU
+        cpcSection:
+          $ref: '#/components/schemas/DictionaryDto'
+        cpcClass:
+          $ref: '#/components/schemas/DictionaryDto'
+        cpcSubclass:
+          $ref: '#/components/schemas/DictionaryDto'
+        currentAssigneeNames:
+          type: array
+          example:
+          - Microsoft Corp
+          items:
+            type: string
+            example: '["Microsoft Corp"]'
+        originalAssigneeNames:
+          type: array
+          example:
+          - Microsoft Corp
+          items:
+            type: string
+            example: '["Microsoft Corp"]'
+        mostRecentLegalStatus:
+          type: string
+          example: Application lapsed section 142(2)(f)/reg. 8.3(3) - pct applic. not entering national phase
+        mostRecentLegalStatusDate:
+          type: string
+          format: date
+          example: '2002-06-06'
+        applicationDate:
+          type: string
+          format: date
+          example: '2000-09-29'
+        grantDate:
+          type: string
+          format: date
+          example: '2000-10-09'
+        familyId:
+          type: string
+          example: '23791471'
+        inventors:
+          type: array
+          example:
+          - Han Jian
+          items:
+            type: string
+            example: '["Han Jian"]'
+        documentForwardCitations:
+          type: integer
+          format: int32
+          example: 25
+        documentBackwardCitations:
+          type: integer
+          format: int32
+          example: 8
+        countOfClaims:
+          type: integer
+          format: int32
+          example: 25
+        countOfIndependentClaims:
+          type: integer
+          format: int32
+          example: 6
+        patentDownloadUrl:
+          type: string
+          example: https://api.pitchbook.com/companies/patents/AU-1072201-A/download
+    DictionaryDto:
+      type: object
+      properties:
+        code:
+          type: string
+          example: Dictionary code
+        description:
+          type: string
+          example: Dictionary Code Description
+    PatentDto:
+      type: object
+      properties:
+        patentId:
+          type: string
+          example: EP-0197552-A2
+        patentTitle:
+          type: string
+          example: Method of processing interrupts in a digital computer system
+        status:
+          type: string
+          example: Active
+        publicationDate:
+          type: string
+          format: date
+          example: '1986-10-15'
+        firstFilingDate:
+          type: string
+          format: date
+          example: '1985-04-10'
+        expirationDate:
+          type: string
+          format: date
+          example: '2006-04-09'
+        filingAuthorityLocation:
+          type: string
+          example: EP
+        cpcSection:
+          $ref: '#/components/schemas/DictionaryDto'
+        cpcClass:
+          $ref: '#/components/schemas/DictionaryDto'
+        cpcSubclass:
+          $ref: '#/components/schemas/DictionaryDto'
+    ErrorDto:
+      type: object
+      properties:
+        reason:
+          type: string
+          enum:
+          - 100 CONTINUE
+          - 101 SWITCHING_PROTOCOLS
+          - 102 PROCESSING
+          - 103 EARLY_HINTS
+          - 103 CHECKPOINT
+          - 200 OK
+          - 201 CREATED
+          - 202 ACCEPTED
+          - 203 NON_AUTHORITATIVE_INFORMATION
+          - 204 NO_CONTENT
+          - 205 RESET_CONTENT
+          - 206 PARTIAL_CONTENT
+          - 207 MULTI_STATUS
+          - 208 ALREADY_REPORTED
+          - 226 IM_USED
+          - 300 MULTIPLE_CHOICES
+          - 301 MOVED_PERMANENTLY
+          - 302 FOUND
+          - 302 MOVED_TEMPORARILY
+          - 303 SEE_OTHER
+          - 304 NOT_MODIFIED
+          - 305 USE_PROXY
+          - 307 TEMPORARY_REDIRECT
+          - 308 PERMANENT_REDIRECT
+          - 400 BAD_REQUEST
+          - 401 UNAUTHORIZED
+          - 402 PAYMENT_REQUIRED
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 405 METHOD_NOT_ALLOWED
+          - 406 NOT_ACCEPTABLE
+          - 407 PROXY_AUTHENTICATION_REQUIRED
+          - 408 REQUEST_TIMEOUT
+          - 409 CONFLICT
+          - 410 GONE
+          - 411 LENGTH_REQUIRED
+          - 412 PRECONDITION_FAILED
+          - 413 PAYLOAD_TOO_LARGE
+          - 413 REQUEST_ENTITY_TOO_LARGE
+          - 414 URI_TOO_LONG
+          - 414 REQUEST_URI_TOO_LONG
+          - 415 UNSUPPORTED_MEDIA_TYPE
+          - 416 REQUESTED_RANGE_NOT_SATISFIABLE
+          - 417 EXPECTATION_FAILED
+          - 418 I_AM_A_TEAPOT
+          - 419 INSUFFICIENT_SPACE_ON_RESOURCE
+          - 420 METHOD_FAILURE
+          - 421 DESTINATION_LOCKED
+          - 422 UNPROCESSABLE_ENTITY
+          - 423 LOCKED
+          - 424 FAILED_DEPENDENCY
+          - 425 TOO_EARLY
+          - 426 UPGRADE_REQUIRED
+          - 428 PRECONDITION_REQUIRED
+          - 429 TOO_MANY_REQUESTS
+          - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
+          - 451 UNAVAILABLE_FOR_LEGAL_REASONS
+          - 500 INTERNAL_SERVER_ERROR
+          - 501 NOT_IMPLEMENTED
+          - 502 BAD_GATEWAY
+          - 503 SERVICE_UNAVAILABLE
+          - 504 GATEWAY_TIMEOUT
+          - 505 HTTP_VERSION_NOT_SUPPORTED
+          - 506 VARIANT_ALSO_NEGOTIATES
+          - 507 INSUFFICIENT_STORAGE
+          - 508 LOOP_DETECTED
+          - 509 BANDWIDTH_LIMIT_EXCEEDED
+          - 510 NOT_EXTENDED
+          - 511 NETWORK_AUTHENTICATION_REQUIRED
+        message:
+          type: string
+  securitySchemes:
+    pbToken:
+      type: apiKey
+      name: Authorization
+      in: header
+      scheme: bearer
+      bearerFormat: JWT

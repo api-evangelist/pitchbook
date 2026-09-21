@@ -1,0 +1,3110 @@
+openapi: 3.2.0
+info:
+  title: OpenAPI definition Funds API
+  version: v0
+  description: Funds
+servers:
+- url: https://api.pitchbook.com
+tags:
+- name: Funds
+  description: Funds
+paths:
+  /funds/search:
+    get:
+      tags:
+      - Funds
+      summary: Fund Search
+      description: Retrieves funds along with the investors associated with the fund
+      operationId: fundSearch
+      parameters:
+      - name: fundNames
+        in: query
+        description: Accepts fund names, and pbIds. Returns a list of funds that are an exact match. Use a comma to separate multiple values
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 11111-11, Name
+      - name: investorNames
+        in: query
+        description: Accepts investor names, pbIds, websites, and tickers. Returns a list of funds with the exact matching investor names. Use a comma to separate multiple values
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 11111-11, Name
+      - name: fundStrategy
+        in: query
+        description: Funds can be found by their <a href="https://my.pitchbook.com/api/lookup-tables/Funds#FUND_STRATEGY" target="_blank">fund strategy code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: AN
+      - name: dryPowder
+        in: query
+        description: Find funds that have a certain amount of dry powder. Search for funds with dry powder more than an amount using the > operator, funds with dry powder less than an amount using the < operator or funds with dry powder in a range using the ^ operator. Amounts in millions
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 10^15
+      - name: fundSize
+        in: query
+        description: Find funds that have a certain fund size. Search for funds with a larger fund size than an amount using the > operator, funds with a smaller fund size than an amount using the < operator or funds within a range using the ^ operator. Amounts in millions
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 10^15
+      - name: city
+        in: query
+        description: Search for funds by city of their investors
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: Seattle
+      - name: stateProvince
+        in: query
+        description: Search for funds by <a href="https://my.pitchbook.com/api/lookup-tables/Location#US_STATE_TREE" target="_blank">state code</a> or <a href="https://my.pitchbook.com/api/lookup-tables/Location#CANADIAN_PROVINCE_TREE" target="_blank">province code</a> of their investors
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: AL
+      - name: country
+        in: query
+        description: Search for funds by <a href="https://my.pitchbook.com/api/lookup-tables/Location#COUNTRY_TREE" target="_blank">country code</a> of their investors
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: ABW
+      - name: postCode
+        in: query
+        description: Search for funds by postcodes of their investors
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '98765'
+      - name: locationType
+        in: query
+        description: Search for funds by additional parameter concerning the investors specifying HQ Only (HQ_ONLY), Non-HQ Only (NON_HQ_ONLY) or any office location (ANY) values. Set this parameter in pair with city, stateProvince, country, postCode options
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: ANY
+      - name: fundDomicileStateProvince
+        in: query
+        description: Find funds by location of incorporation <a href="https://my.pitchbook.com/api/lookup-tables/Location#US_STATE_TREE" target="_blank">state code</a> or <a href="https://my.pitchbook.com/api/lookup-tables/Location#CANADIAN_PROVINCE_TREE" target="_blank">province code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: AL
+      - name: fundDomicileCountry
+        in: query
+        description: Find funds by location of incorporation <a href="https://my.pitchbook.com/api/lookup-tables/Location#COUNTRY_TREE" target="_blank">country code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: ABW
+      - name: vintage
+        in: query
+        description: Search for funds by vintage year. Search for funds with a vintage after a certain date using the > operator, funds with a vintage before a certain date using the < operator and funds with a vintage between 2 dates using the ^ operator
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '>2021'
+      - name: fundStatus
+        in: query
+        description: Search for funds by the fund status. Pass a <a href="https://my.pitchbook.com/api/lookup-tables/Funds#FUND_STATUS_TREE" target="_blank">fund status code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: CLOS
+      - name: fundDate
+        in: query
+        description: 'Find funds within a certain time frame. Search for a fund after a certain date using the > operator, a fund before a certain date using the < operator and a fund between 2 dates using the ^ operator. Format: YYYY-MM-DD'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: <2026-09-16
+      - name: commitmentSize
+        in: query
+        description: Find funds by the size of individual commitments made to the fund. Search for funds with a commitment larger than an amount using the > operator, funds with a commitment smaller than an amount using the < operator and funds with a commitment between 2 amounts using the ^ operator. Amounts in millions
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '>10'
+      - name: commitmentDate
+        in: query
+        description: 'Find funds by the date of individual commitments made to the fund. Search for funds with a commitment after a certain date using the > operator, funds with a commitment before a certain date using the < operator and funds with a commitment between 2 dates using the ^ operator. Format: YYYY-MM-DD'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: <2026-09-16
+      - name: limitedPartnerNames
+        in: query
+        description: Search for funds by the exact match of limited partners committed to them. Accepts limited partner names, pbIds, websites, and tickers to return all funds they are invested in. Use a comma to separate multiple values
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 11111-11, Name
+      - name: irr
+        in: query
+        description: Search for funds by their IRR. Find funds with an IRR greater than a certain percentage using the > operator, funds with an IRR smaller than a certain percentage using the < operator and funds between certain percentages using the ^ operator
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '>10'
+      - name: dpi
+        in: query
+        description: Search for funds by their DPI multiple. Find funds with a multiple greater than a value using the > operator, funds with a multiple smaller than a value using the < operator and funds with a multiple between values using the ^ operator
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 10^15
+      - name: rvpi
+        in: query
+        description: Search for funds by their RVPI multiple. Find funds with a multiple greater than a value using the > operator, funds with a multiple smaller than a value using the < operator and funds with a multiple between values using the ^ operator
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '>10'
+      - name: tvpi
+        in: query
+        description: Search for funds by their TVPI multiple. Find funds with a multiple greater than a value using the > operator, funds with a multiple smaller than a value using the < operator and funds with a multiple between values using the ^ operator
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: <10
+      - name: industryPreferences
+        in: query
+        description: Find funds by their industry preferences. Pass an <a href="https://my.pitchbook.com/api/lookup-tables/Industries, Verticals & Emerging Spaces#INDUSTRY_TREE" target="_blank">industry code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '10'
+      - name: verticalsPreferences
+        in: query
+        description: Find funds by their verticals preferences. Pass a <a href="https://my.pitchbook.com/api/lookup-tables/Industries, Verticals & Emerging Spaces#VERTICAL_TREE" target="_blank">vertical code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 3D
+      - name: geographicalPreferences
+        in: query
+        description: Find funds by their geographical preferences. Pass a <a href="https://my.pitchbook.com/api/lookup-tables/Location#US_STATE_TREE" target="_blank">state code</a>, <a href="https://my.pitchbook.com/api/lookup-tables/Location#US_AREA_TREE" target="_blank">area code</a>, <a href="https://my.pitchbook.com/api/lookup-tables/Location#CANADIAN_PROVINCE_TREE" target="_blank">province code</a>, <a href="https://my.pitchbook.com/api/lookup-tables/Location#UK_TERRITORY_TREE" target="_blank">territory code</a>, <a href="https://my.pitchbook.com/api/lookup-tables/Location#COUNTRY_TREE" target="_blank">country code</a> or <a href="https://my.pitchbook.com/api/lookup-tables/Location#REGION_TREE" target="_blank">regions code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: UK_CI
+      - name: additionalPreferences
+        in: query
+        description: Find funds by <a href="https://my.pitchbook.com/api/lookup-tables/Investors#OTHER_INVESTMENT_PREFERENCES_TREE" target="_blank">additional investment preferences code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: IGPS
+      - name: preferredInvestmentAmount
+        in: query
+        description: Find funds by their preferred investment amount. Search for funds with preferred investment more than an amount using the > operator, funds with preferred investment less than an amount using the < operator or funds with preferred investment within a range using the ^ operator. Amounts in millions
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '>10'
+      - name: preferredDealTypes
+        in: query
+        description: Find funds by their preferred <a href="https://my.pitchbook.com/api/lookup-tables/Deals#DEAL_TYPE_TREE" target="_blank">deal type code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: SeedA
+      - name: currency
+        in: query
+        description: Specify the currency that your other parameters, such as dealSize, are entered as. It depends on the <a href="https://my.pitchbook.com/api/lookup-tables/Currency#CURRENCY_CODE_TREE" target="_blank">currency</a> in user preferences
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: AFN
+      - name: page
+        in: query
+        description: Results are returned so that they can be paged through. Set this parameter to increment the page
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '1'
+      - name: perPage
+        in: query
+        description: How many returned results show on page
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '25'
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/AdvancedSearchPageDtoFundAdvancedSearchResultDto_SearchView'
+      security:
+      - pbToken: []
+  /funds/{pbId}/bio:
+    get:
+      tags:
+      - Funds
+      summary: Fund Bio
+      description: Retrieves key data points about specific fund
+      operationId: getFundBio
+      parameters:
+      - name: pbId
+        in: path
+        description: Fund pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          15285-61F:
+            summary: 15285-61F
+            value: 15285-61F
+          17090-83F:
+            summary: 17090-83F
+            value: 17090-83F
+          13267-18F:
+            summary: 13267-18F
+            value: 13267-18F
+          15767-65F:
+            summary: 15767-65F
+            value: 15767-65F
+          13774-15F:
+            summary: 13774-15F
+            value: 13774-15F
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/FundBioDto'
+      security:
+      - pbToken: []
+  /funds/bio:
+    post:
+      tags:
+      - Funds
+      summary: '[Bulk] Fund Bio'
+      description: Retrieves key data points about specific fund. This bulk call allows you to send multiple pbIds within a single API call.
+      operationId: getBulkFundBio
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequestDto'
+            example:
+              items:
+              - id: 13328-83F
+              - id: 13774-15F
+              - id: 25306-21F
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BulkResultDtoFundBioDto'
+      security:
+      - pbToken: []
+  /funds/{pbId}/benchmark:
+    get:
+      tags:
+      - Funds
+      summary: Fund Benchmark
+      description: Retrieves details of benchmark values of the specific fund
+      operationId: getFundBenchmark
+      parameters:
+      - name: pbId
+        in: path
+        description: Fund pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          25306-21F:
+            summary: 25306-21F
+            value: 25306-21F
+          15285-61F:
+            summary: 15285-61F
+            value: 15285-61F
+          15408-91F:
+            summary: 15408-91F
+            value: 15408-91F
+          17090-83F:
+            summary: 17090-83F
+            value: 17090-83F
+          13774-15F:
+            summary: 13774-15F
+            value: 13774-15F
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/FundBenchmarkDto'
+      security:
+      - pbToken: []
+  /funds/{pbId}/active-investments:
+    get:
+      tags:
+      - Funds
+      summary: Fund Active Investments
+      description: Retrieves active investments of the specific fund
+      operationId: getFundActiveInvestments
+      parameters:
+      - name: pbId
+        in: path
+        description: Fund pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          25306-21F:
+            summary: 25306-21F
+            value: 25306-21F
+          15285-61F:
+            summary: 15285-61F
+            value: 15285-61F
+          13328-83F:
+            summary: 13328-83F
+            value: 13328-83F
+          15767-65F:
+            summary: 15767-65F
+            value: 15767-65F
+          13774-15F:
+            summary: 13774-15F
+            value: 13774-15F
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FundActiveInvestmentDto'
+      security:
+      - pbToken: []
+  /funds/{pbId}/investments:
+    get:
+      tags:
+      - Funds
+      summary: Fund All Investments
+      description: Retrieves active and former investments of the specified fund
+      operationId: getFundInvestments
+      parameters:
+      - name: pbId
+        in: path
+        description: Fund pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          15408-91F:
+            summary: 15408-91F
+            value: 15408-91F
+          13328-83F:
+            summary: 13328-83F
+            value: 13328-83F
+          13533-94F:
+            summary: 13533-94F
+            value: 13533-94F
+          17090-83F:
+            summary: 17090-83F
+            value: 17090-83F
+          15767-65F:
+            summary: 15767-65F
+            value: 15767-65F
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/FundInvestmentsDto'
+      security:
+      - pbToken: []
+  /funds/{pbId}/investment-preferences:
+    get:
+      tags:
+      - Funds
+      summary: Fund Investment Preferences
+      description: Retrieves key investment preferences of the specific fund
+      operationId: getFundInvestmentPreferences
+      parameters:
+      - name: pbId
+        in: path
+        description: Fund pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          25306-21F:
+            summary: 25306-21F
+            value: 25306-21F
+          15408-91F:
+            summary: 15408-91F
+            value: 15408-91F
+          15285-61F:
+            summary: 15285-61F
+            value: 15285-61F
+          13328-83F:
+            summary: 13328-83F
+            value: 13328-83F
+          13774-15F:
+            summary: 13774-15F
+            value: 13774-15F
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/FundInvestmentPreferenceDto'
+      security:
+      - pbToken: []
+  /funds/{pbId}/service-providers:
+    get:
+      tags:
+      - Funds
+      summary: Fund Service Providers
+      description: Retrieves service providers of the specific fund
+      operationId: getFundServiceProviders
+      parameters:
+      - name: pbId
+        in: path
+        description: Fund pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          13533-94F:
+            summary: 13533-94F
+            value: 13533-94F
+          13267-18F:
+            summary: 13267-18F
+            value: 13267-18F
+          17090-83F:
+            summary: 17090-83F
+            value: 17090-83F
+          15767-65F:
+            summary: 15767-65F
+            value: 15767-65F
+          13774-15F:
+            summary: 13774-15F
+            value: 13774-15F
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FundServiceProviderDto'
+      security:
+      - pbToken: []
+  /funds/{pbId}/performance:
+    get:
+      tags:
+      - Funds
+      summary: Fund Performance
+      description: Retrieves the most recent fund performance metrics for a specific fund and, when requested, historical performance snapshots from prior periods.
+      operationId: getFundPerformance
+      parameters:
+      - name: pbId
+        in: path
+        description: Fund pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          25306-21F:
+            summary: 25306-21F
+            value: 25306-21F
+          15408-91F:
+            summary: 15408-91F
+            value: 15408-91F
+          13328-83F:
+            summary: 13328-83F
+            value: 13328-83F
+          13533-94F:
+            summary: 13533-94F
+            value: 13533-94F
+          15767-65F:
+            summary: 15767-65F
+            value: 15767-65F
+      - name: historicalPerformance
+        in: query
+        description: Include historical fund performance data. To use this parameter, set it to True. False by default.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          default: false
+        example: true
+      - name: sinceDate
+        in: query
+        description: "Search for fund returns data relating to the period after a specific date using the > operator, before a certain date using the < operator, and between 2 dates using the ^ operator. Use this parameter only when the historicalPerformance parameter is applied \nFormat: YYYY-MM-DD"
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: <2025-01-01
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/FundPerformanceDto'
+      security:
+      - pbToken: []
+  /funds/{pbId}/portfolio-holdings/{period}:
+    get:
+      tags:
+      - Funds
+      summary: Fund Portfolio Holdings
+      description: Retrieves key portfolio holding information for the specified fund
+      operationId: getPortfolioHoldings
+      parameters:
+      - name: pbId
+        in: path
+        description: Fund pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          25306-21F:
+            summary: 25306-21F
+            value: 25306-21F
+          15112-27F:
+            summary: 15112-27F
+            value: 15112-27F
+      - name: period
+        in: path
+        description: Time period of reported fund holdings data
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: 4Q2024
+      - name: industryCode
+        in: query
+        description: Find holdings based on industry via <a href="https://my.pitchbook.com/api/lookup-tables/Industries, Verticals & Emerging Spaces#INDUSTRY_TREE" target="_blank">industry code</a>. Use a comma to separate multiple values.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '10'
+      - name: instrumentType
+        in: query
+        description: Find holdings by their <a href="https://my.pitchbook.com/api/lookup-tables/Funds#INSTRUMENT_TYPE" target="_blank">instrument type</a> (aka investment type). Use a comma to separate multiple values.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: CLN
+      - name: syndicated
+        in: query
+        description: Find holdings who have had a deal with syndicated loans within them. To use this parameter set it as True or False
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 'true'
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PortfolioHoldingsDto'
+      security:
+      - pbToken: []
+  /funds/{pbId}/cashflows/{period}:
+    get:
+      tags:
+      - Funds
+      summary: Fund Cash Flows (Legacy)
+      description: Retrieves contributed and distributed amounts for the specific fund
+      operationId: getFundCashFlowsLegacy
+      parameters:
+      - name: pbId
+        in: path
+        description: Fund pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          15285-61F:
+            summary: 15285-61F
+            value: 15285-61F
+          15408-91F:
+            summary: 15408-91F
+            value: 15408-91F
+          13533-94F:
+            summary: 13533-94F
+            value: 13533-94F
+          17090-83F:
+            summary: 17090-83F
+            value: 17090-83F
+          15767-65F:
+            summary: 15767-65F
+            value: 15767-65F
+      - name: period
+        in: path
+        description: Period of the cashflows
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: 4Q2019
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/FundCashFlowDto'
+      security:
+      - pbToken: []
+  /funds/{pbId}/cashflows:
+    get:
+      tags:
+      - Funds
+      summary: Fund Cash Flows
+      description: Retrieves fund cash flow data for the specified fund across all supported reporting periods. Quarterly data is returned by default.
+      operationId: getFundCashFlows
+      parameters:
+      - name: pbId
+        in: path
+        description: Fund pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          15285-61F:
+            summary: 15285-61F
+            value: 15285-61F
+          15408-91F:
+            summary: 15408-91F
+            value: 15408-91F
+          13328-83F:
+            summary: 13328-83F
+            value: 13328-83F
+          13267-18F:
+            summary: 13267-18F
+            value: 13267-18F
+          15112-27F:
+            summary: 15112-27F
+            value: 15112-27F
+      - name: periodType
+        in: query
+        description: Type of the period in which data will be presented. The list of types could be found <a href="https://my.pitchbook.com/api/lookup-tables/Funds#FUND_CASH_FLOW_PERIOD_TYPE" target="_blank">here</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          default: QTR
+          enum:
+          - MTH
+          - QTR
+          - ANN
+        example: ANN
+      - name: sinceDate
+        in: query
+        description: 'Searches for data by fiscal period date using the > operator for dates after a specified date, the < operator for dates before a specified date, and the ^ operator for dates between two dates. Format: YYYY-MM-DD'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: <2025-01-01
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/FundCashflowsDto'
+      security:
+      - pbToken: []
+  /funds/{pbId}/share-classes:
+    get:
+      tags:
+      - Funds
+      summary: Fund Share Classes
+      description: Retrieves share-class-level fees and expenses for all supported share classes of the specified fund.
+      operationId: getFundShareClasses
+      parameters:
+      - name: pbId
+        in: path
+        description: Fund pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          25306-21F:
+            summary: 25306-21F
+            value: 25306-21F
+          15285-61F:
+            summary: 15285-61F
+            value: 15285-61F
+          15408-91F:
+            summary: 15408-91F
+            value: 15408-91F
+          13328-83F:
+            summary: 13328-83F
+            value: 13328-83F
+          15767-65F:
+            summary: 15767-65F
+            value: 15767-65F
+      - name: shareClassId
+        in: query
+        description: Share class identifier
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 136
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/FundShareClassesDto'
+      security:
+      - pbToken: []
+  /funds/{pbId}/share-classes/performance:
+    get:
+      tags:
+      - Funds
+      summary: Fund Share Classes Performance
+      description: Retrieves latest share-class-level performance snapshots for the specified fund, including total return and yield metrics calculated at the share-class level.
+      operationId: getFundShareClassesPerformance
+      parameters:
+      - name: pbId
+        in: path
+        description: Fund pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          15408-91F:
+            summary: 15408-91F
+            value: 15408-91F
+          15285-61F:
+            summary: 15285-61F
+            value: 15285-61F
+          17090-83F:
+            summary: 17090-83F
+            value: 17090-83F
+          13267-18F:
+            summary: 13267-18F
+            value: 13267-18F
+          15767-65F:
+            summary: 15767-65F
+            value: 15767-65F
+      - name: shareClassId
+        in: query
+        description: Share class identifier
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 136
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/FundShareClassPerformanceDto'
+      security:
+      - pbToken: []
+  /funds/{pbId}/team:
+    get:
+      tags:
+      - Funds
+      summary: Fund People
+      description: Retrieves data about each team member of the specific fund
+      operationId: getFundPeople
+      parameters:
+      - name: pbId
+        in: path
+        description: Fund pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          25306-21F:
+            summary: 25306-21F
+            value: 25306-21F
+          15408-91F:
+            summary: 15408-91F
+            value: 15408-91F
+          13328-83F:
+            summary: 13328-83F
+            value: 13328-83F
+          15112-27F:
+            summary: 15112-27F
+            value: 15112-27F
+          15767-65F:
+            summary: 15767-65F
+            value: 15767-65F
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/FundPeopleDto'
+      security:
+      - pbToken: []
+  /funds/{pbId}/commitments:
+    get:
+      tags:
+      - Funds
+      summary: Fund Commitments
+      description: Retrieves details of commitments related to the specific fund
+      operationId: getFundCommitments
+      parameters:
+      - name: pbId
+        in: path
+        description: Fund pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          25306-21F:
+            summary: 25306-21F
+            value: 25306-21F
+          15285-61F:
+            summary: 15285-61F
+            value: 15285-61F
+          13328-83F:
+            summary: 13328-83F
+            value: 13328-83F
+          17090-83F:
+            summary: 17090-83F
+            value: 17090-83F
+          15112-27F:
+            summary: 15112-27F
+            value: 15112-27F
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FundCommitmentDto'
+      security:
+      - pbToken: []
+  /funds/{pbId}/updates:
+    get:
+      tags:
+      - Funds
+      summary: Fund Profile Updates
+      description: Retrieves changes for the specific fund for up to the last 90 days
+      operationId: getFundUpdateChanges
+      parameters:
+      - name: pbId
+        in: path
+        description: Fund pbId. Required to specify time period using 'sinceDate' or 'trailingRange' parameter
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          15285-61F:
+            summary: 15285-61F
+            value: 15285-61F
+          13533-94F:
+            summary: 13533-94F
+            value: 13533-94F
+          15112-27F:
+            summary: 15112-27F
+            value: 15112-27F
+          15767-65F:
+            summary: 15767-65F
+            value: 15767-65F
+          13774-15F:
+            summary: 13774-15F
+            value: 13774-15F
+      - name: sinceDate
+        in: query
+        description: 'Add this parameter to extract information about the entity updates after a certain date with the > operator, before a certain date with the < operator and between 2 dates with the ^ operator. Set this parameter in pair with pbId. Format: YYYY-MM-DD'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: <2026-09-16
+      - name: trailingRange
+        in: query
+        description: Add this parameter to extract information about the entity updates during last N days (up to 90). Set this parameter in pair with pbId
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+        example: '20'
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UpdateDto'
+      security:
+      - pbToken: []
+components:
+  schemas:
+    FundReturnsAvailabilityDto:
+      type: object
+      properties:
+        periodEnding:
+          type: string
+          example: 4Q2011
+        irr:
+          type: boolean
+          example: false
+        cashFlowsAndMultiples:
+          type: boolean
+          example: true
+    RequestItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+    RangeDtoInteger:
+      type: object
+      properties:
+        min:
+          type: integer
+          format: int32
+        max:
+          type: integer
+          format: int32
+      example:
+        min: 25
+        max: 50
+    FundBioDto:
+      type: object
+      properties:
+        fundId:
+          type: string
+          example: 13328-83F
+        name:
+          type: string
+          example: Crossroads Capital Partners
+        fundInvestors:
+          type: array
+          items:
+            $ref: '#/components/schemas/FundManagerInfoDto'
+        vintage:
+          type: integer
+          format: int32
+          example: 1997
+        fundStatus:
+          type: string
+          example: Fully Invested
+        fundType:
+          type: string
+          description: Deprecated. Always empty
+          deprecated: true
+        fundStrategy:
+          type: string
+          example: Growth/Expansion
+        additionalFundStrategy:
+          type: array
+          example:
+          - Debt - General
+          - Hedge Fund
+          items:
+            type: string
+            example: '["Debt - General","Hedge Fund"]'
+        fundStructure:
+          type: array
+          example:
+          - ELTIF
+          - Drawdown
+          items:
+            type: string
+            example: '["ELTIF","Drawdown"]'
+        fundLifespan:
+          type: string
+          example: Finite-Life
+        exchangeStatus:
+          type: string
+          example: Non-Listed
+        targetsPrivateWealthInvestors:
+          type: boolean
+          example: false
+        sustainableFinanceDisclosureRegulation:
+          type: string
+          example: Article 6
+        accessPoint:
+          type: string
+          example: Primary Fund
+        additionalAccessPoint:
+          type: string
+          example: Co-Investment, Secondary Fund
+        fundSize:
+          $ref: '#/components/schemas/MoneyDto'
+        fundTerms:
+          $ref: '#/components/schemas/FundTermsDto'
+        location:
+          $ref: '#/components/schemas/EntityOfficeDto'
+        fundTeam:
+          type: array
+          items:
+            $ref: '#/components/schemas/FundTeamDto'
+        openDate:
+          type: string
+          format: date
+          example: '1997-01-01'
+        closeDate:
+          type: string
+          format: date
+          example: '1997-03-01'
+        fundTargetSize:
+          $ref: '#/components/schemas/RangeDtoMoneyDto'
+        sbic:
+          type: boolean
+          example: true
+        returnsInfoAvailable:
+          type: array
+          items:
+            $ref: '#/components/schemas/FundReturnsAvailabilityDto'
+    FailedItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 420962-68
+        reason:
+          type: string
+          example: 429 TOO_MANY_REQUESTS
+          enum:
+          - 400 BAD_REQUEST
+          - 401 UNAUTHORIZED
+          - 402 PAYMENT_REQUIRED
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 405 METHOD_NOT_ALLOWED
+          - 415 UNSUPPORTED_MEDIA_TYPE
+          - 429 TOO_MANY_REQUESTS
+          - 500 INTERNAL_SERVER_ERROR
+          - 503 SERVICE_UNAVAILABLE
+        message:
+          type: string
+          example: '{LIMIT_TYPE} rate limit exceeded. Please wait until rate limit period is renewed'
+    BulkStatsDto:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+        matched:
+          type: integer
+          format: int32
+        noData:
+          type: integer
+          format: int32
+        unmatched:
+          type: integer
+          format: int32
+        duplicates:
+          type: integer
+          format: int32
+    NoDataItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+    FundInvestmentPreferenceDto:
+      type: object
+      properties:
+        fundId:
+          type: string
+          example: 13328-83F
+        preferredInvestmentAmount:
+          $ref: '#/components/schemas/RangeDtoMoneyDto'
+        preferredDealSize:
+          $ref: '#/components/schemas/RangeDtoMoneyDto'
+        preferredCompanyValuation:
+          $ref: '#/components/schemas/RangeDtoMoneyDto'
+        preferredEbitda:
+          $ref: '#/components/schemas/RangeDtoMoneyDto'
+        preferredEbit:
+          $ref: '#/components/schemas/RangeDtoMoneyDto'
+        preferredRevenue:
+          $ref: '#/components/schemas/RangeDtoMoneyDto'
+        preferredInvestmentHorizon:
+          $ref: '#/components/schemas/RangeDtoInteger'
+        geographicalPreferences:
+          type: array
+          items:
+            $ref: '#/components/schemas/GeographicalPreferenceDto'
+        secondariesPreferences:
+          type: array
+          example:
+          - GP Led
+          - LP Led
+          items:
+            type: string
+            example: '["GP Led","LP Led"]'
+        otherInvestmentPreferences:
+          type: array
+          items:
+            $ref: '#/components/schemas/DictionaryDto'
+        preferredIndustry:
+          type: array
+          items:
+            $ref: '#/components/schemas/IndustryPreferenceDto'
+        preferredDealTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/DictionaryDto'
+        preferredVerticals:
+          type: array
+          items:
+            $ref: '#/components/schemas/DictionaryDto'
+        assetPreferences:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssetPreferencesDto'
+    FundServiceProviderDto:
+      type: object
+      properties:
+        fundId:
+          type: string
+          example: 13328-83F
+        serviceProviderId:
+          type: string
+          example: 10024-75
+        serviceProviderName:
+          type: string
+          example: Citigroup
+        serviceProviderTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityTypeDto'
+        serviceProvided:
+          $ref: '#/components/schemas/DictionaryDto'
+        serviceTo:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServicedEntityDto'
+    GeographicalPreferenceDto:
+      type: object
+      properties:
+        regionGroup:
+          $ref: '#/components/schemas/DictionaryDto'
+        regionSegment:
+          $ref: '#/components/schemas/DictionaryDto'
+        regionCode:
+          $ref: '#/components/schemas/DictionaryDto'
+        regionState:
+          $ref: '#/components/schemas/DictionaryDto'
+    BulkRequestDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RequestItemDto'
+    EntityDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 41349-37
+        name:
+          type: string
+          example: Max Technologies
+      example:
+        id: 25304-77F
+        name: AB Private Credit Investors Corp BDC
+    DuplicatedItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 420962-68
+        occurrence:
+          type: integer
+          format: int32
+          example: 1
+    InvestmentsInfoDto:
+      type: object
+      properties:
+        targetCompanyId:
+          type: string
+          example: 164273-95
+        targetCompanyName:
+          type: string
+          example: Proxy
+        investmentStatus:
+          type: string
+          example: Active Investor
+        targetCompanyInvestmentDate:
+          type: string
+          format: date
+          example: '2005-04-03'
+        investmentDealId:
+          type: string
+          example: 111009-52T
+        targetCompanyExitDate:
+          type: string
+          format: date
+          example: 20010-12-05
+        exitDealId:
+          type: string
+          example: 118126-90T
+    IndustryDto:
+      type: object
+      properties:
+        reportedIndustry:
+          type: string
+          example: Cable and Other Subscription Programming
+        industrySector:
+          type: string
+          example: Consumer Products and Services (B2C)
+        industryGroup:
+          type: string
+          example: Media
+        industryCode:
+          type: string
+          example: Broadcasting, Radio and Television
+    FundCashflowsDto:
+      type: object
+      properties:
+        fundId:
+          type: string
+        fundName:
+          type: string
+        fundStructure:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/FundCashflowItemDto'
+    EntityTypeDto:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/DictionaryDto'
+        primary:
+          type: boolean
+          example: false
+      example:
+        type:
+          code: IB
+          description: Investment Bank
+        primary: true
+    FundShareClassesDto:
+      type: object
+      properties:
+        fundId:
+          type: string
+        fundName:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/FundShareClassItemDto'
+    FundManagerInfoDto:
+      type: object
+      properties:
+        investorId:
+          type: string
+          example: 11193-94
+        investorName:
+          type: string
+          example: Franklin Street Equity Partners
+        fundNo:
+          type: integer
+          format: int32
+          example: 1
+        firstFund:
+          type: boolean
+          example: false
+    FundShareClassPerformanceItemDto:
+      type: object
+      properties:
+        shareClassId:
+          type: string
+        shareClassName:
+          type: string
+        shareClassTicker:
+          type: string
+        snapshots:
+          type: array
+          items:
+            $ref: '#/components/schemas/FundShareClassPerformanceSnapshotDto'
+    BdcHoldingDto:
+      type: object
+      properties:
+        syndicated:
+          type: boolean
+          example: false
+        accrualStatus:
+          type: string
+          example: Accrual
+        instrumentType:
+          type: string
+          example: Senior Secured Loan
+        clo:
+          type: boolean
+          example: false
+        industry:
+          $ref: '#/components/schemas/IndustryDto'
+        issuer:
+          $ref: '#/components/schemas/IssuerDto'
+        cost:
+          $ref: '#/components/schemas/MoneyDto'
+        principal:
+          $ref: '#/components/schemas/MoneyDto'
+        fairValue:
+          $ref: '#/components/schemas/MoneyDto'
+        floor:
+          type: number
+          format: double
+          example: 7.25
+        maturityDate:
+          type: string
+          format: date
+          example: '2027-02-10'
+        spreadInterestRate:
+          type: number
+          format: double
+          example: 7.25
+        pikInterest:
+          type: number
+          format: double
+          example: 11.55
+        numberOfShares:
+          type: number
+          format: double
+          example: 34545.0
+        baseRefRate:
+          type: string
+          example: SOFR
+        allInRate:
+          type: number
+          format: double
+          example: 5.6
+        cashPercent:
+          type: number
+          format: double
+          example: 2.35
+        fairValueOverCost:
+          type: number
+          format: double
+          example: 4.65
+        fairValueOverPrincipal:
+          type: number
+          format: double
+          example: 6.5
+        acquisitionDate:
+          type: string
+          format: date
+          example: '2024-06-05'
+        firstPeriodReported:
+          type: string
+          example: Q2 2024
+        finalPeriodReported:
+          type: string
+          example: Q2 2024
+        deal:
+          $ref: '#/components/schemas/DealDto'
+    MoneyDto:
+      type: object
+      properties:
+        amount:
+          type: number
+          example: 17039.27
+        currency:
+          type: string
+          example: USD
+        nativeAmount:
+          type: number
+          example: 15689
+        nativeCurrency:
+          type: string
+          example: EUR
+        estimated:
+          type: boolean
+          example: false
+    FundPerformanceDto:
+      type: object
+      properties:
+        fundId:
+          type: string
+          example: 13328-83F
+        fundName:
+          type: string
+          example: Crossroads Capital Partners
+        asOfQuarter:
+          type: integer
+          format: int32
+          example: 4
+        asOfYear:
+          type: integer
+          format: int32
+          example: 1997
+        irr:
+          type: number
+          format: double
+          example: 9.4
+        dpi:
+          type: number
+          format: double
+          example: 0.08
+        rvpi:
+          type: number
+          format: double
+          example: 1.19
+        tvpi:
+          type: number
+          format: double
+          example: 1.27
+        nav:
+          type: number
+          format: double
+          example: 5.5
+        quartile:
+          type: integer
+          format: int32
+          example: 4
+        numberOfFundsInBenchmark:
+          type: integer
+          format: int32
+          example: 5
+        historicalPerformance:
+          type: array
+          items:
+            $ref: '#/components/schemas/FundPerformanceHistoricalDto'
+    RangeDtoMoneyDto:
+      type: object
+      properties:
+        min:
+          $ref: '#/components/schemas/MoneyDto'
+        max:
+          $ref: '#/components/schemas/MoneyDto'
+    FundCashFlowDto:
+      type: object
+      properties:
+        fundId:
+          type: string
+          example: 13328-83F
+        fundName:
+          type: string
+          example: Crossroads Capital Partners
+        asOfQuarter:
+          type: integer
+          format: int32
+          example: 4
+        asOfYear:
+          type: integer
+          format: int32
+          example: 2005
+        contributed:
+          $ref: '#/components/schemas/MoneyDto'
+        percentCalledDown:
+          type: number
+          format: double
+          example: 17.26
+        dryPowder:
+          $ref: '#/components/schemas/MoneyDto'
+        percentDryPowder:
+          type: number
+          format: double
+          example: 82.73
+        distributed:
+          $ref: '#/components/schemas/MoneyDto'
+        remainingValue:
+          $ref: '#/components/schemas/MoneyDto'
+        distributedRemaining:
+          $ref: '#/components/schemas/MoneyDto'
+    InvestorFundAdvancedSearchResultDto_SearchView:
+      type: object
+      properties:
+        investorId:
+          type: string
+          example: 11193-94
+        investorName:
+          type: string
+          example: Franklin Street Equity Partners
+    EntityOfficeDto:
+      type: object
+      properties:
+        location:
+          type: string
+          example: Chicago, IL
+        addressLine1:
+          type: string
+          example: 69 West Monroe Street
+        addressLine2:
+          type: string
+          example: Suite 190
+        city:
+          type: string
+          example: Chicago
+        stateProvince:
+          type: string
+          example: IL
+        postCode:
+          type: string
+          example: '60661'
+        country:
+          type: string
+          example: United States
+        phone:
+          type: string
+          example: +1 (312) 902-6655
+        fax:
+          type: string
+          example: +1 (312) 902-5655
+        email:
+          type: string
+          example: office.email@gmail.com
+        globalRegion:
+          type: string
+          example: Americas
+        globalSubRegion:
+          type: string
+          example: North America
+    ErrorDto:
+      type: object
+      properties:
+        reason:
+          type: string
+          enum:
+          - 100 CONTINUE
+          - 101 SWITCHING_PROTOCOLS
+          - 102 PROCESSING
+          - 103 EARLY_HINTS
+          - 103 CHECKPOINT
+          - 200 OK
+          - 201 CREATED
+          - 202 ACCEPTED
+          - 203 NON_AUTHORITATIVE_INFORMATION
+          - 204 NO_CONTENT
+          - 205 RESET_CONTENT
+          - 206 PARTIAL_CONTENT
+          - 207 MULTI_STATUS
+          - 208 ALREADY_REPORTED
+          - 226 IM_USED
+          - 300 MULTIPLE_CHOICES
+          - 301 MOVED_PERMANENTLY
+          - 302 FOUND
+          - 302 MOVED_TEMPORARILY
+          - 303 SEE_OTHER
+          - 304 NOT_MODIFIED
+          - 305 USE_PROXY
+          - 307 TEMPORARY_REDIRECT
+          - 308 PERMANENT_REDIRECT
+          - 400 BAD_REQUEST
+          - 401 UNAUTHORIZED
+          - 402 PAYMENT_REQUIRED
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 405 METHOD_NOT_ALLOWED
+          - 406 NOT_ACCEPTABLE
+          - 407 PROXY_AUTHENTICATION_REQUIRED
+          - 408 REQUEST_TIMEOUT
+          - 409 CONFLICT
+          - 410 GONE
+          - 411 LENGTH_REQUIRED
+          - 412 PRECONDITION_FAILED
+          - 413 PAYLOAD_TOO_LARGE
+          - 413 REQUEST_ENTITY_TOO_LARGE
+          - 414 URI_TOO_LONG
+          - 414 REQUEST_URI_TOO_LONG
+          - 415 UNSUPPORTED_MEDIA_TYPE
+          - 416 REQUESTED_RANGE_NOT_SATISFIABLE
+          - 417 EXPECTATION_FAILED
+          - 418 I_AM_A_TEAPOT
+          - 419 INSUFFICIENT_SPACE_ON_RESOURCE
+          - 420 METHOD_FAILURE
+          - 421 DESTINATION_LOCKED
+          - 422 UNPROCESSABLE_ENTITY
+          - 423 LOCKED
+          - 424 FAILED_DEPENDENCY
+          - 425 TOO_EARLY
+          - 426 UPGRADE_REQUIRED
+          - 428 PRECONDITION_REQUIRED
+          - 429 TOO_MANY_REQUESTS
+          - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
+          - 451 UNAVAILABLE_FOR_LEGAL_REASONS
+          - 500 INTERNAL_SERVER_ERROR
+          - 501 NOT_IMPLEMENTED
+          - 502 BAD_GATEWAY
+          - 503 SERVICE_UNAVAILABLE
+          - 504 GATEWAY_TIMEOUT
+          - 505 HTTP_VERSION_NOT_SUPPORTED
+          - 506 VARIANT_ALSO_NEGOTIATES
+          - 507 INSUFFICIENT_STORAGE
+          - 508 LOOP_DETECTED
+          - 509 BANDWIDTH_LIMIT_EXCEEDED
+          - 510 NOT_EXTENDED
+          - 511 NETWORK_AUTHENTICATION_REQUIRED
+        message:
+          type: string
+    FundInvestmentsDto:
+      type: object
+      properties:
+        fundId:
+          type: string
+          example: 13328-83F
+        fundName:
+          type: string
+          example: Crossroads Capital Partners
+        investments:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvestmentsInfoDto'
+    IndustryPreferenceDto:
+      type: object
+      properties:
+        industryCode:
+          $ref: '#/components/schemas/DictionaryDto'
+        industrySector:
+          $ref: '#/components/schemas/DictionaryDto'
+        industryGroup:
+          $ref: '#/components/schemas/DictionaryDto'
+        primary:
+          type: boolean
+    BulkResultDtoFundBioDto:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/BulkStatsDto'
+        matched:
+          type: array
+          items:
+            $ref: '#/components/schemas/FundBioDto'
+        noData:
+          type: array
+          items:
+            $ref: '#/components/schemas/NoDataItemDto'
+        unmatched:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailedItemDto'
+        duplicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicatedItemDto'
+    FundPerformanceHistoricalDto:
+      type: object
+      properties:
+        asOfQuarter:
+          type: integer
+          format: int32
+          example: 4
+        asOfYear:
+          type: integer
+          format: int32
+          example: 1997
+        irr:
+          type: number
+          format: double
+          example: 9.4
+        dpi:
+          type: number
+          format: double
+          example: 0.08
+        rvpi:
+          type: number
+          format: double
+          example: 1.19
+        tvpi:
+          type: number
+          format: double
+          example: 1.27
+        nav:
+          type: number
+          format: double
+          example: 5.5
+    FundShareClassTotalReturnDto:
+      type: object
+      properties:
+        oneMonth:
+          type: number
+          format: double
+        threeMonth:
+          type: number
+          format: double
+        yearToDate:
+          type: number
+          format: double
+        oneYear:
+          type: number
+          format: double
+        threeYear:
+          type: number
+          format: double
+        fiveYear:
+          type: number
+          format: double
+        sevenYear:
+          type: number
+          format: double
+        tenYear:
+          type: number
+          format: double
+        sinceInception:
+          type: number
+          format: double
+    FundPeopleDto:
+      type: object
+      properties:
+        fundId:
+          type: string
+          example: 13328-83F
+        investorIds:
+          type: array
+          example: ' 11193-94,11317-15,42257-26'
+          items:
+            type: string
+            example: ' 11193-94,11317-15,42257-26'
+        countActiveTeam:
+          type: integer
+          format: int32
+          example: 1
+        active:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamMemberDto'
+        former:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamMemberDto'
+    SearchPageStatsDto_SearchView:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+          example: 1
+        perPage:
+          type: integer
+          format: int32
+          example: 25
+        page:
+          type: integer
+          format: int32
+          example: 1
+        lastPage:
+          type: integer
+          format: int32
+          example: 1
+    TeamMemberDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 204383-98P
+        name:
+          type: string
+          example: Luke Bagley
+        title:
+          type: string
+          example: Board Member
+        positionStart:
+          type: string
+          format: date
+          example: '2005-07-29'
+        positionFinish:
+          type: string
+          format: date
+          example: '2020-05-09'
+        infoAvailable:
+          type: boolean
+          example: true
+    FundShareClassItemDto:
+      type: object
+      properties:
+        shareClassId:
+          type: string
+        shareClassName:
+          type: string
+        shareClassTicker:
+          type: string
+        snapshots:
+          type: array
+          items:
+            $ref: '#/components/schemas/FundShareClassSnapshotDto'
+    FundShareClassPerformanceDto:
+      type: object
+      properties:
+        fundId:
+          type: string
+        fundName:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/FundShareClassPerformanceItemDto'
+    DealDto:
+      type: object
+      properties:
+        dealId:
+          type: string
+          example: 108911-98T
+    FundCommitmentDto:
+      type: object
+      properties:
+        fundId:
+          type: string
+          example: 13328-83F
+        limitedPartnerId:
+          type: string
+          example: 59007-79
+        limitedPartnerName:
+          type: string
+          example: Pension Benefit Guaranty
+        commitmentDate:
+          type: string
+          format: date
+          example: '2015-10-08'
+        commitmentSize:
+          $ref: '#/components/schemas/MoneyDto'
+        commitmentStatus:
+          $ref: '#/components/schemas/DictionaryDto'
+        commitmentType:
+          $ref: '#/components/schemas/DictionaryDto'
+    FundBenchmarkDto:
+      type: object
+      properties:
+        fundId:
+          type: string
+          example: 13774-15F
+        fundName:
+          type: string
+          example: Franklin Street Equity Fund II
+        benchmarkFundType:
+          description: Deprecated. Always empty
+          deprecated: true
+          allOf:
+          - $ref: '#/components/schemas/DictionaryDto'
+        benchmarkFundStrategy:
+          type: string
+          example: Buyout
+        benchmarkFundCategory:
+          $ref: '#/components/schemas/DictionaryDto'
+        benchmarkFundSize:
+          $ref: '#/components/schemas/DictionaryDto'
+        benchmarkFundLocation:
+          $ref: '#/components/schemas/DictionaryDto'
+        benchmarkFundVintageYear:
+          type: integer
+          format: int32
+          example: 2016
+        irrBenchmark:
+          type: number
+          format: double
+          example: 9.25
+        dpiBenchmark:
+          type: number
+          format: double
+          example: 0.31
+        tvpiBenchmark:
+          type: number
+          format: double
+          example: 1.08
+        rvpiBenchmark:
+          type: number
+          format: double
+          example: 0.79
+        numberOfFundsInBenchmark:
+          type: integer
+          format: int32
+          example: 1
+        benchmarkFunds:
+          type: array
+          items:
+            $ref: '#/components/schemas/FundNameDto'
+    InvestorActivityDto:
+      type: object
+      properties:
+        sales:
+          type: number
+          format: double
+        redemptions:
+          type: number
+          format: double
+        reinvestedDividends:
+          type: number
+          format: double
+        netCashFlow:
+          type: number
+          format: double
+    FundShareClassPerformanceSnapshotDto:
+      type: object
+      properties:
+        asOfDate:
+          type: string
+          format: date
+        twelveMonthYield:
+          type: number
+          format: double
+        totalReturn:
+          $ref: '#/components/schemas/FundShareClassTotalReturnDto'
+    UpdateDto:
+      type: object
+      properties:
+        updates:
+          type: object
+          additionalProperties:
+            type: string
+            example: '{"Endpoint name":"Update Status (true/false)"}'
+          example:
+            Endpoint name: Update Status (true/false)
+    FundTermsDto:
+      type: object
+      properties:
+        subscriptionFrequency:
+          $ref: '#/components/schemas/DictionaryDto'
+        redemptionFrequency:
+          $ref: '#/components/schemas/DictionaryDto'
+      description: Fund terms including subscription and redemption frequency for Interval Funds and Tender Offer funds; null if not applicable
+    CapitalActivityDto:
+      type: object
+      properties:
+        remainingValue:
+          type: number
+          format: double
+        contributed:
+          type: number
+          format: double
+        percentCalledDown:
+          type: number
+          format: double
+        dryPowder:
+          type: number
+          format: double
+        percentDryPowder:
+          type: number
+          format: double
+        distributed:
+          type: number
+          format: double
+        distributedRemaining:
+          type: number
+          format: double
+    FundActiveInvestmentDto:
+      type: object
+      properties:
+        fundId:
+          type: string
+          example: 13328-83F
+        targetCompanyId:
+          type: string
+          example: 164273-95
+        targetCompanyName:
+          type: string
+          example: Proxy
+        targetCompanyInvestmentDate:
+          type: string
+          format: date
+          example: '2005-04-03'
+        investmentDealId:
+          type: string
+          example: 111009-52T
+    FundNameDto:
+      type: object
+      properties:
+        fundId:
+          type: string
+          example: 13328-83F
+        fundName:
+          type: string
+          example: Crossroads Capital Partners
+    FundShareClassLoadsDto:
+      type: object
+      properties:
+        frontLoad:
+          type: number
+          format: double
+        deferredLoad:
+          type: number
+          format: double
+        redemptionLoad:
+          type: number
+          format: double
+    AssetPreferencesDto:
+      type: object
+      properties:
+        assetClass:
+          $ref: '#/components/schemas/DictionaryDto'
+        subcategory:
+          $ref: '#/components/schemas/DictionaryDto'
+    DictionaryDto:
+      type: object
+      properties:
+        code:
+          type: string
+          example: Dictionary code
+        description:
+          type: string
+          example: Dictionary Code Description
+    FundCashflowItemDto:
+      type: object
+      properties:
+        period:
+          type: string
+        endDate:
+          type: string
+          format: date
+        capitalActivity:
+          $ref: '#/components/schemas/CapitalActivityDto'
+        investorActivity:
+          $ref: '#/components/schemas/InvestorActivityDto'
+    FundTeamDto:
+      type: object
+      properties:
+        personId:
+          type: string
+          example: 204383-98P
+        personFullName:
+          type: string
+          example: Luke Bagley
+    FundAdvancedSearchResultDto_SearchView:
+      type: object
+      properties:
+        fundId:
+          type: string
+          example: 11119-69F
+        fundName:
+          type: string
+          example: Franklin Street Equity Fund
+        investors:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvestorFundAdvancedSearchResultDto_SearchView'
+        sandbox:
+          type: boolean
+          example: false
+    AdvancedSearchPageDtoFundAdvancedSearchResultDto_SearchView:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/SearchPageStatsDto_SearchView'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/FundAdvancedSearchResultDto_SearchView'
+    PortfolioHoldingsDto:
+      type: object
+      properties:
+        fund:
+          $ref: '#/components/schemas/EntityDto'
+        period:
+          type: string
+          example: Q2 2024
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/BdcHoldingDto'
+    ServicedEntityDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 10041-94
+        name:
+          type: string
+          example: Bunker Hill Capital
+        entityType:
+          type: string
+          example: Investor
+    FundShareClassSnapshotDto:
+      type: object
+      properties:
+        asOfDate:
+          type: string
+          format: date
+        managementFee:
+          type: number
+          format: double
+        incentiveFee:
+          type: number
+          format: double
+        otherExpenses:
+          type: number
+          format: double
+        acquiredFundFeesAndExpenses:
+          type: number
+          format: double
+        adjustedExpenseRatio:
+          type: number
+          format: double
+        interestExpense:
+          type: number
+          format: double
+        netExpenseRatio:
+          type: number
+          format: double
+        prospectusExpenseWaiver:
+          type: number
+          format: double
+        prospectusExpenseWaiverExpirationDate:
+          type: string
+          format: date
+        grossExpenseRatio:
+          type: number
+          format: double
+        loads:
+          $ref: '#/components/schemas/FundShareClassLoadsDto'
+    IssuerDto:
+      type: object
+      properties:
+        issuerId:
+          type: string
+          example: 111874-96
+        issuerName:
+          type: string
+          example: Allen Media Group
+        issuerType:
+          type: string
+          example: COMPANY
+          enum:
+          - COMPANY
+          - FUND
+  securitySchemes:
+    pbToken:
+      type: apiKey
+      name: Authorization
+      in: header
+      scheme: bearer
+      bearerFormat: JWT

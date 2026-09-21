@@ -1,0 +1,658 @@
+openapi: 3.2.0
+info:
+  title: OpenAPI definition Account Information API
+  version: v0
+  description: Account Information
+servers:
+- url: https://api.pitchbook.com
+tags:
+- name: Account Information
+  description: Account Information
+paths:
+  /contracts/history:
+    get:
+      tags:
+      - Account Information
+      summary: Contracts History
+      description: Retrieves data for contracts within the account
+      operationId: getContractsHistory
+      parameters:
+      - name: activeContract
+        in: query
+        description: Specify the type of contracts to be returned in a response. To get information only for the active contracts set this parameter as True, and only for the past contracts - as False. Do not set this parameter to receive data about all types of contracts
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 'TRUE'
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ContractHistoryDto'
+      security:
+      - pbToken: []
+  /credits/history:
+    get:
+      tags:
+      - Account Information
+      summary: Credits History
+      description: Retrieves data about credit usage within the specific timeframe (for up to the last 90 days).
+      operationId: getCreditsBalanceStateByPeriod
+      parameters:
+      - name: sinceDate
+        in: query
+        description: 'Add this parameter to extract information for a certain date with the > operator, before a certain date with the < operator and between 2 dates with the ^ operator Format: YYYY-MM-DD'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: <2026-09-16
+      - name: trailingRange
+        in: query
+        description: Add this parameter to extract information for the last N days
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+        example: '20'
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CreditHistoryDto'
+      security:
+      - pbToken: []
+  /calls/history:
+    get:
+      tags:
+      - Account Information
+      summary: Usage Report
+      description: Retrieves information concerning calls made during the specific timeframe (for up to the last 30 days).
+      operationId: getEndpointUsageReport
+      parameters:
+      - name: sinceDate
+        in: query
+        description: 'Add this parameter to extract information for a certain date with the > operator, before a certain date with the < operator and between 2 dates with the ^ operator Format: YYYY-MM-DD'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: <2026-09-16
+      - name: trailingRange
+        in: query
+        description: Add this parameter to extract information for the last N days
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+        example: '20'
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/EndpointUsageReportDto'
+      security:
+      - pbToken: []
+  /calls/costs:
+    get:
+      tags:
+      - Account Information
+      summary: Cost of Calls
+      description: Retrieves pricing details for each endpoint within the account
+      operationId: getEnabledCallsInfo
+      parameters:
+      - name: pricingModel
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+          enum:
+          - SUBSCRIPTION
+          - PAY_PER_CALL
+          - INTEGRATION
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CallInfoDto'
+      security:
+      - pbToken: []
+  /limits:
+    get:
+      tags:
+      - Account Information
+      summary: Limits
+      description: Retrieves limit values set on the account level and remaining limits for the current date
+      operationId: getLimitUsageReports
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/LimitStatisticsDto'
+      security:
+      - pbToken: []
+components:
+  schemas:
+    LimitUsageInfoDto:
+      type: object
+      properties:
+        limitType:
+          type: string
+          example: Search & Update
+        perMinute:
+          $ref: '#/components/schemas/LimitUsageStatsDto'
+        perHour:
+          $ref: '#/components/schemas/LimitUsageStatsDto'
+        perDay:
+          $ref: '#/components/schemas/LimitUsageStatsDto'
+        perMonth:
+          $ref: '#/components/schemas/LimitUsageStatsDto'
+    EndpointUsageInfoDto:
+      type: object
+      properties:
+        contractNumber:
+          type: string
+          example: NS234PD
+        request:
+          type: string
+          example: https://api.pitchbook.com/companies/279838-27/investors
+        requestDate:
+          type: string
+          format: date-time
+        responseStatus:
+          type: string
+          example: '200'
+        endpointType:
+          type: string
+          example: Company All Investors
+        chargedCredits:
+          type: integer
+          format: int32
+          example: 5
+    ContractHistoryDto:
+      type: object
+      properties:
+        contractNumber:
+          type: string
+          example: NUMBER123
+        activeContract:
+          type: boolean
+          example: true
+        pricingModel:
+          type: string
+          example: Subscription
+        startDate:
+          type: string
+          format: date
+          example: '2023-01-01'
+        endDate:
+          type: string
+          format: date
+          example: '2025-01-01'
+        creditsUsed:
+          type: integer
+          format: int32
+          example: 9888
+        creditsChanged:
+          type: integer
+          format: int32
+          example: -100
+        creditsExpired:
+          type: integer
+          format: int32
+          example: 0
+        creditsRemaining:
+          type: integer
+          format: int32
+          example: 1222
+        overageUsed:
+          type: integer
+          format: int32
+          example: 0
+    LimitStatisticsDto:
+      type: object
+      properties:
+        limits:
+          type: array
+          items:
+            $ref: '#/components/schemas/LimitUsageInfoDto'
+        lastUpdatedDate:
+          type: string
+          format: date
+        overageChargesAvailable:
+          type: boolean
+    EndpointUsageReportDto:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/EndpointUsageStatsDto'
+        rawData:
+          type: array
+          items:
+            $ref: '#/components/schemas/EndpointUsageInfoDto'
+    EndpointUsageStatsDto:
+      type: object
+      properties:
+        endpoints:
+          type: array
+          example:
+          - Company All Investors
+          items:
+            type: string
+            example: '["Company All Investors"]'
+        totalCountOfCalls:
+          type: integer
+          format: int32
+          example: 1
+        totalChargedCredits:
+          type: integer
+          format: int32
+          example: 5
+    ErrorDto:
+      type: object
+      properties:
+        reason:
+          type: string
+          enum:
+          - 100 CONTINUE
+          - 101 SWITCHING_PROTOCOLS
+          - 102 PROCESSING
+          - 103 EARLY_HINTS
+          - 103 CHECKPOINT
+          - 200 OK
+          - 201 CREATED
+          - 202 ACCEPTED
+          - 203 NON_AUTHORITATIVE_INFORMATION
+          - 204 NO_CONTENT
+          - 205 RESET_CONTENT
+          - 206 PARTIAL_CONTENT
+          - 207 MULTI_STATUS
+          - 208 ALREADY_REPORTED
+          - 226 IM_USED
+          - 300 MULTIPLE_CHOICES
+          - 301 MOVED_PERMANENTLY
+          - 302 FOUND
+          - 302 MOVED_TEMPORARILY
+          - 303 SEE_OTHER
+          - 304 NOT_MODIFIED
+          - 305 USE_PROXY
+          - 307 TEMPORARY_REDIRECT
+          - 308 PERMANENT_REDIRECT
+          - 400 BAD_REQUEST
+          - 401 UNAUTHORIZED
+          - 402 PAYMENT_REQUIRED
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 405 METHOD_NOT_ALLOWED
+          - 406 NOT_ACCEPTABLE
+          - 407 PROXY_AUTHENTICATION_REQUIRED
+          - 408 REQUEST_TIMEOUT
+          - 409 CONFLICT
+          - 410 GONE
+          - 411 LENGTH_REQUIRED
+          - 412 PRECONDITION_FAILED
+          - 413 PAYLOAD_TOO_LARGE
+          - 413 REQUEST_ENTITY_TOO_LARGE
+          - 414 URI_TOO_LONG
+          - 414 REQUEST_URI_TOO_LONG
+          - 415 UNSUPPORTED_MEDIA_TYPE
+          - 416 REQUESTED_RANGE_NOT_SATISFIABLE
+          - 417 EXPECTATION_FAILED
+          - 418 I_AM_A_TEAPOT
+          - 419 INSUFFICIENT_SPACE_ON_RESOURCE
+          - 420 METHOD_FAILURE
+          - 421 DESTINATION_LOCKED
+          - 422 UNPROCESSABLE_ENTITY
+          - 423 LOCKED
+          - 424 FAILED_DEPENDENCY
+          - 425 TOO_EARLY
+          - 426 UPGRADE_REQUIRED
+          - 428 PRECONDITION_REQUIRED
+          - 429 TOO_MANY_REQUESTS
+          - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
+          - 451 UNAVAILABLE_FOR_LEGAL_REASONS
+          - 500 INTERNAL_SERVER_ERROR
+          - 501 NOT_IMPLEMENTED
+          - 502 BAD_GATEWAY
+          - 503 SERVICE_UNAVAILABLE
+          - 504 GATEWAY_TIMEOUT
+          - 505 HTTP_VERSION_NOT_SUPPORTED
+          - 506 VARIANT_ALSO_NEGOTIATES
+          - 507 INSUFFICIENT_STORAGE
+          - 508 LOOP_DETECTED
+          - 509 BANDWIDTH_LIMIT_EXCEEDED
+          - 510 NOT_EXTENDED
+          - 511 NETWORK_AUTHENTICATION_REQUIRED
+        message:
+          type: string
+    CreditHistoryDto:
+      type: object
+      properties:
+        contractNumber:
+          type: string
+          example: NF134VA
+        activeContract:
+          type: boolean
+          example: true
+        pricingModel:
+          type: string
+          example: Subscription
+        creditsUsed:
+          type: integer
+          format: int32
+          example: 600
+        creditsChanged:
+          type: integer
+          format: int32
+          example: 1000
+        creditsExpired:
+          type: integer
+          format: int32
+          example: 0
+        creditsRemaining:
+          type: integer
+          format: int32
+          example: 400
+        overageUsed:
+          type: integer
+          format: int32
+          example: 0
+    CallInfoDto:
+      type: object
+      properties:
+        group:
+          type: string
+          example: Companies
+        endpoint:
+          type: string
+          example: Company Deals
+        initialCost:
+          type: integer
+          format: int32
+          example: 1
+        refreshCost:
+          type: integer
+          format: int32
+          example: 1
+    LimitUsageStatsDto:
+      type: object
+      properties:
+        limit:
+          type: integer
+          format: int32
+          example: 200
+        remainingLimit:
+          type: integer
+          format: int32
+          example: 50
+  securitySchemes:
+    pbToken:
+      type: apiKey
+      name: Authorization
+      in: header
+      scheme: bearer
+      bearerFormat: JWT

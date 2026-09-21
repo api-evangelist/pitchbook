@@ -1,0 +1,2332 @@
+openapi: 3.2.0
+info:
+  title: OpenAPI definition Limited Partners API
+  version: v0
+  description: Limited Partners
+servers:
+- url: https://api.pitchbook.com
+tags:
+- name: Limited Partners
+  description: Limited Partners
+paths:
+  /limited-partners/search:
+    get:
+      tags:
+      - Limited Partners
+      summary: Limited Partner Search
+      description: Retrieves limited partners matching the specified criteria
+      operationId: limitedPartnerSearch
+      parameters:
+      - name: limitedPartnerNames
+        in: query
+        description: Accepts limited partner names, pbIds, websites, and tickers. Returns a list of limited partners that are an exact match. Use a comma to separate multiple values
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 11111-11, Name
+      - name: limitedPartnerType
+        in: query
+        description: Limited partners can be found by their <a href="https://my.pitchbook.com/api/lookup-tables/Limited Partners#LP_TYPE_TREE" target="_blank">limited partner type code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: BI
+      - name: city
+        in: query
+        description: Search for limited partners by their city location
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: Seattle
+      - name: stateProvince
+        in: query
+        description: Search for limited partners by their <a href="https://my.pitchbook.com/api/lookup-tables/Location#US_STATE_TREE" target="_blank">state code</a> or <a href="https://my.pitchbook.com/api/lookup-tables/Location#CANADIAN_PROVINCE_TREE" target="_blank">province code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: AL
+      - name: country
+        in: query
+        description: Search for limited partners by their <a href="https://my.pitchbook.com/api/lookup-tables/Location#COUNTRY_TREE" target="_blank">country code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: ABW
+      - name: postCode
+        in: query
+        description: Search for limited partners by their postcode, included to support searching for both US postal code and foreign
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '98765'
+      - name: locationType
+        in: query
+        description: Search for limited partners by additional parameter specifying HQ Only (HQ_ONLY), Non-HQ Only (NON_HQ_ONLY) or any office location (ANY) values. Set this parameter in pair with city, stateProvince, country, postCode options
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: ANY
+      - name: aum
+        in: query
+        description: Search for limited partners by their amount of assets under management. Search for limited partners with AUM over a certain amount using the > operator, limited partners with AUM under a certain amount with the < operator or limited partners within a range using the ^ operator. Amounts in millions
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 10^15
+      - name: numberOfCommitments
+        in: query
+        description: Search for limited partners by their count of commitments. Search for limited partners with commitments over a certain count using the > operator, limited partners with commitments under a certain count with the < operator or limited partners within a range using the ^ operator. Counts in units
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: <10
+      - name: commitmentDate
+        in: query
+        description: 'Search for limited partners by their commitments date. Search for limited partners with commitments after a certain date using the > operator, limited partners with commitments before a certain date using the < operator or limited partners with commitments between 2 dates within a range using the ^ operator. Format: YYYY-MM-DD'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: <2026-09-16
+      - name: commitmentSize
+        in: query
+        description: Search for limited partners by their commitments of a certain size. Search for limited partners with commitments larger than an amount using the > operator, limited partners with commitments smaller than a certain amount using the < operator or limited partners within a range using the ^ operator. Amounts in millions
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '>10'
+      - name: fundStateProvince
+        in: query
+        description: Search for limited partners by <a href="https://my.pitchbook.com/api/lookup-tables/Location#US_STATE_TREE" target="_blank">state code</a> or <a href="https://my.pitchbook.com/api/lookup-tables/Location#CANADIAN_PROVINCE_TREE" target="_blank">province code</a> of committed funds
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: AL
+      - name: fundCountry
+        in: query
+        description: Search for limited partners by <a href="https://my.pitchbook.com/api/lookup-tables/Location#COUNTRY_TREE" target="_blank">country code</a> of committed funds
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: ABW
+      - name: fundStrategy
+        in: query
+        description: Search for limited partners by the fund strategy of committed funds. Pass a <a href="https://my.pitchbook.com/api/lookup-tables/Funds#FUND_STRATEGY" target="_blank">fund strategy code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: AN
+      - name: mandateKeywords
+        in: query
+        description: Search for limited partners by keywords they are associated with mandates
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: IT
+      - name: mandateStatusCurrent
+        in: query
+        description: Search for limited partners that have current mandates. To use this parameter set it as True
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 'TRUE'
+      - name: mandateStatusFormer
+        in: query
+        description: Search for limited partners that have former mandates. To use this parameter set it as True
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 'TRUE'
+      - name: mandateAmount
+        in: query
+        description: Search for limited partners by their mandates of a certain size. Search for limited partners with mandates larger than an amount using the > operator, limited partners with mandates smaller than a certain amount using the < operator or limited partners within a range using the ^ operator. Amounts in millions
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '>10'
+      - name: mandateStartDate
+        in: query
+        description: 'Search for limited partners by start date of mandates. Search for limited partners with mandates after a certain start date using the > operator, limited partners with mandates before a certain start date using the < operator or limited partners with mandates between 2 start dates within a range using the ^ operator. Format: YYYY-MM-DD'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '2022-10-20'
+      - name: mandateEndDate
+        in: query
+        description: 'Search for limited partners by end date of mandates. Search for limited partners with mandates after a certain end date using the > operator, limited partners with mandates before a certain end date using the < operator or limited partners with mandates between 2 end dates within a range using the ^ operator. Format: YYYY-MM-DD'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '2022-10-30'
+      - name: mandateStateProvince
+        in: query
+        description: Search for limited partners by <a href="https://my.pitchbook.com/api/lookup-tables/Location#US_STATE_TREE" target="_blank">state code</a> or <a href="https://my.pitchbook.com/api/lookup-tables/Location#CANADIAN_PROVINCE_TREE" target="_blank">province code</a> of mandates
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: AL
+      - name: mandateCountry
+        in: query
+        description: Search for limited partners by <a href="https://my.pitchbook.com/api/lookup-tables/Location#COUNTRY_TREE" target="_blank">country code</a> of mandates
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: ABW
+      - name: fundStrategyFocus
+        in: query
+        description: Search for limited partners by the targeted fund strategy of committed mandates. Pass a <a href="https://my.pitchbook.com/api/lookup-tables/Funds#FUND_STRATEGY" target="_blank">fund strategy code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: AN
+      - name: fundManagerFocus
+        in: query
+        description: Search for limited partners by the manager preferences of committed mandates. Pass a <a href="https://my.pitchbook.com/api/lookup-tables/Limited Partners#FUND_MANAGER_FOCUS_TREE" target="_blank">fund manager focus code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: EM
+      - name: assetTypes
+        in: query
+        description: Search for limited partners by the allocation of assets. Pass an <a href="https://my.pitchbook.com/api/lookup-tables/Limited Partners#ASSET_TYPE_TREE" target="_blank">asset type code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: ALT
+      - name: currentlyAllocated
+        in: query
+        description: Search for limited partners by the current specific assets of a certain size. Search for limited partners with current specific assets larger than an amount using the > operator, limited partners with current specific assets smaller than a certain amount using the < operator or limited partners with current specific assets within a range using the ^ operator. Amounts in millions
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 10^15
+      - name: currentlyAllocatedPercent
+        in: query
+        description: Search for limited partners by the percent of current specific assets. Search for limited partners with the percent of current specific assets larger than a percent using the > operator, limited partners with the percent of current specific assets smaller than a percent using the < operator or limited partners with the percent of current specific assets within a range using the ^ operator. Values in percents
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 10^15
+      - name: targetedMin
+        in: query
+        description: Search for limited partners by the minimum values of targeted specific assets of a certain size. Search for limited partners with the minimum values of targeted specific assets larger than an amount using the > operator, limited partners with the minimum values of targeted current specific assets smaller than a certain amount using the < operator or limited partners with the minimum values of targeted current specific assets within a range using the ^ operator. Amounts in millions
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '>10'
+      - name: targetedMax
+        in: query
+        description: Search for limited partners by the maximum values of targeted specific assets of a certain size. Search for limited partners with the maximum values of targeted specific assets larger than an amount using the > operator, limited partners with the maximum values of targeted current specific assets smaller than a certain amount using the < operator or limited partners with the maximum values of targeted current specific assets within a range using the ^ operator. Amounts in millions
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '>10'
+      - name: targetedMinPercent
+        in: query
+        description: Search for limited partners by the minimum percent of targeted specific assets. Search for limited partners with the the minimum percent of targeted specific assets larger than a percent using the > operator, limited partners with the minimum percent of targeted specific assets smaller than a percent using the < operator or limited partners with the minimum percent of targeted specific assets within a range using the ^ operator. Values in percents
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 10^15
+      - name: targetedMaxPercent
+        in: query
+        description: Search for limited partners by the maximum percent of targeted specific assets. Search for limited partners with the the maximum percent of targeted specific assets larger than a percent using the > operator, limited partners with the maximum percent of targeted specific assets smaller than a percent using the < operator or limited partners with the maximum percent of targeted specific assets within a range using the ^ operator. Values in percents
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 10^15
+      - name: commitmentFundIndustryFocus
+        in: query
+        description: Search for limited partners by the <a href="https://my.pitchbook.com/api/lookup-tables/Industries, Verticals & Emerging Spaces#INDUSTRY_TREE" target="_blank">industry code</a> of committed funds
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '10'
+      - name: commitmentFundVintageYear
+        in: query
+        description: Search for limited partners by the vintage year of committed funds. Search for limited partners with fund's vintage year after a certain date using the > operator, limited partners with fund's vintage year before a certain date using the < operator and limited partners with fund's vintage year between 2 dates using the ^ operator
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '>2021'
+      - name: commitmentFundSize
+        in: query
+        description: Search for limited partners by the committed funds of a certain size. Search for limited partners with the committed funds larger than an amount using the > operator, limited partners with the committed funds smaller than a certain amount using the < operator or limited partners with the committed funds within a range using the ^ operator. Amounts in millions
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: <10
+      - name: commitmentFundStrategyPreferences
+        in: query
+        description: Search for limited partners by the fund strategy of preferred funds. Pass a <a href="https://my.pitchbook.com/api/lookup-tables/Funds#FUND_STRATEGY" target="_blank">fund strategy code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: AN
+      - name: commitmentFundStateProvincePreferences
+        in: query
+        description: Search for limited partners by <a href="https://my.pitchbook.com/api/lookup-tables/Location#US_STATE_TREE" target="_blank">state code</a> or <a href="https://my.pitchbook.com/api/lookup-tables/Location#CANADIAN_PROVINCE_TREE" target="_blank">province code</a> of preferred funds
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: AL
+      - name: commitmentFundCountryPreferences
+        in: query
+        description: Search for limited partners by <a href="https://my.pitchbook.com/api/lookup-tables/Location#COUNTRY_TREE" target="_blank">country code</a> of preferred funds
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: ABW
+      - name: currency
+        in: query
+        description: ''
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: AFN
+      - name: page
+        in: query
+        description: Results are returned so that they can be paged through. Set this parameter to increment the page
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '1'
+      - name: perPage
+        in: query
+        description: How many returned results show on page
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '25'
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/AdvancedSearchPageDtoLimitedPartnerAdvancedSearchResultDto_SearchView'
+      security:
+      - pbToken: []
+  /limited-partners/{pbId}:
+    get:
+      tags:
+      - Limited Partners
+      summary: Limited Partner
+      description: Retrieves all the data points about specific limited partner
+      operationId: getLimitedPartner
+      parameters:
+      - name: pbId
+        in: path
+        description: Limited Partner pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          11603-71:
+            summary: 11603-71
+            value: 11603-71
+          57384-64:
+            summary: 57384-64
+            value: 57384-64
+          53231-59:
+            summary: 53231-59
+            value: 53231-59
+          51959-08:
+            summary: 51959-08
+            value: 51959-08
+          11592-82:
+            summary: 11592-82
+            value: 11592-82
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/LimitedPartnerDto'
+      security:
+      - pbToken: []
+  /limited-partners:
+    post:
+      tags:
+      - Limited Partners
+      summary: '[Bulk] Limited Partner'
+      description: Retrieves all the data points about specific limited partner. This bulk call allows you to send multiple pbIds within a single API call.
+      operationId: getBulkLimitedPartner
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequestDto'
+            example:
+              items:
+              - id: 58572-64
+              - id: 53231-59
+              - id: 11593-99
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BulkResultDtoLimitedPartnerDto'
+      security:
+      - pbToken: []
+  /limited-partners/{pbId}/bio:
+    get:
+      tags:
+      - Limited Partners
+      summary: Limited Partner Bio
+      description: Retrieves key data points about specific limited partner
+      operationId: getLpBio
+      parameters:
+      - name: pbId
+        in: path
+        description: Limited Partner pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          64821-07:
+            summary: 64821-07
+            value: 64821-07
+          11603-71:
+            summary: 11603-71
+            value: 11603-71
+          59007-79:
+            summary: 59007-79
+            value: 59007-79
+          156414-97:
+            summary: 156414-97
+            value: 156414-97
+          11594-89:
+            summary: 11594-89
+            value: 11594-89
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/LimitedPartnerBioDto'
+      security:
+      - pbToken: []
+  /limited-partners/bio:
+    post:
+      tags:
+      - Limited Partners
+      summary: '[Bulk] Limited Partner Bio'
+      description: Retrieves key data points about specific limited partner. This bulk call allows you to send multiple pbIds within a single API call.
+      operationId: getBulkLPBio
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequestDto'
+            example:
+              items:
+              - id: 11554-48
+              - id: 58572-64
+              - id: 11568-07
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BulkResultDtoLimitedPartnerBioDto'
+      security:
+      - pbToken: []
+  /limited-partners/{pbId}/service-providers:
+    get:
+      tags:
+      - Limited Partners
+      summary: Limited Partner Service Providers
+      description: Retrieves current and former service providers of the specific limited partner
+      operationId: getLpServiceProviders
+      parameters:
+      - name: pbId
+        in: path
+        description: Limited Partner pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          11231-47:
+            summary: 11231-47
+            value: 11231-47
+          58572-64:
+            summary: 58572-64
+            value: 58572-64
+          57384-64:
+            summary: 57384-64
+            value: 57384-64
+          11581-21:
+            summary: 11581-21
+            value: 11581-21
+          52460-02:
+            summary: 52460-02
+            value: 52460-02
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/LimitedPartnerGeneralServiceProvidersDto'
+      security:
+      - pbToken: []
+  /limited-partners/{pbId}/commitment-prefs:
+    get:
+      tags:
+      - Limited Partners
+      summary: Limited Partner Commitment Preferences
+      description: Retrieves key investment preferences of the specific limited partner
+      operationId: getLpCommitmentPrefs
+      parameters:
+      - name: pbId
+        in: path
+        description: Limited Partner pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          10339-57:
+            summary: 10339-57
+            value: 10339-57
+          11610-01:
+            summary: 11610-01
+            value: 11610-01
+          51959-08:
+            summary: 51959-08
+            value: 51959-08
+          52460-02:
+            summary: 52460-02
+            value: 52460-02
+          11592-82:
+            summary: 11592-82
+            value: 11592-82
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/LimitedPartnerCommitmentPreferencesDto'
+      security:
+      - pbToken: []
+  /limited-partners/{pbId}/actual-allocations:
+    get:
+      tags:
+      - Limited Partners
+      summary: Limited Partner Actual Allocations
+      description: Retrieves key datapoints for the current asset allocations of the specific limited partner
+      operationId: getLimitedPartnerActualAllocations
+      parameters:
+      - name: pbId
+        in: path
+        description: Limited Partner pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          10339-57:
+            summary: 10339-57
+            value: 10339-57
+          11610-01:
+            summary: 11610-01
+            value: 11610-01
+          64821-07:
+            summary: 64821-07
+            value: 64821-07
+          11231-47:
+            summary: 11231-47
+            value: 11231-47
+          51959-08:
+            summary: 51959-08
+            value: 51959-08
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/LimitedPartnerActualAllocationsDto'
+      security:
+      - pbToken: []
+  /limited-partners/{pbId}/target-allocations:
+    get:
+      tags:
+      - Limited Partners
+      summary: Limited Partner Target Allocations
+      description: Retrieves key datapoints for the target asset allocations of the specific limited partner
+      operationId: getLimitedPartnerTargetAllocations
+      parameters:
+      - name: pbId
+        in: path
+        description: Limited Partner pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          10339-57:
+            summary: 10339-57
+            value: 10339-57
+          109513-99:
+            summary: 109513-99
+            value: 109513-99
+          11231-47:
+            summary: 11231-47
+            value: 11231-47
+          519904-99:
+            summary: 519904-99
+            value: 519904-99
+          52460-02:
+            summary: 52460-02
+            value: 52460-02
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/LimitedPartnerTargetAllocationsDto'
+      security:
+      - pbToken: []
+  /limited-partners/target-allocations:
+    post:
+      tags:
+      - Limited Partners
+      summary: '[Bulk] Limited Partner Target Allocations'
+      description: Retrieves key datapoints for the target asset allocations of the specific limited partner. This bulk call allows you to send multiple pbIds within a single API call.
+      operationId: getBulkLimitedPartnerTargetAllocations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequestDto'
+            example:
+              items:
+              - id: 53231-59
+              - id: 52460-02
+              - id: 11594-89
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BulkResultDtoLimitedPartnerTargetAllocationsDto'
+      security:
+      - pbToken: []
+  /limited-partners/{pbId}/commitments-detailed:
+    get:
+      tags:
+      - Limited Partners
+      summary: Limited Partner Commitments Detailed
+      description: Retrieves commitments information related to the specific limited partner
+      operationId: getLpCommitmentsDetailed
+      parameters:
+      - name: pbId
+        in: path
+        description: Limited Partner pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          10339-57:
+            summary: 10339-57
+            value: 10339-57
+          58572-64:
+            summary: 58572-64
+            value: 58572-64
+          156414-97:
+            summary: 156414-97
+            value: 156414-97
+          11594-89:
+            summary: 11594-89
+            value: 11594-89
+          52460-02:
+            summary: 52460-02
+            value: 52460-02
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LimitedPartnerCommitmentDetailedDto'
+      security:
+      - pbToken: []
+  /limited-partners/{pbId}/commitments-aggregates:
+    get:
+      tags:
+      - Limited Partners
+      summary: Limited Partner Commitment Aggregates
+      description: Retrieves active and total commitment aggregates of the specific limited partner
+      operationId: getLpCommitmentAggregates
+      parameters:
+      - name: pbId
+        in: path
+        description: Limited Partner pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          64821-07:
+            summary: 64821-07
+            value: 64821-07
+          11231-47:
+            summary: 11231-47
+            value: 11231-47
+          156414-97:
+            summary: 156414-97
+            value: 156414-97
+          11593-99:
+            summary: 11593-99
+            value: 11593-99
+          11581-21:
+            summary: 11581-21
+            value: 11581-21
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/LimitedPartnerCommitmentAggregatesDto'
+      security:
+      - pbToken: []
+  /limited-partners/commitments-aggregates:
+    post:
+      tags:
+      - Limited Partners
+      summary: '[Bulk] Limited Partner Commitment Aggregates'
+      description: Retrieves active and total commitment aggregates of the specific limited partner. This bulk call allows you to send multiple pbIds within a single API call.
+      operationId: getBulkLpCommitmentAggregates
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequestDto'
+            example:
+              items:
+              - id: 11554-48
+              - id: 11603-71
+              - id: 52460-02
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BulkResultDtoLimitedPartnerCommitmentAggregatesDto'
+      security:
+      - pbToken: []
+  /limited-partners/{pbId}/updates:
+    get:
+      tags:
+      - Limited Partners
+      summary: Limited Partner Profile Updates
+      description: Retrieves changes for the specific limited partner for up to the last 90 days
+      operationId: getCompanyUpdates_1
+      parameters:
+      - name: pbId
+        in: path
+        description: Limited Partner pbId. Required to specify time period using 'sinceDate' or 'trailingRange' parameter
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          59007-79:
+            summary: 59007-79
+            value: 59007-79
+          57384-64:
+            summary: 57384-64
+            value: 57384-64
+          156414-97:
+            summary: 156414-97
+            value: 156414-97
+          11594-89:
+            summary: 11594-89
+            value: 11594-89
+          51959-08:
+            summary: 51959-08
+            value: 51959-08
+      - name: sinceDate
+        in: query
+        description: 'Add this parameter to extract information about the entity updates after a certain date with the > operator, before a certain date with the < operator and between 2 dates with the ^ operator. Set this parameter in pair with pbId. Format: YYYY-MM-DD'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: <2026-09-16
+      - name: trailingRange
+        in: query
+        description: Add this parameter to extract information about the entity updates during last N days (up to 90). Set this parameter in pair with pbId
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+        example: '20'
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UpdateDto'
+      security:
+      - pbToken: []
+components:
+  schemas:
+    RequestItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+    LimitedPartnerGeneralServiceProvidersDto:
+      type: object
+      properties:
+        limitedPartnerId:
+          type: string
+          example: 11231-47
+        currentGeneralServices:
+          type: array
+          items:
+            $ref: '#/components/schemas/GeneralServiceProviderDto'
+        formerGeneralServices:
+          type: array
+          items:
+            $ref: '#/components/schemas/GeneralServiceProviderDto'
+    LimitedPartnerActualAllocationsDto:
+      type: object
+      properties:
+        limitedPartnerId:
+          type: string
+          example: 11231-47
+        limitedPartnerName:
+          type: string
+          example: Cooley
+        affiliatedFunds:
+          type: integer
+          format: int32
+          example: 10
+        affiliatedInvestors:
+          type: integer
+          format: int32
+          example: 15
+        allocations:
+          type: array
+          items:
+            $ref: '#/components/schemas/AllocationDto'
+    FailedItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 420962-68
+        reason:
+          type: string
+          example: 429 TOO_MANY_REQUESTS
+          enum:
+          - 400 BAD_REQUEST
+          - 401 UNAUTHORIZED
+          - 402 PAYMENT_REQUIRED
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 405 METHOD_NOT_ALLOWED
+          - 415 UNSUPPORTED_MEDIA_TYPE
+          - 429 TOO_MANY_REQUESTS
+          - 500 INTERNAL_SERVER_ERROR
+          - 503 SERVICE_UNAVAILABLE
+        message:
+          type: string
+          example: '{LIMIT_TYPE} rate limit exceeded. Please wait until rate limit period is renewed'
+    BulkStatsDto:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+        matched:
+          type: integer
+          format: int32
+        noData:
+          type: integer
+          format: int32
+        unmatched:
+          type: integer
+          format: int32
+        duplicates:
+          type: integer
+          format: int32
+    NoDataItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+    LimitedPartnerAdvancedSearchResultDto_SearchView:
+      type: object
+      properties:
+        limitedPartnerId:
+          type: string
+          example: 11079-46
+        limitedPartnerName:
+          type: string
+          example: California Public Employees
+        sandbox:
+          type: boolean
+          example: false
+        website:
+          type: string
+          example: www.calpers.ca.gov
+    BulkRequestDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RequestItemDto'
+    DuplicatedItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 420962-68
+        occurrence:
+          type: integer
+          format: int32
+          example: 1
+    BulkResultDtoLimitedPartnerDto:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/BulkStatsDto'
+        matched:
+          type: array
+          items:
+            $ref: '#/components/schemas/LimitedPartnerDto'
+        noData:
+          type: array
+          items:
+            $ref: '#/components/schemas/NoDataItemDto'
+        unmatched:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailedItemDto'
+        duplicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicatedItemDto'
+    GeneralServiceProviderDto:
+      type: object
+      properties:
+        serviceProviderId:
+          type: string
+          example: 11356-75
+        serviceProviderName:
+          type: string
+          example: Wilson Sonsini Goodrich & Rosati
+        serviceProviderTypes:
+          type: array
+          example:
+            type:
+              code: IB
+              description: Investment Bank
+            primary: true
+          items:
+            $ref: '#/components/schemas/EntityTypeDto'
+        serviceProvided:
+          $ref: '#/components/schemas/DictionaryDto'
+    EntityTypeDto:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/DictionaryDto'
+        primary:
+          type: boolean
+          example: false
+      example:
+        type:
+          code: IB
+          description: Investment Bank
+        primary: true
+    LimitedPartnerCommitmentAggregatesDto:
+      type: object
+      properties:
+        limitedPartnerId:
+          type: string
+          example: 11231-47
+        limitedPartnerName:
+          type: string
+          example: Washington State Investment Board
+        activeCommitmentsInDebtFunds:
+          type: integer
+          format: int32
+          example: 220
+        activeCommitmentsInPeFunds:
+          type: integer
+          format: int32
+          example: 190
+        activeCommitmentsInReFunds:
+          type: integer
+          format: int32
+          example: 80
+        activeCommitmentsInVcFunds:
+          type: integer
+          format: int32
+          example: 40
+        activeCommitmentsInFoFsAnd2nd:
+          type: integer
+          format: int32
+          example: 30
+        activeCommitmentsInInfrastructure:
+          type: integer
+          format: int32
+          example: 45
+        activeCommitmentsInEnergyFunds:
+          type: integer
+          format: int32
+          example: 50
+        activeCommitmentsInOtherFunds:
+          type: integer
+          format: int32
+          example: 60
+        totalActiveCommitments:
+          type: integer
+          format: int32
+          example: 454
+        totalCommitmentsInDebtFunds:
+          type: integer
+          format: int32
+          example: 220
+        totalCommitmentsInPeFunds:
+          type: integer
+          format: int32
+          example: 80
+        totalCommitmentsInReFunds:
+          type: integer
+          format: int32
+          example: 130
+        totalCommitmentsInVcFunds:
+          type: integer
+          format: int32
+          example: 83
+        totalCommitmentsInFoFsAnd2nd:
+          type: integer
+          format: int32
+          example: 90
+        totalCommitmentsInInfrastructure:
+          type: integer
+          format: int32
+          example: 12
+        totalCommitmentsInEnergyFunds:
+          type: integer
+          format: int32
+          example: 35
+        totalCommitmentsInOtherFunds:
+          type: integer
+          format: int32
+          example: 50
+        totalCommitments:
+          type: integer
+          format: int32
+          example: 60
+    LimitedPartnerDto:
+      type: object
+      properties:
+        limitedPartnerId:
+          type: string
+          example: 11231-47
+        limitedPartnerBio:
+          $ref: '#/components/schemas/LimitedPartnerBioDto'
+        limitedPartnerTargetAllocations:
+          $ref: '#/components/schemas/LimitedPartnerTargetAllocationsDto'
+        limitedPartnerCommitmentAggregates:
+          $ref: '#/components/schemas/LimitedPartnerCommitmentAggregatesDto'
+    MoneyDto:
+      type: object
+      properties:
+        amount:
+          type: number
+          example: 17039.27
+        currency:
+          type: string
+          example: USD
+        nativeAmount:
+          type: number
+          example: 15689
+        nativeCurrency:
+          type: string
+          example: EUR
+        estimated:
+          type: boolean
+          example: false
+    RangeDtoMoneyDto:
+      type: object
+      properties:
+        min:
+          $ref: '#/components/schemas/MoneyDto'
+        max:
+          $ref: '#/components/schemas/MoneyDto'
+    ErrorDto:
+      type: object
+      properties:
+        reason:
+          type: string
+          enum:
+          - 100 CONTINUE
+          - 101 SWITCHING_PROTOCOLS
+          - 102 PROCESSING
+          - 103 EARLY_HINTS
+          - 103 CHECKPOINT
+          - 200 OK
+          - 201 CREATED
+          - 202 ACCEPTED
+          - 203 NON_AUTHORITATIVE_INFORMATION
+          - 204 NO_CONTENT
+          - 205 RESET_CONTENT
+          - 206 PARTIAL_CONTENT
+          - 207 MULTI_STATUS
+          - 208 ALREADY_REPORTED
+          - 226 IM_USED
+          - 300 MULTIPLE_CHOICES
+          - 301 MOVED_PERMANENTLY
+          - 302 FOUND
+          - 302 MOVED_TEMPORARILY
+          - 303 SEE_OTHER
+          - 304 NOT_MODIFIED
+          - 305 USE_PROXY
+          - 307 TEMPORARY_REDIRECT
+          - 308 PERMANENT_REDIRECT
+          - 400 BAD_REQUEST
+          - 401 UNAUTHORIZED
+          - 402 PAYMENT_REQUIRED
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 405 METHOD_NOT_ALLOWED
+          - 406 NOT_ACCEPTABLE
+          - 407 PROXY_AUTHENTICATION_REQUIRED
+          - 408 REQUEST_TIMEOUT
+          - 409 CONFLICT
+          - 410 GONE
+          - 411 LENGTH_REQUIRED
+          - 412 PRECONDITION_FAILED
+          - 413 PAYLOAD_TOO_LARGE
+          - 413 REQUEST_ENTITY_TOO_LARGE
+          - 414 URI_TOO_LONG
+          - 414 REQUEST_URI_TOO_LONG
+          - 415 UNSUPPORTED_MEDIA_TYPE
+          - 416 REQUESTED_RANGE_NOT_SATISFIABLE
+          - 417 EXPECTATION_FAILED
+          - 418 I_AM_A_TEAPOT
+          - 419 INSUFFICIENT_SPACE_ON_RESOURCE
+          - 420 METHOD_FAILURE
+          - 421 DESTINATION_LOCKED
+          - 422 UNPROCESSABLE_ENTITY
+          - 423 LOCKED
+          - 424 FAILED_DEPENDENCY
+          - 425 TOO_EARLY
+          - 426 UPGRADE_REQUIRED
+          - 428 PRECONDITION_REQUIRED
+          - 429 TOO_MANY_REQUESTS
+          - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
+          - 451 UNAVAILABLE_FOR_LEGAL_REASONS
+          - 500 INTERNAL_SERVER_ERROR
+          - 501 NOT_IMPLEMENTED
+          - 502 BAD_GATEWAY
+          - 503 SERVICE_UNAVAILABLE
+          - 504 GATEWAY_TIMEOUT
+          - 505 HTTP_VERSION_NOT_SUPPORTED
+          - 506 VARIANT_ALSO_NEGOTIATES
+          - 507 INSUFFICIENT_STORAGE
+          - 508 LOOP_DETECTED
+          - 509 BANDWIDTH_LIMIT_EXCEEDED
+          - 510 NOT_EXTENDED
+          - 511 NETWORK_AUTHENTICATION_REQUIRED
+        message:
+          type: string
+    LimitedPartnerCommitmentDetailedDto:
+      type: object
+      properties:
+        limitedPartnerId:
+          type: string
+          example: 11231-47
+        committedFundId:
+          type: string
+          example: 59007-79F
+        committedFundName:
+          type: string
+          example: Pension Benefit Guaranty
+        committedInvestors:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommittedInvestorDto'
+        commitmentDate:
+          type: string
+          format: date
+          example: '2015-10-08'
+        commitmentSize:
+          $ref: '#/components/schemas/MoneyDto'
+        commitmentStatus:
+          $ref: '#/components/schemas/DictionaryDto'
+        commitmentType:
+          $ref: '#/components/schemas/DictionaryDto'
+    LimitedPartnerBioDto:
+      type: object
+      properties:
+        limitedPartnerId:
+          type: string
+          example: 11231-47
+        limitedPartnerName:
+          $ref: '#/components/schemas/EntityNameDto'
+        hqLocation:
+          $ref: '#/components/schemas/HqLocationDto'
+        description:
+          type: string
+          example: Landmark Partners is a private equity, real estate and infrastructure investment company specializing in secondary funds. The firm invests primarily as a fund of funds, purchasing interests in various investment funds, typically structured as limited partnerships. Landmark acquires limited partnership interests and direct investments in real asset, venture, mezzanine, and buyout assets. Founded in 1989, Landmark is headquartered in Simsbury, Connecticut, and has offices in Boston, Dallas, New York, and London.
+        limitedPartnerTypes:
+          type: array
+          example:
+            type:
+              code: F
+              description: Founded
+            primary: true
+          items:
+            $ref: '#/components/schemas/EntityTypeDto'
+        assetsUnderManagement:
+          $ref: '#/components/schemas/MoneyDto'
+        yearFounded:
+          type: integer
+          format: int32
+          example: 1989
+        website:
+          type: string
+          example: www.landmarkpartners.com
+        managementStaff:
+          type: integer
+          format: int32
+    LimitedPartnerCommitmentPreferencesDto:
+      type: object
+      properties:
+        limitedPartnerId:
+          type: string
+          example: 11596-33
+        limitedPartnerName:
+          type: string
+          example: Pennsylvania Public School Employees Retirement System
+        preferredCommitmentSize:
+          $ref: '#/components/schemas/RangeDtoMoneyDto'
+        preferredGeography:
+          type: array
+          items:
+            $ref: '#/components/schemas/DictionaryDto'
+        preferredFundTypes:
+          type: array
+          description: Deprecated. Always empty
+          deprecated: true
+          items:
+            $ref: '#/components/schemas/DictionaryDto'
+        fundStrategyPreferences:
+          type: array
+          items:
+            type: string
+        preferredDirectInvestmentSize:
+          $ref: '#/components/schemas/RangeDtoMoneyDto'
+        otherInvestmentPreferences:
+          type: array
+          items:
+            $ref: '#/components/schemas/DictionaryDto'
+    HqLocationDto:
+      type: object
+      properties:
+        city:
+          type: string
+          example: Chicago
+        stateProvince:
+          type: string
+          example: IL
+        postCode:
+          type: string
+          example: '60661'
+        country:
+          type: string
+          example: United States
+    BulkResultDtoLimitedPartnerTargetAllocationsDto:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/BulkStatsDto'
+        matched:
+          type: array
+          items:
+            $ref: '#/components/schemas/LimitedPartnerTargetAllocationsDto'
+        noData:
+          type: array
+          items:
+            $ref: '#/components/schemas/NoDataItemDto'
+        unmatched:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailedItemDto'
+        duplicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicatedItemDto'
+    BulkResultDtoLimitedPartnerCommitmentAggregatesDto:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/BulkStatsDto'
+        matched:
+          type: array
+          items:
+            $ref: '#/components/schemas/LimitedPartnerCommitmentAggregatesDto'
+        noData:
+          type: array
+          items:
+            $ref: '#/components/schemas/NoDataItemDto'
+        unmatched:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailedItemDto'
+        duplicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicatedItemDto'
+    AdvancedSearchPageDtoLimitedPartnerAdvancedSearchResultDto_SearchView:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/SearchPageStatsDto_SearchView'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/LimitedPartnerAdvancedSearchResultDto_SearchView'
+    EntityNameDto:
+      type: object
+      properties:
+        formalName:
+          type: string
+        alsoKnownAs:
+          type: string
+        legalName:
+          type: string
+        formerlyKnownAs:
+          type: string
+    AllocationDto:
+      type: object
+      properties:
+        alternativeInvestments:
+          $ref: '#/components/schemas/MoneyDto'
+        alternativeInvestmentsPercent:
+          type: number
+          format: double
+          example: 90.5
+        privateEquity:
+          $ref: '#/components/schemas/MoneyDto'
+        privateEquityPercent:
+          type: number
+          format: double
+          example: 7.5
+        realEstate:
+          $ref: '#/components/schemas/MoneyDto'
+        realEstatePercent:
+          type: number
+          format: double
+          example: 81.5
+        specialOpportunities:
+          $ref: '#/components/schemas/MoneyDto'
+        specialOpportunitiePercent:
+          type: number
+          format: double
+          example: 96.9
+        hedgeFunds:
+          $ref: '#/components/schemas/MoneyDto'
+        hedgeFundsPercent:
+          type: number
+          format: double
+          example: 10.3
+        equities:
+          $ref: '#/components/schemas/MoneyDto'
+        equitiesPercent:
+          type: number
+          format: double
+          example: 45.6
+        fixedIncome:
+          $ref: '#/components/schemas/MoneyDto'
+        fixedIncomePercent:
+          type: number
+          format: double
+          example: 5.4
+        cash:
+          $ref: '#/components/schemas/MoneyDto'
+        cashPercent:
+          type: number
+          format: double
+          example: 21.1
+    SearchPageStatsDto_SearchView:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+          example: 1
+        perPage:
+          type: integer
+          format: int32
+          example: 25
+        page:
+          type: integer
+          format: int32
+          example: 1
+        lastPage:
+          type: integer
+          format: int32
+          example: 1
+    UpdateDto:
+      type: object
+      properties:
+        updates:
+          type: object
+          additionalProperties:
+            type: string
+            example: '{"Endpoint name":"Update Status (true/false)"}'
+          example:
+            Endpoint name: Update Status (true/false)
+    TargetAllocationDto:
+      type: object
+      properties:
+        policyDescription:
+          type: string
+        alternativesMin:
+          $ref: '#/components/schemas/MoneyDto'
+        alternativesPercentMin:
+          type: number
+          format: double
+          example: 10.5
+        alternativesMax:
+          $ref: '#/components/schemas/MoneyDto'
+        alternativesPercentMax:
+          type: number
+          format: double
+          example: 20.3
+        privateEquityMin:
+          $ref: '#/components/schemas/MoneyDto'
+        privateEquityPercentMin:
+          type: number
+          format: double
+          example: 34.6
+        privateEquityMax:
+          $ref: '#/components/schemas/MoneyDto'
+        privateEquityPercentMax:
+          type: number
+          format: double
+          example: 50.6
+        realEstateMin:
+          $ref: '#/components/schemas/MoneyDto'
+        realEstatePercentMin:
+          type: number
+          format: double
+          example: 5.2
+        realEstateMax:
+          $ref: '#/components/schemas/MoneyDto'
+        realEstatePercentMax:
+          type: number
+          format: double
+          example: 10.6
+        specialOpportunitiesMin:
+          $ref: '#/components/schemas/MoneyDto'
+        specialOpportunitiesPercentMin:
+          type: number
+          format: double
+          example: 9.6
+        specialOpportunitiesMax:
+          $ref: '#/components/schemas/MoneyDto'
+        specialOpportunitiesPercentMax:
+          type: number
+          format: double
+          example: 20.2
+        hedgeFundsMin:
+          $ref: '#/components/schemas/MoneyDto'
+        hedgeFundsPercentMin:
+          type: number
+          format: double
+          example: 2.5
+        hedgeFundsMax:
+          $ref: '#/components/schemas/MoneyDto'
+        hedgeFundsPercentMax:
+          type: number
+          format: double
+          example: 10.8
+        equitiesMin:
+          $ref: '#/components/schemas/MoneyDto'
+        equitiesPercentMin:
+          type: number
+          format: double
+          example: 3.5
+        equitiesMax:
+          $ref: '#/components/schemas/MoneyDto'
+        equitiesPercentMax:
+          type: number
+          format: double
+          example: 12.6
+        fixedIncomeMin:
+          $ref: '#/components/schemas/MoneyDto'
+        fixedIncomePercentMin:
+          type: number
+          format: double
+          example: 1.2
+        fixedIncomeMax:
+          $ref: '#/components/schemas/MoneyDto'
+        fixedIncomePercentMax:
+          type: number
+          format: double
+          example: 9.1
+        cashMin:
+          $ref: '#/components/schemas/MoneyDto'
+        cashPercentMin:
+          type: number
+          format: double
+          example: 6.7
+        cashMax:
+          $ref: '#/components/schemas/MoneyDto'
+        cashPercentMax:
+          type: number
+          format: double
+          example: 15.8
+    DictionaryDto:
+      type: object
+      properties:
+        code:
+          type: string
+          example: Dictionary code
+        description:
+          type: string
+          example: Dictionary Code Description
+    LimitedPartnerTargetAllocationsDto:
+      type: object
+      properties:
+        limitedPartnerId:
+          type: string
+          example: 11231-47
+        limitedPartnerName:
+          type: string
+          example: Cooley
+        targetAllocations:
+          type: array
+          items:
+            $ref: '#/components/schemas/TargetAllocationDto'
+    CommittedInvestorDto:
+      type: object
+      properties:
+        committedInvestorId:
+          type: string
+        committedInvestorName:
+          type: string
+    BulkResultDtoLimitedPartnerBioDto:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/BulkStatsDto'
+        matched:
+          type: array
+          items:
+            $ref: '#/components/schemas/LimitedPartnerBioDto'
+        noData:
+          type: array
+          items:
+            $ref: '#/components/schemas/NoDataItemDto'
+        unmatched:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailedItemDto'
+        duplicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicatedItemDto'
+  securitySchemes:
+    pbToken:
+      type: apiKey
+      name: Authorization
+      in: header
+      scheme: bearer
+      bearerFormat: JWT

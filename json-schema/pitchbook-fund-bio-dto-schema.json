@@ -1,0 +1,244 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/pitchbook/main/json-schema/pitchbook-fund-bio-dto-schema.json",
+  "title": "FundBioDto",
+  "x-generated": "2026-09-21",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/pitchbook-openapi.json#/components/schemas/FundBioDto",
+  "type": "object",
+  "properties": {
+    "fundId": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "fundInvestors": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/FundManagerInfoDto"
+      }
+    },
+    "vintage": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "fundStatus": {
+      "type": "string"
+    },
+    "fundType": {
+      "type": "string",
+      "description": "Deprecated. Always empty",
+      "deprecated": true
+    },
+    "fundStrategy": {
+      "type": "string"
+    },
+    "additionalFundStrategy": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "fundStructure": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "fundLifespan": {
+      "type": "string"
+    },
+    "exchangeStatus": {
+      "type": "string"
+    },
+    "targetsPrivateWealthInvestors": {
+      "type": "boolean"
+    },
+    "sustainableFinanceDisclosureRegulation": {
+      "type": "string"
+    },
+    "accessPoint": {
+      "type": "string"
+    },
+    "additionalAccessPoint": {
+      "type": "string"
+    },
+    "fundSize": {
+      "$ref": "#/$defs/MoneyDto"
+    },
+    "fundTerms": {
+      "$ref": "#/$defs/FundTermsDto"
+    },
+    "location": {
+      "$ref": "#/$defs/EntityOfficeDto"
+    },
+    "fundTeam": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/FundTeamDto"
+      }
+    },
+    "openDate": {
+      "type": "string",
+      "format": "date"
+    },
+    "closeDate": {
+      "type": "string",
+      "format": "date"
+    },
+    "fundTargetSize": {
+      "$ref": "#/$defs/RangeDtoMoneyDto"
+    },
+    "sbic": {
+      "type": "boolean"
+    },
+    "returnsInfoAvailable": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/FundReturnsAvailabilityDto"
+      }
+    }
+  },
+  "$defs": {
+    "DictionaryDto": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "EntityOfficeDto": {
+      "type": "object",
+      "properties": {
+        "location": {
+          "type": "string"
+        },
+        "addressLine1": {
+          "type": "string"
+        },
+        "addressLine2": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "stateProvince": {
+          "type": "string"
+        },
+        "postCode": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "fax": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "globalRegion": {
+          "type": "string"
+        },
+        "globalSubRegion": {
+          "type": "string"
+        }
+      }
+    },
+    "FundManagerInfoDto": {
+      "type": "object",
+      "properties": {
+        "investorId": {
+          "type": "string"
+        },
+        "investorName": {
+          "type": "string"
+        },
+        "fundNo": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "firstFund": {
+          "type": "boolean"
+        }
+      }
+    },
+    "FundReturnsAvailabilityDto": {
+      "type": "object",
+      "properties": {
+        "periodEnding": {
+          "type": "string"
+        },
+        "irr": {
+          "type": "boolean"
+        },
+        "cashFlowsAndMultiples": {
+          "type": "boolean"
+        }
+      }
+    },
+    "FundTeamDto": {
+      "type": "object",
+      "properties": {
+        "personId": {
+          "type": "string"
+        },
+        "personFullName": {
+          "type": "string"
+        }
+      }
+    },
+    "FundTermsDto": {
+      "type": "object",
+      "properties": {
+        "subscriptionFrequency": {
+          "$ref": "#/$defs/DictionaryDto"
+        },
+        "redemptionFrequency": {
+          "$ref": "#/$defs/DictionaryDto"
+        }
+      },
+      "description": "Fund terms including subscription and redemption frequency for Interval Funds and Tender Offer funds; null if not applicable"
+    },
+    "MoneyDto": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "number"
+        },
+        "currency": {
+          "type": "string"
+        },
+        "nativeAmount": {
+          "type": "number"
+        },
+        "nativeCurrency": {
+          "type": "string"
+        },
+        "estimated": {
+          "type": "boolean"
+        }
+      }
+    },
+    "RangeDtoMoneyDto": {
+      "type": "object",
+      "properties": {
+        "min": {
+          "$ref": "#/$defs/MoneyDto"
+        },
+        "max": {
+          "$ref": "#/$defs/MoneyDto"
+        }
+      }
+    }
+  }
+}

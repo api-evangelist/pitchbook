@@ -1,0 +1,1213 @@
+openapi: 3.2.0
+info:
+  title: OpenAPI definition Credit Analysis API
+  version: v0
+  description: Credit Analysis
+servers:
+- url: https://api.pitchbook.com
+tags:
+- name: Credit Analysis
+  description: Credit Analysis
+paths:
+  /credit-analysis/credit-news/search:
+    get:
+      tags:
+      - Credit Analysis
+      summary: Credit News Search
+      description: Retrieves main info about the Credit news articles matching the specified criteria
+      operationId: creditNewsSearch
+      parameters:
+      - name: authors
+        in: query
+        description: Articles can be found by their authors. Use a comma to separate multiple values.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: John Atkins, Glen Fest
+      - name: regions
+        in: query
+        description: Search for articles by the <a href="https://my.pitchbook.com/api/lookup-tables/Credit News#CREDIT_NEWS_REGION" target="_blank">regions</a> covered in them. Use a comma to separate multiple values.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: Europe, United States
+      - name: assetClasses
+        in: query
+        description: Search for articles by the <a href="https://my.pitchbook.com/api/lookup-tables/Credit News#CREDIT_NEWS_ASSET_CLASS" target="_blank">asset classes</a> covered in them. Use a comma to separate multiple values
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: CLO, Bonds
+      - name: topics
+        in: query
+        description: Articles can be found by their <a href="https://my.pitchbook.com/api/lookup-tables/Credit News#CREDIT_NEWS_TOPIC" target="_blank">topics</a>. Use a comma to separate multiple values
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: ' People, Trends'
+      - name: issuer
+        in: query
+        description: Accepts issuer names, pbIds, websites, and tickers. Returns a list of entities that are an exact match. Use a comma to separate multiple values
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 11111-11, Tesla
+      - name: lender
+        in: query
+        description: Accepts lender names, pbIds, websites, and tickers. Returns a list of entities that are an exact match. Use a comma to separate multiple values
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 11111-11, Tesla
+      - name: sponsor
+        in: query
+        description: Accepts sponsor names, pbIds, websites, and tickers. Returns a list of entities that are an exact match. Use a comma to separate multiple values.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 11111-11, Tesla
+      - name: sinceDate
+        in: query
+        description: Add this parameter to extract news articles published after a certain date with the > operator, before a certain date with the < operator and between two dates with the ^ operator
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: <2023-07-20
+      - name: page
+        in: query
+        description: Results are returned so that they can be paged through. Set this parameter to increment the page. If nothing is specified, default value is 1.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '1'
+      - name: perPage
+        in: query
+        description: Set how many returned results will be shown on the page (between 1 and 250). If nothing is specified, default value is 25.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '25'
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CreditNewsSearchPageDto'
+      security:
+      - pbToken: []
+  /credit-analysis/credit-news/most-recent:
+    get:
+      tags:
+      - Credit Analysis
+      summary: Most Recent Credit News
+      description: Retrieves up to 250 of the most recently published articles and their associated descriptions (excluding article content). Users can specify page number parameter to retrieve older articles.
+      operationId: getMostRecentCreditNews
+      parameters:
+      - name: page
+        in: query
+        description: Results are returned so that they can be paged through. Set this parameter to increment the page
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+        example: 1
+      - name: perPage
+        in: query
+        description: How many returned results show on the page
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+        example: 25
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/MostRecentCreditNewsDto'
+      security:
+      - pbToken: []
+  /credit-analysis/credit-news/{articleId}:
+    get:
+      tags:
+      - Credit Analysis
+      summary: Credit News
+      description: Retrieves full article content for specific article IDs
+      operationId: getCreditNewsById
+      parameters:
+      - name: articleId
+        in: path
+        description: News articleId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+        examples:
+          '2142401':
+            summary: '2142401'
+            value: 2142401
+          '5312405':
+            summary: '5312405'
+            value: 5312405
+          '1312103':
+            summary: '1312103'
+            value: 1312103
+          '6052303':
+            summary: '6052303'
+            value: 6052303
+          '11041384':
+            summary: '11041384'
+            value: 11041384
+          '6052302':
+            summary: '6052302'
+            value: 6052302
+          '2242405':
+            summary: '2242405'
+            value: 2242405
+          '6062401':
+            summary: '6062401'
+            value: 6062401
+          '5302402':
+            summary: '5302402'
+            value: 5302402
+          '5312104':
+            summary: '5312104'
+            value: 5312104
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CreditNewsDto'
+      security:
+      - pbToken: []
+  /credit-analysis/credit-news:
+    post:
+      tags:
+      - Credit Analysis
+      summary: '[Bulk] Credit News'
+      description: Returns whole information about the specified Credit News articles. This bulk call allows you to send multiple articleIds within a single API call
+      operationId: getBatchCreditNews
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreditNewsBulkRequestDto'
+            example:
+              items:
+              - articleId: 11041384
+              - articleId: 2142401
+              - articleId: 5302402
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CreditNewsBulkResponseDto'
+      security:
+      - pbToken: []
+  /credit-analysis/credit-news/{articleId}/attachment:
+    get:
+      tags:
+      - Credit Analysis
+      summary: Credit News Attachment
+      description: Retrieves an exact attachment file for a specific article.
+      operationId: downloadAttachment
+      parameters:
+      - name: articleId
+        in: path
+        description: News articleId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+        examples:
+          '2142401':
+            summary: '2142401'
+            value: 2142401
+          '5312405':
+            summary: '5312405'
+            value: 5312405
+          '1312103':
+            summary: '1312103'
+            value: 1312103
+          '6052303':
+            summary: '6052303'
+            value: 6052303
+          '11041384':
+            summary: '11041384'
+            value: 11041384
+          '6052302':
+            summary: '6052302'
+            value: 6052302
+          '2242405':
+            summary: '2242405'
+            value: 2242405
+          '6062401':
+            summary: '6062401'
+            value: 6062401
+          '5302402':
+            summary: '5302402'
+            value: 5302402
+          '5312104':
+            summary: '5312104'
+            value: 5312104
+      - name: name
+        in: query
+        description: Attachment Name
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        default:
+          description: default response
+          content:
+            '*/*':
+              schema:
+                type: string
+                example: Binary file content
+      security:
+      - pbToken: []
+  /credit-analysis/credit-research/search:
+    get:
+      tags:
+      - Credit Analysis
+      summary: Credit Research Search
+      description: Retrieves main info about the Credit Research reports matching the specified criteria
+      operationId: creditResearchSearch
+      parameters:
+      - name: authors
+        in: query
+        description: Reports can be found by their authors. Use a comma to separate multiple values.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: Jack Jonson
+      - name: regions
+        in: query
+        description: Search for reports by the <a href="https://my.pitchbook.com/api/lookup-tables/Credit Research#CREDIT_RESEARCH_REGION" target="_blank">regions</a> covered in them. Use a comma to separate multiple values.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: United States
+      - name: assetClasses
+        in: query
+        description: Search for reports by the <a href="https://my.pitchbook.com/api/lookup-tables/Credit Research#CREDIT_RESEARCH_ASSET_CLASS" target="_blank">asset classes</a> covered in them. Use a comma to separate multiple values.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: Bonds
+      - name: reportTypes
+        in: query
+        description: Reports can be found by their <a href="https://my.pitchbook.com/api/lookup-tables/Credit Research#CREDIT_RESEARCH_REPORT_TYPE" target="_blank">report types</a>. Use a comma to separate multiple values.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: Snapshot
+      - name: marketTypes
+        in: query
+        description: Search for reports by the <a href="https://my.pitchbook.com/api/lookup-tables/Credit Research#CREDIT_RESEARCH_MARKET_TYPE" target="_blank">market types</a> covered in them. Use a comma to separate multiple values.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: Primary Market
+      - name: companyNames
+        in: query
+        description: Accepts company names, pbIds, websites, and tickers. Returns a list of companies that are an exact match. Use a comma to separate multiple values.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: Aris Mining, 432919-99
+      - name: purposes
+        in: query
+        description: Search for reports by the <a href="https://my.pitchbook.com/api/lookup-tables/Credit Research#CREDIT_RESEARCH_PURPOSE" target="_blank">purposes</a> covered in them. Use a comma to separate multiple values.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: M&A
+      - name: fileTypes
+        in: query
+        description: Reports can be found by their <a href="https://my.pitchbook.com/api/lookup-tables/Credit Research#CREDIT_RESEARCH_FILE_TYPE" target="_blank">file types</a>. Use a comma to separate multiple values.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: PDF
+      - name: sinceDate
+        in: query
+        description: Add this parameter to extract reports published after a certain date with the > operator, before a certain date with the < operator and between two dates with the ^ operator.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '>2024-04-26'
+      - name: page
+        in: query
+        description: Results are returned so that they can be paged through. Set this parameter to increment the page. If nothing is specified, default value is 1.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '1'
+      - name: perPage
+        in: query
+        description: Set how many returned results will be shown on the page (between 1 and 250). If nothing is specified, default value is 25.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '50'
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CreditResearchPageDto'
+      security:
+      - pbToken: []
+  /credit-analysis/credit-research/{reportId}/download:
+    get:
+      tags:
+      - Credit Analysis
+      summary: Credit Research Download
+      description: Retrieves an exact file of a specific report.
+      operationId: creditResearchDownload
+      parameters:
+      - name: reportId
+        in: path
+        description: Report ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+      - name: fileName
+        in: query
+        description: Report filename
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: fileType
+        in: query
+        description: Report filetype
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        default:
+          description: default response
+          content:
+            '*/*':
+              schema:
+                type: string
+                example: Binary file content
+      security:
+      - pbToken: []
+components:
+  schemas:
+    CreditNewsStatsDto:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+          example: 226326
+        perPage:
+          type: integer
+          format: int32
+          example: 25
+        page:
+          type: integer
+          format: int32
+          example: 1
+        lastPage:
+          type: integer
+          format: int32
+          example: 75442
+    CreditResearchPageDto:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/CreditResearchStatsDto'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResearchReportDto'
+    CreditNewsSearchPageDto:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/CreditNewsStatsDto'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreditNewsItemDto'
+    CreditNewsBulkRequestDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreditNewsBulkItemDto'
+    CreditNewsBulkStatsDto:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+          example: 1
+        found:
+          type: integer
+          format: int32
+          example: 1
+        notFound:
+          type: integer
+          format: int32
+          example: 0
+        duplicates:
+          type: integer
+          format: int32
+          example: 0
+    ErrorDto:
+      type: object
+      properties:
+        reason:
+          type: string
+          enum:
+          - 100 CONTINUE
+          - 101 SWITCHING_PROTOCOLS
+          - 102 PROCESSING
+          - 103 EARLY_HINTS
+          - 103 CHECKPOINT
+          - 200 OK
+          - 201 CREATED
+          - 202 ACCEPTED
+          - 203 NON_AUTHORITATIVE_INFORMATION
+          - 204 NO_CONTENT
+          - 205 RESET_CONTENT
+          - 206 PARTIAL_CONTENT
+          - 207 MULTI_STATUS
+          - 208 ALREADY_REPORTED
+          - 226 IM_USED
+          - 300 MULTIPLE_CHOICES
+          - 301 MOVED_PERMANENTLY
+          - 302 FOUND
+          - 302 MOVED_TEMPORARILY
+          - 303 SEE_OTHER
+          - 304 NOT_MODIFIED
+          - 305 USE_PROXY
+          - 307 TEMPORARY_REDIRECT
+          - 308 PERMANENT_REDIRECT
+          - 400 BAD_REQUEST
+          - 401 UNAUTHORIZED
+          - 402 PAYMENT_REQUIRED
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 405 METHOD_NOT_ALLOWED
+          - 406 NOT_ACCEPTABLE
+          - 407 PROXY_AUTHENTICATION_REQUIRED
+          - 408 REQUEST_TIMEOUT
+          - 409 CONFLICT
+          - 410 GONE
+          - 411 LENGTH_REQUIRED
+          - 412 PRECONDITION_FAILED
+          - 413 PAYLOAD_TOO_LARGE
+          - 413 REQUEST_ENTITY_TOO_LARGE
+          - 414 URI_TOO_LONG
+          - 414 REQUEST_URI_TOO_LONG
+          - 415 UNSUPPORTED_MEDIA_TYPE
+          - 416 REQUESTED_RANGE_NOT_SATISFIABLE
+          - 417 EXPECTATION_FAILED
+          - 418 I_AM_A_TEAPOT
+          - 419 INSUFFICIENT_SPACE_ON_RESOURCE
+          - 420 METHOD_FAILURE
+          - 421 DESTINATION_LOCKED
+          - 422 UNPROCESSABLE_ENTITY
+          - 423 LOCKED
+          - 424 FAILED_DEPENDENCY
+          - 425 TOO_EARLY
+          - 426 UPGRADE_REQUIRED
+          - 428 PRECONDITION_REQUIRED
+          - 429 TOO_MANY_REQUESTS
+          - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
+          - 451 UNAVAILABLE_FOR_LEGAL_REASONS
+          - 500 INTERNAL_SERVER_ERROR
+          - 501 NOT_IMPLEMENTED
+          - 502 BAD_GATEWAY
+          - 503 SERVICE_UNAVAILABLE
+          - 504 GATEWAY_TIMEOUT
+          - 505 HTTP_VERSION_NOT_SUPPORTED
+          - 506 VARIANT_ALSO_NEGOTIATES
+          - 507 INSUFFICIENT_STORAGE
+          - 508 LOOP_DETECTED
+          - 509 BANDWIDTH_LIMIT_EXCEEDED
+          - 510 NOT_EXTENDED
+          - 511 NETWORK_AUTHENTICATION_REQUIRED
+        message:
+          type: string
+    CreditNewsBulkResponseDto:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/CreditNewsBulkStatsDto'
+        found:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreditNewsDto'
+        notFound:
+          type: array
+          items:
+            type: integer
+            format: int32
+        duplicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicatedCreditNewsItemDto'
+    MostRecentCreditNewsDto:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/CreditNewsStatsDto'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreditNewsItemDto'
+    CreditNewsDto:
+      type: object
+      properties:
+        articleId:
+          type: integer
+          format: int32
+          example: 5598589
+        title:
+          type: string
+          example: Angel Investor
+        authors:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthorDto'
+        regions:
+          type: array
+          example:
+          - Europe
+          items:
+            type: string
+            example: '["Europe"]'
+        publishDate:
+          type: string
+          format: date-time
+        assetClasses:
+          type: array
+          example:
+          - Leveraged Loans
+          items:
+            type: string
+            example: '["Leveraged Loans"]'
+        topics:
+          type: array
+          example:
+          - Break
+          items:
+            type: string
+            example: '["Break"]'
+        issuer:
+          $ref: '#/components/schemas/NewsBusinessEntityDto'
+        lender:
+          $ref: '#/components/schemas/NewsBusinessEntityDto'
+        sponsor:
+          $ref: '#/components/schemas/NewsBusinessEntityDto'
+        articleBody:
+          type: string
+          example: Inmar has completed its $950 million term loan B due May 2026 wide of talk at pricing of Sofr+550, with a 0.5% floor and an OID of 96.5 through a Jefferies-led arranger group, according to sources.
+        attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttachmentDto'
+        deal:
+          $ref: '#/components/schemas/DealDto'
+    AttachmentDto:
+      type: object
+      properties:
+        name:
+          type: string
+          example: LCD Research HY Monthly May.pdf
+        url:
+          type: string
+          example: https://api.pitchbook.com/credit-analysis/credit-news/12503248/attachment?name=LCD%20Research%20HY%20Monthly%20May.pdf
+    AuthorDto:
+      type: object
+      properties:
+        authorName:
+          type: string
+          example: Jack Jonson
+    DealDto:
+      type: object
+      properties:
+        dealId:
+          type: string
+          example: 108911-98T
+    CreditResearchCompanyDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+          example: 432919-99
+        companyName:
+          type: string
+          example: Aris Mining
+    CreditNewsItemDto:
+      type: object
+      properties:
+        articleId:
+          type: integer
+          format: int32
+          example: 5598589
+        title:
+          type: string
+          example: Angel Investor
+        authors:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthorDto'
+        regions:
+          type: array
+          example:
+          - Europe
+          items:
+            type: string
+            example: '["Europe"]'
+        publishDate:
+          type: string
+          format: date-time
+        assetClasses:
+          type: array
+          example:
+          - Leveraged Loans
+          items:
+            type: string
+            example: '["Leveraged Loans"]'
+        topics:
+          type: array
+          example:
+          - Break
+          items:
+            type: string
+            example: '["Break"]'
+        issuer:
+          $ref: '#/components/schemas/NewsBusinessEntityDto'
+        lender:
+          $ref: '#/components/schemas/NewsBusinessEntityDto'
+        sponsor:
+          $ref: '#/components/schemas/NewsBusinessEntityDto'
+        deal:
+          $ref: '#/components/schemas/DealDto'
+    DuplicatedCreditNewsItemDto:
+      type: object
+      properties:
+        articleId:
+          type: integer
+          format: int32
+          example: 42096268
+        occurrence:
+          type: integer
+          format: int32
+          example: 1
+    CreditNewsBulkItemDto:
+      type: object
+      properties:
+        articleId:
+          type: integer
+          format: int32
+    ResearchReportDto:
+      type: object
+      properties:
+        reportId:
+          type: integer
+          format: int32
+          example: 324
+        title:
+          type: string
+          example: US High-Yield Bond Daily PlayBook
+        description:
+          type: string
+          example: US High-Yield Bond Daily PlayBook is a daily report that provides a comprehensive overview of the US high-yield bond market.
+        authors:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthorDto'
+        regions:
+          type: array
+          example:
+          - United States
+          items:
+            type: string
+            example: '["United States"]'
+        assetClasses:
+          type: array
+          example:
+          - Bonds
+          items:
+            type: string
+            example: '["Bonds"]'
+        publishDate:
+          type: string
+          format: date
+          example: '2024-01-01'
+        reportType:
+          type: string
+          example: Snapshot
+        companies:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreditResearchCompanyDto'
+        purposes:
+          type: array
+          example:
+          - M&A
+          items:
+            type: string
+            example: '["M&A"]'
+        attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReportFileDto'
+    ReportFileDto:
+      type: object
+      properties:
+        name:
+          type: string
+          example: September_2023_Global_Loan_Statistics_Report.pdf
+        type:
+          type: string
+          example: PDF
+        url:
+          type: string
+          example: https://api.pitchbook.com/credit-analysis/credit-research/246/download?fileName=September_2023_Global_Loan_Statistics_Report.pdf&fileType=PDF
+    CreditResearchStatsDto:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+          example: 226326
+        perPage:
+          type: integer
+          format: int32
+          example: 25
+        page:
+          type: integer
+          format: int32
+          example: 1
+        lastPage:
+          type: integer
+          format: int32
+          example: 75442
+    NewsBusinessEntityDto:
+      type: object
+      properties:
+        pbId:
+          type: string
+          example: 10089-64
+        name:
+          type: string
+          example: Wafra Partners
+  securitySchemes:
+    pbToken:
+      type: apiKey
+      name: Authorization
+      in: header
+      scheme: bearer
+      bearerFormat: JWT

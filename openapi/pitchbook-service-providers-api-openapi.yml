@@ -1,0 +1,1458 @@
+openapi: 3.2.0
+info:
+  title: OpenAPI definition Service Providers API
+  version: v0
+  description: Service Providers
+servers:
+- url: https://api.pitchbook.com
+tags:
+- name: Service Providers
+  description: Service Providers
+paths:
+  /service-providers/search:
+    get:
+      tags:
+      - Service Providers
+      summary: Service Provider Search
+      description: Retrieves service providers matching the specified criteria
+      operationId: serviceProviderSearch
+      parameters:
+      - name: serviceProviderNames
+        in: query
+        description: Accepts service provider names, pbIds, websites, and tickers. Returns a list of service providers that are an exact match. Use a comma to separate multiple values
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 11111-11, Name
+      - name: serviceProviderType
+        in: query
+        description: Service providers can be found by their service <a href="https://my.pitchbook.com/api/lookup-tables/Service Providers#SP_TYPE_TREE" target="_blank">service provider type code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: AC
+      - name: city
+        in: query
+        description: Search for service providers by their city location
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: Seattle
+      - name: stateProvince
+        in: query
+        description: Search for service providers by their <a href="https://my.pitchbook.com/api/lookup-tables/Location#US_STATE_TREE" target="_blank">state code</a> or <a href="https://my.pitchbook.com/api/lookup-tables/Location#CANADIAN_PROVINCE_TREE" target="_blank">province code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: AL
+      - name: country
+        in: query
+        description: Search for service providers by their <a href="https://my.pitchbook.com/api/lookup-tables/Location#COUNTRY_TREE" target="_blank">country code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: ABW
+      - name: postCode
+        in: query
+        description: Search for service providers by their postcode, included to support searching for both US postal code and foreign
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '98765'
+      - name: locationType
+        in: query
+        description: Search for service providers by additional parameter specifying HQ Only (HQ_ONLY), Non-HQ Only (NON_HQ_ONLY) or any office location (ANY) values. Set this parameter in pair with city, stateProvince, country, postCode options
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: ANY
+      - name: hiredForGeneralServices
+        in: query
+        description: Find service providers hired for general services to other entities. Set this parameter as True
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 'TRUE'
+      - name: hiredForFundraising
+        in: query
+        description: Find service providers hired for services on a fund to other entities. Set this parameter as True
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 'TRUE'
+      - name: hiredForDealWork
+        in: query
+        description: Find service providers hired for services on a deal to other entities. Set this parameter as True
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 'TRUE'
+      - name: numberOfDeals
+        in: query
+        description: Search for service providers by the serviced deals. Find service providers with a deals count greater than a value using the > operator, service providers with a deals count smaller than a value using the < operator and service providers with a deals count between values using the ^ operator
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 10^15
+      - name: dealDate
+        in: query
+        description: 'Find service providers who have been hired for a deal within a certain time frame. Search for service providers hired for a deal after a certain date using the > operator, service providers hired for a deal before a certain date using the < operator and service providers hired for a deal between 2 dates using the ^ operator. Format: YYYY-MM-DD'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: <2026-09-16
+      - name: dealSize
+        in: query
+        description: Find service providers who have been hired for deals of a certain size. Search for service providers hired for deals larger than an amount using the > operator, service providers hired for deals smaller than a certain amount using the < operator and service providers hired for deals in a range using the ^ operator. Amounts in millions
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 10^15
+      - name: includeDealsWithoutDealSize
+        in: query
+        description: Include service providers on deals without a known deal size. Set this parameter as True only when Deal Size parameter is applied. False by default
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 'TRUE'
+      - name: excludeDealsWithoutDealSize
+        in: query
+        description: Exclude service providers on deals without a known deal size. Set this parameter as True only when Deal Size parameter is not applied. False by default
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 'TRUE'
+      - name: dealType
+        in: query
+        description: Find service providers by the types of deals they have been hired for. Pass a <a href="https://my.pitchbook.com/api/lookup-tables/Deals#DEAL_TYPE_TREE" target="_blank">deal type code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: SeedA
+      - name: serviceTypesOnDeal
+        in: query
+        description: Find service providers by the service types within the deals they have been hired for. Pass a <a href="https://my.pitchbook.com/api/lookup-tables/Service Providers#SERVICE_TYPE_SELL_SIDE_TREE" target="_blank">service type on deal code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: ACON
+      - name: companyStateProvince
+        in: query
+        description: Search for service providers hired for services to companies by their <a href="https://my.pitchbook.com/api/lookup-tables/Location#US_STATE_TREE" target="_blank">state code</a> or <a href="https://my.pitchbook.com/api/lookup-tables/Location#CANADIAN_PROVINCE_TREE" target="_blank">province code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: AL
+      - name: companyCountry
+        in: query
+        description: Search for service providers hired for services to companies by their <a href="https://my.pitchbook.com/api/lookup-tables/Location#COUNTRY_TREE" target="_blank">country code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: ABW
+      - name: companyLocationType
+        in: query
+        description: Search for service providers hired for services to companies by additional parameter specifying HQ Only (HQ_ONLY), Non-HQ Only (NON_HQ_ONLY) or any office location (ANY) values. Set this parameter in pair with companyStateProvince, companyCountry
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: ANY
+      - name: companyUniverse
+        in: query
+        description: Search for service providers hired for services to companies by their <a href="https://my.pitchbook.com/api/lookup-tables/Companies#UNIVERSE_TREE" target="_blank">universe code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: DEBTU
+      - name: companyKeywords
+        in: query
+        description: Search for service providers hired for services to companies by their keywords
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: IT
+      - name: companyIndustry
+        in: query
+        description: Search for service providers hired for services to companies by their industries via <a href="https://my.pitchbook.com/api/lookup-tables/Industries, Verticals & Emerging Spaces#INDUSTRY_TREE" target="_blank">industry code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '10'
+      - name: companyVerticals
+        in: query
+        description: Search for service providers hired for services to companies by their verticals via <a href="https://my.pitchbook.com/api/lookup-tables/Industries, Verticals & Emerging Spaces#VERTICAL_TREE" target="_blank">vertical code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 3D
+      - name: companyIndustryAndVertical
+        in: query
+        description: When using both company industry and company vertical, "OR" logic is used by default. To use "AND" logic, set this parameter to True
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 'TRUE'
+      - name: currency
+        in: query
+        description: Specify the currency that your other parameters, such as dealSize, are entered as. It depends on the <a href="https://my.pitchbook.com/api/lookup-tables/Currency#CURRENCY_CODE_TREE" target="_blank">currency</a> in user preferences
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: AFN
+      - name: page
+        in: query
+        description: Results are returned so that they can be paged through. Set this parameter to increment the page
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '1'
+      - name: perPage
+        in: query
+        description: How many returned results show on page
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '25'
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/AdvancedSearchPageDtoServiceProviderAdvancedSearchResultDto_SearchView'
+      security:
+      - pbToken: []
+  /service-providers/{pbId}/bio:
+    get:
+      tags:
+      - Service Providers
+      summary: Service Provider Bio
+      description: Retrieves key data points about specific service provider
+      operationId: getServiceProviderBio
+      parameters:
+      - name: pbId
+        in: path
+        description: Service Provider pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          11423-17:
+            summary: 11423-17
+            value: 11423-17
+          10099-45:
+            summary: 10099-45
+            value: 10099-45
+          10437-40:
+            summary: 10437-40
+            value: 10437-40
+          10231-48:
+            summary: 10231-48
+            value: 10231-48
+          10072-27:
+            summary: 10072-27
+            value: 10072-27
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ServiceProviderBioDto'
+      security:
+      - pbToken: []
+  /service-providers/bio:
+    post:
+      tags:
+      - Service Providers
+      summary: '[Bulk] Service Provider Bio'
+      description: Retrieves key data points about specific service provider. This bulk call allows you to send multiple pbIds within a single API call.
+      operationId: getBulkServiceProviderBio
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequestDto'
+            example:
+              items:
+              - id: 10024-84
+              - id: 10045-63
+              - id: 10034-56
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BulkResultDtoServiceProviderBioDto'
+      security:
+      - pbToken: []
+  /service-providers/{pbId}/serviced-companies:
+    get:
+      tags:
+      - Service Providers
+      summary: Serviced Companies
+      description: Retrieves current and former services provided to companies by the specific service provider
+      operationId: getServicedCompanies
+      parameters:
+      - name: pbId
+        in: path
+        description: Service Provider pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          10024-84:
+            summary: 10024-84
+            value: 10024-84
+          11423-17:
+            summary: 11423-17
+            value: 11423-17
+          10067-77:
+            summary: 10067-77
+            value: 10067-77
+          61310-53:
+            summary: 61310-53
+            value: 61310-53
+          10045-81:
+            summary: 10045-81
+            value: 10045-81
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ServicedEntitiesDto'
+      security:
+      - pbToken: []
+  /service-providers/{pbId}/serviced-deals:
+    get:
+      tags:
+      - Service Providers
+      summary: Serviced Deals
+      description: Retrieves general datapoints about serviced deals of the specific service provider
+      operationId: getServicedDeals
+      parameters:
+      - name: pbId
+        in: path
+        description: Service Provider pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          10045-81:
+            summary: 10045-81
+            value: 10045-81
+          10437-40:
+            summary: 10437-40
+            value: 10437-40
+          10045-63:
+            summary: 10045-63
+            value: 10045-63
+          10231-48:
+            summary: 10231-48
+            value: 10231-48
+          10061-02:
+            summary: 10061-02
+            value: 10061-02
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ServicedDealsDto'
+      security:
+      - pbToken: []
+  /service-providers/{pbId}/serviced-investors:
+    get:
+      tags:
+      - Service Providers
+      summary: Serviced Investors
+      description: Retrieves current and former services provided to investors by the specific service provider
+      operationId: getServicedInvestors
+      parameters:
+      - name: pbId
+        in: path
+        description: Service Provider pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          10024-84:
+            summary: 10024-84
+            value: 10024-84
+          11341-18:
+            summary: 11341-18
+            value: 11341-18
+          10394-11:
+            summary: 10394-11
+            value: 10394-11
+          10623-25:
+            summary: 10623-25
+            value: 10623-25
+          10108-09:
+            summary: 10108-09
+            value: 10108-09
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ServicedEntitiesDto'
+      security:
+      - pbToken: []
+  /service-providers/{pbId}/serviced-funds:
+    get:
+      tags:
+      - Service Providers
+      summary: Serviced Funds
+      description: Retrieves current and former services provided to funds by the specific service provider
+      operationId: getServicedFunds
+      parameters:
+      - name: pbId
+        in: path
+        description: Service Provider pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          10352-44:
+            summary: 10352-44
+            value: 10352-44
+          10024-93:
+            summary: 10024-93
+            value: 10024-93
+          10034-56:
+            summary: 10034-56
+            value: 10034-56
+          98338-78:
+            summary: 98338-78
+            value: 98338-78
+          10061-02:
+            summary: 10061-02
+            value: 10061-02
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ServicedFundsDto'
+      security:
+      - pbToken: []
+  /service-providers/{pbId}/serviced-limited-partners:
+    get:
+      tags:
+      - Service Providers
+      summary: Serviced Limited Partners
+      description: Retrieves current and former services to limited partners by the specific service provider
+      operationId: getServicedLimitedPartners
+      parameters:
+      - name: pbId
+        in: path
+        description: Service Provider pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          10075-87:
+            summary: 10075-87
+            value: 10075-87
+          10606-60:
+            summary: 10606-60
+            value: 10606-60
+          10070-92:
+            summary: 10070-92
+            value: 10070-92
+          51538-87:
+            summary: 51538-87
+            value: 51538-87
+          10047-34:
+            summary: 10047-34
+            value: 10047-34
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ServicedEntitiesDto'
+      security:
+      - pbToken: []
+  /service-providers/{pbId}/updates:
+    get:
+      tags:
+      - Service Providers
+      summary: Service Provider Profile Updates
+      description: Retrieves changes for the specific service provider for up to the last 90 days
+      operationId: getInvestorUpdates_1
+      parameters:
+      - name: pbId
+        in: path
+        description: Service Provider pbId. Required to specify time period using 'sinceDate' or 'trailingRange' parameter
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          10606-60:
+            summary: 10606-60
+            value: 10606-60
+          10067-77:
+            summary: 10067-77
+            value: 10067-77
+          10045-81:
+            summary: 10045-81
+            value: 10045-81
+          10094-32:
+            summary: 10094-32
+            value: 10094-32
+          10047-34:
+            summary: 10047-34
+            value: 10047-34
+      - name: sinceDate
+        in: query
+        description: 'Add this parameter to extract information about the entity updates after a certain date with the > operator, before a certain date with the < operator and between 2 dates with the ^ operator. Set this parameter in pair with pbId. Format: YYYY-MM-DD'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: <2026-09-16
+      - name: trailingRange
+        in: query
+        description: Add this parameter to extract information about the entity updates during last N days (up to 90). Set this parameter in pair with pbId
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+        example: '20'
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UpdateDto'
+      security:
+      - pbToken: []
+components:
+  schemas:
+    RequestItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+    AdvancedSearchPageDtoServiceProviderAdvancedSearchResultDto_SearchView:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/SearchPageStatsDto_SearchView'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceProviderAdvancedSearchResultDto_SearchView'
+    FailedItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 420962-68
+        reason:
+          type: string
+          example: 429 TOO_MANY_REQUESTS
+          enum:
+          - 400 BAD_REQUEST
+          - 401 UNAUTHORIZED
+          - 402 PAYMENT_REQUIRED
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 405 METHOD_NOT_ALLOWED
+          - 415 UNSUPPORTED_MEDIA_TYPE
+          - 429 TOO_MANY_REQUESTS
+          - 500 INTERNAL_SERVER_ERROR
+          - 503 SERVICE_UNAVAILABLE
+        message:
+          type: string
+          example: '{LIMIT_TYPE} rate limit exceeded. Please wait until rate limit period is renewed'
+    BulkStatsDto:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+        matched:
+          type: integer
+          format: int32
+        noData:
+          type: integer
+          format: int32
+        unmatched:
+          type: integer
+          format: int32
+        duplicates:
+          type: integer
+          format: int32
+    NoDataItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+    ServicedDealsDto:
+      type: object
+      properties:
+        serviceProviderId:
+          type: string
+          example: 11356-75
+        serviceProviderName:
+          type: string
+          example: Wilson Sonsini Goodrich & Rosati
+        servicedDealInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServicedDealInfoDto'
+    BulkRequestDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RequestItemDto'
+    DuplicatedItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 420962-68
+        occurrence:
+          type: integer
+          format: int32
+          example: 1
+    ServicedEntitiesDto:
+      type: object
+      properties:
+        serviceProviderId:
+          type: string
+          example: 11356-75
+        serviceProviderName:
+          type: string
+          example: Wilson Sonsini Goodrich & Rosati
+        currentGeneralServices:
+          type: array
+          items:
+            $ref: '#/components/schemas/GeneralServiceDto'
+        formerGeneralServices:
+          type: array
+          items:
+            $ref: '#/components/schemas/GeneralServiceDto'
+    EntityTypeDto:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/DictionaryDto'
+        primary:
+          type: boolean
+          example: false
+      example:
+        type:
+          code: IB
+          description: Investment Bank
+        primary: true
+    ServicedFundsDto:
+      type: object
+      properties:
+        serviceProviderId:
+          type: string
+          example: 11356-75
+        serviceProviderName:
+          type: string
+          example: Wilson Sonsini Goodrich & Rosati
+        fundServices:
+          type: array
+          items:
+            $ref: '#/components/schemas/FundServiceDto'
+    ErrorDto:
+      type: object
+      properties:
+        reason:
+          type: string
+          enum:
+          - 100 CONTINUE
+          - 101 SWITCHING_PROTOCOLS
+          - 102 PROCESSING
+          - 103 EARLY_HINTS
+          - 103 CHECKPOINT
+          - 200 OK
+          - 201 CREATED
+          - 202 ACCEPTED
+          - 203 NON_AUTHORITATIVE_INFORMATION
+          - 204 NO_CONTENT
+          - 205 RESET_CONTENT
+          - 206 PARTIAL_CONTENT
+          - 207 MULTI_STATUS
+          - 208 ALREADY_REPORTED
+          - 226 IM_USED
+          - 300 MULTIPLE_CHOICES
+          - 301 MOVED_PERMANENTLY
+          - 302 FOUND
+          - 302 MOVED_TEMPORARILY
+          - 303 SEE_OTHER
+          - 304 NOT_MODIFIED
+          - 305 USE_PROXY
+          - 307 TEMPORARY_REDIRECT
+          - 308 PERMANENT_REDIRECT
+          - 400 BAD_REQUEST
+          - 401 UNAUTHORIZED
+          - 402 PAYMENT_REQUIRED
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 405 METHOD_NOT_ALLOWED
+          - 406 NOT_ACCEPTABLE
+          - 407 PROXY_AUTHENTICATION_REQUIRED
+          - 408 REQUEST_TIMEOUT
+          - 409 CONFLICT
+          - 410 GONE
+          - 411 LENGTH_REQUIRED
+          - 412 PRECONDITION_FAILED
+          - 413 PAYLOAD_TOO_LARGE
+          - 413 REQUEST_ENTITY_TOO_LARGE
+          - 414 URI_TOO_LONG
+          - 414 REQUEST_URI_TOO_LONG
+          - 415 UNSUPPORTED_MEDIA_TYPE
+          - 416 REQUESTED_RANGE_NOT_SATISFIABLE
+          - 417 EXPECTATION_FAILED
+          - 418 I_AM_A_TEAPOT
+          - 419 INSUFFICIENT_SPACE_ON_RESOURCE
+          - 420 METHOD_FAILURE
+          - 421 DESTINATION_LOCKED
+          - 422 UNPROCESSABLE_ENTITY
+          - 423 LOCKED
+          - 424 FAILED_DEPENDENCY
+          - 425 TOO_EARLY
+          - 426 UPGRADE_REQUIRED
+          - 428 PRECONDITION_REQUIRED
+          - 429 TOO_MANY_REQUESTS
+          - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
+          - 451 UNAVAILABLE_FOR_LEGAL_REASONS
+          - 500 INTERNAL_SERVER_ERROR
+          - 501 NOT_IMPLEMENTED
+          - 502 BAD_GATEWAY
+          - 503 SERVICE_UNAVAILABLE
+          - 504 GATEWAY_TIMEOUT
+          - 505 HTTP_VERSION_NOT_SUPPORTED
+          - 506 VARIANT_ALSO_NEGOTIATES
+          - 507 INSUFFICIENT_STORAGE
+          - 508 LOOP_DETECTED
+          - 509 BANDWIDTH_LIMIT_EXCEEDED
+          - 510 NOT_EXTENDED
+          - 511 NETWORK_AUTHENTICATION_REQUIRED
+        message:
+          type: string
+    ServiceProviderBioDto:
+      type: object
+      properties:
+        serviceProviderId:
+          type: string
+          example: 11356-75
+        serviceProviderName:
+          $ref: '#/components/schemas/EntityNameDto'
+        serviceProviderTypes:
+          type: array
+          example:
+            type:
+              code: IB
+              description: Investment Bank
+            primary: true
+          items:
+            $ref: '#/components/schemas/EntityTypeDto'
+        hqLocation:
+          $ref: '#/components/schemas/HqLocationDto'
+        description:
+          type: string
+          example: Collins Stewart was an independent investment banking group with offices in London, New York, Jersey, Guernsey, Isle of Man, Dublin, Paris, Geneva, Singapore, Tel Aviv, Mumbai, and Tokyo. The company was a fundraiser on London's Alternative, Investment Market. the firm's services included fixed income credit trading, corporate broking, corporate finance advisory services, debt capital markets advice, restructuring and debt advisory services. The firm was founded in 1991 and was based in London, England.
+        website:
+          type: string
+          example: www.collins-stewart.com
+        employees:
+          type: integer
+          format: int32
+          example: 68
+        servicedCompanies:
+          type: integer
+          format: int32
+          example: 36
+        servicedDeals:
+          type: integer
+          format: int32
+          example: 38
+        servicedInvestors:
+          type: integer
+          format: int32
+          example: 14
+        servicedFunds:
+          type: integer
+          format: int32
+          example: 0
+        servicedLimitedPartners:
+          type: integer
+          format: int32
+          example: 0
+    HqLocationDto:
+      type: object
+      properties:
+        city:
+          type: string
+          example: Chicago
+        stateProvince:
+          type: string
+          example: IL
+        postCode:
+          type: string
+          example: '60661'
+        country:
+          type: string
+          example: United States
+    FundServiceDto:
+      type: object
+      properties:
+        fundId:
+          type: string
+          example: 17475-23F
+        fundName:
+          type: string
+          example: Gerken Capital Associates
+        serviceProvided:
+          $ref: '#/components/schemas/DictionaryDto'
+        servicedEntityType:
+          $ref: '#/components/schemas/DictionaryDto'
+    EntityNameDto:
+      type: object
+      properties:
+        formalName:
+          type: string
+        alsoKnownAs:
+          type: string
+        legalName:
+          type: string
+        formerlyKnownAs:
+          type: string
+    ServiceProviderAdvancedSearchResultDto_SearchView:
+      type: object
+      properties:
+        serviceProviderId:
+          type: string
+          example: 55545-67
+        serviceProviderName:
+          type: string
+          example: JP Morgan Chase
+        sandbox:
+          type: boolean
+          example: false
+        website:
+          type: string
+          example: www.sp.com
+    ServicedDealInfoDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+          example: 10695-52
+        companyName:
+          type: string
+          example: Facebook
+        serviceProvided:
+          $ref: '#/components/schemas/DictionaryDto'
+        dealId:
+          type: string
+          example: 108911-98T
+        dealNumber:
+          type: integer
+          format: int32
+          example: 4
+        dealDate:
+          type: string
+          format: date
+          example: '2020-01-03'
+    SearchPageStatsDto_SearchView:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+          example: 1
+        perPage:
+          type: integer
+          format: int32
+          example: 25
+        page:
+          type: integer
+          format: int32
+          example: 1
+        lastPage:
+          type: integer
+          format: int32
+          example: 1
+    GeneralServiceDto:
+      type: object
+      properties:
+        entityId:
+          type: string
+          example: 11356-75
+        entityName:
+          type: string
+          example: Franklin Street Equity Partners
+        serviceProvided:
+          $ref: '#/components/schemas/DictionaryDto'
+    UpdateDto:
+      type: object
+      properties:
+        updates:
+          type: object
+          additionalProperties:
+            type: string
+            example: '{"Endpoint name":"Update Status (true/false)"}'
+          example:
+            Endpoint name: Update Status (true/false)
+    DictionaryDto:
+      type: object
+      properties:
+        code:
+          type: string
+          example: Dictionary code
+        description:
+          type: string
+          example: Dictionary Code Description
+    BulkResultDtoServiceProviderBioDto:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/BulkStatsDto'
+        matched:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceProviderBioDto'
+        noData:
+          type: array
+          items:
+            $ref: '#/components/schemas/NoDataItemDto'
+        unmatched:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailedItemDto'
+        duplicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicatedItemDto'
+  securitySchemes:
+    pbToken:
+      type: apiKey
+      name: Authorization
+      in: header
+      scheme: bearer
+      bearerFormat: JWT

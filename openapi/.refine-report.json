@@ -1,0 +1,30 @@
+{
+  "provider": "pitchbook",
+  "sources": [
+    "pitchbook-openapi.json"
+  ],
+  "outputs": [
+    "pitchbook-account-information-api-openapi.yml",
+    "pitchbook-companies-api-openapi.yml",
+    "pitchbook-credit-analysis-api-openapi.yml",
+    "pitchbook-deals-api-openapi.yml",
+    "pitchbook-fundamentals-api-openapi.yml",
+    "pitchbook-funds-api-openapi.yml",
+    "pitchbook-general-api-openapi.yml",
+    "pitchbook-investors-api-openapi.yml",
+    "pitchbook-limited-partners-api-openapi.yml",
+    "pitchbook-patents-api-openapi.yml",
+    "pitchbook-people-api-openapi.yml",
+    "pitchbook-service-providers-api-openapi.yml"
+  ],
+  "archived": [
+    "archived openapi/pitchbook-openapi.json"
+  ],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "pitchbook-openapi.json: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "apis.yml register: written (+12 apis, 12 total)"
+  ],
+  "skipped": []
+}

@@ -1,0 +1,5 @@
+generated: "2026-09-21"
+method: derived
+source: openapi/pitchbook-openapi.json
+overlayVersion: "1.0.0"
+actions: []

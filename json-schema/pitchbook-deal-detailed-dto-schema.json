@@ -1,0 +1,247 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/pitchbook/main/json-schema/pitchbook-deal-detailed-dto-schema.json",
+  "title": "DealDetailedDto",
+  "x-generated": "2026-09-21",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/pitchbook-openapi.json#/components/schemas/DealDetailedDto",
+  "type": "object",
+  "properties": {
+    "dealId": {
+      "type": "string"
+    },
+    "dealNumber": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "companyId": {
+      "type": "string"
+    },
+    "companyName": {
+      "type": "string"
+    },
+    "dealDate": {
+      "type": "string",
+      "format": "date"
+    },
+    "dealSize": {
+      "$ref": "#/$defs/MoneyDto"
+    },
+    "dealSizeBreakdown": {
+      "$ref": "#/$defs/DealSizeBreakdownDto"
+    },
+    "dealSizeStatus": {
+      "type": "string"
+    },
+    "dealStatus": {
+      "$ref": "#/$defs/DictionaryDto"
+    },
+    "percentAcquired": {
+      "type": "number",
+      "format": "double"
+    },
+    "raisedToDate": {
+      "$ref": "#/$defs/MoneyDto"
+    },
+    "vcRound": {
+      "type": "string"
+    },
+    "vcRoundUpDownFlat": {
+      "type": "string"
+    },
+    "totalInvestedCapital": {
+      "$ref": "#/$defs/MoneyDto"
+    },
+    "investorOwnership": {
+      "type": "number",
+      "format": "double"
+    },
+    "stockSplit": {
+      "type": "string"
+    },
+    "dealType1": {
+      "$ref": "#/$defs/DictionaryDto"
+    },
+    "dealType2": {
+      "$ref": "#/$defs/DictionaryDto"
+    },
+    "dealType3": {
+      "$ref": "#/$defs/DictionaryDto"
+    },
+    "dealClass": {
+      "$ref": "#/$defs/DictionaryDto"
+    },
+    "dealSynopsis": {
+      "type": "string"
+    },
+    "totalInvestedEquity": {
+      "$ref": "#/$defs/MoneyDto"
+    },
+    "debtType1": {
+      "deprecated": true,
+      "allOf": [
+        {
+          "$ref": "#/$defs/DictionaryDto"
+        }
+      ]
+    },
+    "debtType2": {
+      "deprecated": true,
+      "allOf": [
+        {
+          "$ref": "#/$defs/DictionaryDto"
+        }
+      ]
+    },
+    "debtType3": {
+      "deprecated": true,
+      "allOf": [
+        {
+          "$ref": "#/$defs/DictionaryDto"
+        }
+      ]
+    },
+    "debtAmount1": {
+      "deprecated": true,
+      "allOf": [
+        {
+          "$ref": "#/$defs/MoneyDto"
+        }
+      ]
+    },
+    "debtAmount2": {
+      "deprecated": true,
+      "allOf": [
+        {
+          "$ref": "#/$defs/MoneyDto"
+        }
+      ]
+    },
+    "debtAmount3": {
+      "deprecated": true,
+      "allOf": [
+        {
+          "$ref": "#/$defs/MoneyDto"
+        }
+      ]
+    },
+    "debtRaisedInRound": {
+      "$ref": "#/$defs/MoneyDto"
+    },
+    "contingentPayout": {
+      "$ref": "#/$defs/MoneyDto"
+    },
+    "valuationAvailable": {
+      "type": "boolean"
+    },
+    "capTableAvailable": {
+      "type": "boolean"
+    },
+    "trancheInfoAvailable": {
+      "type": "boolean"
+    },
+    "debtLenderInfoAvailable": {
+      "type": "boolean"
+    },
+    "launchDate": {
+      "type": "string",
+      "format": "date"
+    },
+    "totalLoanSize": {
+      "$ref": "#/$defs/MoneyDto"
+    },
+    "totalInstLoanSize": {
+      "$ref": "#/$defs/MoneyDto"
+    },
+    "totalNewDebt": {
+      "$ref": "#/$defs/MoneyDto"
+    },
+    "useOfProceeds": {
+      "type": "string"
+    }
+  },
+  "$defs": {
+    "DealSizeBreakdownDto": {
+      "type": "object",
+      "properties": {
+        "totalNewMoney": {
+          "$ref": "#/$defs/MoneyDto"
+        },
+        "usdNewMoney": {
+          "$ref": "#/$defs/MoneyDto"
+        },
+        "eurNewMoney": {
+          "$ref": "#/$defs/MoneyDto"
+        },
+        "totalInstitutionalNewMoney": {
+          "$ref": "#/$defs/MoneyDto"
+        },
+        "usdInstitutionalNewMoney": {
+          "$ref": "#/$defs/MoneyDto"
+        },
+        "eurInstitutionalNewMoney": {
+          "$ref": "#/$defs/MoneyDto"
+        },
+        "totalFirstLienNewMoney": {
+          "$ref": "#/$defs/MoneyDto"
+        },
+        "usdFirstLienNewMoney": {
+          "$ref": "#/$defs/MoneyDto"
+        },
+        "eurFirstLienNewMoney": {
+          "$ref": "#/$defs/MoneyDto"
+        },
+        "totalFirstLienInstitutionalNewMoney": {
+          "$ref": "#/$defs/MoneyDto"
+        },
+        "usdFirstLienInstitutionalNewMoney": {
+          "$ref": "#/$defs/MoneyDto"
+        },
+        "eurFirstLienInstitutionalNewMoney": {
+          "$ref": "#/$defs/MoneyDto"
+        },
+        "totalSecondLienNewMoney": {
+          "$ref": "#/$defs/MoneyDto"
+        },
+        "usdSecondLienNewMoney": {
+          "$ref": "#/$defs/MoneyDto"
+        },
+        "eurSecondLienNewMoney": {
+          "$ref": "#/$defs/MoneyDto"
+        }
+      }
+    },
+    "DictionaryDto": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "MoneyDto": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "number"
+        },
+        "currency": {
+          "type": "string"
+        },
+        "nativeAmount": {
+          "type": "number"
+        },
+        "nativeCurrency": {
+          "type": "string"
+        },
+        "estimated": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,87 @@
+generated: '2026-09-21'
+method: derived
+generator: derive-problem-types.py
+source:
+- openapi/pitchbook-account-information-api-openapi.yml
+- openapi/pitchbook-companies-api-openapi.yml
+- openapi/pitchbook-credit-analysis-api-openapi.yml
+- openapi/pitchbook-deals-api-openapi.yml
+- openapi/pitchbook-fundamentals-api-openapi.yml
+- openapi/pitchbook-funds-api-openapi.yml
+- openapi/pitchbook-general-api-openapi.yml
+- openapi/pitchbook-investors-api-openapi.yml
+- openapi/pitchbook-limited-partners-api-openapi.yml
+- openapi/pitchbook-patents-api-openapi.yml
+- openapi/pitchbook-people-api-openapi.yml
+- openapi/pitchbook-service-providers-api-openapi.yml
+format: custom
+envelope:
+  media_type: '*/*'
+  schema: ErrorDto
+coverage:
+  operations: 130
+  statuses_declared: 9
+problems:
+- status: 400
+  title: Bad Request
+  description: Bad Request
+  operations: 130
+  media_types:
+  - '*/*'
+  schema: ErrorDto
+- status: 402
+  title: Payment Required
+  description: Payment Required
+  operations: 130
+  media_types:
+  - '*/*'
+  schema: ErrorDto
+- status: 403
+  title: Forbidden
+  description: Forbidden
+  operations: 130
+  media_types:
+  - '*/*'
+  schema: ErrorDto
+- status: 404
+  title: Not Found
+  description: Not Found
+  operations: 130
+  media_types:
+  - '*/*'
+  schema: ErrorDto
+- status: 429
+  title: Too Many Requests
+  description: Too Many Requests
+  operations: 130
+  media_types:
+  - '*/*'
+  schema: ErrorDto
+- status: 500
+  title: Internal Server Error
+  description: Internal Server Error
+  operations: 130
+  media_types:
+  - '*/*'
+  schema: ErrorDto
+- status: 503
+  title: Service Unavailable
+  description: Service Unavailable
+  operations: 130
+  media_types:
+  - '*/*'
+  schema: ErrorDto
+- status: 504
+  title: Gateway Timeout
+  description: Gateway Timeout
+  operations: 130
+  media_types:
+  - '*/*'
+  schema: ErrorDto
+- status: default
+  title: null
+  description: default response
+  operations: 4
+  media_types:
+  - '*/*'
+  schema: null

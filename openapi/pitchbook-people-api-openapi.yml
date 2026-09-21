@@ -1,0 +1,1261 @@
+openapi: 3.2.0
+info:
+  title: OpenAPI definition People API
+  version: v0
+  description: People
+servers:
+- url: https://api.pitchbook.com
+tags:
+- name: People
+  description: People
+paths:
+  /people/search:
+    get:
+      tags:
+      - People
+      summary: People Search
+      description: Retrieves people along with the companies associated with the person
+      operationId: peopleSearch
+      parameters:
+      - name: firmNames
+        in: query
+        description: Accepts firm names, pbIds, websites, and tickers. Returns a list of persons from all entities that are an exact match. Use a comma to separate multiple values
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 11111-11, Name
+      - name: personNames
+        in: query
+        description: Accepts person names, and pbIds. Returns a list of persons that are an exact match. Use a comma to separate multiple values
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 11111-11, Name
+      - name: biography
+        in: query
+        description: Search for people by words and phrases in their biography text
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: IT
+      - name: university
+        in: query
+        description: Find people by their graduating institution
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: MIT
+      - name: firmType
+        in: query
+        description: Find people associated with a specific <a href="https://my.pitchbook.com/api/lookup-tables/People#PERSON_FIRM_TYPE_TREE" target="_blank">firm type code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: SP_AC
+      - name: positionLevel
+        in: query
+        description: Find people by their <a href="https://my.pitchbook.com/api/lookup-tables/People#PERSON_POSITION_TREE" target="_blank">position level code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: AC
+      - name: positionTitle
+        in: query
+        description: Find people by the keywords related to their positions
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: Chief Executive Officer
+      - name: primaryPositionOnly
+        in: query
+        description: Search for people by additional parameter concerning their positions. Set this parameter as True and use in pair with positionTitle option
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 'TRUE'
+      - name: department
+        in: query
+        description: Find people within an organization by the department they work in. Pass a <a href="https://my.pitchbook.com/api/lookup-tables/People#PERSON_POSITION_DEPARTMENT_TREE" target="_blank">position department code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: ACC
+      - name: status
+        in: query
+        description: Find people by position status (active or former)
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: active
+      - name: gender
+        in: query
+        description: 'Find people by gender (male or female) '
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: male
+      - name: industry
+        in: query
+        description: People can be found by <a href="https://my.pitchbook.com/api/lookup-tables/Industries, Verticals & Emerging Spaces#INDUSTRY_TREE" target="_blank">industry code</a> of the companies associated with them
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '10'
+      - name: verticals
+        in: query
+        description: People can be found by <a href="https://my.pitchbook.com/api/lookup-tables/Industries, Verticals & Emerging Spaces#VERTICAL_TREE" target="_blank">vertical code</a> of the companies associated with them
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 3D
+      - name: industryAndVertical
+        in: query
+        description: When using both industry and vertical parameters, "OR" logic is used by default. To use "AND" logic, set this parameter to True. Set this parameter in pair with industry and vertical options
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 'TRUE'
+      - name: city
+        in: query
+        description: Search for people by city of their entities
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: Seattle
+      - name: stateProvince
+        in: query
+        description: Search for people by <a href="https://my.pitchbook.com/api/lookup-tables/Location#US_STATE_TREE" target="_blank">state code</a> or <a href="https://my.pitchbook.com/api/lookup-tables/Location#CANADIAN_PROVINCE_TREE" target="_blank">province code</a> of their entities
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: AL
+      - name: country
+        in: query
+        description: Search for people by <a href="https://my.pitchbook.com/api/lookup-tables/Location#COUNTRY_TREE" target="_blank">country code</a> of their entities
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: ABW
+      - name: postCode
+        in: query
+        description: Search for people by postcodes of their entities
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '98765'
+      - name: locationType
+        in: query
+        description: Search for people by additional parameter concerning the entities specifying HQ Only (HQ_ONLY), Non-HQ Only (NON_HQ_ONLY) or any office location (ANY) values. Set this parameter in pair with city, stateProvince, country, postCode options
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: ANY
+      - name: firstName
+        in: query
+        description: Find people by first name
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: John
+      - name: lastName
+        in: query
+        description: Find people by last name
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: Johnson
+      - name: email
+        in: query
+        description: Find people by email
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: Johnson@pitchbook.com
+      - name: domain
+        in: query
+        description: Find people by domain
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: pitchbook.com
+      - name: page
+        in: query
+        description: Results are returned so that they can be paged through. Set this parameter to increment the page
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '1'
+      - name: perPage
+        in: query
+        description: How many returned results show on page
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '25'
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/AdvancedSearchPageDtoPersonAdvancedSearchResultDto_SearchView'
+      security:
+      - pbToken: []
+  /people/{pbId}/bio:
+    get:
+      tags:
+      - People
+      summary: People Bio
+      description: Retrieves key data points about specific person
+      operationId: getPerson
+      parameters:
+      - name: pbId
+        in: path
+        description: Person pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          11436-22P:
+            summary: 11436-22P
+            value: 11436-22P
+          12260-62P:
+            summary: 12260-62P
+            value: 12260-62P
+          12330-19P:
+            summary: 12330-19P
+            value: 12330-19P
+          11429-47P:
+            summary: 11429-47P
+            value: 11429-47P
+          12369-25P:
+            summary: 12369-25P
+            value: 12369-25P
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PersonBioDto'
+      security:
+      - pbToken: []
+  /people/bio:
+    post:
+      tags:
+      - People
+      summary: '[Bulk] People Bio'
+      description: Retrieves key data points about specific person. This bulk call allows you to send multiple pbIds within a single API call.
+      operationId: getBulkPersonBio
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequestDto'
+            example:
+              items:
+              - id: 11425-78P
+              - id: 12251-53P
+              - id: 11396-89P
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BulkResultDtoPersonBioDto'
+      security:
+      - pbToken: []
+  /people/{pbId}/education-work:
+    get:
+      tags:
+      - People
+      summary: People Education/Work
+      description: Retrieves company, deal, fund and advisory roles of the specific person
+      operationId: getPersonEducationWork
+      parameters:
+      - name: pbId
+        in: path
+        description: Person pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          11396-89P:
+            summary: 11396-89P
+            value: 11396-89P
+          11396-98P:
+            summary: 11396-98P
+            value: 11396-98P
+          11397-70P:
+            summary: 11397-70P
+            value: 11397-70P
+          12382-57P:
+            summary: 12382-57P
+            value: 12382-57P
+          12369-25P:
+            summary: 12369-25P
+            value: 12369-25P
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PersonEducationWorkDto'
+      security:
+      - pbToken: []
+  /people/{pbId}/contact:
+    get:
+      tags:
+      - People
+      summary: People Contact
+      description: Retrieves contact information of the specific person
+      operationId: getPersonContactInfo
+      parameters:
+      - name: pbId
+        in: path
+        description: Person pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          11406-88P:
+            summary: 11406-88P
+            value: 11406-88P
+          11428-93P:
+            summary: 11428-93P
+            value: 11428-93P
+          11461-96P:
+            summary: 11461-96P
+            value: 11461-96P
+          11429-47P:
+            summary: 11429-47P
+            value: 11429-47P
+          11441-53P:
+            summary: 11441-53P
+            value: 11441-53P
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PersonContactDto'
+      security:
+      - pbToken: []
+  /people/{pbId}/updates:
+    get:
+      tags:
+      - People
+      summary: Person Profile Updates
+      description: Retrieves changes for the specific person for up to the last 90 days
+      operationId: getPersonUpdates
+      parameters:
+      - name: pbId
+        in: path
+        description: Person pbId. Required to specify time period using 'sinceDate' or 'trailingRange' parameter
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          12406-06P:
+            summary: 12406-06P
+            value: 12406-06P
+          11617-93P:
+            summary: 11617-93P
+            value: 11617-93P
+          12024-82P:
+            summary: 12024-82P
+            value: 12024-82P
+          12382-57P:
+            summary: 12382-57P
+            value: 12382-57P
+          12327-94P:
+            summary: 12327-94P
+            value: 12327-94P
+      - name: sinceDate
+        in: query
+        description: 'Add this parameter to extract information about the entity updates after a certain date with the > operator, before a certain date with the < operator and between 2 dates with the ^ operator. Set this parameter in pair with pbId. Format: YYYY-MM-DD'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: <2026-09-16
+      - name: trailingRange
+        in: query
+        description: Add this parameter to extract information about the entity updates during last N days (up to 90). Set this parameter in pair with pbId
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+        example: '20'
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UpdateDto'
+      security:
+      - pbToken: []
+components:
+  schemas:
+    PersonContactDto:
+      type: object
+      properties:
+        personId:
+          type: string
+          example: 195066-01P
+        fullName:
+          type: string
+          example: John Taylor
+        phone:
+          type: string
+          example: +44 (0)20 7466 2430
+        fax:
+          type: string
+          example: +44 (0)20 7374 0888
+        email:
+          type: string
+          example: john.taylor@hsf.com
+    RequestItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+    FailedItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 420962-68
+        reason:
+          type: string
+          example: 429 TOO_MANY_REQUESTS
+          enum:
+          - 400 BAD_REQUEST
+          - 401 UNAUTHORIZED
+          - 402 PAYMENT_REQUIRED
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 405 METHOD_NOT_ALLOWED
+          - 415 UNSUPPORTED_MEDIA_TYPE
+          - 429 TOO_MANY_REQUESTS
+          - 500 INTERNAL_SERVER_ERROR
+          - 503 SERVICE_UNAVAILABLE
+        message:
+          type: string
+          example: '{LIMIT_TYPE} rate limit exceeded. Please wait until rate limit period is renewed'
+    BulkStatsDto:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+        matched:
+          type: integer
+          format: int32
+        noData:
+          type: integer
+          format: int32
+        unmatched:
+          type: integer
+          format: int32
+        duplicates:
+          type: integer
+          format: int32
+    NoDataItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+    BulkRequestDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RequestItemDto'
+    DuplicatedItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 420962-68
+        occurrence:
+          type: integer
+          format: int32
+          example: 1
+    PersonBioDto:
+      type: object
+      properties:
+        personId:
+          type: string
+          example: 195066-01P
+        personName:
+          $ref: '#/components/schemas/PersonNameDto'
+        yearOfBirth:
+          type: integer
+          format: int32
+          example: 1970
+        biography:
+          type: string
+          example: Mr. John Taylor serves as Partner at Herbert Smith Freehills. He helps clients achieve the best outcome on private equity investments, including private equity real estate, infrastructure and energy. He works with investors, corporates and management teams on significant and high-profile transactions, including UK and international buyouts, mergers, acquisitions, disposals, takeovers, joint ventures, equity financing and management equity incentives. The focus of John's work is acting for private equity funds on investments and disposals. John also brings his investor-side experience to bear in acting for management teams and investee companies in relation to private equity investments.
+        linkedInProfileUrl:
+          type: string
+          example: http://www.linkedin.com/in/john-taylor-b99
+        gender:
+          type: string
+          example: Male
+        primaryEntityId:
+          type: string
+          example: 10352-44
+        primaryEntityName:
+          type: string
+          example: Herbert Smith Freehills
+        primaryEntityType:
+          type: string
+          example: Service Provider
+        primaryEntityWebsite:
+          type: string
+          example: www.herbertsmithfreehills.com
+        primaryPosition:
+          type: string
+          example: Partner
+        primaryOffice:
+          $ref: '#/components/schemas/EntityOfficeDto'
+    BoardSeatDto:
+      type: object
+      properties:
+        boardCompanyId:
+          type: string
+          example: 41161-24
+        boardCompanyName:
+          type: string
+          example: Nvidia
+        boardRepresentingId:
+          type: string
+          example: 10067-86
+        boardRepresentingName:
+          type: string
+          example: Cooley
+        positionStatus:
+          type: string
+          example: Current
+        boardStart:
+          type: string
+          format: date
+          example: '2009-01-01'
+        boardFinish:
+          type: string
+          format: date
+    PersonEducationInfoDto:
+      type: object
+      properties:
+        institution:
+          type: string
+          example: University of Chicago Law School
+        degree:
+          type: string
+          example: Graduate
+        yearOfGraduation:
+          type: integer
+          format: int32
+          example: 2006
+    ErrorDto:
+      type: object
+      properties:
+        reason:
+          type: string
+          enum:
+          - 100 CONTINUE
+          - 101 SWITCHING_PROTOCOLS
+          - 102 PROCESSING
+          - 103 EARLY_HINTS
+          - 103 CHECKPOINT
+          - 200 OK
+          - 201 CREATED
+          - 202 ACCEPTED
+          - 203 NON_AUTHORITATIVE_INFORMATION
+          - 204 NO_CONTENT
+          - 205 RESET_CONTENT
+          - 206 PARTIAL_CONTENT
+          - 207 MULTI_STATUS
+          - 208 ALREADY_REPORTED
+          - 226 IM_USED
+          - 300 MULTIPLE_CHOICES
+          - 301 MOVED_PERMANENTLY
+          - 302 FOUND
+          - 302 MOVED_TEMPORARILY
+          - 303 SEE_OTHER
+          - 304 NOT_MODIFIED
+          - 305 USE_PROXY
+          - 307 TEMPORARY_REDIRECT
+          - 308 PERMANENT_REDIRECT
+          - 400 BAD_REQUEST
+          - 401 UNAUTHORIZED
+          - 402 PAYMENT_REQUIRED
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 405 METHOD_NOT_ALLOWED
+          - 406 NOT_ACCEPTABLE
+          - 407 PROXY_AUTHENTICATION_REQUIRED
+          - 408 REQUEST_TIMEOUT
+          - 409 CONFLICT
+          - 410 GONE
+          - 411 LENGTH_REQUIRED
+          - 412 PRECONDITION_FAILED
+          - 413 PAYLOAD_TOO_LARGE
+          - 413 REQUEST_ENTITY_TOO_LARGE
+          - 414 URI_TOO_LONG
+          - 414 REQUEST_URI_TOO_LONG
+          - 415 UNSUPPORTED_MEDIA_TYPE
+          - 416 REQUESTED_RANGE_NOT_SATISFIABLE
+          - 417 EXPECTATION_FAILED
+          - 418 I_AM_A_TEAPOT
+          - 419 INSUFFICIENT_SPACE_ON_RESOURCE
+          - 420 METHOD_FAILURE
+          - 421 DESTINATION_LOCKED
+          - 422 UNPROCESSABLE_ENTITY
+          - 423 LOCKED
+          - 424 FAILED_DEPENDENCY
+          - 425 TOO_EARLY
+          - 426 UPGRADE_REQUIRED
+          - 428 PRECONDITION_REQUIRED
+          - 429 TOO_MANY_REQUESTS
+          - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
+          - 451 UNAVAILABLE_FOR_LEGAL_REASONS
+          - 500 INTERNAL_SERVER_ERROR
+          - 501 NOT_IMPLEMENTED
+          - 502 BAD_GATEWAY
+          - 503 SERVICE_UNAVAILABLE
+          - 504 GATEWAY_TIMEOUT
+          - 505 HTTP_VERSION_NOT_SUPPORTED
+          - 506 VARIANT_ALSO_NEGOTIATES
+          - 507 INSUFFICIENT_STORAGE
+          - 508 LOOP_DETECTED
+          - 509 BANDWIDTH_LIMIT_EXCEEDED
+          - 510 NOT_EXTENDED
+          - 511 NETWORK_AUTHENTICATION_REQUIRED
+        message:
+          type: string
+    BulkResultDtoPersonBioDto:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/BulkStatsDto'
+        matched:
+          type: array
+          items:
+            $ref: '#/components/schemas/PersonBioDto'
+        noData:
+          type: array
+          items:
+            $ref: '#/components/schemas/NoDataItemDto'
+        unmatched:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailedItemDto'
+        duplicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicatedItemDto'
+    PersonEducationWorkDto:
+      type: object
+      properties:
+        personId:
+          type: string
+          example: 195066-01P
+        fullName:
+          type: string
+          example: John Taylor
+        education:
+          type: array
+          items:
+            $ref: '#/components/schemas/PersonEducationInfoDto'
+        companyRoles:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyRoleDto'
+        boardSeats:
+          type: array
+          items:
+            $ref: '#/components/schemas/BoardSeatDto'
+        currentAdvisoryRoles:
+          type: array
+          items:
+            $ref: '#/components/schemas/CurrentAdvisoryRoleDto'
+        dealRoles:
+          type: array
+          items:
+            $ref: '#/components/schemas/DealRoleDto'
+        fundRoles:
+          type: array
+          items:
+            $ref: '#/components/schemas/FundRoleDto'
+    EntityOfficeDto:
+      type: object
+      properties:
+        location:
+          type: string
+          example: Chicago, IL
+        addressLine1:
+          type: string
+          example: 69 West Monroe Street
+        addressLine2:
+          type: string
+          example: Suite 190
+        city:
+          type: string
+          example: Chicago
+        stateProvince:
+          type: string
+          example: IL
+        postCode:
+          type: string
+          example: '60661'
+        country:
+          type: string
+          example: United States
+        phone:
+          type: string
+          example: +1 (312) 902-6655
+        fax:
+          type: string
+          example: +1 (312) 902-5655
+        email:
+          type: string
+          example: office.email@gmail.com
+        globalRegion:
+          type: string
+          example: Americas
+        globalSubRegion:
+          type: string
+          example: North America
+    CompanyRoleDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+          example: 10352-44
+        companyName:
+          type: string
+          example: Herbert Smith Freehills
+        position:
+          type: string
+          example: Partner
+        positionType:
+          type: string
+          example: Employee
+        positionStatus:
+          type: string
+          example: Current
+        positionStart:
+          type: string
+          format: date
+          example: '2011-05-01'
+        positionFinish:
+          type: string
+          format: date
+          example: '2015-05-01'
+    FundRoleDto:
+      type: object
+      properties:
+        fundId:
+          type: string
+          example: 15021-28F
+        fundName:
+          type: string
+          example: Crossroads Capital II
+        investorId:
+          type: string
+          example: 62181-28
+        investorName:
+          type: string
+          example: The We Company
+        representingId:
+          type: string
+          example: 172739-35
+        representingName:
+          type: string
+          example: DocuTouch
+    SearchPageStatsDto_SearchView:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+          example: 1
+        perPage:
+          type: integer
+          format: int32
+          example: 25
+        page:
+          type: integer
+          format: int32
+          example: 1
+        lastPage:
+          type: integer
+          format: int32
+          example: 1
+    PersonNameDto:
+      type: object
+      properties:
+        full:
+          type: string
+          example: John Taylor
+        first:
+          type: string
+          example: John
+        last:
+          type: string
+          example: Taylor
+        middle:
+          type: string
+          example: M.
+        prefix:
+          type: string
+          example: Mr.
+        suffix:
+          type: string
+          example: JD
+    UpdateDto:
+      type: object
+      properties:
+        updates:
+          type: object
+          additionalProperties:
+            type: string
+            example: '{"Endpoint name":"Update Status (true/false)"}'
+          example:
+            Endpoint name: Update Status (true/false)
+    AdvancedSearchPageDtoPersonAdvancedSearchResultDto_SearchView:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/SearchPageStatsDto_SearchView'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PersonAdvancedSearchResultDto_SearchView'
+    PersonAdvancedSearchResultDto_SearchView:
+      type: object
+      properties:
+        personId:
+          type: string
+          example: 11397-61P
+        personName:
+          type: string
+          example: Stephen Neal
+        firmId:
+          type: string
+          example: 164076-94
+        sandbox:
+          type: boolean
+          example: false
+    DictionaryDto:
+      type: object
+      properties:
+        code:
+          type: string
+          example: Dictionary code
+        description:
+          type: string
+          example: Dictionary Code Description
+    DealRoleDto:
+      type: object
+      properties:
+        dealId:
+          type: string
+          example: 120048-04T
+        dealDate:
+          type: string
+          format: date
+          example: '2019-01-08'
+        companyId:
+          type: string
+          example: 12774-34
+        companyName:
+          type: string
+          example: Synamedia
+        representingId:
+          type: string
+          example: 10352-44
+        representingName:
+          type: string
+          example: Herbert Smith Freehills
+    CurrentAdvisoryRoleDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+          example: 164076-94
+        companyName:
+          type: string
+          example: Spacemob
+        companyType:
+          $ref: '#/components/schemas/DictionaryDto'
+        position:
+          type: string
+          example: Advisor
+        positionStart:
+          type: string
+          format: date
+          example: '2014-08-23'
+  securitySchemes:
+    pbToken:
+      type: apiKey
+      name: Authorization
+      in: header
+      scheme: bearer
+      bearerFormat: JWT

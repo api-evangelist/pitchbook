@@ -1,0 +1,204 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/pitchbook/main/json-schema/pitchbook-company-bio-dto-schema.json",
+  "title": "CompanyBioDto",
+  "x-generated": "2026-09-21",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/pitchbook-openapi.json#/components/schemas/CompanyBioDto",
+  "type": "object",
+  "properties": {
+    "companyId": {
+      "type": "string"
+    },
+    "companyName": {
+      "$ref": "#/$defs/EntityNameDto"
+    },
+    "parentCompanyId": {
+      "type": "string"
+    },
+    "parentCompanyName": {
+      "type": "string"
+    },
+    "hqLocation": {
+      "$ref": "#/$defs/HqLocationDto"
+    },
+    "description": {
+      "type": "string"
+    },
+    "financingStatus": {
+      "$ref": "#/$defs/DictionaryDto"
+    },
+    "businessStatus": {
+      "$ref": "#/$defs/DictionaryDto"
+    },
+    "ownershipStatus": {
+      "$ref": "#/$defs/DictionaryDto"
+    },
+    "universe": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/DictionaryDto"
+      }
+    },
+    "website": {
+      "type": "string"
+    },
+    "employees": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "employeeHistory": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/EmployeeHistoryDto"
+      }
+    },
+    "exchange": {
+      "type": "string"
+    },
+    "ticker": {
+      "type": "string"
+    },
+    "yearFounded": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "financingStatusNote": {
+      "$ref": "#/$defs/CompanyFinancingNoteDto"
+    },
+    "totalMoneyRaised": {
+      "$ref": "#/$defs/MoneyDto"
+    },
+    "sicCodes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/DictionaryDto"
+      }
+    },
+    "morningstarCode": {
+      "description": "Deprecated. Always empty.",
+      "deprecated": true,
+      "allOf": [
+        {
+          "$ref": "#/$defs/DictionaryDto"
+        }
+      ]
+    },
+    "cikCode": {
+      "type": "string"
+    },
+    "companySocialURLs": {
+      "$ref": "#/$defs/CompanySocialDto"
+    },
+    "pitchBookProfileLink": {
+      "type": "string"
+    }
+  },
+  "$defs": {
+    "CompanyFinancingNoteDto": {
+      "type": "object",
+      "properties": {
+        "note": {
+          "type": "string"
+        },
+        "asOfDate": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "CompanySocialDto": {
+      "type": "object",
+      "properties": {
+        "facebookProfileUrl": {
+          "type": "string"
+        },
+        "twitterProfileUrl": {
+          "type": "string"
+        },
+        "linkedInProfileUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "DictionaryDto": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "EmployeeHistoryDto": {
+      "type": "object",
+      "properties": {
+        "asOfDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "employeeCount": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "EntityNameDto": {
+      "type": "object",
+      "properties": {
+        "formalName": {
+          "type": "string"
+        },
+        "alsoKnownAs": {
+          "type": "string"
+        },
+        "legalName": {
+          "type": "string"
+        },
+        "formerlyKnownAs": {
+          "type": "string"
+        }
+      }
+    },
+    "HqLocationDto": {
+      "type": "object",
+      "properties": {
+        "city": {
+          "type": "string"
+        },
+        "stateProvince": {
+          "type": "string"
+        },
+        "postCode": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        }
+      }
+    },
+    "MoneyDto": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "number"
+        },
+        "currency": {
+          "type": "string"
+        },
+        "nativeAmount": {
+          "type": "number"
+        },
+        "nativeCurrency": {
+          "type": "string"
+        },
+        "estimated": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

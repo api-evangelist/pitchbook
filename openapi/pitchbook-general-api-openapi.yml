@@ -1,0 +1,2223 @@
+openapi: 3.2.0
+info:
+  title: OpenAPI definition General API
+  version: v0
+  description: General
+servers:
+- url: https://api.pitchbook.com
+tags:
+- name: General
+  description: General
+paths:
+  /search:
+    get:
+      tags:
+      - General
+      summary: General Search
+      description: Retrieves business entities matching the specified criteria
+      operationId: generalSearch
+      parameters:
+      - name: query
+        in: query
+        description: "Pass some of the parameters:\n- an entity ID (will return results for entities with matching IDs);\n- name (entities can be found by formal, also known as and legal names.\n  Exact and partial matches are returned);\n- website (only exact matches are returned for website inputs);\n- ticker (takes entity ticker and searches across all exchanges; results are\n  returned for exact matches only);\n- xticker (takes exchange and ticker symbol; results are returned for exact matches only)\n"
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 11111-11
+      - name: page
+        in: query
+        description: Results are returned so that they can be paged through. Set this parameter to increment the page
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '1'
+      - name: perPage
+        in: query
+        description: How many returned results show on page
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '25'
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/GeneralSearchPageDto_SearchView'
+              example:
+                stats:
+                  total: 3
+                  perPage: 25
+                  page: 1
+                  lastPage: 1
+                items:
+                - pbId: 10377-37
+                  name: Tesla
+                  sandbox: false
+                  website: www.tesla.com
+                  pitchBookProfileLink: https://my.pitchbook.com/profile/10377-37/company/profile
+                  primaryFirmType:
+                    pbId: 10377-37
+                    type: COMPANY
+                  otherFirmTypes:
+                  - pbId: 10377-37
+                    type: INVESTOR
+                  stockTicker: TSLA
+                - fundId: 10377-37
+                  fundName: Tesla
+                  sandbox: false
+                - pbId: 1111-11P
+                  name: Peter Parker
+                  sandbox: true
+                  primaryCompanyId: 10377-37
+                  primaryCompanyName: Tesla
+      security:
+      - pbToken: []
+  /{entityType}/search:
+    get:
+      tags:
+      - General
+      summary: Shared Search
+      description: 'Extracts the specified entity names and pbIds from an Advanced Search that has been shared from a PitchBook platform user. This endpoint supports the extraction of pbIds for Companies, Deals, Investors, Funds, Limited Partners, Service Providers, People and Entity Management. The Shared Search endpoint can be an easier way to get the names and pbIds for your universe instead of using another search endpoint, such as Company Search. To generate a Shared Search link, click the share icon located in the Advanced Search Results page or Saved Searches/Lists sections.
+
+
+        For example, the following is the generated link for a Shared Search for US PE-Backed Companies:
+
+        https://content.pitchbook.com/share/quick-link/search/8e6bd17e-dea5-4eca-8143-dddb2ab623a0?hash=484124ea029982f76ec42f9a53cb3452f2d75eb013d75478a547d542b852e1c7
+
+        In the example above, the search ID value is: 8e6bd17e-dea5-4eca-8143-dddb2ab623a0, the hash value is 484124ea029982f76ec42f9a53cb3452f2d75eb013d75478a547d542b852e1c7 and the available entity types include: Companies, Deals, Investors and Entity_Management'
+      operationId: sharedSearch
+      parameters:
+      - name: entityType
+        in: path
+        description: Specify the type of entity to be returned from the PitchBook Shared Search. The ENTITY_MANAGEMENT entityType enables users to pull back people information from Companies & Deals, Investors & Funds, and Limited Partners searches. The People entityType is reserved for People screener shared searches
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          enum:
+          - COMPANIES
+          - DEALS
+          - INVESTORS
+          - SERVICE_PROVIDERS
+          - LIMITED_PARTNERS
+          - PEOPLE
+          - ENTITY_MANAGEMENT
+          - FUNDS
+      - name: searchId
+        in: query
+        description: Pass a search ID found in the generated URL of a PitchBook Shared Search. Note that this is different than copying the URL found in the browser
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 8e6bd17e-dea5-4eca-8143-dddb2ab623a0
+      - name: hash
+        in: query
+        description: Hash value for shared search
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 484124ea029982f76ec42f9a53cb3452f2d75eb013d75478a547d542b852e1c7
+      - name: page
+        in: query
+        description: Results are returned so that they can be paged through. Set this parameter to increment the page
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 1
+      - name: perPage
+        in: query
+        description: How many returned results show on page
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 25
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SharedSearchPageDtoObject_SearchView'
+              examples:
+                COMPANIES:
+                  value:
+                    stats:
+                      total: 5
+                      perPage: 1
+                      page: 3
+                      lastPage: 5
+                    searchCriteria: 'Deal Size: Min: 1.14M; Max: 57.04M; Deal Options: Search on a full transaction; Ownership Status: Privately Held (backing); Backing Status: Accelerator/Incubator-backed; Locations: United States;'
+                    items:
+                    - companyId: 10695-52
+                      companyName: Facebook
+                      sandbox: true
+                DEALS:
+                  value:
+                    stats:
+                      total: 5
+                      perPage: 1
+                      page: 3
+                      lastPage: 5
+                    searchCriteria: 'Deal Size: Min: 1.14M; Max: 57.04M; Deal Options: Search on a full transaction; Ownership Status: Privately Held (backing); Backing Status: Accelerator/Incubator-backed; Locations: United States;'
+                    items:
+                    - dealId: 109688-14T
+                      companyId: 164273-95
+                      companyName: Proxy
+                      sandbox: true
+                INVESTORS:
+                  value:
+                    stats:
+                      total: 5
+                      perPage: 1
+                      page: 3
+                      lastPage: 5
+                    searchCriteria: 'Deal Size: Min: 1.14M; Max: 57.04M; Deal Options: Search on a full transaction; Ownership Status: Privately Held (backing); Backing Status: Accelerator/Incubator-backed; Locations: United States;'
+                    items:
+                    - investorId: 52385-14
+                      investorName: TriGate Capital
+                      sandbox: true
+                SERVICE_PROVIDERS:
+                  value:
+                    stats:
+                      total: 5
+                      perPage: 1
+                      page: 3
+                      lastPage: 5
+                    searchCriteria: 'Deal Size: Min: 1.14M; Max: 57.04M; Deal Options: Search on a full transaction; Ownership Status: Privately Held (backing); Backing Status: Accelerator/Incubator-backed; Locations: United States;'
+                    items:
+                    - serviceProviderId: 166176-28
+                      serviceProviderName: Maitland Green I
+                      sandbox: true
+                LIMITED_PARTNERS:
+                  value:
+                    stats:
+                      total: 5
+                      perPage: 1
+                      page: 3
+                      lastPage: 5
+                    searchCriteria: 'Deal Size: Min: 1.14M; Max: 57.04M; Deal Options: Search on a full transaction; Ownership Status: Privately Held (backing); Backing Status: Accelerator/Incubator-backed; Locations: United States;'
+                    items:
+                    - limitedPartnerId: 166176-28
+                      limitedPartnerName: Maitland Green I
+                      sandbox: true
+                PEOPLE:
+                  value:
+                    stats:
+                      total: 5
+                      perPage: 1
+                      page: 3
+                      lastPage: 5
+                    searchCriteria: 'Deal Size: Min: 1.14M; Max: 57.04M; Deal Options: Search on a full transaction; Ownership Status: Privately Held (backing); Backing Status: Accelerator/Incubator-backed; Locations: United States;'
+                    items:
+                    - personId: 11397-61P
+                      personName: Stephen Neal
+                      firmId: 164076-94
+                      sandbox: true
+                ENTITY_MANAGEMENT:
+                  value:
+                    stats:
+                      total: 5
+                      perPage: 1
+                      page: 3
+                      lastPage: 5
+                    searchCriteria: 'Deal Size: Min: 1.14M; Max: 57.04M; Deal Options: Search on a full transaction; Ownership Status: Privately Held (backing); Backing Status: Accelerator/Incubator-backed; Locations: United States;'
+                    items:
+                    - personId: 11397-61P
+                      personName: Stephen Neal
+                      firmId: 164076-94
+                      sandbox: true
+                FUNDS:
+                  value:
+                    stats:
+                      total: 5
+                      perPage: 1
+                      page: 3
+                      lastPage: 5
+                    searchCriteria: 'Deal Size: Min: 1.14M; Max: 57.04M; Deal Options: Search on a full transaction; Ownership Status: Privately Held (backing); Backing Status: Accelerator/Incubator-backed; Locations: United States;'
+                    items:
+                    - fundId: 11119-69F
+                      fundName: Franklin Street Equity Fund
+                      investors:
+                      - investorId: 11193-94
+                        investorName: Franklin Street Equity Partners
+                      sandbox: true
+      security:
+      - pbToken: []
+  /entities/{pbId}/bio:
+    get:
+      tags:
+      - General
+      summary: Entity Bio
+      description: Retrieves key data points about primary entity type of specific PBID
+      operationId: getEntityBio
+      parameters:
+      - name: pbId
+        in: path
+        description: Entity pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          137127-16:
+            summary: 137127-16
+            value: 137127-16
+          436909-78:
+            summary: 436909-78
+            value: 436909-78
+          158901-40:
+            summary: 158901-40
+            value: 158901-40
+          51538-87:
+            summary: 51538-87
+            value: 51538-87
+          11593-99:
+            summary: 11593-99
+            value: 11593-99
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/EntityBioDto'
+      security:
+      - pbToken: []
+  /entities/bio:
+    post:
+      tags:
+      - General
+      summary: '[Bulk] Entity Bio'
+      description: Retrieves key data points about primary entity type of specific PBID. This bulk call allows you to send multiple pbIds within a single API call.
+      operationId: getBulkEntityBio
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequestDto'
+            example:
+              items:
+              - id: 11461-51
+              - id: 11593-99
+              - id: 437741-92
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BulkResultDtoEntityBioDto'
+      security:
+      - pbToken: []
+  /entities/{pbId}/people:
+    get:
+      tags:
+      - General
+      summary: Entity People
+      description: Retrieves data about each team member of the specific entity
+      operationId: getEntityPeople
+      parameters:
+      - name: pbId
+        in: path
+        description: Entity pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          10352-44:
+            summary: 10352-44
+            value: 10352-44
+          226884-79:
+            summary: 226884-79
+            value: 226884-79
+          178836-04:
+            summary: 178836-04
+            value: 178836-04
+          56069-29:
+            summary: 56069-29
+            value: 56069-29
+          11033-29:
+            summary: 11033-29
+            value: 11033-29
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/EntityPeopleDto'
+      security:
+      - pbToken: []
+  /entities/people:
+    post:
+      tags:
+      - General
+      summary: '[Bulk] Entity People'
+      description: Retrieves data about each team member of the specific entity. This bulk call allows you to send multiple pbIds within a single API call.
+      operationId: getBulkEntityPeople
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequestDto'
+            example:
+              items:
+              - id: 10072-27
+              - id: 51231-25
+              - id: 62881-48
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BulkResultDtoEntityPeopleDto'
+      security:
+      - pbToken: []
+  /entities/{pbId}/locations:
+    get:
+      tags:
+      - General
+      summary: Entity Locations
+      description: Retrieves data about locations of HQ and alternate offices of the specific entity
+      operationId: getEntityLocations
+      parameters:
+      - name: pbId
+        in: path
+        description: Entity pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          226657-72:
+            summary: 226657-72
+            value: 226657-72
+          122050-54:
+            summary: 122050-54
+            value: 122050-54
+          121367-53:
+            summary: 121367-53
+            value: 121367-53
+          10034-56:
+            summary: 10034-56
+            value: 10034-56
+          63910-36:
+            summary: 63910-36
+            value: 63910-36
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/EntityLocationsDto'
+      security:
+      - pbToken: []
+  /entities/locations:
+    post:
+      tags:
+      - General
+      summary: '[Bulk] Entity Locations'
+      description: Retrieves data about locations of HQ and alternate offices of the specific entity. This bulk call allows you to send multiple pbIds within a single API call.
+      operationId: getBulkEntityLocations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequestDto'
+            example:
+              items:
+              - id: 51209-29
+              - id: 10103-32
+              - id: 109857-16
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BulkResultDtoEntityLocationsDto'
+      security:
+      - pbToken: []
+  /entities/{pbId}/affiliates:
+    get:
+      tags:
+      - General
+      summary: Entity Affiliates
+      description: 'Retrieves data about entities affiliated with the specified entity; affiliated entities include: parent company, subsidiaries, and sisters'
+      operationId: getEntityAffiliates
+      parameters:
+      - name: pbId
+        in: path
+        description: Entity pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          161109-28:
+            summary: 161109-28
+            value: 161109-28
+          61310-53:
+            summary: 61310-53
+            value: 61310-53
+          224622-37:
+            summary: 224622-37
+            value: 224622-37
+          57384-64:
+            summary: 57384-64
+            value: 57384-64
+          10605-07:
+            summary: 10605-07
+            value: 10605-07
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EntityAffiliateDto'
+      security:
+      - pbToken: []
+  /entities/affiliates:
+    post:
+      tags:
+      - General
+      summary: '[Bulk] Entity Affiliates'
+      description: Retrieves entities affiliated with the specific entity. This bulk call allows you to send multiple pbIds within a single API call.
+      operationId: getBulkEntityAffiliate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequestDto'
+            example:
+              items:
+              - id: 62283-07
+              - id: 89110-45
+              - id: 11009-35
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BulkResultDtoListEntityAffiliateDto'
+      security:
+      - pbToken: []
+  /entities/{pbId}/news:
+    get:
+      tags:
+      - General
+      summary: Entity News
+      description: Retrieves news articles for the specific entity for up to the last 30 days
+      operationId: entityNews
+      parameters:
+      - name: pbId
+        in: path
+        description: Entity pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          10074-88:
+            summary: 10074-88
+            value: 10074-88
+          52385-14:
+            summary: 52385-14
+            value: 52385-14
+          122050-54:
+            summary: 122050-54
+            value: 122050-54
+          11571-22:
+            summary: 11571-22
+            value: 11571-22
+          10623-25:
+            summary: 10623-25
+            value: 10623-25
+      - name: sinceDate
+        in: query
+        description: 'Add this parameter to extract news articles about the entity after a certain date with the > operator, before a certain date with the < operator and between 2 dates with the ^ operator. Set this parameter in pair with pbId. Format: YYYY-MM-DD'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: <2022-10-20
+      - name: trailingRange
+        in: query
+        description: Add this parameter to extract news articles about the entity during last N days (up to 30). Set this parameter in pair with pbId
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 20
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EntityNewsDto'
+      security:
+      - pbToken: []
+  /entities/{pbId}/profile-download:
+    get:
+      tags:
+      - General
+      summary: Entity Profile Download
+      description: Retrieves PDF file of the specific entity.
+      operationId: downloadEntityProfile
+      parameters:
+      - name: pbId
+        in: path
+        description: Entity pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          66153-25:
+            summary: 66153-25
+            value: 66153-25
+          232806-43:
+            summary: 232806-43
+            value: 232806-43
+          89110-45:
+            summary: 89110-45
+            value: 89110-45
+          58572-64:
+            summary: 58572-64
+            value: 58572-64
+          11033-29:
+            summary: 11033-29
+            value: 11033-29
+      - name: entityType
+        in: query
+        description: Specify the type of entity to be downloaded into the PDF file. If nothing is specified, information about the entity's primary type is retrieved by default.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          enum:
+          - COMPANY
+          - INVESTOR
+          - LIMITED_PARTNER
+          - SERVICE_PROVIDER
+          - FUND
+          - PERSON
+      - name: includeSections
+        in: query
+        description: 'Specify the sections: <a href="https://my.pitchbook.com/api/lookup-tables/Entity Profile Sections#COMPANY_PROFILE_SECTIONS" target="_blank">company</a>, <a href="https://my.pitchbook.com/api/lookup-tables/Entity Profile Sections#INVESTOR_PROFILE_SECTIONS" target="_blank">investor</a>, <a href="https://my.pitchbook.com/api/lookup-tables/Entity Profile Sections#PERSON_PROFILE_SECTIONS" target="_blank">person</a>, <a href="https://my.pitchbook.com/api/lookup-tables/Entity Profile Sections#FUND_PROFILE_SECTIONS" target="_blank">fund</a>, <a href="https://my.pitchbook.com/api/lookup-tables/Entity Profile Sections#LIMITED_PARTNER_PROFILE_SECTIONS" target="_blank">limited partner</a>, <a href="https://my.pitchbook.com/api/lookup-tables/Entity Profile Sections#SERVICE_PROVIDER_PROFILE_SECTIONS" target="_blank">service provider</a> to be downloaded into a PDF file. Set this parameter to limit the list of downloaded information to the specified sections. Set the value for this parameter only when the Exclude Sections parameter is not applied. All sections will be downloaded by default.'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: ENTITY_CONTACT_INFO
+      - name: excludeSections
+        in: query
+        description: 'Specify the sections: <a href="https://my.pitchbook.com/api/lookup-tables/Entity Profile Sections#COMPANY_PROFILE_SECTIONS" target="_blank">company</a>, <a href="https://my.pitchbook.com/api/lookup-tables/Entity Profile Sections#INVESTOR_PROFILE_SECTIONS" target="_blank">investor</a>, <a href="https://my.pitchbook.com/api/lookup-tables/Entity Profile Sections#PERSON_PROFILE_SECTIONS" target="_blank">person</a>, <a href="https://my.pitchbook.com/api/lookup-tables/Entity Profile Sections#FUND_PROFILE_SECTIONS" target="_blank">fund</a>, <a href="https://my.pitchbook.com/api/lookup-tables/Entity Profile Sections#LIMITED_PARTNER_PROFILE_SECTIONS" target="_blank">limited partner</a>, <a href="https://my.pitchbook.com/api/lookup-tables/Entity Profile Sections#SERVICE_PROVIDER_PROFILE_SECTIONS" target="_blank">service provider</a> to be excluded from a PDF file. Set this parameter to exclude sections from the file. Set the value for this parameter only when the Include Sections parameter is not applied. Empty by default'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: ENTITY_FILINGS
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        default:
+          description: default response
+          content:
+            '*/*':
+              schema:
+                type: string
+                example: Binary file content
+      security:
+      - pbToken: []
+  /entities/{pbId}/updates:
+    get:
+      tags:
+      - General
+      summary: General Updates
+      description: Retrieves changes for the specific entity for up to the last 90 days
+      operationId: getEntityUpdates
+      parameters:
+      - name: pbId
+        in: path
+        description: Entity pbId. Required to specify time period using 'sinceDate' or 'trailingRange' parameter
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          223975-81:
+            summary: 223975-81
+            value: 223975-81
+          10034-56:
+            summary: 10034-56
+            value: 10034-56
+          56069-29:
+            summary: 56069-29
+            value: 56069-29
+          14145-31:
+            summary: 14145-31
+            value: 14145-31
+          10039-24:
+            summary: 10039-24
+            value: 10039-24
+      - name: sinceDate
+        in: query
+        description: 'Add this parameter to extract information about the entity updates after a certain date with the > operator, before a certain date with the < operator and between 2 dates with the ^ operator. Set this parameter in pair with pbId. Format: YYYY-MM-DD'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: <2026-09-16
+      - name: trailingRange
+        in: query
+        description: Add this parameter to extract information about the entity updates during last N days (up to 90). Set this parameter in pair with pbId
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+        example: '20'
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UpdateDto'
+      security:
+      - pbToken: []
+components:
+  schemas:
+    RequestItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+    FundGeneralSearchResultDto_SearchView:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/GeneralSearchResultDto_SearchView'
+      - type: object
+        properties:
+          fundId:
+            type: string
+          fundName:
+            type: string
+    GeneralSearchResultDto_SearchView:
+      required:
+      - discriminator
+      type: object
+      properties:
+        sandbox:
+          type: boolean
+        pbId:
+          type: string
+        name:
+          type: string
+        discriminator:
+          type: string
+      discriminator:
+        propertyName: discriminator
+    FailedItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 420962-68
+        reason:
+          type: string
+          example: 429 TOO_MANY_REQUESTS
+          enum:
+          - 400 BAD_REQUEST
+          - 401 UNAUTHORIZED
+          - 402 PAYMENT_REQUIRED
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 405 METHOD_NOT_ALLOWED
+          - 415 UNSUPPORTED_MEDIA_TYPE
+          - 429 TOO_MANY_REQUESTS
+          - 500 INTERNAL_SERVER_ERROR
+          - 503 SERVICE_UNAVAILABLE
+        message:
+          type: string
+          example: '{LIMIT_TYPE} rate limit exceeded. Please wait until rate limit period is renewed'
+    BulkStatsDto:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+        matched:
+          type: integer
+          format: int32
+        noData:
+          type: integer
+          format: int32
+        unmatched:
+          type: integer
+          format: int32
+        duplicates:
+          type: integer
+          format: int32
+    NoDataItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+    BulkResultDtoEntityPeopleDto:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/BulkStatsDto'
+        matched:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityPeopleDto'
+        noData:
+          type: array
+          items:
+            $ref: '#/components/schemas/NoDataItemDto'
+        unmatched:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailedItemDto'
+        duplicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicatedItemDto'
+    BulkRequestDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RequestItemDto'
+    CompanyBioDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+          example: 54937-90
+        companyName:
+          $ref: '#/components/schemas/EntityNameDto'
+        parentCompanyId:
+          type: string
+          example: 62181-28
+        parentCompanyName:
+          type: string
+          example: The We Company
+        hqLocation:
+          $ref: '#/components/schemas/HqLocationDto'
+        description:
+          type: string
+          example: Provider of a mobile collaboration platform created to turn simple field updates into game-changing insights. The company's mobile collaboration platform contains a Web/tablet component, providing all stakeholders on a construction job mobile access to job-site data and also issues automated daily reports, job-site tasks and tracks field progress in real time, enabling professionals in the construction industry with a bird's-eye view of every project without stepping on-site.
+        financingStatus:
+          $ref: '#/components/schemas/DictionaryDto'
+        businessStatus:
+          $ref: '#/components/schemas/DictionaryDto'
+        ownershipStatus:
+          $ref: '#/components/schemas/DictionaryDto'
+        universe:
+          type: array
+          items:
+            $ref: '#/components/schemas/DictionaryDto'
+        website:
+          type: string
+          example: www.fieldlens.com
+        employees:
+          type: integer
+          format: int64
+          example: 25
+        employeeHistory:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmployeeHistoryDto'
+        exchange:
+          type: string
+          example: PINX
+        ticker:
+          type: string
+          example: BASX
+        yearFounded:
+          type: integer
+          format: int32
+          example: 2010
+        financingStatusNote:
+          $ref: '#/components/schemas/CompanyFinancingNoteDto'
+        totalMoneyRaised:
+          $ref: '#/components/schemas/MoneyDto'
+        sicCodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/DictionaryDto'
+        morningstarCode:
+          description: Deprecated. Always empty.
+          deprecated: true
+          allOf:
+          - $ref: '#/components/schemas/DictionaryDto'
+        cikCode:
+          type: string
+          example: '1554436'
+        companySocialURLs:
+          $ref: '#/components/schemas/CompanySocialDto'
+        pitchBookProfileLink:
+          type: string
+    DuplicatedItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 420962-68
+        occurrence:
+          type: integer
+          format: int32
+          example: 1
+    CompanySocialDto:
+      type: object
+      properties:
+        facebookProfileUrl:
+          type: string
+        twitterProfileUrl:
+          type: string
+        linkedInProfileUrl:
+          type: string
+    EntityTypeDto:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/DictionaryDto'
+        primary:
+          type: boolean
+          example: false
+      example:
+        type:
+          code: IB
+          description: Investment Bank
+        primary: true
+    EntityBoardMemberDto:
+      type: object
+      properties:
+        personId:
+          type: string
+          example: 204383-98P
+        personName:
+          type: string
+          example: Luke Bagley
+        fullTitle:
+          type: string
+          example: Board Member
+        boardRepresentingId:
+          type: string
+          example: 10377-37
+        boardRepresentingName:
+          type: string
+          example: Max Technologies
+        roleOnBoard:
+          type: string
+          example: Board Member
+        boardStart:
+          type: string
+          format: date
+          example: '2005-07-29'
+        boardFinish:
+          type: string
+          format: date
+          example: '2020-05-09'
+        contactInfoAvailable:
+          type: boolean
+          example: true
+    EntityDescriptionDto:
+      type: object
+      properties:
+        brief:
+          type: string
+          example: Franklin Street Equity Partners is a private equity firm investing in middle market companies across a wide range of industries.
+        full:
+          type: string
+          example: Franklin Street Equity Partners is a private equity firm investing in middle market companies across a wide range of industries. FSEP was founded by the principals of Ablum, Brown & Company, a Chicago-based investment banking boutique specializing in leveraged acquisitions. The firm was founded in 1997 and is based in Chicago, Illinois.
+    EntityAffiliateDto:
+      type: object
+      properties:
+        entityId:
+          type: string
+          example: 54937-90
+        affiliateId:
+          type: string
+          example: 41349-37
+        affiliateName:
+          type: string
+          example: Max Technologies
+        affiliateType:
+          type: string
+          example: Subsidiary
+    MoneyDto:
+      type: object
+      properties:
+        amount:
+          type: number
+          example: 17039.27
+        currency:
+          type: string
+          example: USD
+        nativeAmount:
+          type: number
+          example: 15689
+        nativeCurrency:
+          type: string
+          example: EUR
+        estimated:
+          type: boolean
+          example: false
+    EntityBioDto:
+      type: object
+      properties:
+        primaryFirmType:
+          type: string
+        companyBio:
+          $ref: '#/components/schemas/CompanyBioDto'
+        investorBio:
+          $ref: '#/components/schemas/InvestorBioDto'
+        limitedPartnerBio:
+          $ref: '#/components/schemas/LimitedPartnerBioDto'
+        serviceProviderBio:
+          $ref: '#/components/schemas/ServiceProviderBioDto'
+    EntityOfficeDto:
+      type: object
+      properties:
+        location:
+          type: string
+          example: Chicago, IL
+        addressLine1:
+          type: string
+          example: 69 West Monroe Street
+        addressLine2:
+          type: string
+          example: Suite 190
+        city:
+          type: string
+          example: Chicago
+        stateProvince:
+          type: string
+          example: IL
+        postCode:
+          type: string
+          example: '60661'
+        country:
+          type: string
+          example: United States
+        phone:
+          type: string
+          example: +1 (312) 902-6655
+        fax:
+          type: string
+          example: +1 (312) 902-5655
+        email:
+          type: string
+          example: office.email@gmail.com
+        globalRegion:
+          type: string
+          example: Americas
+        globalSubRegion:
+          type: string
+          example: North America
+    ErrorDto:
+      type: object
+      properties:
+        reason:
+          type: string
+          enum:
+          - 100 CONTINUE
+          - 101 SWITCHING_PROTOCOLS
+          - 102 PROCESSING
+          - 103 EARLY_HINTS
+          - 103 CHECKPOINT
+          - 200 OK
+          - 201 CREATED
+          - 202 ACCEPTED
+          - 203 NON_AUTHORITATIVE_INFORMATION
+          - 204 NO_CONTENT
+          - 205 RESET_CONTENT
+          - 206 PARTIAL_CONTENT
+          - 207 MULTI_STATUS
+          - 208 ALREADY_REPORTED
+          - 226 IM_USED
+          - 300 MULTIPLE_CHOICES
+          - 301 MOVED_PERMANENTLY
+          - 302 FOUND
+          - 302 MOVED_TEMPORARILY
+          - 303 SEE_OTHER
+          - 304 NOT_MODIFIED
+          - 305 USE_PROXY
+          - 307 TEMPORARY_REDIRECT
+          - 308 PERMANENT_REDIRECT
+          - 400 BAD_REQUEST
+          - 401 UNAUTHORIZED
+          - 402 PAYMENT_REQUIRED
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 405 METHOD_NOT_ALLOWED
+          - 406 NOT_ACCEPTABLE
+          - 407 PROXY_AUTHENTICATION_REQUIRED
+          - 408 REQUEST_TIMEOUT
+          - 409 CONFLICT
+          - 410 GONE
+          - 411 LENGTH_REQUIRED
+          - 412 PRECONDITION_FAILED
+          - 413 PAYLOAD_TOO_LARGE
+          - 413 REQUEST_ENTITY_TOO_LARGE
+          - 414 URI_TOO_LONG
+          - 414 REQUEST_URI_TOO_LONG
+          - 415 UNSUPPORTED_MEDIA_TYPE
+          - 416 REQUESTED_RANGE_NOT_SATISFIABLE
+          - 417 EXPECTATION_FAILED
+          - 418 I_AM_A_TEAPOT
+          - 419 INSUFFICIENT_SPACE_ON_RESOURCE
+          - 420 METHOD_FAILURE
+          - 421 DESTINATION_LOCKED
+          - 422 UNPROCESSABLE_ENTITY
+          - 423 LOCKED
+          - 424 FAILED_DEPENDENCY
+          - 425 TOO_EARLY
+          - 426 UPGRADE_REQUIRED
+          - 428 PRECONDITION_REQUIRED
+          - 429 TOO_MANY_REQUESTS
+          - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
+          - 451 UNAVAILABLE_FOR_LEGAL_REASONS
+          - 500 INTERNAL_SERVER_ERROR
+          - 501 NOT_IMPLEMENTED
+          - 502 BAD_GATEWAY
+          - 503 SERVICE_UNAVAILABLE
+          - 504 GATEWAY_TIMEOUT
+          - 505 HTTP_VERSION_NOT_SUPPORTED
+          - 506 VARIANT_ALSO_NEGOTIATES
+          - 507 INSUFFICIENT_STORAGE
+          - 508 LOOP_DETECTED
+          - 509 BANDWIDTH_LIMIT_EXCEEDED
+          - 510 NOT_EXTENDED
+          - 511 NETWORK_AUTHENTICATION_REQUIRED
+        message:
+          type: string
+    ServiceProviderBioDto:
+      type: object
+      properties:
+        serviceProviderId:
+          type: string
+          example: 11356-75
+        serviceProviderName:
+          $ref: '#/components/schemas/EntityNameDto'
+        serviceProviderTypes:
+          type: array
+          example:
+            type:
+              code: IB
+              description: Investment Bank
+            primary: true
+          items:
+            $ref: '#/components/schemas/EntityTypeDto'
+        hqLocation:
+          $ref: '#/components/schemas/HqLocationDto'
+        description:
+          type: string
+          example: Collins Stewart was an independent investment banking group with offices in London, New York, Jersey, Guernsey, Isle of Man, Dublin, Paris, Geneva, Singapore, Tel Aviv, Mumbai, and Tokyo. The company was a fundraiser on London's Alternative, Investment Market. the firm's services included fixed income credit trading, corporate broking, corporate finance advisory services, debt capital markets advice, restructuring and debt advisory services. The firm was founded in 1991 and was based in London, England.
+        website:
+          type: string
+          example: www.collins-stewart.com
+        employees:
+          type: integer
+          format: int32
+          example: 68
+        servicedCompanies:
+          type: integer
+          format: int32
+          example: 36
+        servicedDeals:
+          type: integer
+          format: int32
+          example: 38
+        servicedInvestors:
+          type: integer
+          format: int32
+          example: 14
+        servicedFunds:
+          type: integer
+          format: int32
+          example: 0
+        servicedLimitedPartners:
+          type: integer
+          format: int32
+          example: 0
+    LimitedPartnerBioDto:
+      type: object
+      properties:
+        limitedPartnerId:
+          type: string
+          example: 11231-47
+        limitedPartnerName:
+          $ref: '#/components/schemas/EntityNameDto'
+        hqLocation:
+          $ref: '#/components/schemas/HqLocationDto'
+        description:
+          type: string
+          example: Landmark Partners is a private equity, real estate and infrastructure investment company specializing in secondary funds. The firm invests primarily as a fund of funds, purchasing interests in various investment funds, typically structured as limited partnerships. Landmark acquires limited partnership interests and direct investments in real asset, venture, mezzanine, and buyout assets. Founded in 1989, Landmark is headquartered in Simsbury, Connecticut, and has offices in Boston, Dallas, New York, and London.
+        limitedPartnerTypes:
+          type: array
+          example:
+            type:
+              code: F
+              description: Founded
+            primary: true
+          items:
+            $ref: '#/components/schemas/EntityTypeDto'
+        assetsUnderManagement:
+          $ref: '#/components/schemas/MoneyDto'
+        yearFounded:
+          type: integer
+          format: int32
+          example: 1989
+        website:
+          type: string
+          example: www.landmarkpartners.com
+        managementStaff:
+          type: integer
+          format: int32
+    GeneralSearchPageDto_SearchView:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/SearchPageStatsDto_SearchView'
+        items:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/GeneralSearchResultDto_SearchView'
+            - $ref: '#/components/schemas/EntityGeneralSearchResultDto_SearchView'
+            - $ref: '#/components/schemas/FundGeneralSearchResultDto_SearchView'
+            - $ref: '#/components/schemas/PersonGeneralSearchResultDto_SearchView'
+    HqLocationDto:
+      type: object
+      properties:
+        city:
+          type: string
+          example: Chicago
+        stateProvince:
+          type: string
+          example: IL
+        postCode:
+          type: string
+          example: '60661'
+        country:
+          type: string
+          example: United States
+    InvestorBioDto:
+      type: object
+      properties:
+        investorId:
+          type: string
+          example: 11193-94
+        investorName:
+          $ref: '#/components/schemas/EntityNameDto'
+        hqLocation:
+          $ref: '#/components/schemas/HqLocationDto'
+        description:
+          $ref: '#/components/schemas/EntityDescriptionDto'
+        investorStatus:
+          $ref: '#/components/schemas/DictionaryDto'
+        investorType:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityTypeDto'
+        assetsUnderManagement:
+          $ref: '#/components/schemas/MoneyDto'
+        dryPowder:
+          $ref: '#/components/schemas/MoneyDto'
+        yearFounded:
+          type: integer
+          format: int32
+          example: 1997
+        website:
+          type: string
+          example: www.franklinstreetequity.com
+        countInvestmentProfessionals:
+          type: integer
+          format: int32
+          example: 1
+        tradeAssociations:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvestorTradeAssociationDto'
+    BulkResultDtoEntityBioDto:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/BulkStatsDto'
+        matched:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityBioDto'
+        noData:
+          type: array
+          items:
+            $ref: '#/components/schemas/NoDataItemDto'
+        unmatched:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailedItemDto'
+        duplicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicatedItemDto'
+    CompanyFinancingNoteDto:
+      type: object
+      properties:
+        note:
+          type: string
+          example: The company was acquired by WeWork for an undisclosed amount on June 7, 2017.
+        asOfDate:
+          type: string
+          format: date
+          example: '2017-06-08'
+    EntityNameDto:
+      type: object
+      properties:
+        formalName:
+          type: string
+        alsoKnownAs:
+          type: string
+        legalName:
+          type: string
+        formerlyKnownAs:
+          type: string
+    BulkResultDtoEntityLocationsDto:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/BulkStatsDto'
+        matched:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityLocationsDto'
+        noData:
+          type: array
+          items:
+            $ref: '#/components/schemas/NoDataItemDto'
+        unmatched:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailedItemDto'
+        duplicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicatedItemDto'
+    TeamMemberDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 204383-98P
+        name:
+          type: string
+          example: Luke Bagley
+        title:
+          type: string
+          example: Board Member
+        positionStart:
+          type: string
+          format: date
+          example: '2005-07-29'
+        positionFinish:
+          type: string
+          format: date
+          example: '2020-05-09'
+        infoAvailable:
+          type: boolean
+          example: true
+    SearchPageStatsDto_SearchView:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+          example: 1
+        perPage:
+          type: integer
+          format: int32
+          example: 25
+        page:
+          type: integer
+          format: int32
+          example: 1
+        lastPage:
+          type: integer
+          format: int32
+          example: 1
+    PrimaryContactDto:
+      type: object
+      properties:
+        personId:
+          type: string
+          example: 195066-01P
+        fullName:
+          type: string
+          example: John Taylor
+        title:
+          type: string
+          example: Board Member
+        phone:
+          type: string
+          example: +44 (0)20 7466 2430
+        fax:
+          type: string
+          example: +44 (0)20 7374 0888
+        email:
+          type: string
+          example: john.taylor@hsf.com
+    EntityLocationsDto:
+      type: object
+      properties:
+        entityId:
+          type: string
+          example: 54937-90
+        hqOffice:
+          $ref: '#/components/schemas/EntityOfficeDto'
+        alternateOffices:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityOfficeDto'
+        alternateOfficesCount:
+          type: integer
+          format: int32
+          example: 1
+    SharedSearchPageDtoObject_SearchView:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/SearchPageStatsDto_SearchView'
+        searchCriteria:
+          type: string
+        items:
+          type: array
+          items:
+            type: object
+    BulkResultDtoListEntityAffiliateDto:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/BulkStatsDto'
+        matched:
+          type: array
+          items:
+            type: array
+            items:
+              $ref: '#/components/schemas/EntityAffiliateDto'
+        noData:
+          type: array
+          items:
+            $ref: '#/components/schemas/NoDataItemDto'
+        unmatched:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailedItemDto'
+        duplicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicatedItemDto'
+    EntityGeneralSearchResultDto_SearchView:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/GeneralSearchResultDto_SearchView'
+      - type: object
+        properties:
+          website:
+            type: string
+          pitchBookProfileLink:
+            type: string
+          primaryFirmType:
+            $ref: '#/components/schemas/FirmTypeDto_SearchView'
+          otherFirmTypes:
+            type: array
+            items:
+              $ref: '#/components/schemas/FirmTypeDto_SearchView'
+          stockTicker:
+            type: string
+    EntityPeopleDto:
+      type: object
+      properties:
+        entityId:
+          type: string
+          example: 54937-90
+        primaryContact:
+          $ref: '#/components/schemas/PrimaryContactDto'
+        currentTeam:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamMemberDto'
+        formerTeam:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamMemberDto'
+        currentBoardMembersAndObservers:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityBoardMemberDto'
+        formerBoardMembersAndObservers:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityBoardMemberDto'
+    UpdateDto:
+      type: object
+      properties:
+        updates:
+          type: object
+          additionalProperties:
+            type: string
+            example: '{"Endpoint name":"Update Status (true/false)"}'
+          example:
+            Endpoint name: Update Status (true/false)
+    FirmTypeDto_SearchView:
+      type: object
+      properties:
+        pbId:
+          type: string
+          example: 10377-37
+        type:
+          type: string
+          enum:
+          - GENERAL
+          - COMPANY
+          - INVESTOR
+          - LIMITED_PARTNER
+          - SERVICE_PROVIDER
+          - PERSON
+          - DEAL
+          - FUND
+    DictionaryDto:
+      type: object
+      properties:
+        code:
+          type: string
+          example: Dictionary code
+        description:
+          type: string
+          example: Dictionary Code Description
+    EmployeeHistoryDto:
+      type: object
+      properties:
+        asOfDate:
+          type: string
+          format: date
+        employeeCount:
+          type: integer
+          format: int64
+    EntityNewsDto:
+      type: object
+      properties:
+        entityId:
+          type: string
+          example: 41082-40
+        title:
+          type: string
+          example: 'Apple: Airpods Pro work with Find My Network'
+        byline:
+          type: string
+          example: The annual Worldwide Developers Conference also shows off new WatchOS 8, Apple Wallet, iMessage, Apple Maps and AirPods tricks.
+        source:
+          type: string
+          example: Bollyinside
+        publishDate:
+          type: string
+          format: date-time
+        url:
+          type: string
+          example: https://www.bollyinside.com/news/all-apples-big-announcements-at-wwdc-2021-ios-15-facetime-for-android-macos-monterey-and-more
+    InvestorTradeAssociationDto:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Evergreen Venture Capital Association
+    PersonGeneralSearchResultDto_SearchView:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/GeneralSearchResultDto_SearchView'
+      - type: object
+        properties:
+          primaryCompanyId:
+            type: string
+            example: 10377-37
+          primaryCompanyName:
+            type: string
+            example: Tesla
+  securitySchemes:
+    pbToken:
+      type: apiKey
+      name: Authorization
+      in: header
+      scheme: bearer
+      bearerFormat: JWT

@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/pitchbook/main/json-schema/pitchbook-company-social-analytics-dto-schema.json",
+  "title": "CompanySocialAnalyticsDto",
+  "x-generated": "2026-09-21",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/pitchbook-openapi.json#/components/schemas/CompanySocialAnalyticsDto",
+  "type": "object",
+  "properties": {
+    "companyId": {
+      "type": "string"
+    },
+    "growthRate": {
+      "type": "number",
+      "format": "double"
+    },
+    "growthRatePercentile": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "growthRateChange": {
+      "type": "number",
+      "format": "double"
+    },
+    "growthRatePercentChange": {
+      "type": "number",
+      "format": "double"
+    },
+    "webGrowthRate": {
+      "type": "number",
+      "format": "double"
+    },
+    "webGrowthRatePercentile": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "socialGrowthRate": {
+      "type": "number",
+      "format": "double",
+      "deprecated": true
+    },
+    "socialGrowthRatePercentile": {
+      "type": "integer",
+      "format": "int32",
+      "deprecated": true
+    },
+    "sizeMultiple": {
+      "type": "number",
+      "format": "double"
+    },
+    "sizeMultiplePercentile": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "sizeMultipleChange": {
+      "type": "number",
+      "format": "double"
+    },
+    "sizeMultiplePercentChange": {
+      "type": "number",
+      "format": "double"
+    },
+    "webSizeMultiple": {
+      "type": "number",
+      "format": "double"
+    },
+    "webSizeMultiplePercentile": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "socialSizeMultiple": {
+      "type": "number",
+      "format": "double",
+      "deprecated": true
+    },
+    "socialSizeMultiplePercentile": {
+      "type": "integer",
+      "format": "int32",
+      "deprecated": true
+    },
+    "twitterFollowers": {
+      "type": "integer",
+      "format": "int32",
+      "deprecated": true
+    },
+    "twitterFollowersChange": {
+      "type": "integer",
+      "format": "int32",
+      "deprecated": true
+    },
+    "twitterFollowersPercentChange": {
+      "type": "number",
+      "format": "double",
+      "deprecated": true
+    }
+  }
+}

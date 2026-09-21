@@ -1,0 +1,430 @@
+generated: '2026-09-21'
+method: derived
+generator: derive-vocabulary.py
+source:
+- openapi/pitchbook-account-information-api-openapi.yml
+- openapi/pitchbook-companies-api-openapi.yml
+- openapi/pitchbook-credit-analysis-api-openapi.yml
+- openapi/pitchbook-deals-api-openapi.yml
+- openapi/pitchbook-fundamentals-api-openapi.yml
+vocabulary:
+  name: PitchBook Domain Vocabulary
+  description: 'Terms declared by PitchBook''s own API contract: its resource groups, objects and enumerations, with the contract''s definitions.
+    Derived, not authored.'
+  version: '2026-09-21'
+  terms:
+  - term: Account Information
+    definition: Account Information
+    tags:
+    - Resource Group
+    source: openapi/pitchbook-account-information-api-openapi.yml
+  - term: Companies
+    definition: Companies
+    tags:
+    - Resource Group
+    source: openapi/pitchbook-companies-api-openapi.yml
+  - term: Credit Analysis
+    definition: Credit Analysis
+    tags:
+    - Resource Group
+    source: openapi/pitchbook-credit-analysis-api-openapi.yml
+  - term: Deals
+    definition: Deals
+    tags:
+    - Resource Group
+    source: openapi/pitchbook-deals-api-openapi.yml
+  - term: Fundamentals
+    definition: Fundamentals
+    tags:
+    - Resource Group
+    source: openapi/pitchbook-fundamentals-api-openapi.yml
+  - term: Funds
+    definition: Funds
+    tags:
+    - Resource Group
+    source: openapi/pitchbook-funds-api-openapi.yml
+  - term: General
+    definition: General
+    tags:
+    - Resource Group
+    source: openapi/pitchbook-general-api-openapi.yml
+  - term: Investors
+    definition: Investors
+    tags:
+    - Resource Group
+    source: openapi/pitchbook-investors-api-openapi.yml
+  - term: Limited Partners
+    definition: Limited Partners
+    tags:
+    - Resource Group
+    source: openapi/pitchbook-limited-partners-api-openapi.yml
+  - term: Patents
+    definition: Patents
+    tags:
+    - Resource Group
+    source: openapi/pitchbook-patents-api-openapi.yml
+  - term: People
+    definition: People
+    tags:
+    - Resource Group
+    source: openapi/pitchbook-people-api-openapi.yml
+  - term: Service Providers
+    definition: Service Providers
+    tags:
+    - Resource Group
+    source: openapi/pitchbook-service-providers-api-openapi.yml
+  - term: LimitUsageInfoDto
+    definition: 'Object declared by the contract with fields: limitType, perMinute, perHour, perDay, perMonth.'
+    tags:
+    - Object
+    source: openapi/pitchbook-account-information-api-openapi.yml#/components/schemas/LimitUsageInfoDto
+  - term: EndpointUsageInfoDto
+    definition: 'Object declared by the contract with fields: contractNumber, request, requestDate, responseStatus, endpointType, chargedCredits.'
+    tags:
+    - Object
+    source: openapi/pitchbook-account-information-api-openapi.yml#/components/schemas/EndpointUsageInfoDto
+  - term: ContractHistoryDto
+    definition: 'Object declared by the contract with fields: contractNumber, activeContract, pricingModel, startDate, endDate, creditsUsed, creditsChanged,
+      creditsExpired, creditsRemaining, overageUsed.'
+    tags:
+    - Object
+    source: openapi/pitchbook-account-information-api-openapi.yml#/components/schemas/ContractHistoryDto
+  - term: LimitStatisticsDto
+    definition: 'Object declared by the contract with fields: limits, lastUpdatedDate, overageChargesAvailable.'
+    tags:
+    - Object
+    source: openapi/pitchbook-account-information-api-openapi.yml#/components/schemas/LimitStatisticsDto
+  - term: EndpointUsageReportDto
+    definition: 'Object declared by the contract with fields: stats, rawData.'
+    tags:
+    - Object
+    source: openapi/pitchbook-account-information-api-openapi.yml#/components/schemas/EndpointUsageReportDto
+  - term: EndpointUsageStatsDto
+    definition: 'Object declared by the contract with fields: endpoints, totalCountOfCalls, totalChargedCredits.'
+    tags:
+    - Object
+    source: openapi/pitchbook-account-information-api-openapi.yml#/components/schemas/EndpointUsageStatsDto
+  - term: ErrorDto
+    definition: 'Object declared by the contract with fields: reason, message.'
+    tags:
+    - Object
+    source: openapi/pitchbook-account-information-api-openapi.yml#/components/schemas/ErrorDto
+  - term: CreditHistoryDto
+    definition: 'Object declared by the contract with fields: contractNumber, activeContract, pricingModel, creditsUsed, creditsChanged, creditsExpired,
+      creditsRemaining, overageUsed.'
+    tags:
+    - Object
+    source: openapi/pitchbook-account-information-api-openapi.yml#/components/schemas/CreditHistoryDto
+  - term: CallInfoDto
+    definition: 'Object declared by the contract with fields: group, endpoint, initialCost, refreshCost.'
+    tags:
+    - Object
+    source: openapi/pitchbook-account-information-api-openapi.yml#/components/schemas/CallInfoDto
+  - term: LimitUsageStatsDto
+    definition: 'Object declared by the contract with fields: limit, remainingLimit.'
+    tags:
+    - Object
+    source: openapi/pitchbook-account-information-api-openapi.yml#/components/schemas/LimitUsageStatsDto
+  - term: EmergingSpaceDto
+    definition: 'Object declared by the contract with fields: spaceCode, spaceName, spaceDescription.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/EmergingSpaceDto
+  - term: RequestItemDto
+    definition: 'Object declared by the contract with fields: id.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/RequestItemDto
+  - term: FailedItemDto
+    definition: 'Object declared by the contract with fields: id, reason, message.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/FailedItemDto
+  - term: BulkStatsDto
+    definition: 'Object declared by the contract with fields: total, matched, noData, unmatched, duplicates.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/BulkStatsDto
+  - term: NoDataItemDto
+    definition: 'Object declared by the contract with fields: id.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/NoDataItemDto
+  - term: CompanyIndustryInfoDto
+    definition: 'Object declared by the contract with fields: industrySector, industryGroup, industryCode, primary.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/CompanyIndustryInfoDto
+  - term: BulkRequestDto
+    definition: 'Object declared by the contract with fields: items.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/BulkRequestDto
+  - term: BulkResultDtoCompanyBioDto
+    definition: 'Object declared by the contract with fields: stats, matched, noData, unmatched, duplicates.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/BulkResultDtoCompanyBioDto
+  - term: EntityDto
+    definition: 'Object declared by the contract with fields: id, name.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/EntityDto
+  - term: CompanyMostRecentFinancingDto
+    definition: 'Object declared by the contract with fields: companyId, lastFinancingDealId, lastFinancingDate, lastFinancingStatus, lastFinancingSize,
+      lastFinancingSizeStatus, lastFinancingValuation, lastFinancingValuationStatus, lastFinancingDealType, lastFinancingDealType2, lastFinancingDealType3,
+      lastFinancingDealClass. (3 more)'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/CompanyMostRecentFinancingDto
+  - term: CompanyBioDto
+    definition: 'Object declared by the contract with fields: companyId, companyName, parentCompanyId, parentCompanyName, hqLocation, description,
+      financingStatus, businessStatus, ownershipStatus, universe, website, employees. (11 more)'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/CompanyBioDto
+  - term: BulkResultDtoListActiveInvestorDto
+    definition: 'Object declared by the contract with fields: stats, matched, noData, unmatched, duplicates.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/BulkResultDtoListActiveInvestorDto
+  - term: DuplicatedItemDto
+    definition: 'Object declared by the contract with fields: id, occurrence.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/DuplicatedItemDto
+  - term: GeneralServiceProviderDto
+    definition: 'Object declared by the contract with fields: serviceProviderId, serviceProviderName, serviceProviderTypes, serviceProvided.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/GeneralServiceProviderDto
+  - term: CompanyDto
+    definition: 'Object declared by the contract with fields: companyId, companyBio, companyIndustry, companyActiveInvestors, companyAllInvestors,
+      companyMostRecentFinancing.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/CompanyDto
+  - term: EntityTypeDto
+    definition: 'Object declared by the contract with fields: type, primary.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/EntityTypeDto
+  - term: CompanySocialDto
+    definition: 'Object declared by the contract with fields: facebookProfileUrl, twitterProfileUrl, linkedInProfileUrl.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/CompanySocialDto
+  - term: ValuationEstimatesDto
+    definition: 'Object declared by the contract with fields: companyId, companyName, estimationDate, valuationEstimate, confidenceScore, estimateGrowthRate,
+      lastKnownValuationDate, estimateRangeLow, estimateRangeHigh, predictionDrivers, historicalEstimates.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/ValuationEstimatesDto
+  - term: CompanyInvestorDto
+    definition: 'Object declared by the contract with fields: companyId, investorId, investorName, investorTypes, investorSince, investorExit,
+      investorStatus.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/CompanyInvestorDto
+  - term: CompanySocialAnalyticsDto
+    definition: 'Object declared by the contract with fields: companyId, growthRate, growthRatePercentile, growthRateChange, growthRatePercentChange,
+      webGrowthRate, webGrowthRatePercentile, socialGrowthRate, socialGrowthRatePercentile, sizeMultiple, sizeMultiplePercentile, sizeMultipleChange.
+      (8 more)'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/CompanySocialAnalyticsDto
+  - term: PredictionDriversDto
+    definition: 'Object declared by the contract with fields: marketReturns, comparablePerformance, companySpecificSignals.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/PredictionDriversDto
+  - term: BulkResultDtoCompanyDto
+    definition: 'Object declared by the contract with fields: stats, matched, noData, unmatched, duplicates.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/BulkResultDtoCompanyDto
+  - term: MoneyDto
+    definition: 'Object declared by the contract with fields: amount, currency, nativeAmount, nativeCurrency, estimated.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/MoneyDto
+  - term: CompanyAllInvestorsDto
+    definition: 'Object declared by the contract with fields: countAllInvestors, investors.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/CompanyAllInvestorsDto
+  - term: CompanyEntityAdvancedSearchResultDto_SearchView
+    definition: 'Object declared by the contract with fields: companyId, companyName, sandbox, website.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/CompanyEntityAdvancedSearchResultDto_SearchView
+  - term: EstimateDto
+    definition: 'Object declared by the contract with fields: estimationDate, valuationEstimate, estimateRangeLow, estimateRangeHigh.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/EstimateDto
+  - term: DriverItemDto
+    definition: 'Object declared by the contract with fields: name, value, contribution.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/DriverItemDto
+  - term: HqLocationDto
+    definition: 'Object declared by the contract with fields: city, stateProvince, postCode, country.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/HqLocationDto
+  - term: ActiveInvestorDto
+    definition: 'Object declared by the contract with fields: companyId, investorId, investorName, investorTypes, investorSince, holding.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/ActiveInvestorDto
+  - term: CompanyFinancingNoteDto
+    definition: 'Object declared by the contract with fields: note, asOfDate.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/CompanyFinancingNoteDto
+  - term: EntityNameDto
+    definition: 'Object declared by the contract with fields: formalName, alsoKnownAs, legalName, formerlyKnownAs.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/EntityNameDto
+  - term: MostRecentPrivateCompanyFinancialsDto
+    definition: 'Object declared by the contract with fields: companyId, period, quarter, endDate, enterpriseValue, revenue, netIncome, ebitda,
+      totalAssets, totalDebt.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/MostRecentPrivateCompanyFinancialsDto
+  - term: CompanyGeneralServiceProvidersDto
+    definition: 'Object declared by the contract with fields: companyId, currentGeneralServices, formerGeneralServices.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/CompanyGeneralServiceProvidersDto
+  - term: CompanyIndustryDto
+    definition: 'Object declared by the contract with fields: companyId, gecs, industries, verticals, keywords, emergingSpaces.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/CompanyIndustryDto
+  - term: LastDebtFinancingDto
+    definition: 'Object declared by the contract with fields: lastDebtFinancingType, lastDebtFinancingAmount, seniority, security, subordination,
+      term, additionalDebtCharacteristics, lenders.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/LastDebtFinancingDto
+  - term: AdvancedSearchPageDtoCompanyEntityAdvancedSearchResultDto_SearchView
+    definition: 'Object declared by the contract with fields: stats, items.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/AdvancedSearchPageDtoCompanyEntityAdvancedSearchResultDto_SearchView
+  - term: SearchPageStatsDto_SearchView
+    definition: 'Object declared by the contract with fields: total, perPage, page, lastPage.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/SearchPageStatsDto_SearchView
+  - term: PrivateCompanyFinancialsDto
+    definition: 'Object declared by the contract with fields: companyId, items.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/PrivateCompanyFinancialsDto
+  - term: GecsClassificationDto
+    definition: GECS (Morningstar Global Equity Classification Structure) classifications. Empty when no GECS data is available. Distinct from
+      PitchBook native industry classifications.
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/GecsClassificationDto
+  - term: BulkResultDtoCompanyIndustryDto
+    definition: 'Object declared by the contract with fields: stats, matched, noData, unmatched, duplicates.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/BulkResultDtoCompanyIndustryDto
+  - term: UpdateDto
+    definition: 'Object declared by the contract with fields: updates.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/UpdateDto
+  - term: SimilarCompanyDto
+    definition: 'Object declared by the contract with fields: companyId, similarCompanyId, similarCompanyName, similarityScore, competitor.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/SimilarCompanyDto
+  - term: BulkResultDtoCompanyMostRecentFinancingDto
+    definition: 'Object declared by the contract with fields: stats, matched, noData, unmatched, duplicates.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/BulkResultDtoCompanyMostRecentFinancingDto
+  - term: AdditionalDebtCharacteristicsDto
+    definition: 'Object declared by the contract with fields: unitranche, syndicated, mezzanine, covLite, warrants, convertible, rate.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/AdditionalDebtCharacteristicsDto
+  - term: BulkResultDtoCompanyAllInvestorsDto
+    definition: 'Object declared by the contract with fields: stats, matched, noData, unmatched, duplicates.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/BulkResultDtoCompanyAllInvestorsDto
+  - term: DriverCategoryDto
+    definition: 'Object declared by the contract with fields: category, contribution, items.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/DriverCategoryDto
+  - term: DictionaryDto
+    definition: 'Object declared by the contract with fields: code, description.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/DictionaryDto
+  - term: CompanyDealServiceProviderDto
+    definition: 'Object declared by the contract with fields: companyId, serviceProviderId, serviceProviderName, serviceProviderTypes, serviceProvided,
+      dealIdServiceProvided.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/CompanyDealServiceProviderDto
+  - term: CompanyFinancialsDto
+    definition: 'Object declared by the contract with fields: period, endDate, enterpriseValue, revenue, netIncome, ebitda, totalAssets, totalDebt.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/CompanyFinancialsDto
+  - term: EmployeeHistoryDto
+    definition: 'Object declared by the contract with fields: asOfDate, employeeCount.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/EmployeeHistoryDto
+  - term: CompanyDealsDto
+    definition: 'Object declared by the contract with fields: companyId, dealId, dealDate, dealType1, dealType2, dealType3, dealNumber.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/CompanyDealsDto
+  - term: CompanyMostRecentDebtFinancingDto
+    definition: 'Object declared by the contract with fields: companyId, lastDebtFinancingDealId, lastDebtFinancingDate, lastDebtFinancing.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/CompanyMostRecentDebtFinancingDto
+  - term: ExitPredictionDto
+    definition: 'Object declared by the contract with fields: companyId, predictionDate, opportunityScore, successClass, successProbability, noexitProbability,
+      exitClass, ipoProbability, mergeracquisitionProbability, vcDealNumber.'
+    tags:
+    - Object
+    source: openapi/pitchbook-companies-api-openapi.yml#/components/schemas/ExitPredictionDto
+  - term: CreditNewsStatsDto
+    definition: 'Object declared by the contract with fields: total, perPage, page, lastPage.'
+    tags:
+    - Object
+    source: openapi/pitchbook-credit-analysis-api-openapi.yml#/components/schemas/CreditNewsStatsDto
+  - term: CreditResearchPageDto
+    definition: 'Object declared by the contract with fields: stats, items.'
+    tags:
+    - Object
+    source: openapi/pitchbook-credit-analysis-api-openapi.yml#/components/schemas/CreditResearchPageDto
+  - term: CreditNewsSearchPageDto
+    definition: 'Object declared by the contract with fields: stats, items.'
+    tags:
+    - Object
+    source: openapi/pitchbook-credit-analysis-api-openapi.yml#/components/schemas/CreditNewsSearchPageDto
+  - term: CreditNewsBulkRequestDto
+    definition: 'Object declared by the contract with fields: items.'
+    tags:
+    - Object
+    source: openapi/pitchbook-credit-analysis-api-openapi.yml#/components/schemas/CreditNewsBulkRequestDto
+  - term: CreditNewsBulkStatsDto
+    definition: 'Object declared by the contract with fields: total, found, notFound, duplicates.'
+    tags:
+    - Object
+    source: openapi/pitchbook-credit-analysis-api-openapi.yml#/components/schemas/CreditNewsBulkStatsDto

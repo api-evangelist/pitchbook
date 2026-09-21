@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/pitchbook/main/json-schema/pitchbook-patent-detailed-dto-schema.json",
+  "title": "PatentDetailedDto",
+  "x-generated": "2026-09-21",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/pitchbook-openapi.json#/components/schemas/PatentDetailedDto",
+  "type": "object",
+  "properties": {
+    "patentId": {
+      "type": "string"
+    },
+    "patentTitle": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "publicationDate": {
+      "type": "string",
+      "format": "date"
+    },
+    "firstFilingDate": {
+      "type": "string",
+      "format": "date"
+    },
+    "expirationDate": {
+      "type": "string",
+      "format": "date"
+    },
+    "filingAuthorityLocation": {
+      "type": "string"
+    },
+    "cpcSection": {
+      "$ref": "#/$defs/DictionaryDto"
+    },
+    "cpcClass": {
+      "$ref": "#/$defs/DictionaryDto"
+    },
+    "cpcSubclass": {
+      "$ref": "#/$defs/DictionaryDto"
+    },
+    "currentAssigneeNames": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "originalAssigneeNames": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "mostRecentLegalStatus": {
+      "type": "string"
+    },
+    "mostRecentLegalStatusDate": {
+      "type": "string",
+      "format": "date"
+    },
+    "applicationDate": {
+      "type": "string",
+      "format": "date"
+    },
+    "grantDate": {
+      "type": "string",
+      "format": "date"
+    },
+    "familyId": {
+      "type": "string"
+    },
+    "inventors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "documentForwardCitations": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "documentBackwardCitations": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "countOfClaims": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "countOfIndependentClaims": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "patentDownloadUrl": {
+      "type": "string"
+    }
+  },
+  "$defs": {
+    "DictionaryDto": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

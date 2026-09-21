@@ -1,0 +1,2588 @@
+openapi: 3.2.0
+info:
+  title: OpenAPI definition Deals API
+  version: v0
+  description: Deals
+servers:
+- url: https://api.pitchbook.com
+tags:
+- name: Deals
+  description: Deals
+paths:
+  /deals/search:
+    get:
+      tags:
+      - Deals
+      summary: Deal Search
+      description: Retrieves deals along with the companies associated with the deal
+      operationId: dealSearch
+      parameters:
+      - name: companyNames
+        in: query
+        description: Accepts company names, pbIds, websites, and tickers to find all deals. Returns a list of deals related to companies that are an exact match. Use a comma to separate multiple values
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 11111-11, Name
+      - name: ownershipStatus
+        in: query
+        description: Search for deals by <a href="https://my.pitchbook.com/api/lookup-tables/Companies#OWNERSHIP_STATUS_TREE" target="_blank">ownership status code</a> of the companies involved
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: ACQ
+      - name: backingStatus
+        in: query
+        description: Search for deals by <a href="https://my.pitchbook.com/api/lookup-tables/Companies#BACKING_STATUS_TREE" target="_blank">backing status code</a> of the companies involved
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: ACCIB
+      - name: businessStatus
+        in: query
+        description: Search for deals by <a href="https://my.pitchbook.com/api/lookup-tables/Companies#BUSINESS_STATUS_TREE" target="_blank">business status code</a> of the companies involved
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: CH11
+      - name: city
+        in: query
+        description: Search for deals by city location of the companies involved
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: Seattle
+      - name: stateProvince
+        in: query
+        description: Search for deals by <a href="https://my.pitchbook.com/api/lookup-tables/Location#US_STATE_TREE" target="_blank">state code</a> or <a href="https://my.pitchbook.com/api/lookup-tables/Location#CANADIAN_PROVINCE_TREE" target="_blank">province code</a> of the companies involved
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: AL
+      - name: country
+        in: query
+        description: Search for deals by <a href="https://my.pitchbook.com/api/lookup-tables/Location#COUNTRY_TREE" target="_blank">country code</a> of the companies involved
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: ABW
+      - name: postCode
+        in: query
+        description: Search for deals by postcode of the companies involved, included to support searching for both US postal code and foreign
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '98765'
+      - name: locationType
+        in: query
+        description: Search for deals by additional parameter concerning the companies involved specifying HQ Only (HQ_ONLY), Non-HQ Only (NON_HQ_ONLY) or any office location (ANY) values. Set this parameter in pair with city, stateProvince, country, postCode options
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: ANY
+      - name: dateFounded
+        in: query
+        description: 'Deals can be found by founding date of the companies involved. Search for deals of companies founded after a certain date using the > operator, companies founded before a certain date using the < operator and companies founded between 2 dates using the ^ operator. Format: YYYY-MM-DD'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: <2026-09-16
+      - name: industry
+        in: query
+        description: Deals can be found by the <a href="https://my.pitchbook.com/api/lookup-tables/Industries, Verticals & Emerging Spaces#INDUSTRY_TREE" target="_blank">industry code</a> of the companies involved. Only one industry classification can be used at a time. This parameter cannot be combined with parameters from other industry classifications
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '10'
+      - name: verticals
+        in: query
+        description: Deals can be found by the <a href="https://my.pitchbook.com/api/lookup-tables/Industries, Verticals & Emerging Spaces#VERTICAL_TREE" target="_blank">vertical code</a> of the companies involved. Only one industry classification can be used at a time. This parameter cannot be combined with parameters from other industry classifications
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 3D
+      - name: industryAndVertical
+        in: query
+        description: When using both industry and vertical parameters, "OR" logic is used by default. To use "AND" logic, set this parameter to True. Set this parameter in pair with industry and vertical options
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 'TRUE'
+      - name: gecsSector
+        in: query
+        description: Deals can be found by the <a href="https://my.pitchbook.com/api/lookup-tables/Industries, Verticals & Emerging Spaces#GECS_SECTOR_TREE" target="_blank">GECS sector code</a> of the companies involved. Only one industry classification can be used at a time. This parameter cannot be combined with parameters from other industry classifications
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '102'
+      - name: gecsIndustryGroup
+        in: query
+        description: Deals can be found by the <a href="https://my.pitchbook.com/api/lookup-tables/Industries, Verticals & Emerging Spaces#GECS_INDUSTRY_GROUP_TREE" target="_blank">GECS industry group code</a> of the companies involved. Only one industry classification can be used at a time. This parameter cannot be combined with parameters from other industry classifications
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '10200'
+      - name: gecsIndustry
+        in: query
+        description: Deals can be found by the <a href="https://my.pitchbook.com/api/lookup-tables/Industries, Verticals & Emerging Spaces#GECS_INDUSTRY_TREE" target="_blank">GECS industry code</a> of the companies involved. Only one industry classification can be used at a time. This parameter cannot be combined with parameters from other industry classifications
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '10200020'
+      - name: totalRaised
+        in: query
+        description: Find deals by the companies' total amount of money they have raised to date in millions. Use the > operator to find companies that have raised more than a certain value, use the < to find companies who have raised less than a certain value and the ^ operator to search within a range. Amounts in millions
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 10^15
+      - name: keywords
+        in: query
+        description: Search for deals by keywords associated with the companies involved or keywords appearing in their business description. Only one industry classification can be used at a time. This parameter cannot be combined with parameters from other industry classifications
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: IT
+      - name: onlyMostRecentTransaction
+        in: query
+        description: 'Find most recent deals. To use this parameter set it as True '
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 'TRUE'
+      - name: dealType
+        in: query
+        description: Find specific <a href="https://my.pitchbook.com/api/lookup-tables/Deals#DEAL_TYPE_TREE" target="_blank">deal type code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: SeedA
+      - name: dealStatus
+        in: query
+        description: Distinguish between failed, upcoming, completed deals and more. Pass a <a href="https://my.pitchbook.com/api/lookup-tables/Deals#DEAL_STATUS_TREE" target="_blank">deal status code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: ANNO
+      - name: dealSize
+        in: query
+        description: Find deals of a certain size. Search for deals larger than an amount using the > operator, deals smaller than a certain amount using the < operator and deals in a range using the ^ operator. Amounts in millions
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 10^15
+      - name: includeDealsWithoutDealSize
+        in: query
+        description: Include deals without a known deal size. Set this parameter as True only when Deal Size parameter is applied. False by default
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 'TRUE'
+      - name: excludeDealsWithoutDealSize
+        in: query
+        description: Exclude deals without a known deal size. Set this parameter as True only when Deal Size parameter is not applied. False by default
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 'TRUE'
+      - name: dealDate
+        in: query
+        description: 'Find deals within a certain time frame. Search for a deal after a certain date using the > operator, a deal before a certain date using the < operator and a deal between 2 dates using the ^ operator. Format: YYYY-MM-DD'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: <2026-09-16
+      - name: partialExit
+        in: query
+        description: Find deals with partial investor's exit within them. To use this parameter set it as True
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 'TRUE'
+      - name: fullExit
+        in: query
+        description: Find deals with full investor's exit within them. To use this parameter set it as True
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 'TRUE'
+      - name: investorNames
+        in: query
+        description: Search for deals by who invested in them with an exact match. Accepts investor names, pbIds, websites, and tickers to return all deals they participated in. Use a comma to separate multiple values
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 11111-11, Name
+      - name: exitType
+        in: query
+        description: Find specific deal types with investor's exit within them. Pass a <a href="https://my.pitchbook.com/api/lookup-tables/Deals#EXIT_TYPE_TREE" target="_blank">exit type code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: CH11
+      - name: exitStatus
+        in: query
+        description: Distinguish between failed, upcoming, completed exits and more. Pass a <a href="https://my.pitchbook.com/api/lookup-tables/Deals#DEAL_STATUS_TREE" target="_blank">deal status code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: ANNO
+      - name: exitSize
+        in: query
+        description: Find deals of a certain size with investor's exit within them. Search for deals with an exit larger than an amount using the > operator, deals with an exit smaller than a certain amount using the < operator and deals with an exit size in a range using the ^ operator. Amounts in millions
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 10^15
+      - name: exitDate
+        in: query
+        description: 'Find deals of a certain time frame with investor''s exit within them. Search for deals with an exit after a certain date using the > operator, companies with an exit before a certain date using the < operator and companies with an exit between 2 dates using the ^ operator. Format: YYYY-MM-DD'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: <2026-09-16
+      - name: preMoneyValuation
+        in: query
+        description: Search for deals by companies' valuation prior to a financing. Search for deals with companies' valuation prior to a financing larger than an amount using the > operator, deals with companies' valuation prior to a financing smaller than a certain amount using the < operator and deals with companies' valuation prior to a financing in a range using the ^ operator. Amounts in millions
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 10^15
+      - name: postValuation
+        in: query
+        description: Search for deals by companies' valuation prior at or post investment. Search for deals with companies' valuation prior at or post investment larger than an amount using the > operator, deals with companies' valuation prior at or post investment smaller than a certain amount using the < operator and deals with companies' valuation prior at or post investment in a range using the ^ operator. Amounts in millions
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 10^15
+      - name: revenue
+        in: query
+        description: Find deals by the revenue of the companies involved. Search for deals with companies' revenue more than an amount using the > operator, deals with companies' revenue less than an amount using the < operator or deals with companies' revenue  in a range using the ^ operator. Amounts in millions
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 10^15
+      - name: currency
+        in: query
+        description: Specify the currency that your other parameters, such as dealSize, are entered as. It depends on the <a href="https://my.pitchbook.com/api/lookup-tables/Currency#CURRENCY_CODE_TREE" target="_blank">currency</a> in user preferences
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: AFN
+      - name: page
+        in: query
+        description: Results are returned so that they can be paged through. Set this parameter to increment the page
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '1'
+      - name: perPage
+        in: query
+        description: How many returned results show on page
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '25'
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/AdvancedSearchPageDtoDealAdvancedSearchResultDto_SearchView'
+      security:
+      - pbToken: []
+  /deals/{pbId}/bio:
+    get:
+      tags:
+      - Deals
+      summary: Deal Bio
+      description: Retrieves key data points about specific deal
+      operationId: getDealBio
+      parameters:
+      - name: pbId
+        in: path
+        description: Deal pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          105928-66T:
+            summary: 105928-66T
+            value: 105928-66T
+          75779-11T:
+            summary: 75779-11T
+            value: 75779-11T
+          111416-59T:
+            summary: 111416-59T
+            value: 111416-59T
+          119310-31T:
+            summary: 119310-31T
+            value: 119310-31T
+          85305-88T:
+            summary: 85305-88T
+            value: 85305-88T
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DealBioDto'
+      security:
+      - pbToken: []
+  /deals/{pbId}/detailed:
+    get:
+      tags:
+      - Deals
+      summary: Deal Detailed
+      description: Retrieves extended description of the specific deal
+      operationId: getDealDetailed
+      parameters:
+      - name: pbId
+        in: path
+        description: Deal pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          163939-87T:
+            summary: 163939-87T
+            value: 163939-87T
+          124120-36T:
+            summary: 124120-36T
+            value: 124120-36T
+          26404-75T:
+            summary: 26404-75T
+            value: 26404-75T
+          117731-62T:
+            summary: 117731-62T
+            value: 117731-62T
+          85305-88T:
+            summary: 85305-88T
+            value: 85305-88T
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DealDetailedDto'
+      security:
+      - pbToken: []
+  /deals/{pbId}/investors/exiters:
+    get:
+      tags:
+      - Deals
+      summary: Deal Investors/Exiters
+      description: Retrieves investors, exiters and sellers within the specific deal
+      operationId: getDealInvestorsExiters
+      parameters:
+      - name: pbId
+        in: path
+        description: Deal pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          124120-36T:
+            summary: 124120-36T
+            value: 124120-36T
+          75779-11T:
+            summary: 75779-11T
+            value: 75779-11T
+          111416-59T:
+            summary: 111416-59T
+            value: 111416-59T
+          119310-31T:
+            summary: 119310-31T
+            value: 119310-31T
+          85305-88T:
+            summary: 85305-88T
+            value: 85305-88T
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DealInvestorsExitersDto'
+      security:
+      - pbToken: []
+  /deals/{pbId}/service-providers:
+    get:
+      tags:
+      - Deals
+      summary: Deal Service Providers
+      description: Retrieves service providers hired within the specific deal
+      operationId: getDealServiceProviders
+      parameters:
+      - name: pbId
+        in: path
+        description: Deal pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          173485-81T:
+            summary: 173485-81T
+            value: 173485-81T
+          163939-87T:
+            summary: 163939-87T
+            value: 163939-87T
+          117731-62T:
+            summary: 117731-62T
+            value: 117731-62T
+          75779-11T:
+            summary: 75779-11T
+            value: 75779-11T
+          119310-31T:
+            summary: 119310-31T
+            value: 119310-31T
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DealServiceProviderDto'
+      security:
+      - pbToken: []
+  /deals/{pbId}/valuation:
+    get:
+      tags:
+      - Deals
+      summary: Deal Valuation
+      description: Retrieves the company's valuation prior and after the specific deal
+      operationId: getDealValuation
+      parameters:
+      - name: pbId
+        in: path
+        description: Deal pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          173485-81T:
+            summary: 173485-81T
+            value: 173485-81T
+          26404-75T:
+            summary: 26404-75T
+            value: 26404-75T
+          105443-38T:
+            summary: 105443-38T
+            value: 105443-38T
+          118069-93T:
+            summary: 118069-93T
+            value: 118069-93T
+          85305-88T:
+            summary: 85305-88T
+            value: 85305-88T
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DealValuationDto'
+      security:
+      - pbToken: []
+  /deals/{pbId}/stock-info:
+    get:
+      tags:
+      - Deals
+      summary: Deal Stock Info
+      description: Retrieves key data about stock within the specific deal
+      operationId: getDealStockInfo
+      parameters:
+      - name: pbId
+        in: path
+        description: Deal pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          173485-81T:
+            summary: 173485-81T
+            value: 173485-81T
+          105928-66T:
+            summary: 105928-66T
+            value: 105928-66T
+          165559-69T:
+            summary: 165559-69T
+            value: 165559-69T
+          105443-38T:
+            summary: 105443-38T
+            value: 105443-38T
+          189494-92T:
+            summary: 189494-92T
+            value: 189494-92T
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DealStockInfoDto'
+      security:
+      - pbToken: []
+  /deals/{pbId}/cap-table-history:
+    get:
+      tags:
+      - Deals
+      summary: Deal Cap Table History
+      description: Retrieves stock prices values within the specific deal and prior to it
+      operationId: getDealCapTableHistory
+      parameters:
+      - name: pbId
+        in: path
+        description: Deal pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          173485-81T:
+            summary: 173485-81T
+            value: 173485-81T
+          163939-87T:
+            summary: 163939-87T
+            value: 163939-87T
+          123088-78T:
+            summary: 123088-78T
+            value: 123088-78T
+          111416-59T:
+            summary: 111416-59T
+            value: 111416-59T
+          105443-38T:
+            summary: 105443-38T
+            value: 105443-38T
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DealCapTableHistoryDto'
+      security:
+      - pbToken: []
+  /deals/{pbId}/tranche-info:
+    get:
+      tags:
+      - Deals
+      summary: Deal Tranche Information
+      description: Retrieves tranche data within the specific deal
+      operationId: getDealTrancheInfo
+      parameters:
+      - name: pbId
+        in: path
+        description: Deal pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          163939-87T:
+            summary: 163939-87T
+            value: 163939-87T
+          118069-93T:
+            summary: 118069-93T
+            value: 118069-93T
+          119310-31T:
+            summary: 119310-31T
+            value: 119310-31T
+          85305-88T:
+            summary: 85305-88T
+            value: 85305-88T
+          189494-92T:
+            summary: 189494-92T
+            value: 189494-92T
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DealTrancheInformationDto'
+      security:
+      - pbToken: []
+  /deals/{pbId}/debt-lenders:
+    get:
+      tags:
+      - Deals
+      summary: Deal Debt/Lenders
+      description: Retrieves debt and lender data within the specific deal
+      operationId: getDealDebtLenders
+      parameters:
+      - name: pbId
+        in: path
+        description: Deal pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          105928-66T:
+            summary: 105928-66T
+            value: 105928-66T
+          165559-69T:
+            summary: 165559-69T
+            value: 165559-69T
+          163939-87T:
+            summary: 163939-87T
+            value: 163939-87T
+          26404-75T:
+            summary: 26404-75T
+            value: 26404-75T
+          75779-11T:
+            summary: 75779-11T
+            value: 75779-11T
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DealDebtLendersDto'
+      security:
+      - pbToken: []
+  /deals/{pbId}/multiples:
+    get:
+      tags:
+      - Deals
+      summary: Deal Multiples
+      description: Retrieves key financial multiple values of the specific deal
+      operationId: getDealMultiples
+      parameters:
+      - name: pbId
+        in: path
+        description: Deal pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          165559-69T:
+            summary: 165559-69T
+            value: 165559-69T
+          124120-36T:
+            summary: 124120-36T
+            value: 124120-36T
+          26404-75T:
+            summary: 26404-75T
+            value: 26404-75T
+          123088-78T:
+            summary: 123088-78T
+            value: 123088-78T
+          118069-93T:
+            summary: 118069-93T
+            value: 118069-93T
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DealMultiplesDto'
+      security:
+      - pbToken: []
+  /deals/{pbId}/updates:
+    get:
+      tags:
+      - Deals
+      summary: Deal Updates
+      description: Retrieves changes for the specific deal for up to the last 90 days
+      operationId: getDealUpdates
+      parameters:
+      - name: pbId
+        in: path
+        description: Deal pbId. Required to specify time period using 'sinceDate' or 'trailingRange' parameter
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          163939-87T:
+            summary: 163939-87T
+            value: 163939-87T
+          123088-78T:
+            summary: 123088-78T
+            value: 123088-78T
+          105443-38T:
+            summary: 105443-38T
+            value: 105443-38T
+          119310-31T:
+            summary: 119310-31T
+            value: 119310-31T
+          85305-88T:
+            summary: 85305-88T
+            value: 85305-88T
+      - name: sinceDate
+        in: query
+        description: 'Add this parameter to extract information about the entity updates after a certain date with the > operator, before a certain date with the < operator and between 2 dates with the ^ operator. Set this parameter in pair with pbId. Format: YYYY-MM-DD'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: <2026-09-16
+      - name: trailingRange
+        in: query
+        description: Add this parameter to extract information about the entity updates during last N days (up to 90). Set this parameter in pair with pbId
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+        example: '20'
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UpdateDto'
+      security:
+      - pbToken: []
+components:
+  schemas:
+    DealValuationDto:
+      type: object
+      properties:
+        dealId:
+          type: string
+        dealNumber:
+          type: integer
+          format: int32
+          example: 1
+        companyId:
+          type: string
+          example: 10695-52
+        companyName:
+          type: string
+          example: Facebook
+        preValuation:
+          $ref: '#/components/schemas/MoneyDto'
+        postValuation:
+          $ref: '#/components/schemas/MoneyDto'
+        postValuationStatus:
+          type: string
+          example: Estimated
+    DealExiterDto:
+      type: object
+      properties:
+        exiterId:
+          type: string
+          example: 42257-26
+        exiterName:
+          type: string
+          example: Crossroads Capital Partners
+    AdvancedSearchPageDtoDealAdvancedSearchResultDto_SearchView:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/SearchPageStatsDto_SearchView'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/DealAdvancedSearchResultDto_SearchView'
+    DealInvestorsExitersDto:
+      type: object
+      properties:
+        dealId:
+          type: string
+          example: 108911-98T
+        companyId:
+          type: string
+          example: 10695-52
+        companyName:
+          type: string
+          example: Facebook
+        investors:
+          type: array
+          items:
+            $ref: '#/components/schemas/DealInvestorDto'
+        sellers:
+          type: array
+          items:
+            $ref: '#/components/schemas/DealSellerDto'
+        exiters:
+          type: array
+          items:
+            $ref: '#/components/schemas/DealExiterDto'
+    DealCapTableHistoryDto:
+      type: object
+      properties:
+        dealId:
+          type: string
+          example: 108911-98T
+        dealNumber:
+          type: integer
+          format: int32
+          example: 1
+        companyId:
+          type: string
+          example: 10695-52
+        companyName:
+          type: string
+          example: Facebook
+        stockSeries:
+          type: string
+          example: Preferred
+        numberOfSharesAuthorized:
+          type: integer
+          format: int64
+          example: 8167544
+        parValue:
+          $ref: '#/components/schemas/MoneyDto'
+        dividendRate:
+          type: number
+          format: double
+          example: 0.1
+        dividendAmount:
+          $ref: '#/components/schemas/MoneyDto'
+        originalIssuePrice:
+          $ref: '#/components/schemas/MoneyDto'
+        liquidationPrice:
+          $ref: '#/components/schemas/MoneyDto'
+        liquidationPreferenceMultiple:
+          type: number
+          format: double
+          example: 1.05
+        conversionPrice:
+          $ref: '#/components/schemas/MoneyDto'
+        percentOwned:
+          type: number
+          format: double
+          example: 0.1
+    EntityDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 41349-37
+        name:
+          type: string
+          example: Max Technologies
+      example:
+        id: 25304-77F
+        name: AB Private Credit Investors Corp BDC
+    EntityTypeDto:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/DictionaryDto'
+        primary:
+          type: boolean
+          example: false
+      example:
+        type:
+          code: IB
+          description: Investment Bank
+        primary: true
+    BondDetailsDto:
+      type: object
+      properties:
+        lcdBondId:
+          type: integer
+          format: int32
+          example: 10243
+        spread:
+          type: string
+          example: Base Rate + 7.6
+        price:
+          type: number
+          format: double
+          example: 100.0
+        yield:
+          type: number
+          format: double
+          example: 8.5
+        floatingRateEquivalent:
+          type: number
+          format: double
+          example: 31.0
+          deprecated: true
+        priceTalkTight:
+          type: number
+          format: double
+          example: 8.0
+        priceTalkWide:
+          type: number
+          format: double
+          example: 8.25
+        breakYield:
+          type: number
+          format: double
+          example: 0.57
+        settleDate:
+          type: string
+          format: date
+          example: '2019-09-16'
+        settleTDays:
+          type: integer
+          format: int32
+        nonCallYears:
+          type: number
+          format: double
+          example: 3.25
+        callTerms:
+          type: string
+          example: nc3.25
+        firstCallPremiumPercent:
+          type: number
+          format: double
+          example: 0.0
+          deprecated: true
+        firstCallPremium:
+          type: number
+          format: double
+          example: 1.03
+        equityClawback:
+          type: boolean
+          example: true
+        equityClawbackYears:
+          type: number
+          format: double
+          example: 1.5
+        equityClawbackPercent:
+          type: number
+          format: double
+          example: 40.0
+        clawbackValue:
+          type: number
+          format: double
+          example: 300.0
+        marketplace:
+          type: string
+          example: PUB
+        pik:
+          type: boolean
+          example: true
+        cashPik:
+          type: boolean
+          example: false
+        holdco:
+          type: boolean
+          example: false
+        portabilityClause:
+          type: boolean
+          example: false
+    DealSizeBreakdownDto:
+      type: object
+      properties:
+        totalNewMoney:
+          $ref: '#/components/schemas/MoneyDto'
+        usdNewMoney:
+          $ref: '#/components/schemas/MoneyDto'
+        eurNewMoney:
+          $ref: '#/components/schemas/MoneyDto'
+        totalInstitutionalNewMoney:
+          $ref: '#/components/schemas/MoneyDto'
+        usdInstitutionalNewMoney:
+          $ref: '#/components/schemas/MoneyDto'
+        eurInstitutionalNewMoney:
+          $ref: '#/components/schemas/MoneyDto'
+        totalFirstLienNewMoney:
+          $ref: '#/components/schemas/MoneyDto'
+        usdFirstLienNewMoney:
+          $ref: '#/components/schemas/MoneyDto'
+        eurFirstLienNewMoney:
+          $ref: '#/components/schemas/MoneyDto'
+        totalFirstLienInstitutionalNewMoney:
+          $ref: '#/components/schemas/MoneyDto'
+        usdFirstLienInstitutionalNewMoney:
+          $ref: '#/components/schemas/MoneyDto'
+        eurFirstLienInstitutionalNewMoney:
+          $ref: '#/components/schemas/MoneyDto'
+        totalSecondLienNewMoney:
+          $ref: '#/components/schemas/MoneyDto'
+        usdSecondLienNewMoney:
+          $ref: '#/components/schemas/MoneyDto'
+        eurSecondLienNewMoney:
+          $ref: '#/components/schemas/MoneyDto'
+    LenderDto:
+      type: object
+      properties:
+        lenderId:
+          type: string
+          example: 13954-20
+        lenderName:
+          type: string
+          example: Morgan Stanley
+        firmType:
+          type: string
+          example: SERVICE_PROVIDER
+          enum:
+          - GENERAL
+          - COMPANY
+          - INVESTOR
+          - LIMITED_PARTNER
+          - SERVICE_PROVIDER
+          - PERSON
+          - DEAL
+          - FUND
+        serviceProviderType:
+          $ref: '#/components/schemas/DictionaryDto'
+        titles:
+          type: array
+          example: '[Co-agent]'
+          items:
+            type: string
+            example: '[Co-agent]'
+        lenderSize:
+          $ref: '#/components/schemas/MoneyDto'
+        leadPartner:
+          $ref: '#/components/schemas/LeadPartnerDto'
+        funds:
+          type: array
+          items:
+            $ref: '#/components/schemas/LenderFundDto'
+    DealTrancheInformationDto:
+      type: object
+      properties:
+        dealId:
+          type: string
+          example: 108911-98T
+        dealNumber:
+          type: integer
+          format: int32
+          example: 1
+        company:
+          $ref: '#/components/schemas/EntityDto'
+        tranches:
+          type: array
+          items:
+            $ref: '#/components/schemas/DealTrancheDto'
+    MoneyDto:
+      type: object
+      properties:
+        amount:
+          type: number
+          example: 17039.27
+        currency:
+          type: string
+          example: USD
+        nativeAmount:
+          type: number
+          example: 15689
+        nativeCurrency:
+          type: string
+          example: EUR
+        estimated:
+          type: boolean
+          example: false
+    DealAdvancedSearchResultDto_SearchView:
+      type: object
+      properties:
+        dealId:
+          type: string
+          example: 109688-14T
+        companyId:
+          type: string
+          example: 164273-95
+        companyName:
+          type: string
+          example: Proxy
+        sandbox:
+          type: boolean
+          example: false
+    ErrorDto:
+      type: object
+      properties:
+        reason:
+          type: string
+          enum:
+          - 100 CONTINUE
+          - 101 SWITCHING_PROTOCOLS
+          - 102 PROCESSING
+          - 103 EARLY_HINTS
+          - 103 CHECKPOINT
+          - 200 OK
+          - 201 CREATED
+          - 202 ACCEPTED
+          - 203 NON_AUTHORITATIVE_INFORMATION
+          - 204 NO_CONTENT
+          - 205 RESET_CONTENT
+          - 206 PARTIAL_CONTENT
+          - 207 MULTI_STATUS
+          - 208 ALREADY_REPORTED
+          - 226 IM_USED
+          - 300 MULTIPLE_CHOICES
+          - 301 MOVED_PERMANENTLY
+          - 302 FOUND
+          - 302 MOVED_TEMPORARILY
+          - 303 SEE_OTHER
+          - 304 NOT_MODIFIED
+          - 305 USE_PROXY
+          - 307 TEMPORARY_REDIRECT
+          - 308 PERMANENT_REDIRECT
+          - 400 BAD_REQUEST
+          - 401 UNAUTHORIZED
+          - 402 PAYMENT_REQUIRED
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 405 METHOD_NOT_ALLOWED
+          - 406 NOT_ACCEPTABLE
+          - 407 PROXY_AUTHENTICATION_REQUIRED
+          - 408 REQUEST_TIMEOUT
+          - 409 CONFLICT
+          - 410 GONE
+          - 411 LENGTH_REQUIRED
+          - 412 PRECONDITION_FAILED
+          - 413 PAYLOAD_TOO_LARGE
+          - 413 REQUEST_ENTITY_TOO_LARGE
+          - 414 URI_TOO_LONG
+          - 414 REQUEST_URI_TOO_LONG
+          - 415 UNSUPPORTED_MEDIA_TYPE
+          - 416 REQUESTED_RANGE_NOT_SATISFIABLE
+          - 417 EXPECTATION_FAILED
+          - 418 I_AM_A_TEAPOT
+          - 419 INSUFFICIENT_SPACE_ON_RESOURCE
+          - 420 METHOD_FAILURE
+          - 421 DESTINATION_LOCKED
+          - 422 UNPROCESSABLE_ENTITY
+          - 423 LOCKED
+          - 424 FAILED_DEPENDENCY
+          - 425 TOO_EARLY
+          - 426 UPGRADE_REQUIRED
+          - 428 PRECONDITION_REQUIRED
+          - 429 TOO_MANY_REQUESTS
+          - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
+          - 451 UNAVAILABLE_FOR_LEGAL_REASONS
+          - 500 INTERNAL_SERVER_ERROR
+          - 501 NOT_IMPLEMENTED
+          - 502 BAD_GATEWAY
+          - 503 SERVICE_UNAVAILABLE
+          - 504 GATEWAY_TIMEOUT
+          - 505 HTTP_VERSION_NOT_SUPPORTED
+          - 506 VARIANT_ALSO_NEGOTIATES
+          - 507 INSUFFICIENT_STORAGE
+          - 508 LOOP_DETECTED
+          - 509 BANDWIDTH_LIMIT_EXCEEDED
+          - 510 NOT_EXTENDED
+          - 511 NETWORK_AUTHENTICATION_REQUIRED
+        message:
+          type: string
+    DealSellerDto:
+      type: object
+      properties:
+        sellerId:
+          type: string
+          example: 11317-15
+        sellerName:
+          type: string
+          example: Timberline Venture Partners
+        sellerFunds:
+          type: array
+          items:
+            $ref: '#/components/schemas/FundNameDto'
+    DebtLendersDto:
+      type: object
+      properties:
+        pbId:
+          type: string
+          example: 56072-89D
+        debtSize:
+          $ref: '#/components/schemas/MoneyDto'
+        paymentInKind:
+          type: number
+          format: double
+          example: 12.5
+        debtType:
+          $ref: '#/components/schemas/DictionaryDto'
+        seniority:
+          $ref: '#/components/schemas/DictionaryDto'
+        security:
+          $ref: '#/components/schemas/DictionaryDto'
+        subordination:
+          deprecated: true
+          allOf:
+          - $ref: '#/components/schemas/DictionaryDto'
+        term:
+          $ref: '#/components/schemas/DictionaryDto'
+        floor:
+          type: number
+          format: double
+          example: 2.5
+        ceiling:
+          type: number
+          format: double
+          example: 3.5
+        breakDate:
+          type: string
+          format: date
+          example: '2012-03-19'
+        breakPrice:
+          type: number
+          format: double
+          example: 50.5
+        resetFrequency:
+          type: string
+          example: Monthly
+        coupon:
+          type: number
+          format: double
+          example: 8.5
+        additionalDebtCharacteristics:
+          $ref: '#/components/schemas/AdditionalDebtCharacteristicsDto'
+        maturityDate:
+          type: string
+          format: date
+          example: '2020-03-04'
+        spreadInterestRate:
+          type: number
+          format: double
+          example: 45.0
+        tradeDate:
+          type: string
+          format: date
+          example: '2015-06-12'
+        tenorYears:
+          type: number
+          format: double
+          example: 8.0
+        numberOfShares:
+          type: integer
+          format: int64
+          example: 80
+        pikInterest:
+          type: number
+          format: double
+          example: 2500.0
+        debtCommentary:
+          type: string
+          example: Apollo Investment Corporation provided a senior secured facility.
+        lenders:
+          type: array
+          items:
+            $ref: '#/components/schemas/LenderDto'
+        loanDetails:
+          $ref: '#/components/schemas/LoanDetailsDto'
+        bondDetails:
+          $ref: '#/components/schemas/BondDetailsDto'
+    DealMultiplesDto:
+      type: object
+      properties:
+        dealId:
+          type: string
+          example: 31456-00T
+        dealNumber:
+          type: integer
+          format: int32
+          example: 4
+        companyId:
+          type: string
+          example: 41965-66
+        companyName:
+          type: string
+          example: Caplease
+        dealSizeToCashFlow:
+          type: number
+          example: 0.25
+        dealSizeToEBIT:
+          type: number
+          example: 0.36
+        dealSizeToEBITDA:
+          type: number
+          example: 1.5
+        dealSizeToNetIncome:
+          type: number
+          example: 1.23
+        dealSizeToRevenue:
+          type: number
+          example: 0.56
+        debtRaisedInRoundToEBITDA:
+          type: number
+          example: -1.56
+        debtRaisedInRoundToEquity:
+          type: number
+          example: -1.3
+        impliedEvToCashFlow:
+          type: number
+          example: 0.56
+        impliedEvToEBIT:
+          type: number
+          example: 0.56
+        impliedEvToEBITDA:
+          type: number
+          example: 0.26
+        impliedEvToNetIncome:
+          type: number
+          example: 0.26
+        impliedEvToRevenue:
+          type: number
+          example: 0.27
+        valuationToCashFlow:
+          type: number
+          example: 0.15
+        valuationToEBIT:
+          type: number
+          example: 0.23
+        valuationToEBITDA:
+          type: number
+          example: 1.3
+        valuationToNetIncome:
+          type: number
+          example: 0.56
+        valuationToRevenue:
+          type: number
+          example: 0.45
+    DealBioDto:
+      type: object
+      properties:
+        dealId:
+          type: string
+          example: 108911-98T
+        dealNumber:
+          type: integer
+          format: int32
+          example: 1
+        companyId:
+          type: string
+          example: 10695-52
+        companyName:
+          type: string
+          example: Facebook
+        dealAnnouncedDate:
+          type: string
+          format: date
+          example: '2020-12-05'
+        dealDate:
+          type: string
+          format: date
+          example: '2020-12-05'
+        dealSize:
+          $ref: '#/components/schemas/MoneyDto'
+        dealSizeStatus:
+          type: string
+          example: Actual
+        dealStatus:
+          $ref: '#/components/schemas/DictionaryDto'
+        dealType1:
+          $ref: '#/components/schemas/DictionaryDto'
+        dealType2:
+          $ref: '#/components/schemas/DictionaryDto'
+        dealType3:
+          $ref: '#/components/schemas/DictionaryDto'
+        dealClass:
+          $ref: '#/components/schemas/DictionaryDto'
+        valuationAvailable:
+          type: boolean
+          example: true
+        capTableAvailable:
+          type: boolean
+          example: false
+        trancheInfoAvailable:
+          type: boolean
+          example: true
+        debtLenderInfoAvailable:
+          type: boolean
+          example: true
+    SearchPageStatsDto_SearchView:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+          example: 1
+        perPage:
+          type: integer
+          format: int32
+          example: 25
+        page:
+          type: integer
+          format: int32
+          example: 1
+        lastPage:
+          type: integer
+          format: int32
+          example: 1
+    DealInvestorDto:
+      type: object
+      properties:
+        investorId:
+          type: string
+          example: 11193-94
+        investorName:
+          type: string
+          example: Franklin Street Equity Partners
+        investmentStatus:
+          type: string
+          example: New Investor
+        leadSoleInvestor:
+          type: boolean
+          example: false
+        leadPartnerId:
+          type: string
+          example: 204383-98P
+        leadPartnerName:
+          type: string
+          example: Luke Bagley
+        investorFunds:
+          type: array
+          items:
+            $ref: '#/components/schemas/FundNameDto'
+        investmentAmount:
+          $ref: '#/components/schemas/MoneyDto'
+        formOfPayment:
+          $ref: '#/components/schemas/DictionaryDto'
+    DealDetailedDto:
+      type: object
+      properties:
+        dealId:
+          type: string
+          example: 108911-98T
+        dealNumber:
+          type: integer
+          format: int32
+          example: 1
+        companyId:
+          type: string
+          example: 10695-52
+        companyName:
+          type: string
+          example: Facebook
+        dealDate:
+          type: string
+          format: date
+          example: '2005-07-29'
+        dealSize:
+          $ref: '#/components/schemas/MoneyDto'
+        dealSizeBreakdown:
+          $ref: '#/components/schemas/DealSizeBreakdownDto'
+        dealSizeStatus:
+          type: string
+          example: Actual
+        dealStatus:
+          $ref: '#/components/schemas/DictionaryDto'
+        percentAcquired:
+          type: number
+          format: double
+          example: 10
+        raisedToDate:
+          $ref: '#/components/schemas/MoneyDto'
+        vcRound:
+          type: string
+          example: 1st Round
+        vcRoundUpDownFlat:
+          type: string
+          example: Up Round
+        totalInvestedCapital:
+          $ref: '#/components/schemas/MoneyDto'
+        investorOwnership:
+          type: number
+          format: double
+          example: 32.78
+        stockSplit:
+          type: string
+          example: '1:1'
+        dealType1:
+          $ref: '#/components/schemas/DictionaryDto'
+        dealType2:
+          $ref: '#/components/schemas/DictionaryDto'
+        dealType3:
+          $ref: '#/components/schemas/DictionaryDto'
+        dealClass:
+          $ref: '#/components/schemas/DictionaryDto'
+        dealSynopsis:
+          type: string
+          example: The company was acquired by Advent International and Bain Capital through a $545 million LBO on July 29, 2005.
+        totalInvestedEquity:
+          $ref: '#/components/schemas/MoneyDto'
+        debtType1:
+          deprecated: true
+          allOf:
+          - $ref: '#/components/schemas/DictionaryDto'
+        debtType2:
+          deprecated: true
+          allOf:
+          - $ref: '#/components/schemas/DictionaryDto'
+        debtType3:
+          deprecated: true
+          allOf:
+          - $ref: '#/components/schemas/DictionaryDto'
+        debtAmount1:
+          deprecated: true
+          allOf:
+          - $ref: '#/components/schemas/MoneyDto'
+        debtAmount2:
+          deprecated: true
+          allOf:
+          - $ref: '#/components/schemas/MoneyDto'
+        debtAmount3:
+          deprecated: true
+          allOf:
+          - $ref: '#/components/schemas/MoneyDto'
+        debtRaisedInRound:
+          $ref: '#/components/schemas/MoneyDto'
+        contingentPayout:
+          $ref: '#/components/schemas/MoneyDto'
+        valuationAvailable:
+          type: boolean
+          example: true
+        capTableAvailable:
+          type: boolean
+          example: false
+        trancheInfoAvailable:
+          type: boolean
+          example: true
+        debtLenderInfoAvailable:
+          type: boolean
+          example: true
+        launchDate:
+          type: string
+          format: date
+          example: '2005-06-29'
+        totalLoanSize:
+          $ref: '#/components/schemas/MoneyDto'
+        totalInstLoanSize:
+          $ref: '#/components/schemas/MoneyDto'
+        totalNewDebt:
+          $ref: '#/components/schemas/MoneyDto'
+        useOfProceeds:
+          type: string
+          example: 'Acquisition-related: LBO'
+    UpdateDto:
+      type: object
+      properties:
+        updates:
+          type: object
+          additionalProperties:
+            type: string
+            example: '{"Endpoint name":"Update Status (true/false)"}'
+          example:
+            Endpoint name: Update Status (true/false)
+    AdditionalDebtCharacteristicsDto:
+      type: object
+      properties:
+        unitranche:
+          type: boolean
+          example: true
+        syndicated:
+          type: boolean
+          example: false
+        mezzanine:
+          type: boolean
+          example: true
+        covLite:
+          type: boolean
+          example: false
+        warrants:
+          type: boolean
+          example: true
+        convertible:
+          type: boolean
+          example: false
+        rate:
+          $ref: '#/components/schemas/DictionaryDto'
+    LeadPartnerDto:
+      type: object
+      properties:
+        partnerId:
+          type: string
+          example: 135150-94P
+        partnerName:
+          type: string
+          example: Tom Weedall
+    FundNameDto:
+      type: object
+      properties:
+        fundId:
+          type: string
+          example: 13328-83F
+        fundName:
+          type: string
+          example: Crossroads Capital Partners
+    LenderFundDto:
+      type: object
+      properties:
+        fundId:
+          type: string
+          example: 15864-85F
+        fundName:
+          type: string
+          example: Farol Fund
+        fundAmount:
+          $ref: '#/components/schemas/MoneyDto'
+    DealStockInfoDto:
+      type: object
+      properties:
+        dealId:
+          type: string
+          example: 108911-98T
+        dealNumber:
+          type: integer
+          format: int32
+          example: 1
+        companyId:
+          type: string
+          example: 10695-52
+        companyName:
+          type: string
+          example: Facebook
+        series:
+          type: string
+          example: Preferred
+        pricePerShare:
+          $ref: '#/components/schemas/MoneyDto'
+        stockType:
+          deprecated: true
+          allOf:
+          - $ref: '#/components/schemas/DictionaryDto'
+        stockTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/DictionaryDto'
+        numberOfSharesAcquired:
+          type: integer
+          format: int64
+          example: 234554
+        sharesSought:
+          type: integer
+          format: int64
+          example: 15213000
+        conversionRatio:
+          type: string
+          example: 0.92:1
+        liquidationPreferences:
+          type: string
+          example: Pari Passu
+        liquidationParticipating:
+          type: string
+          example: Participating
+        dividendRights:
+          type: string
+          example: 'Yes'
+        cumulativeness:
+          type: string
+          example: Non-Cumulative
+        antiDilutionProvisions:
+          type: string
+          example: Weighted Average
+        redemptionRights:
+          type: string
+          example: 'Yes'
+        boardVotingRights:
+          type: string
+          example: 'Yes'
+        generalVotingRights:
+          type: string
+          example: 'No'
+    DealServiceProviderDto:
+      type: object
+      properties:
+        dealId:
+          type: string
+          example: 108911-98T
+        companyId:
+          type: string
+          example: 10695-52
+        companyName:
+          type: string
+          example: Facebook
+        serviceProviderId:
+          type: string
+          example: 10108-09
+        serviceProviderName:
+          type: string
+          example: Wilson Sonsini Goodrich & Rosati
+        serviceProviderTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityTypeDto'
+        serviceProvided:
+          $ref: '#/components/schemas/DictionaryDto'
+        serviceProvidedToId:
+          type: string
+          example: 10377-37
+        serviceProvidedToName:
+          type: string
+          example: Tesla
+        leadPartnerId:
+          type: string
+          example: 11441-98P
+        leadPartnerName:
+          type: string
+          example: Larry Sonsini
+    LoanDetailsDto:
+      type: object
+      properties:
+        lcdFacilityId:
+          type: integer
+          format: int32
+          example: 132859
+        newMoney:
+          $ref: '#/components/schemas/MoneyDto'
+        spread:
+          type: string
+          example: Base Rate + 7.54
+        spreadAdjustment1Month:
+          type: number
+          format: double
+          example: 0.03
+        spreadAdjustment3Month:
+          type: number
+          format: double
+          example: 15.0
+        spreadAdjustment6Month:
+          type: number
+          format: double
+          example: 27.0
+        alternativeSpread:
+          type: number
+          format: double
+          example: 10.0
+        originalIssueDiscount:
+          type: number
+          format: double
+          example: 95.0
+        originalIssueDiscountTight:
+          type: number
+          format: double
+          example: 96.25
+        originalIssueDiscountWide:
+          type: number
+          format: double
+          example: 95.25
+        yieldToMaturityPrimary:
+          type: number
+          format: double
+          example: 7.51
+        yieldToMaturityTalk:
+          type: number
+          format: double
+          example: 7.8
+        spreadToMaturityPrimary:
+          type: number
+          format: double
+          example: 6.49
+        yieldToMaturityBreak:
+          type: number
+          format: double
+          example: 7.44
+        spreadToMaturitySecondary:
+          type: number
+          format: double
+          example: 63.0
+        priceTight:
+          type: number
+          format: double
+          example: 6.0
+        priceWide:
+          type: number
+          format: double
+          example: 7.0
+        prepayFee:
+          type: boolean
+          example: true
+        flexSpread:
+          type: number
+          format: double
+          example: 5.0
+        floorFlex:
+          type: number
+          format: double
+          example: 0.0
+        flexSpreadDate:
+          type: string
+          format: date
+          example: '2023-10-30'
+        originalIssueDiscountFlex:
+          type: number
+          format: double
+          example: 95.0
+        originalIssueDiscountFlexDate:
+          type: string
+          format: date
+          example: '2023-10-01'
+        flexAmount:
+          $ref: '#/components/schemas/MoneyDto'
+        flexAmountDate:
+          type: string
+          format: date
+          example: '2023-10-10'
+        commitmentFee:
+          type: number
+          format: double
+          example: 30.0
+        facilityFee:
+          type: number
+          format: double
+          example: 0.5
+        letterOfCreditFee:
+          type: number
+          format: double
+          example: 1.0
+        letterOfCreditIssuanceFee:
+          type: number
+          format: double
+          example: 0.18
+        mezzanineIrr:
+          type: number
+          format: double
+          example: 10.5
+        percentToInstitutional:
+          type: number
+          format: double
+          example: 0.0
+        tickingFee:
+          type: boolean
+          example: false
+        tickingFeePercent:
+          type: number
+          format: double
+          example: 0.15
+          deprecated: true
+        tickingFeeRate:
+          type: number
+          format: double
+          example: 100.0
+        spreadToCallPrimary:
+          type: number
+          format: double
+          example: 4.0
+        spreadToCallSecondary:
+          type: number
+          format: double
+          example: 5.0
+        tickingFeeComment:
+          type: string
+          example: 'Ticking fee: None, 0–60 days; 50% of margin, 61–120; 100%, 121+.'
+    DictionaryDto:
+      type: object
+      properties:
+        code:
+          type: string
+          example: Dictionary code
+        description:
+          type: string
+          example: Dictionary Code Description
+    DealTrancheDto:
+      type: object
+      properties:
+        trancheSize:
+          $ref: '#/components/schemas/MoneyDto'
+        trancheSizeStatus:
+          type: string
+          example: Actual
+        trancheDate:
+          type: string
+          format: date
+          example: '2004-04-05'
+        financingType:
+          $ref: '#/components/schemas/DictionaryDto'
+        stockType:
+          $ref: '#/components/schemas/DictionaryDto'
+        stockSeriesType:
+          type: string
+          example: B1
+        conversionStatus:
+          type: string
+          example: 'Yes'
+        conversionDate:
+          type: string
+          format: date
+          example: '2005-03-21'
+        investor:
+          $ref: '#/components/schemas/EntityDto'
+        investor2:
+          $ref: '#/components/schemas/EntityDto'
+        investor3:
+          $ref: '#/components/schemas/EntityDto'
+    DealDebtLendersDto:
+      type: object
+      properties:
+        dealId:
+          type: string
+          example: 13774-15T
+        dealNumber:
+          type: integer
+          format: int32
+          example: 4
+        company:
+          $ref: '#/components/schemas/EntityDto'
+        debts:
+          type: array
+          items:
+            $ref: '#/components/schemas/DebtLendersDto'
+  securitySchemes:
+    pbToken:
+      type: apiKey
+      name: Authorization
+      in: header
+      scheme: bearer
+      bearerFormat: JWT

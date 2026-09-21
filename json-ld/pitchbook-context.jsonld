@@ -1,0 +1,1489 @@
+{
+  "@context": {
+    "@vocab": "https://pitchbook.com/schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "pitchbook": "https://pitchbook.com/schema#",
+    "ErrorDto": "pitchbook:ErrorDto",
+    "reason": {
+      "@id": "pitchbook:reason",
+      "@type": "xsd:string"
+    },
+    "message": {
+      "@id": "pitchbook:message",
+      "@type": "xsd:string"
+    },
+    "BulkRequestDto": "pitchbook:BulkRequestDto",
+    "items": {
+      "@id": "pitchbook:items",
+      "@container": "@list"
+    },
+    "RequestItemDto": "pitchbook:RequestItemDto",
+    "id": {
+      "@id": "pitchbook:id",
+      "@type": "xsd:string"
+    },
+    "BulkResultDtoServiceProviderBioDto": "pitchbook:BulkResultDtoServiceProviderBioDto",
+    "stats": {
+      "@id": "pitchbook:stats",
+      "@type": "@id"
+    },
+    "matched": {
+      "@id": "pitchbook:matched",
+      "@container": "@list"
+    },
+    "noData": {
+      "@id": "pitchbook:noData",
+      "@container": "@list"
+    },
+    "unmatched": {
+      "@id": "pitchbook:unmatched",
+      "@container": "@list"
+    },
+    "duplicates": {
+      "@id": "pitchbook:duplicates",
+      "@container": "@list"
+    },
+    "BulkStatsDto": "pitchbook:BulkStatsDto",
+    "total": {
+      "@id": "pitchbook:total",
+      "@type": "xsd:integer"
+    },
+    "DictionaryDto": "pitchbook:DictionaryDto",
+    "code": {
+      "@id": "pitchbook:code",
+      "@type": "xsd:string"
+    },
+    "description": {
+      "@id": "pitchbook:description",
+      "@type": "xsd:string"
+    },
+    "DuplicatedItemDto": "pitchbook:DuplicatedItemDto",
+    "occurrence": {
+      "@id": "pitchbook:occurrence",
+      "@type": "xsd:integer"
+    },
+    "EntityNameDto": "pitchbook:EntityNameDto",
+    "formalName": {
+      "@id": "pitchbook:formalName",
+      "@type": "xsd:string"
+    },
+    "alsoKnownAs": {
+      "@id": "pitchbook:alsoKnownAs",
+      "@type": "xsd:string"
+    },
+    "legalName": {
+      "@id": "pitchbook:legalName",
+      "@type": "xsd:string"
+    },
+    "formerlyKnownAs": {
+      "@id": "pitchbook:formerlyKnownAs",
+      "@type": "xsd:string"
+    },
+    "EntityTypeDto": "pitchbook:EntityTypeDto",
+    "type": {
+      "@id": "pitchbook:type",
+      "@type": "@id"
+    },
+    "primary": {
+      "@id": "pitchbook:primary",
+      "@type": "xsd:boolean"
+    },
+    "FailedItemDto": "pitchbook:FailedItemDto",
+    "HqLocationDto": "pitchbook:HqLocationDto",
+    "city": {
+      "@id": "pitchbook:city",
+      "@type": "xsd:string"
+    },
+    "stateProvince": {
+      "@id": "pitchbook:stateProvince",
+      "@type": "xsd:string"
+    },
+    "postCode": {
+      "@id": "pitchbook:postCode",
+      "@type": "xsd:string"
+    },
+    "country": {
+      "@id": "pitchbook:country",
+      "@type": "xsd:string"
+    },
+    "NoDataItemDto": "pitchbook:NoDataItemDto",
+    "ServiceProviderBioDto": "pitchbook:ServiceProviderBioDto",
+    "serviceProviderId": {
+      "@id": "pitchbook:serviceProviderId",
+      "@type": "xsd:string"
+    },
+    "serviceProviderName": {
+      "@id": "pitchbook:serviceProviderName",
+      "@type": "@id"
+    },
+    "serviceProviderTypes": {
+      "@id": "pitchbook:serviceProviderTypes",
+      "@container": "@list"
+    },
+    "hqLocation": {
+      "@id": "pitchbook:hqLocation",
+      "@type": "@id"
+    },
+    "website": {
+      "@id": "pitchbook:website",
+      "@type": "xsd:string"
+    },
+    "employees": {
+      "@id": "pitchbook:employees",
+      "@type": "xsd:integer"
+    },
+    "servicedCompanies": {
+      "@id": "pitchbook:servicedCompanies",
+      "@type": "xsd:integer"
+    },
+    "servicedDeals": {
+      "@id": "pitchbook:servicedDeals",
+      "@type": "xsd:integer"
+    },
+    "servicedInvestors": {
+      "@id": "pitchbook:servicedInvestors",
+      "@type": "xsd:integer"
+    },
+    "servicedFunds": {
+      "@id": "pitchbook:servicedFunds",
+      "@type": "xsd:integer"
+    },
+    "servicedLimitedPartners": {
+      "@id": "pitchbook:servicedLimitedPartners",
+      "@type": "xsd:integer"
+    },
+    "BulkResultDtoPersonBioDto": "pitchbook:BulkResultDtoPersonBioDto",
+    "EntityOfficeDto": "pitchbook:EntityOfficeDto",
+    "location": {
+      "@id": "pitchbook:location",
+      "@type": "xsd:string"
+    },
+    "addressLine1": {
+      "@id": "pitchbook:addressLine1",
+      "@type": "xsd:string"
+    },
+    "addressLine2": {
+      "@id": "pitchbook:addressLine2",
+      "@type": "xsd:string"
+    },
+    "phone": {
+      "@id": "pitchbook:phone",
+      "@type": "xsd:string"
+    },
+    "fax": {
+      "@id": "pitchbook:fax",
+      "@type": "xsd:string"
+    },
+    "email": {
+      "@id": "pitchbook:email",
+      "@type": "xsd:string"
+    },
+    "globalRegion": {
+      "@id": "pitchbook:globalRegion",
+      "@type": "xsd:string"
+    },
+    "globalSubRegion": {
+      "@id": "pitchbook:globalSubRegion",
+      "@type": "xsd:string"
+    },
+    "PersonBioDto": "pitchbook:PersonBioDto",
+    "personId": {
+      "@id": "pitchbook:personId",
+      "@type": "xsd:string"
+    },
+    "personName": {
+      "@id": "pitchbook:personName",
+      "@type": "@id"
+    },
+    "yearOfBirth": {
+      "@id": "pitchbook:yearOfBirth",
+      "@type": "xsd:integer"
+    },
+    "biography": {
+      "@id": "pitchbook:biography",
+      "@type": "xsd:string"
+    },
+    "linkedInProfileUrl": {
+      "@id": "pitchbook:linkedInProfileUrl",
+      "@type": "xsd:string"
+    },
+    "gender": {
+      "@id": "pitchbook:gender",
+      "@type": "xsd:string"
+    },
+    "primaryEntityId": {
+      "@id": "pitchbook:primaryEntityId",
+      "@type": "xsd:string"
+    },
+    "primaryEntityName": {
+      "@id": "pitchbook:primaryEntityName",
+      "@type": "xsd:string"
+    },
+    "primaryEntityType": {
+      "@id": "pitchbook:primaryEntityType",
+      "@type": "xsd:string"
+    },
+    "primaryEntityWebsite": {
+      "@id": "pitchbook:primaryEntityWebsite",
+      "@type": "xsd:string"
+    },
+    "primaryPosition": {
+      "@id": "pitchbook:primaryPosition",
+      "@type": "xsd:string"
+    },
+    "primaryOffice": {
+      "@id": "pitchbook:primaryOffice",
+      "@type": "@id"
+    },
+    "PersonNameDto": "pitchbook:PersonNameDto",
+    "full": {
+      "@id": "pitchbook:full",
+      "@type": "xsd:string"
+    },
+    "first": {
+      "@id": "pitchbook:first",
+      "@type": "xsd:string"
+    },
+    "last": {
+      "@id": "pitchbook:last",
+      "@type": "xsd:string"
+    },
+    "middle": {
+      "@id": "pitchbook:middle",
+      "@type": "xsd:string"
+    },
+    "prefix": {
+      "@id": "pitchbook:prefix",
+      "@type": "xsd:string"
+    },
+    "suffix": {
+      "@id": "pitchbook:suffix",
+      "@type": "xsd:string"
+    },
+    "BulkResultDtoLimitedPartnerDto": "pitchbook:BulkResultDtoLimitedPartnerDto",
+    "LimitedPartnerBioDto": "pitchbook:LimitedPartnerBioDto",
+    "limitedPartnerId": {
+      "@id": "pitchbook:limitedPartnerId",
+      "@type": "xsd:string"
+    },
+    "limitedPartnerName": {
+      "@id": "pitchbook:limitedPartnerName",
+      "@type": "@id"
+    },
+    "limitedPartnerTypes": {
+      "@id": "pitchbook:limitedPartnerTypes",
+      "@container": "@list"
+    },
+    "assetsUnderManagement": {
+      "@id": "pitchbook:assetsUnderManagement",
+      "@type": "@id"
+    },
+    "yearFounded": {
+      "@id": "pitchbook:yearFounded",
+      "@type": "xsd:integer"
+    },
+    "managementStaff": {
+      "@id": "pitchbook:managementStaff",
+      "@type": "xsd:integer"
+    },
+    "LimitedPartnerCommitmentAggregatesDto": "pitchbook:LimitedPartnerCommitmentAggregatesDto",
+    "activeCommitmentsInDebtFunds": {
+      "@id": "pitchbook:activeCommitmentsInDebtFunds",
+      "@type": "xsd:integer"
+    },
+    "activeCommitmentsInPeFunds": {
+      "@id": "pitchbook:activeCommitmentsInPeFunds",
+      "@type": "xsd:integer"
+    },
+    "activeCommitmentsInReFunds": {
+      "@id": "pitchbook:activeCommitmentsInReFunds",
+      "@type": "xsd:integer"
+    },
+    "activeCommitmentsInVcFunds": {
+      "@id": "pitchbook:activeCommitmentsInVcFunds",
+      "@type": "xsd:integer"
+    },
+    "activeCommitmentsInFoFsAnd2nd": {
+      "@id": "pitchbook:activeCommitmentsInFoFsAnd2nd",
+      "@type": "xsd:integer"
+    },
+    "activeCommitmentsInInfrastructure": {
+      "@id": "pitchbook:activeCommitmentsInInfrastructure",
+      "@type": "xsd:integer"
+    },
+    "activeCommitmentsInEnergyFunds": {
+      "@id": "pitchbook:activeCommitmentsInEnergyFunds",
+      "@type": "xsd:integer"
+    },
+    "activeCommitmentsInOtherFunds": {
+      "@id": "pitchbook:activeCommitmentsInOtherFunds",
+      "@type": "xsd:integer"
+    },
+    "totalActiveCommitments": {
+      "@id": "pitchbook:totalActiveCommitments",
+      "@type": "xsd:integer"
+    },
+    "totalCommitmentsInDebtFunds": {
+      "@id": "pitchbook:totalCommitmentsInDebtFunds",
+      "@type": "xsd:integer"
+    },
+    "totalCommitmentsInPeFunds": {
+      "@id": "pitchbook:totalCommitmentsInPeFunds",
+      "@type": "xsd:integer"
+    },
+    "totalCommitmentsInReFunds": {
+      "@id": "pitchbook:totalCommitmentsInReFunds",
+      "@type": "xsd:integer"
+    },
+    "totalCommitmentsInVcFunds": {
+      "@id": "pitchbook:totalCommitmentsInVcFunds",
+      "@type": "xsd:integer"
+    },
+    "totalCommitmentsInFoFsAnd2nd": {
+      "@id": "pitchbook:totalCommitmentsInFoFsAnd2nd",
+      "@type": "xsd:integer"
+    },
+    "totalCommitmentsInInfrastructure": {
+      "@id": "pitchbook:totalCommitmentsInInfrastructure",
+      "@type": "xsd:integer"
+    },
+    "totalCommitmentsInEnergyFunds": {
+      "@id": "pitchbook:totalCommitmentsInEnergyFunds",
+      "@type": "xsd:integer"
+    },
+    "totalCommitmentsInOtherFunds": {
+      "@id": "pitchbook:totalCommitmentsInOtherFunds",
+      "@type": "xsd:integer"
+    },
+    "totalCommitments": {
+      "@id": "pitchbook:totalCommitments",
+      "@type": "xsd:integer"
+    },
+    "LimitedPartnerDto": "pitchbook:LimitedPartnerDto",
+    "limitedPartnerBio": {
+      "@id": "pitchbook:limitedPartnerBio",
+      "@type": "@id"
+    },
+    "limitedPartnerTargetAllocations": {
+      "@id": "pitchbook:limitedPartnerTargetAllocations",
+      "@type": "@id"
+    },
+    "limitedPartnerCommitmentAggregates": {
+      "@id": "pitchbook:limitedPartnerCommitmentAggregates",
+      "@type": "@id"
+    },
+    "LimitedPartnerTargetAllocationsDto": "pitchbook:LimitedPartnerTargetAllocationsDto",
+    "targetAllocations": {
+      "@id": "pitchbook:targetAllocations",
+      "@container": "@list"
+    },
+    "MoneyDto": "pitchbook:MoneyDto",
+    "amount": {
+      "@id": "pitchbook:amount",
+      "@type": "xsd:decimal"
+    },
+    "currency": {
+      "@id": "pitchbook:currency",
+      "@type": "xsd:string"
+    },
+    "nativeAmount": {
+      "@id": "pitchbook:nativeAmount",
+      "@type": "xsd:decimal"
+    },
+    "nativeCurrency": {
+      "@id": "pitchbook:nativeCurrency",
+      "@type": "xsd:string"
+    },
+    "estimated": {
+      "@id": "pitchbook:estimated",
+      "@type": "xsd:boolean"
+    },
+    "TargetAllocationDto": "pitchbook:TargetAllocationDto",
+    "policyDescription": {
+      "@id": "pitchbook:policyDescription",
+      "@type": "xsd:string"
+    },
+    "alternativesMin": {
+      "@id": "pitchbook:alternativesMin",
+      "@type": "@id"
+    },
+    "alternativesPercentMin": {
+      "@id": "pitchbook:alternativesPercentMin",
+      "@type": "xsd:decimal"
+    },
+    "alternativesMax": {
+      "@id": "pitchbook:alternativesMax",
+      "@type": "@id"
+    },
+    "alternativesPercentMax": {
+      "@id": "pitchbook:alternativesPercentMax",
+      "@type": "xsd:decimal"
+    },
+    "privateEquityMin": {
+      "@id": "pitchbook:privateEquityMin",
+      "@type": "@id"
+    },
+    "privateEquityPercentMin": {
+      "@id": "pitchbook:privateEquityPercentMin",
+      "@type": "xsd:decimal"
+    },
+    "privateEquityMax": {
+      "@id": "pitchbook:privateEquityMax",
+      "@type": "@id"
+    },
+    "privateEquityPercentMax": {
+      "@id": "pitchbook:privateEquityPercentMax",
+      "@type": "xsd:decimal"
+    },
+    "realEstateMin": {
+      "@id": "pitchbook:realEstateMin",
+      "@type": "@id"
+    },
+    "realEstatePercentMin": {
+      "@id": "pitchbook:realEstatePercentMin",
+      "@type": "xsd:decimal"
+    },
+    "realEstateMax": {
+      "@id": "pitchbook:realEstateMax",
+      "@type": "@id"
+    },
+    "realEstatePercentMax": {
+      "@id": "pitchbook:realEstatePercentMax",
+      "@type": "xsd:decimal"
+    },
+    "specialOpportunitiesMin": {
+      "@id": "pitchbook:specialOpportunitiesMin",
+      "@type": "@id"
+    },
+    "specialOpportunitiesPercentMin": {
+      "@id": "pitchbook:specialOpportunitiesPercentMin",
+      "@type": "xsd:decimal"
+    },
+    "specialOpportunitiesMax": {
+      "@id": "pitchbook:specialOpportunitiesMax",
+      "@type": "@id"
+    },
+    "specialOpportunitiesPercentMax": {
+      "@id": "pitchbook:specialOpportunitiesPercentMax",
+      "@type": "xsd:decimal"
+    },
+    "hedgeFundsMin": {
+      "@id": "pitchbook:hedgeFundsMin",
+      "@type": "@id"
+    },
+    "hedgeFundsPercentMin": {
+      "@id": "pitchbook:hedgeFundsPercentMin",
+      "@type": "xsd:decimal"
+    },
+    "hedgeFundsMax": {
+      "@id": "pitchbook:hedgeFundsMax",
+      "@type": "@id"
+    },
+    "hedgeFundsPercentMax": {
+      "@id": "pitchbook:hedgeFundsPercentMax",
+      "@type": "xsd:decimal"
+    },
+    "equitiesMin": {
+      "@id": "pitchbook:equitiesMin",
+      "@type": "@id"
+    },
+    "equitiesPercentMin": {
+      "@id": "pitchbook:equitiesPercentMin",
+      "@type": "xsd:decimal"
+    },
+    "equitiesMax": {
+      "@id": "pitchbook:equitiesMax",
+      "@type": "@id"
+    },
+    "equitiesPercentMax": {
+      "@id": "pitchbook:equitiesPercentMax",
+      "@type": "xsd:decimal"
+    },
+    "fixedIncomeMin": {
+      "@id": "pitchbook:fixedIncomeMin",
+      "@type": "@id"
+    },
+    "fixedIncomePercentMin": {
+      "@id": "pitchbook:fixedIncomePercentMin",
+      "@type": "xsd:decimal"
+    },
+    "fixedIncomeMax": {
+      "@id": "pitchbook:fixedIncomeMax",
+      "@type": "@id"
+    },
+    "fixedIncomePercentMax": {
+      "@id": "pitchbook:fixedIncomePercentMax",
+      "@type": "xsd:decimal"
+    },
+    "cashMin": {
+      "@id": "pitchbook:cashMin",
+      "@type": "@id"
+    },
+    "cashPercentMin": {
+      "@id": "pitchbook:cashPercentMin",
+      "@type": "xsd:decimal"
+    },
+    "cashMax": {
+      "@id": "pitchbook:cashMax",
+      "@type": "@id"
+    },
+    "cashPercentMax": {
+      "@id": "pitchbook:cashPercentMax",
+      "@type": "xsd:decimal"
+    },
+    "BulkResultDtoLimitedPartnerTargetAllocationsDto": "pitchbook:BulkResultDtoLimitedPartnerTargetAllocationsDto",
+    "BulkResultDtoLimitedPartnerCommitmentAggregatesDto": "pitchbook:BulkResultDtoLimitedPartnerCommitmentAggregatesDto",
+    "BulkResultDtoLimitedPartnerBioDto": "pitchbook:BulkResultDtoLimitedPartnerBioDto",
+    "ActiveInvestmentDto": "pitchbook:ActiveInvestmentDto",
+    "investorId": {
+      "@id": "pitchbook:investorId",
+      "@type": "xsd:string"
+    },
+    "companyId": {
+      "@id": "pitchbook:companyId",
+      "@type": "xsd:string"
+    },
+    "companyName": {
+      "@id": "pitchbook:companyName",
+      "@type": "xsd:string"
+    },
+    "investorSince": {
+      "@id": "pitchbook:investorSince",
+      "@type": "xsd:date"
+    },
+    "investmentDealId": {
+      "@id": "pitchbook:investmentDealId",
+      "@type": "xsd:string"
+    },
+    "investmentDate": {
+      "@id": "pitchbook:investmentDate",
+      "@type": "xsd:date"
+    },
+    "AssetPreferencesDto": "pitchbook:AssetPreferencesDto",
+    "assetClass": {
+      "@id": "pitchbook:assetClass",
+      "@type": "@id"
+    },
+    "subcategory": {
+      "@id": "pitchbook:subcategory",
+      "@type": "@id"
+    },
+    "BulkResultDtoInvestorDto": "pitchbook:BulkResultDtoInvestorDto",
+    "EntityDescriptionDto": "pitchbook:EntityDescriptionDto",
+    "brief": {
+      "@id": "pitchbook:brief",
+      "@type": "xsd:string"
+    },
+    "FundInfoDto": "pitchbook:FundInfoDto",
+    "fundId": {
+      "@id": "pitchbook:fundId",
+      "@type": "xsd:string"
+    },
+    "fundName": {
+      "@id": "pitchbook:fundName",
+      "@type": "xsd:string"
+    },
+    "fundType": {
+      "@id": "pitchbook:fundType"
+    },
+    "fundStrategy": {
+      "@id": "pitchbook:fundStrategy",
+      "@type": "xsd:string"
+    },
+    "FundStatsDto": "pitchbook:FundStatsDto",
+    "totalFundsOpen": {
+      "@id": "pitchbook:totalFundsOpen",
+      "@type": "xsd:integer"
+    },
+    "totalFundsClosed": {
+      "@id": "pitchbook:totalFundsClosed",
+      "@type": "xsd:integer"
+    },
+    "GeographicalPreferenceDto": "pitchbook:GeographicalPreferenceDto",
+    "regionGroup": {
+      "@id": "pitchbook:regionGroup",
+      "@type": "@id"
+    },
+    "regionSegment": {
+      "@id": "pitchbook:regionSegment",
+      "@type": "@id"
+    },
+    "regionCode": {
+      "@id": "pitchbook:regionCode",
+      "@type": "@id"
+    },
+    "regionState": {
+      "@id": "pitchbook:regionState",
+      "@type": "@id"
+    },
+    "IndustryPreferenceDto": "pitchbook:IndustryPreferenceDto",
+    "industryCode": {
+      "@id": "pitchbook:industryCode",
+      "@type": "@id"
+    },
+    "industrySector": {
+      "@id": "pitchbook:industrySector",
+      "@type": "@id"
+    },
+    "industryGroup": {
+      "@id": "pitchbook:industryGroup",
+      "@type": "@id"
+    },
+    "InvestorBioDto": "pitchbook:InvestorBioDto",
+    "investorName": {
+      "@id": "pitchbook:investorName",
+      "@type": "@id"
+    },
+    "investorStatus": {
+      "@id": "pitchbook:investorStatus",
+      "@type": "@id"
+    },
+    "investorType": {
+      "@id": "pitchbook:investorType",
+      "@container": "@list"
+    },
+    "dryPowder": {
+      "@id": "pitchbook:dryPowder",
+      "@type": "@id"
+    },
+    "countInvestmentProfessionals": {
+      "@id": "pitchbook:countInvestmentProfessionals",
+      "@type": "xsd:integer"
+    },
+    "tradeAssociations": {
+      "@id": "pitchbook:tradeAssociations",
+      "@container": "@list"
+    },
+    "InvestorDto": "pitchbook:InvestorDto",
+    "investorBio": {
+      "@id": "pitchbook:investorBio",
+      "@type": "@id"
+    },
+    "activeInvestments": {
+      "@id": "pitchbook:activeInvestments",
+      "@container": "@list"
+    },
+    "investmentPreference": {
+      "@id": "pitchbook:investmentPreference",
+      "@type": "@id"
+    },
+    "investorFunds": {
+      "@id": "pitchbook:investorFunds",
+      "@type": "@id"
+    },
+    "InvestorFundsDto": "pitchbook:InvestorFundsDto",
+    "minFundSize": {
+      "@id": "pitchbook:minFundSize",
+      "@type": "@id"
+    },
+    "medianFundSize": {
+      "@id": "pitchbook:medianFundSize",
+      "@type": "@id"
+    },
+    "maxFundSize": {
+      "@id": "pitchbook:maxFundSize",
+      "@type": "@id"
+    },
+    "fundInfo": {
+      "@id": "pitchbook:fundInfo",
+      "@container": "@list"
+    },
+    "InvestorInvestmentPreferenceDto": "pitchbook:InvestorInvestmentPreferenceDto",
+    "preferredInvestmentAmount": {
+      "@id": "pitchbook:preferredInvestmentAmount",
+      "@type": "@id"
+    },
+    "preferredDealSize": {
+      "@id": "pitchbook:preferredDealSize",
+      "@type": "@id"
+    },
+    "preferredCompanyValuation": {
+      "@id": "pitchbook:preferredCompanyValuation",
+      "@type": "@id"
+    },
+    "preferredEbitda": {
+      "@id": "pitchbook:preferredEbitda",
+      "@type": "@id"
+    },
+    "preferredEbit": {
+      "@id": "pitchbook:preferredEbit",
+      "@type": "@id"
+    },
+    "preferredRevenue": {
+      "@id": "pitchbook:preferredRevenue",
+      "@type": "@id"
+    },
+    "preferredInvestmentHorizon": {
+      "@id": "pitchbook:preferredInvestmentHorizon",
+      "@type": "@id"
+    },
+    "geographicalPreferences": {
+      "@id": "pitchbook:geographicalPreferences",
+      "@container": "@list"
+    },
+    "otherInvestmentPreferences": {
+      "@id": "pitchbook:otherInvestmentPreferences",
+      "@container": "@list"
+    },
+    "preferredIndustry": {
+      "@id": "pitchbook:preferredIndustry",
+      "@container": "@list"
+    },
+    "preferredDealTypes": {
+      "@id": "pitchbook:preferredDealTypes",
+      "@container": "@list"
+    },
+    "preferredVerticals": {
+      "@id": "pitchbook:preferredVerticals",
+      "@container": "@list"
+    },
+    "assetPreferences": {
+      "@id": "pitchbook:assetPreferences",
+      "@container": "@list"
+    },
+    "InvestorTradeAssociationDto": "pitchbook:InvestorTradeAssociationDto",
+    "name": {
+      "@id": "pitchbook:name",
+      "@type": "xsd:string"
+    },
+    "RangeDtoInteger": "pitchbook:RangeDtoInteger",
+    "min": {
+      "@id": "pitchbook:min",
+      "@type": "xsd:integer"
+    },
+    "max": {
+      "@id": "pitchbook:max",
+      "@type": "xsd:integer"
+    },
+    "RangeDtoMoneyDto": "pitchbook:RangeDtoMoneyDto",
+    "BulkResultDtoInvestorInvestmentPreferenceDto": "pitchbook:BulkResultDtoInvestorInvestmentPreferenceDto",
+    "BulkResultDtoInvestorFundsDto": "pitchbook:BulkResultDtoInvestorFundsDto",
+    "BulkResultDtoInvestorBioDto": "pitchbook:BulkResultDtoInvestorBioDto",
+    "BulkResultDtoListActiveInvestmentDto": "pitchbook:BulkResultDtoListActiveInvestmentDto",
+    "BulkResultDtoFundBioDto": "pitchbook:BulkResultDtoFundBioDto",
+    "FundBioDto": "pitchbook:FundBioDto",
+    "fundInvestors": {
+      "@id": "pitchbook:fundInvestors",
+      "@container": "@list"
+    },
+    "vintage": {
+      "@id": "pitchbook:vintage",
+      "@type": "xsd:integer"
+    },
+    "fundStatus": {
+      "@id": "pitchbook:fundStatus",
+      "@type": "xsd:string"
+    },
+    "additionalFundStrategy": {
+      "@id": "pitchbook:additionalFundStrategy",
+      "@container": "@list"
+    },
+    "fundStructure": {
+      "@id": "pitchbook:fundStructure",
+      "@container": "@list"
+    },
+    "fundLifespan": {
+      "@id": "pitchbook:fundLifespan",
+      "@type": "xsd:string"
+    },
+    "exchangeStatus": {
+      "@id": "pitchbook:exchangeStatus",
+      "@type": "xsd:string"
+    },
+    "targetsPrivateWealthInvestors": {
+      "@id": "pitchbook:targetsPrivateWealthInvestors",
+      "@type": "xsd:boolean"
+    },
+    "sustainableFinanceDisclosureRegulation": {
+      "@id": "pitchbook:sustainableFinanceDisclosureRegulation",
+      "@type": "xsd:string"
+    },
+    "accessPoint": {
+      "@id": "pitchbook:accessPoint",
+      "@type": "xsd:string"
+    },
+    "additionalAccessPoint": {
+      "@id": "pitchbook:additionalAccessPoint",
+      "@type": "xsd:string"
+    },
+    "fundSize": {
+      "@id": "pitchbook:fundSize",
+      "@type": "@id"
+    },
+    "fundTerms": {
+      "@id": "pitchbook:fundTerms",
+      "@type": "@id"
+    },
+    "fundTeam": {
+      "@id": "pitchbook:fundTeam",
+      "@container": "@list"
+    },
+    "openDate": {
+      "@id": "pitchbook:openDate",
+      "@type": "xsd:date"
+    },
+    "closeDate": {
+      "@id": "pitchbook:closeDate",
+      "@type": "xsd:date"
+    },
+    "fundTargetSize": {
+      "@id": "pitchbook:fundTargetSize",
+      "@type": "@id"
+    },
+    "sbic": {
+      "@id": "pitchbook:sbic",
+      "@type": "xsd:boolean"
+    },
+    "returnsInfoAvailable": {
+      "@id": "pitchbook:returnsInfoAvailable",
+      "@container": "@list"
+    },
+    "FundManagerInfoDto": "pitchbook:FundManagerInfoDto",
+    "fundNo": {
+      "@id": "pitchbook:fundNo",
+      "@type": "xsd:integer"
+    },
+    "firstFund": {
+      "@id": "pitchbook:firstFund",
+      "@type": "xsd:boolean"
+    },
+    "FundReturnsAvailabilityDto": "pitchbook:FundReturnsAvailabilityDto",
+    "periodEnding": {
+      "@id": "pitchbook:periodEnding",
+      "@type": "xsd:string"
+    },
+    "irr": {
+      "@id": "pitchbook:irr",
+      "@type": "xsd:boolean"
+    },
+    "cashFlowsAndMultiples": {
+      "@id": "pitchbook:cashFlowsAndMultiples",
+      "@type": "xsd:boolean"
+    },
+    "FundTeamDto": "pitchbook:FundTeamDto",
+    "personFullName": {
+      "@id": "pitchbook:personFullName",
+      "@type": "xsd:string"
+    },
+    "FundTermsDto": "pitchbook:FundTermsDto",
+    "subscriptionFrequency": {
+      "@id": "pitchbook:subscriptionFrequency",
+      "@type": "@id"
+    },
+    "redemptionFrequency": {
+      "@id": "pitchbook:redemptionFrequency",
+      "@type": "@id"
+    },
+    "BulkResultDtoEntityPeopleDto": "pitchbook:BulkResultDtoEntityPeopleDto",
+    "EntityBoardMemberDto": "pitchbook:EntityBoardMemberDto",
+    "fullTitle": {
+      "@id": "pitchbook:fullTitle",
+      "@type": "xsd:string"
+    },
+    "boardRepresentingId": {
+      "@id": "pitchbook:boardRepresentingId",
+      "@type": "xsd:string"
+    },
+    "boardRepresentingName": {
+      "@id": "pitchbook:boardRepresentingName",
+      "@type": "xsd:string"
+    },
+    "roleOnBoard": {
+      "@id": "pitchbook:roleOnBoard",
+      "@type": "xsd:string"
+    },
+    "boardStart": {
+      "@id": "pitchbook:boardStart",
+      "@type": "xsd:date"
+    },
+    "boardFinish": {
+      "@id": "pitchbook:boardFinish",
+      "@type": "xsd:date"
+    },
+    "contactInfoAvailable": {
+      "@id": "pitchbook:contactInfoAvailable",
+      "@type": "xsd:boolean"
+    },
+    "EntityPeopleDto": "pitchbook:EntityPeopleDto",
+    "entityId": {
+      "@id": "pitchbook:entityId",
+      "@type": "xsd:string"
+    },
+    "primaryContact": {
+      "@id": "pitchbook:primaryContact",
+      "@type": "@id"
+    },
+    "currentTeam": {
+      "@id": "pitchbook:currentTeam",
+      "@container": "@list"
+    },
+    "formerTeam": {
+      "@id": "pitchbook:formerTeam",
+      "@container": "@list"
+    },
+    "currentBoardMembersAndObservers": {
+      "@id": "pitchbook:currentBoardMembersAndObservers",
+      "@container": "@list"
+    },
+    "formerBoardMembersAndObservers": {
+      "@id": "pitchbook:formerBoardMembersAndObservers",
+      "@container": "@list"
+    },
+    "PrimaryContactDto": "pitchbook:PrimaryContactDto",
+    "fullName": {
+      "@id": "pitchbook:fullName",
+      "@type": "xsd:string"
+    },
+    "title": {
+      "@id": "pitchbook:title",
+      "@type": "xsd:string"
+    },
+    "TeamMemberDto": "pitchbook:TeamMemberDto",
+    "positionStart": {
+      "@id": "pitchbook:positionStart",
+      "@type": "xsd:date"
+    },
+    "positionFinish": {
+      "@id": "pitchbook:positionFinish",
+      "@type": "xsd:date"
+    },
+    "infoAvailable": {
+      "@id": "pitchbook:infoAvailable",
+      "@type": "xsd:boolean"
+    },
+    "BulkResultDtoEntityLocationsDto": "pitchbook:BulkResultDtoEntityLocationsDto",
+    "EntityLocationsDto": "pitchbook:EntityLocationsDto",
+    "hqOffice": {
+      "@id": "pitchbook:hqOffice",
+      "@type": "@id"
+    },
+    "alternateOffices": {
+      "@id": "pitchbook:alternateOffices",
+      "@container": "@list"
+    },
+    "alternateOfficesCount": {
+      "@id": "pitchbook:alternateOfficesCount",
+      "@type": "xsd:integer"
+    },
+    "BulkResultDtoEntityBioDto": "pitchbook:BulkResultDtoEntityBioDto",
+    "CompanyBioDto": "pitchbook:CompanyBioDto",
+    "parentCompanyId": {
+      "@id": "pitchbook:parentCompanyId",
+      "@type": "xsd:string"
+    },
+    "parentCompanyName": {
+      "@id": "pitchbook:parentCompanyName",
+      "@type": "xsd:string"
+    },
+    "financingStatus": {
+      "@id": "pitchbook:financingStatus",
+      "@type": "@id"
+    },
+    "businessStatus": {
+      "@id": "pitchbook:businessStatus",
+      "@type": "@id"
+    },
+    "ownershipStatus": {
+      "@id": "pitchbook:ownershipStatus",
+      "@type": "@id"
+    },
+    "universe": {
+      "@id": "pitchbook:universe",
+      "@container": "@list"
+    },
+    "employeeHistory": {
+      "@id": "pitchbook:employeeHistory",
+      "@container": "@list"
+    },
+    "exchange": {
+      "@id": "pitchbook:exchange",
+      "@type": "xsd:string"
+    },
+    "ticker": {
+      "@id": "pitchbook:ticker",
+      "@type": "xsd:string"
+    },
+    "financingStatusNote": {
+      "@id": "pitchbook:financingStatusNote",
+      "@type": "@id"
+    },
+    "totalMoneyRaised": {
+      "@id": "pitchbook:totalMoneyRaised",
+      "@type": "@id"
+    },
+    "sicCodes": {
+      "@id": "pitchbook:sicCodes",
+      "@container": "@list"
+    },
+    "morningstarCode": {
+      "@id": "pitchbook:morningstarCode"
+    },
+    "cikCode": {
+      "@id": "pitchbook:cikCode",
+      "@type": "xsd:string"
+    },
+    "companySocialURLs": {
+      "@id": "pitchbook:companySocialURLs",
+      "@type": "@id"
+    },
+    "pitchBookProfileLink": {
+      "@id": "pitchbook:pitchBookProfileLink",
+      "@type": "xsd:string"
+    },
+    "CompanyFinancingNoteDto": "pitchbook:CompanyFinancingNoteDto",
+    "note": {
+      "@id": "pitchbook:note",
+      "@type": "xsd:string"
+    },
+    "asOfDate": {
+      "@id": "pitchbook:asOfDate",
+      "@type": "xsd:date"
+    },
+    "CompanySocialDto": "pitchbook:CompanySocialDto",
+    "facebookProfileUrl": {
+      "@id": "pitchbook:facebookProfileUrl",
+      "@type": "xsd:string"
+    },
+    "twitterProfileUrl": {
+      "@id": "pitchbook:twitterProfileUrl",
+      "@type": "xsd:string"
+    },
+    "EmployeeHistoryDto": "pitchbook:EmployeeHistoryDto",
+    "employeeCount": {
+      "@id": "pitchbook:employeeCount",
+      "@type": "xsd:integer"
+    },
+    "EntityBioDto": "pitchbook:EntityBioDto",
+    "primaryFirmType": {
+      "@id": "pitchbook:primaryFirmType",
+      "@type": "xsd:string"
+    },
+    "companyBio": {
+      "@id": "pitchbook:companyBio",
+      "@type": "@id"
+    },
+    "serviceProviderBio": {
+      "@id": "pitchbook:serviceProviderBio",
+      "@type": "@id"
+    },
+    "BulkResultDtoListEntityAffiliateDto": "pitchbook:BulkResultDtoListEntityAffiliateDto",
+    "EntityAffiliateDto": "pitchbook:EntityAffiliateDto",
+    "affiliateId": {
+      "@id": "pitchbook:affiliateId",
+      "@type": "xsd:string"
+    },
+    "affiliateName": {
+      "@id": "pitchbook:affiliateName",
+      "@type": "xsd:string"
+    },
+    "affiliateType": {
+      "@id": "pitchbook:affiliateType",
+      "@type": "xsd:string"
+    },
+    "CreditNewsBulkItemDto": "pitchbook:CreditNewsBulkItemDto",
+    "articleId": {
+      "@id": "pitchbook:articleId",
+      "@type": "xsd:integer"
+    },
+    "CreditNewsBulkRequestDto": "pitchbook:CreditNewsBulkRequestDto",
+    "AttachmentDto": "pitchbook:AttachmentDto",
+    "url": {
+      "@id": "pitchbook:url",
+      "@type": "xsd:string"
+    },
+    "AuthorDto": "pitchbook:AuthorDto",
+    "authorName": {
+      "@id": "pitchbook:authorName",
+      "@type": "xsd:string"
+    },
+    "CreditNewsBulkResponseDto": "pitchbook:CreditNewsBulkResponseDto",
+    "found": {
+      "@id": "pitchbook:found",
+      "@container": "@list"
+    },
+    "notFound": {
+      "@id": "pitchbook:notFound",
+      "@container": "@list"
+    },
+    "CreditNewsBulkStatsDto": "pitchbook:CreditNewsBulkStatsDto",
+    "CreditNewsDto": "pitchbook:CreditNewsDto",
+    "authors": {
+      "@id": "pitchbook:authors",
+      "@container": "@list"
+    },
+    "regions": {
+      "@id": "pitchbook:regions",
+      "@container": "@list"
+    },
+    "publishDate": {
+      "@id": "pitchbook:publishDate",
+      "@type": "xsd:dateTime"
+    },
+    "assetClasses": {
+      "@id": "pitchbook:assetClasses",
+      "@container": "@list"
+    },
+    "topics": {
+      "@id": "pitchbook:topics",
+      "@container": "@list"
+    },
+    "issuer": {
+      "@id": "pitchbook:issuer",
+      "@type": "@id"
+    },
+    "lender": {
+      "@id": "pitchbook:lender",
+      "@type": "@id"
+    },
+    "sponsor": {
+      "@id": "pitchbook:sponsor",
+      "@type": "@id"
+    },
+    "articleBody": {
+      "@id": "pitchbook:articleBody",
+      "@type": "xsd:string"
+    },
+    "attachments": {
+      "@id": "pitchbook:attachments",
+      "@container": "@list"
+    },
+    "deal": {
+      "@id": "pitchbook:deal",
+      "@type": "@id"
+    },
+    "DealDto": "pitchbook:DealDto",
+    "dealId": {
+      "@id": "pitchbook:dealId",
+      "@type": "xsd:string"
+    },
+    "DuplicatedCreditNewsItemDto": "pitchbook:DuplicatedCreditNewsItemDto",
+    "NewsBusinessEntityDto": "pitchbook:NewsBusinessEntityDto",
+    "pbId": {
+      "@id": "pitchbook:pbId",
+      "@type": "xsd:string"
+    },
+    "ActiveInvestorDto": "pitchbook:ActiveInvestorDto",
+    "investorTypes": {
+      "@id": "pitchbook:investorTypes",
+      "@container": "@list"
+    },
+    "holding": {
+      "@id": "pitchbook:holding",
+      "@type": "xsd:string"
+    },
+    "BulkResultDtoCompanyDto": "pitchbook:BulkResultDtoCompanyDto",
+    "CompanyAllInvestorsDto": "pitchbook:CompanyAllInvestorsDto",
+    "countAllInvestors": {
+      "@id": "pitchbook:countAllInvestors",
+      "@type": "xsd:integer"
+    },
+    "investors": {
+      "@id": "pitchbook:investors",
+      "@container": "@list"
+    },
+    "CompanyDto": "pitchbook:CompanyDto",
+    "companyIndustry": {
+      "@id": "pitchbook:companyIndustry",
+      "@type": "@id"
+    },
+    "companyActiveInvestors": {
+      "@id": "pitchbook:companyActiveInvestors",
+      "@container": "@list"
+    },
+    "companyAllInvestors": {
+      "@id": "pitchbook:companyAllInvestors",
+      "@type": "@id"
+    },
+    "companyMostRecentFinancing": {
+      "@id": "pitchbook:companyMostRecentFinancing",
+      "@type": "@id"
+    },
+    "CompanyIndustryDto": "pitchbook:CompanyIndustryDto",
+    "gecs": {
+      "@id": "pitchbook:gecs",
+      "@container": "@list"
+    },
+    "industries": {
+      "@id": "pitchbook:industries",
+      "@container": "@list"
+    },
+    "verticals": {
+      "@id": "pitchbook:verticals",
+      "@container": "@list"
+    },
+    "keywords": {
+      "@id": "pitchbook:keywords",
+      "@container": "@list"
+    },
+    "emergingSpaces": {
+      "@id": "pitchbook:emergingSpaces",
+      "@container": "@list"
+    },
+    "CompanyIndustryInfoDto": "pitchbook:CompanyIndustryInfoDto",
+    "CompanyInvestorDto": "pitchbook:CompanyInvestorDto",
+    "investorExit": {
+      "@id": "pitchbook:investorExit",
+      "@type": "xsd:date"
+    },
+    "CompanyMostRecentFinancingDto": "pitchbook:CompanyMostRecentFinancingDto",
+    "lastFinancingDealId": {
+      "@id": "pitchbook:lastFinancingDealId",
+      "@type": "xsd:string"
+    },
+    "lastFinancingDate": {
+      "@id": "pitchbook:lastFinancingDate",
+      "@type": "xsd:date"
+    },
+    "lastFinancingStatus": {
+      "@id": "pitchbook:lastFinancingStatus",
+      "@type": "@id"
+    },
+    "lastFinancingSize": {
+      "@id": "pitchbook:lastFinancingSize",
+      "@type": "@id"
+    },
+    "lastFinancingSizeStatus": {
+      "@id": "pitchbook:lastFinancingSizeStatus",
+      "@type": "xsd:string"
+    },
+    "lastFinancingValuation": {
+      "@id": "pitchbook:lastFinancingValuation",
+      "@type": "@id"
+    },
+    "lastFinancingValuationStatus": {
+      "@id": "pitchbook:lastFinancingValuationStatus",
+      "@type": "xsd:string"
+    },
+    "lastFinancingDealType": {
+      "@id": "pitchbook:lastFinancingDealType",
+      "@type": "@id"
+    },
+    "lastFinancingDealType2": {
+      "@id": "pitchbook:lastFinancingDealType2",
+      "@type": "@id"
+    },
+    "lastFinancingDealType3": {
+      "@id": "pitchbook:lastFinancingDealType3",
+      "@type": "@id"
+    },
+    "lastFinancingDealClass": {
+      "@id": "pitchbook:lastFinancingDealClass",
+      "@type": "@id"
+    },
+    "lastKnownValuation": {
+      "@id": "pitchbook:lastKnownValuation",
+      "@type": "@id"
+    },
+    "lastKnownValuationDate": {
+      "@id": "pitchbook:lastKnownValuationDate",
+      "@type": "xsd:date"
+    },
+    "lastKnownValuationDealType": {
+      "@id": "pitchbook:lastKnownValuationDealType",
+      "@type": "@id"
+    },
+    "EmergingSpaceDto": "pitchbook:EmergingSpaceDto",
+    "spaceCode": {
+      "@id": "pitchbook:spaceCode",
+      "@type": "xsd:string"
+    },
+    "spaceName": {
+      "@id": "pitchbook:spaceName",
+      "@type": "xsd:string"
+    },
+    "spaceDescription": {
+      "@id": "pitchbook:spaceDescription",
+      "@type": "xsd:string"
+    },
+    "GecsClassificationDto": "pitchbook:GecsClassificationDto",
+    "gecsSector": {
+      "@id": "pitchbook:gecsSector",
+      "@type": "@id"
+    },
+    "gecsIndustryGroup": {
+      "@id": "pitchbook:gecsIndustryGroup",
+      "@type": "@id"
+    },
+    "gecsIndustry": {
+      "@id": "pitchbook:gecsIndustry",
+      "@type": "@id"
+    },
+    "BulkResultDtoCompanyMostRecentFinancingDto": "pitchbook:BulkResultDtoCompanyMostRecentFinancingDto",
+    "BulkResultDtoCompanyAllInvestorsDto": "pitchbook:BulkResultDtoCompanyAllInvestorsDto",
+    "BulkResultDtoCompanyIndustryDto": "pitchbook:BulkResultDtoCompanyIndustryDto",
+    "BulkResultDtoCompanyBioDto": "pitchbook:BulkResultDtoCompanyBioDto",
+    "BulkResultDtoListActiveInvestorDto": "pitchbook:BulkResultDtoListActiveInvestorDto",
+    "SearchPageStatsDto_SearchView": "pitchbook:SearchPageStatsDto_SearchView",
+    "perPage": {
+      "@id": "pitchbook:perPage",
+      "@type": "xsd:integer"
+    },
+    "page": {
+      "@id": "pitchbook:page",
+      "@type": "xsd:integer"
+    },
+    "lastPage": {
+      "@id": "pitchbook:lastPage",
+      "@type": "xsd:integer"
+    },
+    "SharedSearchPageDtoObject_SearchView": "pitchbook:SharedSearchPageDtoObject_SearchView",
+    "searchCriteria": {
+      "@id": "pitchbook:searchCriteria",
+      "@type": "xsd:string"
+    },
+    "UpdateDto": "pitchbook:UpdateDto",
+    "updates": {
+      "@id": "pitchbook:updates"
+    },
+    "GeneralServiceDto": "pitchbook:GeneralServiceDto",
+    "entityName": {
+      "@id": "pitchbook:entityName",
+      "@type": "xsd:string"
+    },
+    "serviceProvided": {
+      "@id": "pitchbook:serviceProvided",
+      "@type": "@id"
+    },
+    "ServicedEntitiesDto": "pitchbook:ServicedEntitiesDto",
+    "currentGeneralServices": {
+      "@id": "pitchbook:currentGeneralServices",
+      "@container": "@list"
+    },
+    "formerGeneralServices": {
+      "@id": "pitchbook:formerGeneralServices",
+      "@container": "@list"
+    },
+    "FundServiceDto": "pitchbook:FundServiceDto",
+    "servicedEntityType": {
+      "@id": "pitchbook:servicedEntityType",
+      "@type": "@id"
+    },
+    "ServicedFundsDto": "pitchbook:ServicedFundsDto",
+    "fundServices": {
+      "@id": "pitchbook:fundServices",
+      "@container": "@list"
+    },
+    "ServicedDealInfoDto": "pitchbook:ServicedDealInfoDto",
+    "dealNumber": {
+      "@id": "pitchbook:dealNumber",
+      "@type": "xsd:integer"
+    },
+    "dealDate": {
+      "@id": "pitchbook:dealDate",
+      "@type": "xsd:date"
+    },
+    "ServicedDealsDto": "pitchbook:ServicedDealsDto",
+    "servicedDealInfo": {
+      "@id": "pitchbook:servicedDealInfo",
+      "@container": "@list"
+    },
+    "AdvancedSearchPageDtoServiceProviderAdvancedSearchResultDto_SearchView": "pitchbook:AdvancedSearchPageDtoServiceProviderAdvancedSearchResultDto_SearchView",
+    "ServiceProviderAdvancedSearchResultDto_SearchView": "pitchbook:ServiceProviderAdvancedSearchResultDto_SearchView",
+    "sandbox": {
+      "@id": "pitchbook:sandbox",
+      "@type": "xsd:boolean"
+    },
+    "FirmTypeDto_SearchView": "pitchbook:FirmTypeDto_SearchView",
+    "GeneralSearchPageDto_SearchView": "pitchbook:GeneralSearchPageDto_SearchView",
+    "GeneralSearchResultDto_SearchView": "pitchbook:GeneralSearchResultDto_SearchView",
+    "discriminator": {
+      "@id": "pitchbook:discriminator",
+      "@type": "xsd:string"
+    },
+    "EntityTypeCountsDto": "pitchbook:EntityTypeCountsDto",
+    "companies": {
+      "@id": "pitchbook:companies",
+      "@type": "xsd:integer"
+    },
+    "deals": {
+      "@id": "pitchbook:deals",
+      "@type": "xsd:integer"
+    },
+    "people": {
+      "@id": "pitchbook:people",
+      "@type": "xsd:integer"
+    },
+    "funds": {
+      "@id": "pitchbook:funds",
+      "@type": "xsd:integer"
+    },
+    "limitedPartners": {
+      "@id": "pitchbook:limitedPartners",
+      "@type": "xsd:integer"
+    },
+    "serviceProviders": {
+      "@id": "pitchbook:serviceProviders",
+      "@type": "xsd:integer"
+    },
+    "creditNews": {
+      "@id": "pitchbook:creditNews",
+      "@type": "xsd:integer"
+    },
+    "SandboxCompanyDto": "pitchbook:SandboxCompanyDto",
+    "SandboxCreditNewsDto": "pitchbook:SandboxCreditNewsDto",
+    "articleTitle": {
+      "@id": "pitchbook:articleTitle",
+      "@type": "xsd:string"
+    },
+    "SandboxDealDto": "pitchbook:SandboxDealDto",
+    "SandboxEntitiesDto": "pitchbook:SandboxEntitiesDto",
+    "entityTypeCounts": {
+      "@id": "pitchbook:entityTypeCounts",
+      "@type": "@id"
+    },
+    "dealIds": {
+      "@id": "pitchbook:dealIds",
+      "@container": "@list"
+    },
+    "SandboxFundDto": "pitchbook:SandboxFundDto",
+    "SandboxInvestorDto": "pitchbook:SandboxInvestorDto",
+    "SandboxLimitedPartnerDto": "pitchbook:SandboxLimitedPartnerDto",
+    "SandboxPersonDto": "pitchbook:SandboxPersonDto",
+    "SandboxServiceProviderDto": "pitchbook:SandboxServiceProviderDto",
+    "BoardSeatDto": "pitchbook:BoardSeatDto",
+    "boardCompanyId": {
+      "@id": "pitchbook:boardCompanyId",
+      "@type": "xsd:string"
+    },
+    "boardCompanyName": {
+      "@id": "pitchbook:boardCompanyName",
+      "@type": "xsd:string"
+    },
+    "positionStatus": {
+      "@id": "pitchbook:positionStatus",
+      "@type": "xsd:string"
+    },
+    "CompanyRoleDto": "pitchbook:CompanyRoleDto",
+    "position": {
+      "@id": "pitchbook:position",
+      "@type": "xsd:string"
+    },
+    "positionType": {
+      "@id": "pitchbook:positionType",
+      "@type": "xsd:string"
+    },
+    "CurrentAdvisoryRoleDto": "pitchbook:CurrentAdvisoryRoleDto",
+    "companyType": {
+      "@id": "pitchbook:companyType",
+      "@type": "@id"
+    },
+    "DealRoleDto": "pitchbook:DealRoleDto",
+    "representingId": {
+      "@id": "pitchbook:representingId",
+      "@type": "xsd:string"
+    },
+    "representingName": {
+      "@id": "pitchbook:representingName",
+      "@type": "xsd:string"
+    }
+  },
+  "@type": "schema:Dataset",
+  "schema:name": "PitchBook API JSON-LD context",
+  "schema:description": "A JSON-LD @context for the objects PitchBook's own API contract declares: one class per component schema, one property per declared field, typed from the contract. Derived by script (derive-json-ld.py, 2026-09-21) from openapi/pitchbook-openapi.json.",
+  "dcterms:created": "2026-09-21",
+  "dcterms:source": [
+    "openapi/pitchbook-openapi.json"
+  ]
+}

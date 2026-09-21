@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/pitchbook/main/json-schema/pitchbook-limited-partner-commitment-aggregates-dto-schema.json",
+  "title": "LimitedPartnerCommitmentAggregatesDto",
+  "x-generated": "2026-09-21",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/pitchbook-openapi.json#/components/schemas/LimitedPartnerCommitmentAggregatesDto",
+  "type": "object",
+  "properties": {
+    "limitedPartnerId": {
+      "type": "string"
+    },
+    "limitedPartnerName": {
+      "type": "string"
+    },
+    "activeCommitmentsInDebtFunds": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "activeCommitmentsInPeFunds": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "activeCommitmentsInReFunds": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "activeCommitmentsInVcFunds": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "activeCommitmentsInFoFsAnd2nd": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "activeCommitmentsInInfrastructure": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "activeCommitmentsInEnergyFunds": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "activeCommitmentsInOtherFunds": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "totalActiveCommitments": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "totalCommitmentsInDebtFunds": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "totalCommitmentsInPeFunds": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "totalCommitmentsInReFunds": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "totalCommitmentsInVcFunds": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "totalCommitmentsInFoFsAnd2nd": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "totalCommitmentsInInfrastructure": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "totalCommitmentsInEnergyFunds": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "totalCommitmentsInOtherFunds": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "totalCommitments": {
+      "type": "integer",
+      "format": "int32"
+    }
+  }
+}

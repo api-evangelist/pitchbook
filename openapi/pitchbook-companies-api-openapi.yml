@@ -1,0 +1,3678 @@
+openapi: 3.2.0
+info:
+  title: OpenAPI definition Companies API
+  version: v0
+  description: Companies
+servers:
+- url: https://api.pitchbook.com
+tags:
+- name: Companies
+  description: Companies
+paths:
+  /companies/search:
+    get:
+      tags:
+      - Companies
+      summary: Company Search
+      description: Retrieves companies matching the specified criteria
+      operationId: companySearch
+      parameters:
+      - name: companyNames
+        in: query
+        description: Accepts company names, pbIds, websites, and tickers. Returns a list of companies that are an exact match. Use a comma to separate multiple values
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 11111-11, Name
+      - name: ownershipStatus
+        in: query
+        description: Companies can be found by their <a href="https://my.pitchbook.com/api/lookup-tables/Companies#OWNERSHIP_STATUS_TREE" target="_blank">ownership status code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: ACQ
+      - name: backingStatus
+        in: query
+        description: Companies can be found by their <a href="https://my.pitchbook.com/api/lookup-tables/Companies#BACKING_STATUS_TREE" target="_blank">backing status code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: ACCIB
+      - name: businessStatus
+        in: query
+        description: Companies can be found by their <a href="https://my.pitchbook.com/api/lookup-tables/Companies#BUSINESS_STATUS_TREE" target="_blank">business status code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: CH11
+      - name: city
+        in: query
+        description: Search for companies by their city location
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: Seattle
+      - name: stateProvince
+        in: query
+        description: Search for companies by their <a href="https://my.pitchbook.com/api/lookup-tables/Location#US_STATE_TREE" target="_blank">state code</a> or <a href="https://my.pitchbook.com/api/lookup-tables/Location#CANADIAN_PROVINCE_TREE" target="_blank">province code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: AL
+      - name: country
+        in: query
+        description: Search for companies by their <a href="https://my.pitchbook.com/api/lookup-tables/Location#COUNTRY_TREE" target="_blank">country code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: ABW
+      - name: postCode
+        in: query
+        description: Search for companies by their postcode, included to support searching for both US postal code and foreign
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '98765'
+      - name: locationType
+        in: query
+        description: Search for companies by additional parameter specifying HQ Only (HQ_ONLY), Non-HQ Only (NON_HQ_ONLY) or any office location (ANY) values. Set this parameter in pair with city, stateProvince, country, postCode options
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: ANY
+      - name: dateFounded
+        in: query
+        description: 'Companies can be found by founding date. Search for companies founded after a certain date using the > operator, companies founded before a certain date using the < operator and companies founded between 2 dates using the ^ operator. Format: YYYY-MM-DD'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: <2026-09-16
+      - name: keywords
+        in: query
+        description: Search for companies by keywords associated with them or appearing in their business descriptions. If two or more keywords are specified, the OR operator is applied. Only one industry classification can be used at a time. This parameter cannot be combined with parameters from other industry classifications
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: IT
+      - name: industry
+        in: query
+        description: Companies can be found by the <a href="https://my.pitchbook.com/api/lookup-tables/Industries, Verticals & Emerging Spaces#INDUSTRY_TREE" target="_blank">industry code</a>. Only one industry classification can be used at a time. This parameter cannot be combined with parameters from other industry classifications
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '10'
+      - name: verticals
+        in: query
+        description: Companies can be found by the <a href="https://my.pitchbook.com/api/lookup-tables/Industries, Verticals & Emerging Spaces#VERTICAL_TREE" target="_blank">vertical code</a>. Only one industry classification can be used at a time. This parameter cannot be combined with parameters from other industry classifications
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 3D
+      - name: industryAndVertical
+        in: query
+        description: When using any combination of industry, verticals, and emergingSpaces parameters, "OR" logic is used by default. To use "AND" logic, set this parameter to True.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 'TRUE'
+      - name: emergingSpaces
+        in: query
+        description: Emerging spaces are defined by PB analysts for specific products or technological innovations that are growing in popularity. These spaces are dynamic and change over time. Companies can be found by the <a href="https://my.pitchbook.com/api/lookup-tables/Industries, Verticals & Emerging Spaces#EMERGING_SPACES_TREE" target="_blank">emerging space code</a>. Only one industry classification can be used at a time. This parameter cannot be combined with parameters from other industry classifications
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '348'
+      - name: gecsSector
+        in: query
+        description: Companies can be found by the <a href="https://my.pitchbook.com/api/lookup-tables/Industries, Verticals & Emerging Spaces#GECS_SECTOR_TREE" target="_blank">GECS sector code</a>. Only one industry classification can be used at a time. This parameter cannot be combined with parameters from other industry classifications
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '102'
+      - name: gecsIndustryGroup
+        in: query
+        description: Companies can be found by the <a href="https://my.pitchbook.com/api/lookup-tables/Industries, Verticals & Emerging Spaces#GECS_INDUSTRY_GROUP_TREE" target="_blank">GECS industry group code</a>. Only one industry classification can be used at a time. This parameter cannot be combined with parameters from other industry classifications
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '10200'
+      - name: gecsIndustry
+        in: query
+        description: Companies can be found by the <a href="https://my.pitchbook.com/api/lookup-tables/Industries, Verticals & Emerging Spaces#GECS_INDUSTRY_TREE" target="_blank">GECS industry code</a>. Only one industry classification can be used at a time. This parameter cannot be combined with parameters from other industry classifications
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '10200020'
+      - name: dealType
+        in: query
+        description: Find companies with a specific <a href="https://my.pitchbook.com/api/lookup-tables/Deals#DEAL_TYPE_TREE" target="_blank">deal type code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: SeedA
+      - name: dealStatus
+        in: query
+        description: Distinguish between failed, upcoming, completed deals and more. Pass a <a href="https://my.pitchbook.com/api/lookup-tables/Deals#DEAL_STATUS_TREE" target="_blank">deal status code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: ANNO
+      - name: dealSize
+        in: query
+        description: Find companies who have had a deal of a certain size. Search for companies with a deal larger than an amount using the > operator, companies with a deal smaller than a certain amount using the < operator and companies with a deal size in a range using the ^ operator. Amounts in millions
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 10^15
+      - name: includeDealsWithoutDealSize
+        in: query
+        description: Include companies without a known deal size. Set this parameter as True only when Deal Size parameter is applied. False by default
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 'TRUE'
+      - name: excludeDealsWithoutDealSize
+        in: query
+        description: Exclude companies without a known deal size. Set this parameter as True only when Deal Size parameter is not applied. False by default
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 'TRUE'
+      - name: dealDate
+        in: query
+        description: 'Find companies who have had a deal within a certain time frame. Search for companies with a deal after a certain date using the > operator, companies with a deal before a certain date using the < operator and companies with a deal between 2 dates using the ^ operator. Format: YYYY-MM-DD'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: <2026-09-16
+      - name: totalRaised
+        in: query
+        description: Find companies by the total amount of money they have raised to date in millions. Use the > operator to find companies that have raised more than a certain value, use the < to find companies who have raised less than a certain value and the ^ operator to search within a range. Amounts in millions
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 10^15
+      - name: investorNames
+        in: query
+        description: Accepts investor names, pbIds, websites, and tickers. Returns a list of companies that have been invested in by specified investors that are an exact match to the input. Use a comma to separate multiple values
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 11111-11, Name
+      - name: partialExit
+        in: query
+        description: Find companies who have had a deal with partial investor's exit within them. To use this parameter set it as True
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 'TRUE'
+      - name: fullExit
+        in: query
+        description: Find companies who have had a deal with full investor's exit within them. To use this parameter set it as True
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 'TRUE'
+      - name: exitType
+        in: query
+        description: Find companies with a specific exit of deal with investor's exit within them. Pass a <a href="https://my.pitchbook.com/api/lookup-tables/Deals#EXIT_TYPE_TREE" target="_blank">exit type code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: CH11
+      - name: exitStatus
+        in: query
+        description: Distinguish between failed, upcoming, completed exits and more. Pass a <a href="https://my.pitchbook.com/api/lookup-tables/Deals#DEAL_STATUS_TREE" target="_blank">deal status code</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: ANNO
+      - name: exitSize
+        in: query
+        description: Find companies who have had a deal with investor's exit within them of a certain size. Search for companies with an exit larger than an amount using the > operator, companies with an exit smaller than a certain amount using the < operator and companies with an exit size in a range using the ^ operator. Amounts in millions
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 10^15
+      - name: exitDate
+        in: query
+        description: 'Find companies who have had a deal within a certain time frame. Search for companies with a deal after a certain date using the > operator, companies with a deal before a certain date using the < operator and companies with a deal between 2 dates using the ^ operator. Format: YYYY-MM-DD'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: <2026-09-16
+      - name: revenue
+        in: query
+        description: Find companies that have a certain amount of revenue. Search for companies with more revenue than an amount using the > operator, companies with less revenue than an amount using the < operator or companies within a range using the ^ operator. Amounts in millions
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 10^15
+      - name: onlyMostRecentTransaction
+        in: query
+        description: Find companies by their most recent deal. To use this parameter set it as True
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 'TRUE'
+      - name: employeeCount
+        in: query
+        description: Find companies by their current employee count. Search for companies with a headcount larger than a value using the > operator, companies with a headcount smaller than a value using the < operator and companies with a headcount in a range using the ^ operator
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 10^15
+      - name: totalPatentDocuments
+        in: query
+        description: Add this parameter to filter based on total patents count. Use the > operator to indicate a minimum value, the < operator to indicate a maximum value, and a range of two values with the ^ operator.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 10^15
+      - name: activePatentDocuments
+        in: query
+        description: Add this parameter to filter based on active patents count. Use the > operator to indicate a minimum value, the < operator to indicate a maximum value, and a range of two values with the ^ operator.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 10^15
+      - name: pendingPatentDocuments
+        in: query
+        description: Add this parameter to filter based on pending patents count. Use the > operator to indicate a minimum value, the < operator to indicate a maximum value, and a range of two values with the ^ operator.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 10^15
+      - name: totalPatentFamilies
+        in: query
+        description: Add this parameter to filter based on patent family count. Use the > operator to indicate a minimum value, the < operator to indicate a maximum value, and a range of two values with the ^ operator.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 10^15
+      - name: inactiveFamilyDocuments
+        in: query
+        description: Add this parameter to filter based on inactive documents count. Use the > operator to indicate a minimum value, the < operator to indicate a maximum value, and a range of two values with the ^ operator.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 10^15
+      - name: patentsExpiringNextYear
+        in: query
+        description: Add this parameter to filter based on count of patents expiring next year. Use the > operator to indicate a minimum value, the < operator to indicate a maximum value, and a range of two values with the ^ operator.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 10^15
+      - name: patentFilingLocation
+        in: query
+        description: Patents can be found by their <a href="https://my.pitchbook.com/api/lookup-tables/Patents#FILING_LOCATION_TREE" target="_blank">filing location</a>. Use a comma to separate multiple values
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: US
+      - name: currency
+        in: query
+        description: Specify the currency that your other parameters, such as dealSize, are entered as. It depends on the <a href="https://my.pitchbook.com/api/lookup-tables/Currency#CURRENCY_CODE_TREE" target="_blank">currency</a> in user preferences
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: AFN
+      - name: page
+        in: query
+        description: Results are returned so that they can be paged through. Set this parameter to increment the page
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '1'
+      - name: perPage
+        in: query
+        description: How many returned results show on page
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: '25'
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/AdvancedSearchPageDtoCompanyEntityAdvancedSearchResultDto_SearchView'
+      security:
+      - pbToken: []
+  /companies/{pbId}:
+    get:
+      tags:
+      - Companies
+      summary: Company
+      description: Retrieves all the data points about specific company
+      operationId: getCompany
+      parameters:
+      - name: pbId
+        in: path
+        description: Company pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          114233-77:
+            summary: 114233-77
+            value: 114233-77
+          227393-20:
+            summary: 227393-20
+            value: 227393-20
+          88374-43:
+            summary: 88374-43
+            value: 88374-43
+          55363-78:
+            summary: 55363-78
+            value: 55363-78
+          42901-93:
+            summary: 42901-93
+            value: 42901-93
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CompanyDto'
+      security:
+      - pbToken: []
+  /companies:
+    post:
+      tags:
+      - Companies
+      summary: '[Bulk] Company'
+      description: Retrieves all the data points about specific company. This bulk call allows you to send multiple pbIds within a single API call.
+      operationId: getCompanyBulk
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequestDto'
+            example:
+              items:
+              - id: 224622-37
+              - id: 62300-89
+              - id: 51209-29
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BulkResultDtoCompanyDto'
+      security:
+      - pbToken: []
+  /companies/{pbId}/bio:
+    get:
+      tags:
+      - Companies
+      summary: Company Bio
+      description: Retrieves key data points about specific company
+      operationId: getCompanyBio
+      parameters:
+      - name: pbId
+        in: path
+        description: Company pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          232806-43:
+            summary: 232806-43
+            value: 232806-43
+          185815-81:
+            summary: 185815-81
+            value: 185815-81
+          158901-40:
+            summary: 158901-40
+            value: 158901-40
+          56069-02:
+            summary: 56069-02
+            value: 56069-02
+          84659-86:
+            summary: 84659-86
+            value: 84659-86
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CompanyBioDto'
+      security:
+      - pbToken: []
+  /companies/bio:
+    post:
+      tags:
+      - Companies
+      summary: '[Bulk] Company Bio'
+      description: Retrieves key data points about specific company. This bulk call allows you to send multiple pbIds within a single API call.
+      operationId: getBulkCompanyBio
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequestDto'
+            example:
+              items:
+              - id: 88374-43
+              - id: 108346-96
+              - id: 84659-86
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BulkResultDtoCompanyBioDto'
+      security:
+      - pbToken: []
+  /companies/{pbId}/industries:
+    get:
+      tags:
+      - Companies
+      summary: Company Industry
+      description: Retrieves industries, verticals, keywords, and emerging spaces tagged to the specific company
+      operationId: getCompanyIndustry
+      parameters:
+      - name: pbId
+        in: path
+        description: Company pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          66153-25:
+            summary: 66153-25
+            value: 66153-25
+          232806-43:
+            summary: 232806-43
+            value: 232806-43
+          137127-16:
+            summary: 137127-16
+            value: 137127-16
+          59191-48:
+            summary: 59191-48
+            value: 59191-48
+          185815-81:
+            summary: 185815-81
+            value: 185815-81
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CompanyIndustryDto'
+      security:
+      - pbToken: []
+  /companies/industries:
+    post:
+      tags:
+      - Companies
+      summary: '[Bulk] Company Industry'
+      description: Retrieves industries and verticals tagged to the specific company. This bulk call allows you to send multiple pbIds within a single API call.
+      operationId: getCompanyIndustryBulk
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequestDto'
+            example:
+              items:
+              - id: 179806-69
+              - id: 161109-28
+              - id: 62881-48
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BulkResultDtoCompanyIndustryDto'
+      security:
+      - pbToken: []
+  /companies/{pbId}/active-investors:
+    get:
+      tags:
+      - Companies
+      summary: Company Active Investors
+      description: Retrieves active investors of the specific company
+      operationId: getCompanyActiveInvestors
+      parameters:
+      - name: pbId
+        in: path
+        description: Company pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          114233-77:
+            summary: 114233-77
+            value: 114233-77
+          65860-66:
+            summary: 65860-66
+            value: 65860-66
+          226884-79:
+            summary: 226884-79
+            value: 226884-79
+          180002-80:
+            summary: 180002-80
+            value: 180002-80
+          56060-83:
+            summary: 56060-83
+            value: 56060-83
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ActiveInvestorDto'
+      security:
+      - pbToken: []
+  /companies/active-investors:
+    post:
+      tags:
+      - Companies
+      summary: '[Bulk] Company Active Investors'
+      description: Retrieves active investors of the specific company. This bulk call allows you to send multiple pbIds within a single API call.
+      operationId: getBulkCompanyActiveInvestor
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequestDto'
+            example:
+              items:
+              - id: 55363-78
+              - id: 51231-25
+              - id: 470063-62
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BulkResultDtoListActiveInvestorDto'
+      security:
+      - pbToken: []
+  /companies/{pbId}/investors:
+    get:
+      tags:
+      - Companies
+      summary: Company All Investors
+      description: Retrieves current and former investors of the specific company
+      operationId: getAllCompanyInvestors
+      parameters:
+      - name: pbId
+        in: path
+        description: Company pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          470063-62:
+            summary: 470063-62
+            value: 470063-62
+          65860-66:
+            summary: 65860-66
+            value: 65860-66
+          264371-86:
+            summary: 264371-86
+            value: 264371-86
+          121367-53:
+            summary: 121367-53
+            value: 121367-53
+          51231-25:
+            summary: 51231-25
+            value: 51231-25
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CompanyAllInvestorsDto'
+      security:
+      - pbToken: []
+  /companies/investors:
+    post:
+      tags:
+      - Companies
+      summary: '[Bulk] Company All Investors'
+      description: Retrieves current and former investors of the specific company. This bulk call allows you to send multiple pbIds within a single API call.
+      operationId: getBulkAllCompanyInvestors
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequestDto'
+            example:
+              items:
+              - id: 88374-43
+              - id: 226884-79
+              - id: 42901-93
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BulkResultDtoCompanyAllInvestorsDto'
+      security:
+      - pbToken: []
+  /companies/{pbId}/general-service-providers:
+    get:
+      tags:
+      - Companies
+      summary: Company General Service Providers
+      description: Retrieves current and former general service providers of the specific company
+      operationId: getCompanyGeneralServiceProviders
+      parameters:
+      - name: pbId
+        in: path
+        description: Company pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          137127-16:
+            summary: 137127-16
+            value: 137127-16
+          184523-77:
+            summary: 184523-77
+            value: 184523-77
+          54885-61:
+            summary: 54885-61
+            value: 54885-61
+          125953-12:
+            summary: 125953-12
+            value: 125953-12
+          151481-89:
+            summary: 151481-89
+            value: 151481-89
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CompanyGeneralServiceProvidersDto'
+      security:
+      - pbToken: []
+  /companies/{pbId}/deal-service-providers:
+    get:
+      tags:
+      - Companies
+      summary: Company Deal Service Providers
+      description: Retrieves service providers that serviced deals of the specific company
+      operationId: getCompanyDealServiceProviders
+      parameters:
+      - name: pbId
+        in: path
+        description: Company pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          114233-77:
+            summary: 114233-77
+            value: 114233-77
+          137127-16:
+            summary: 137127-16
+            value: 137127-16
+          264371-86:
+            summary: 264371-86
+            value: 264371-86
+          56068-93:
+            summary: 56068-93
+            value: 56068-93
+          54885-61:
+            summary: 54885-61
+            value: 54885-61
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CompanyDealServiceProviderDto'
+      security:
+      - pbToken: []
+  /companies/{pbId}/most-recent-financing:
+    get:
+      tags:
+      - Companies
+      summary: Company Most Recent Financing
+      description: Retrieves key data for the most recent financing deal of the specific company
+      operationId: getCompanyMostRecentFinancing
+      parameters:
+      - name: pbId
+        in: path
+        description: Company pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          161109-28:
+            summary: 161109-28
+            value: 161109-28
+          56069-29:
+            summary: 56069-29
+            value: 56069-29
+          222445-27:
+            summary: 222445-27
+            value: 222445-27
+          151481-89:
+            summary: 151481-89
+            value: 151481-89
+          42901-93:
+            summary: 42901-93
+            value: 42901-93
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CompanyMostRecentFinancingDto'
+      security:
+      - pbToken: []
+  /companies/most-recent-financing:
+    post:
+      tags:
+      - Companies
+      summary: '[Bulk] Company Most Recent Financing'
+      description: Retrieves key data for the most recent financing deal of the specific company. This bulk call allows you to send multiple pbIds within a single API call.
+      operationId: getCompanyMostRecentFinancingBulk
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequestDto'
+            example:
+              items:
+              - id: 50936-68
+              - id: 56069-47
+              - id: 63910-36
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BulkResultDtoCompanyMostRecentFinancingDto'
+      security:
+      - pbToken: []
+  /companies/{pbId}/most-recent-debt-financing:
+    get:
+      tags:
+      - Companies
+      summary: Company Most Recent Debt Financing
+      description: Retrieves debt and lender data within the specific deal
+      operationId: getCompanyLastRecentDebtFinancing
+      parameters:
+      - name: pbId
+        in: path
+        description: Company pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          114233-77:
+            summary: 114233-77
+            value: 114233-77
+          180002-80:
+            summary: 180002-80
+            value: 180002-80
+          459316-00:
+            summary: 459316-00
+            value: 459316-00
+          56060-83:
+            summary: 56060-83
+            value: 56060-83
+          62300-89:
+            summary: 62300-89
+            value: 62300-89
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CompanyMostRecentDebtFinancingDto'
+      security:
+      - pbToken: []
+  /companies/{pbId}/deals:
+    get:
+      tags:
+      - Companies
+      summary: Company Deals
+      description: Retrieves all deals of the specific company
+      operationId: getCompanyDeals
+      parameters:
+      - name: pbId
+        in: path
+        description: Company pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          11009-35:
+            summary: 11009-35
+            value: 11009-35
+          108346-96:
+            summary: 108346-96
+            value: 108346-96
+          122050-54:
+            summary: 122050-54
+            value: 122050-54
+          264371-86:
+            summary: 264371-86
+            value: 264371-86
+          56060-83:
+            summary: 56060-83
+            value: 56060-83
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CompanyDealsDto'
+      security:
+      - pbToken: []
+  /companies/{pbId}/most-recent-financials:
+    get:
+      tags:
+      - Companies
+      summary: Most Recent Private Company Financials
+      description: Retrieves financial data for the most recent available fiscal year or quarter of the specific company. Data is returned on an annual basis by default. Endpoint is only available for private companies
+      operationId: getMostRecentPrivateCompanyFinancials
+      parameters:
+      - name: pbId
+        in: path
+        description: Company pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          153722-62:
+            summary: 153722-62
+            value: 153722-62
+          459316-00:
+            summary: 459316-00
+            value: 459316-00
+          50936-68:
+            summary: 50936-68
+            value: 50936-68
+          156186-19:
+            summary: 156186-19
+            value: 156186-19
+          156488-14:
+            summary: 156488-14
+            value: 156488-14
+      - name: periodType
+        in: query
+        description: Type of the period in which data will be presented. The list of types could be found <a href="https://my.pitchbook.com/api/lookup-tables/Companies#FINANCIALS_PERIOD_TYPE" target="_blank">here</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: ANN
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/MostRecentPrivateCompanyFinancialsDto'
+      security:
+      - pbToken: []
+  /companies/{pbId}/financials:
+    get:
+      tags:
+      - Companies
+      summary: Private Company Financials
+      description: Retrieves private company financial data for all available fiscal years or quarters. Annual data is returned by default. Endpoint is only available for private companies.
+      operationId: getPrivateCompanyFinancials
+      parameters:
+      - name: pbId
+        in: path
+        description: Company pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          470063-62:
+            summary: 470063-62
+            value: 470063-62
+          226657-72:
+            summary: 226657-72
+            value: 226657-72
+          178836-04:
+            summary: 178836-04
+            value: 178836-04
+          55579-06:
+            summary: 55579-06
+            value: 55579-06
+          459316-00:
+            summary: 459316-00
+            value: 459316-00
+      - name: periodType
+        in: query
+        description: Type of the period in which data will be presented. The list of types could be found <a href="https://my.pitchbook.com/api/lookup-tables/Companies#FINANCIALS_PERIOD_TYPE" target="_blank">here</a>
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: ANN
+      - name: sinceDate
+        in: query
+        description: "Search for financial data relating to the fiscal period after a certain date using the > operator, before a certain date using the < operator, and between 2 dates using the ^ operator. \nFormat: YYYY-MM-DD"
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: <2025-01-01
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PrivateCompanyFinancialsDto'
+      security:
+      - pbToken: []
+  /companies/{pbId}/vc-exit-predictions:
+    get:
+      tags:
+      - Companies
+      summary: Company VC Exit Predictions
+      description: 'For a given pbId, returns exit predictions based on PitchBook machine learning.
+
+        Company needs to have at least 2 rounds of funding in the past six years to qualify for this dataset. For detailed methodology explanation, please reference this document.'
+      operationId: getCompanyVcExitPredictions
+      parameters:
+      - name: pbId
+        in: path
+        description: Company pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          467209-27:
+            summary: 467209-27
+            value: 467209-27
+          137127-16:
+            summary: 137127-16
+            value: 137127-16
+          56069-02:
+            summary: 56069-02
+            value: 56069-02
+          63910-36:
+            summary: 63910-36
+            value: 63910-36
+          179806-69:
+            summary: 179806-69
+            value: 179806-69
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ExitPredictionDto'
+      security:
+      - pbToken: []
+  /companies/{pbId}/valuation-estimates:
+    get:
+      tags:
+      - Companies
+      summary: Company Valuation Estimates
+      description: For a given pbId, returns valuation estimates based on PitchBook's predictive modeling. For detailed methodology explanation, please reference this document
+      operationId: getValuationEstimates
+      parameters:
+      - name: pbId
+        in: path
+        description: Company pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          226884-79:
+            summary: 226884-79
+            value: 226884-79
+          112704-22:
+            summary: 112704-22
+            value: 112704-22
+          12396-16:
+            summary: 12396-16
+            value: 12396-16
+          180436-42:
+            summary: 180436-42
+            value: 180436-42
+          54885-61:
+            summary: 54885-61
+            value: 54885-61
+      - name: sinceDate
+        in: query
+        description: 'Search for valuation estimates relating to the period after a specific date using the > operator, before a certain date using the < operator, and between 2 dates using the ^ operator. Format: YYYY-MM-DD. Use this parameter only when the historicalEstimates parameter is applied.'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: <2025-01-01
+      - name: historicalEstimates
+        in: query
+        description: Include historical estimates. To use this parameter, set it to True. False by default
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          default: false
+        example: true
+      - name: predictionDrivers
+        in: query
+        description: Include prediction driver fields in the response. To use this parameter, set it to True. False by default
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+          default: false
+        example: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ValuationEstimatesDto'
+      security:
+      - pbToken: []
+  /companies/{pbId}/social-analytics:
+    get:
+      tags:
+      - Companies
+      summary: Company Social Analytics
+      description: Retrieves social media and web signal data points of the specified company
+      operationId: getCompanySocialAnalytics
+      parameters:
+      - name: pbId
+        in: path
+        description: Company pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          56560-42:
+            summary: 56560-42
+            value: 56560-42
+          436909-78:
+            summary: 436909-78
+            value: 436909-78
+          156186-19:
+            summary: 156186-19
+            value: 156186-19
+          62300-89:
+            summary: 62300-89
+            value: 62300-89
+          55363-78:
+            summary: 55363-78
+            value: 55363-78
+      - name: compare
+        in: query
+        description: Compare social media and web signals data against companies within similar companies (SIMILAR_COMPANIES), industry (INDUSTRY), verticals (VERTICALS), or all companies (ALL_COMPANIES).
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          default: ALL_COMPANIES
+          enum:
+          - SIMILAR_COMPANIES
+          - INDUSTRY
+          - VERTICALS
+          - ALL_COMPANIES
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CompanySocialAnalyticsDto'
+      security:
+      - pbToken: []
+  /companies/{pbId}/similar-companies:
+    get:
+      tags:
+      - Companies
+      summary: Company Similar Companies
+      description: Retrieves top 10 similar companies/competitors
+      operationId: getSimilarCompanies
+      parameters:
+      - name: pbId
+        in: path
+        description: Company pbId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          279838-27:
+            summary: 279838-27
+            value: 279838-27
+          224622-37:
+            summary: 224622-37
+            value: 224622-37
+          56069-02:
+            summary: 56069-02
+            value: 56069-02
+          56068-93:
+            summary: 56068-93
+            value: 56068-93
+          179806-69:
+            summary: 179806-69
+            value: 179806-69
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SimilarCompanyDto'
+      security:
+      - pbToken: []
+  /companies/{pbId}/updates:
+    get:
+      tags:
+      - Companies
+      summary: Company Profile Updates
+      description: Retrieves changes for the specific company for up to the last 90 days
+      operationId: getCompanyUpdates
+      parameters:
+      - name: pbId
+        in: path
+        description: Company pbId. Required to specify time period using 'sinceDate' or 'trailingRange' parameter
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        examples:
+          227393-20:
+            summary: 227393-20
+            value: 227393-20
+          62283-07:
+            summary: 62283-07
+            value: 62283-07
+          112704-22:
+            summary: 112704-22
+            value: 112704-22
+          153722-62:
+            summary: 153722-62
+            value: 153722-62
+          84659-86:
+            summary: 84659-86
+            value: 84659-86
+      - name: sinceDate
+        in: query
+        description: 'Add this parameter to extract information about the entity updates after a certain date with the > operator, before a certain date with the < operator and between 2 dates with the ^ operator. Set this parameter in pair with pbId. Format: YYYY-MM-DD'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: <2026-09-16
+      - name: trailingRange
+        in: query
+        description: Add this parameter to extract information about the entity updates during last N days (up to 90). Set this parameter in pair with pbId
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+        example: '20'
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '503':
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '504':
+          description: Gateway Timeout
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '402':
+          description: Payment Required
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '429':
+          description: Too Many Requests
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UpdateDto'
+      security:
+      - pbToken: []
+components:
+  schemas:
+    EmergingSpaceDto:
+      type: object
+      properties:
+        spaceCode:
+          type: string
+          example: '327'
+        spaceName:
+          type: string
+          example: '2021 Emerging Space Brief: Clean Meat'
+        spaceDescription:
+          type: string
+          example: Emerging Space Briefs provide primers on emerging technologies or investment trends as identified by our emerging tech analysts
+    RequestItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+    FailedItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 420962-68
+        reason:
+          type: string
+          example: 429 TOO_MANY_REQUESTS
+          enum:
+          - 400 BAD_REQUEST
+          - 401 UNAUTHORIZED
+          - 402 PAYMENT_REQUIRED
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 405 METHOD_NOT_ALLOWED
+          - 415 UNSUPPORTED_MEDIA_TYPE
+          - 429 TOO_MANY_REQUESTS
+          - 500 INTERNAL_SERVER_ERROR
+          - 503 SERVICE_UNAVAILABLE
+        message:
+          type: string
+          example: '{LIMIT_TYPE} rate limit exceeded. Please wait until rate limit period is renewed'
+    BulkStatsDto:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+        matched:
+          type: integer
+          format: int32
+        noData:
+          type: integer
+          format: int32
+        unmatched:
+          type: integer
+          format: int32
+        duplicates:
+          type: integer
+          format: int32
+    NoDataItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+    CompanyIndustryInfoDto:
+      type: object
+      properties:
+        industrySector:
+          $ref: '#/components/schemas/DictionaryDto'
+        industryGroup:
+          $ref: '#/components/schemas/DictionaryDto'
+        industryCode:
+          $ref: '#/components/schemas/DictionaryDto'
+        primary:
+          type: boolean
+          example: true
+    BulkRequestDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RequestItemDto'
+    BulkResultDtoCompanyBioDto:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/BulkStatsDto'
+        matched:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyBioDto'
+        noData:
+          type: array
+          items:
+            $ref: '#/components/schemas/NoDataItemDto'
+        unmatched:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailedItemDto'
+        duplicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicatedItemDto'
+    EntityDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 41349-37
+        name:
+          type: string
+          example: Max Technologies
+      example:
+        id: 25304-77F
+        name: AB Private Credit Investors Corp BDC
+    CompanyMostRecentFinancingDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+          example: 54937-90
+        lastFinancingDealId:
+          type: string
+          example: 92610-37T
+        lastFinancingDate:
+          type: string
+          format: date
+          example: '2017-08-11'
+        lastFinancingStatus:
+          $ref: '#/components/schemas/DictionaryDto'
+        lastFinancingSize:
+          $ref: '#/components/schemas/MoneyDto'
+        lastFinancingSizeStatus:
+          type: string
+          example: Estimated
+        lastFinancingValuation:
+          $ref: '#/components/schemas/MoneyDto'
+        lastFinancingValuationStatus:
+          type: string
+          example: Actual
+        lastFinancingDealType:
+          $ref: '#/components/schemas/DictionaryDto'
+        lastFinancingDealType2:
+          $ref: '#/components/schemas/DictionaryDto'
+        lastFinancingDealType3:
+          $ref: '#/components/schemas/DictionaryDto'
+        lastFinancingDealClass:
+          $ref: '#/components/schemas/DictionaryDto'
+        lastKnownValuation:
+          $ref: '#/components/schemas/MoneyDto'
+        lastKnownValuationDate:
+          type: string
+          format: date
+          example: '2017-08-11'
+        lastKnownValuationDealType:
+          $ref: '#/components/schemas/DictionaryDto'
+    CompanyBioDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+          example: 54937-90
+        companyName:
+          $ref: '#/components/schemas/EntityNameDto'
+        parentCompanyId:
+          type: string
+          example: 62181-28
+        parentCompanyName:
+          type: string
+          example: The We Company
+        hqLocation:
+          $ref: '#/components/schemas/HqLocationDto'
+        description:
+          type: string
+          example: Provider of a mobile collaboration platform created to turn simple field updates into game-changing insights. The company's mobile collaboration platform contains a Web/tablet component, providing all stakeholders on a construction job mobile access to job-site data and also issues automated daily reports, job-site tasks and tracks field progress in real time, enabling professionals in the construction industry with a bird's-eye view of every project without stepping on-site.
+        financingStatus:
+          $ref: '#/components/schemas/DictionaryDto'
+        businessStatus:
+          $ref: '#/components/schemas/DictionaryDto'
+        ownershipStatus:
+          $ref: '#/components/schemas/DictionaryDto'
+        universe:
+          type: array
+          items:
+            $ref: '#/components/schemas/DictionaryDto'
+        website:
+          type: string
+          example: www.fieldlens.com
+        employees:
+          type: integer
+          format: int64
+          example: 25
+        employeeHistory:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmployeeHistoryDto'
+        exchange:
+          type: string
+          example: PINX
+        ticker:
+          type: string
+          example: BASX
+        yearFounded:
+          type: integer
+          format: int32
+          example: 2010
+        financingStatusNote:
+          $ref: '#/components/schemas/CompanyFinancingNoteDto'
+        totalMoneyRaised:
+          $ref: '#/components/schemas/MoneyDto'
+        sicCodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/DictionaryDto'
+        morningstarCode:
+          description: Deprecated. Always empty.
+          deprecated: true
+          allOf:
+          - $ref: '#/components/schemas/DictionaryDto'
+        cikCode:
+          type: string
+          example: '1554436'
+        companySocialURLs:
+          $ref: '#/components/schemas/CompanySocialDto'
+        pitchBookProfileLink:
+          type: string
+    BulkResultDtoListActiveInvestorDto:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/BulkStatsDto'
+        matched:
+          type: array
+          items:
+            type: array
+            items:
+              $ref: '#/components/schemas/ActiveInvestorDto'
+        noData:
+          type: array
+          items:
+            $ref: '#/components/schemas/NoDataItemDto'
+        unmatched:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailedItemDto'
+        duplicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicatedItemDto'
+    DuplicatedItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 420962-68
+        occurrence:
+          type: integer
+          format: int32
+          example: 1
+    GeneralServiceProviderDto:
+      type: object
+      properties:
+        serviceProviderId:
+          type: string
+          example: 11356-75
+        serviceProviderName:
+          type: string
+          example: Wilson Sonsini Goodrich & Rosati
+        serviceProviderTypes:
+          type: array
+          example:
+            type:
+              code: IB
+              description: Investment Bank
+            primary: true
+          items:
+            $ref: '#/components/schemas/EntityTypeDto'
+        serviceProvided:
+          $ref: '#/components/schemas/DictionaryDto'
+    CompanyDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+          example: 54937-90
+        companyBio:
+          $ref: '#/components/schemas/CompanyBioDto'
+        companyIndustry:
+          $ref: '#/components/schemas/CompanyIndustryDto'
+        companyActiveInvestors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActiveInvestorDto'
+        companyAllInvestors:
+          $ref: '#/components/schemas/CompanyAllInvestorsDto'
+        companyMostRecentFinancing:
+          $ref: '#/components/schemas/CompanyMostRecentFinancingDto'
+    EntityTypeDto:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/DictionaryDto'
+        primary:
+          type: boolean
+          example: false
+      example:
+        type:
+          code: IB
+          description: Investment Bank
+        primary: true
+    CompanySocialDto:
+      type: object
+      properties:
+        facebookProfileUrl:
+          type: string
+        twitterProfileUrl:
+          type: string
+        linkedInProfileUrl:
+          type: string
+    ValuationEstimatesDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+          example: 54937-90
+        companyName:
+          type: string
+          example: FieldLens
+        estimationDate:
+          type: string
+          format: date
+          example: '2020-01-01'
+        valuationEstimate:
+          $ref: '#/components/schemas/MoneyDto'
+        confidenceScore:
+          type: string
+          example: MEDIUM
+        estimateGrowthRate:
+          type: number
+          format: double
+          example: 0.025
+        lastKnownValuationDate:
+          type: string
+          format: date
+          example: '2020-01-01'
+        estimateRangeLow:
+          $ref: '#/components/schemas/MoneyDto'
+        estimateRangeHigh:
+          $ref: '#/components/schemas/MoneyDto'
+        predictionDrivers:
+          $ref: '#/components/schemas/PredictionDriversDto'
+        historicalEstimates:
+          type: array
+          items:
+            $ref: '#/components/schemas/EstimateDto'
+    CompanyInvestorDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+          example: 54937-90
+        investorId:
+          type: string
+          example: 111396-97
+        investorName:
+          type: string
+          example: Sequoia Economic Infrastructure Income Fund
+        investorTypes:
+          type: array
+          example:
+            type:
+              code: INFR
+              description: Infrastructure
+            primary: true
+          items:
+            $ref: '#/components/schemas/EntityTypeDto'
+        investorSince:
+          type: string
+          format: date
+          example: '2018-04-08'
+        investorExit:
+          type: string
+          format: date
+        investorStatus:
+          $ref: '#/components/schemas/DictionaryDto'
+    CompanySocialAnalyticsDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+          example: 54937-90
+        growthRate:
+          type: number
+          format: double
+          example: 0.14
+        growthRatePercentile:
+          type: integer
+          format: int32
+          example: 98
+        growthRateChange:
+          type: number
+          format: double
+          example: -0.04
+        growthRatePercentChange:
+          type: number
+          format: double
+          example: 1.25
+        webGrowthRate:
+          type: number
+          format: double
+          example: 4.36
+        webGrowthRatePercentile:
+          type: integer
+          format: int32
+          example: 100
+        socialGrowthRate:
+          type: number
+          format: double
+          deprecated: true
+        socialGrowthRatePercentile:
+          type: integer
+          format: int32
+          example: 100
+          deprecated: true
+        sizeMultiple:
+          type: number
+          format: double
+          example: 6645.42
+        sizeMultiplePercentile:
+          type: integer
+          format: int32
+          example: 100
+        sizeMultipleChange:
+          type: number
+          format: double
+          example: 1.25
+        sizeMultiplePercentChange:
+          type: number
+          format: double
+          example: 0.25
+        webSizeMultiple:
+          type: number
+          format: double
+          example: 339.57
+        webSizeMultiplePercentile:
+          type: integer
+          format: int32
+          example: 100
+        socialSizeMultiple:
+          type: number
+          format: double
+          example: 2569.5
+          deprecated: true
+        socialSizeMultiplePercentile:
+          type: integer
+          format: int32
+          example: 100
+          deprecated: true
+        twitterFollowers:
+          type: integer
+          format: int32
+          example: 133478259
+          deprecated: true
+        twitterFollowersChange:
+          type: integer
+          format: int32
+          example: -4256
+          deprecated: true
+        twitterFollowersPercentChange:
+          type: number
+          format: double
+          example: 0.43
+          deprecated: true
+    PredictionDriversDto:
+      type: object
+      properties:
+        marketReturns:
+          $ref: '#/components/schemas/DriverCategoryDto'
+        comparablePerformance:
+          $ref: '#/components/schemas/DriverCategoryDto'
+        companySpecificSignals:
+          $ref: '#/components/schemas/DriverCategoryDto'
+    BulkResultDtoCompanyDto:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/BulkStatsDto'
+        matched:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyDto'
+        noData:
+          type: array
+          items:
+            $ref: '#/components/schemas/NoDataItemDto'
+        unmatched:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailedItemDto'
+        duplicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicatedItemDto'
+    MoneyDto:
+      type: object
+      properties:
+        amount:
+          type: number
+          example: 17039.27
+        currency:
+          type: string
+          example: USD
+        nativeAmount:
+          type: number
+          example: 15689
+        nativeCurrency:
+          type: string
+          example: EUR
+        estimated:
+          type: boolean
+          example: false
+    CompanyAllInvestorsDto:
+      type: object
+      properties:
+        countAllInvestors:
+          type: integer
+          format: int32
+          example: 1
+        investors:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyInvestorDto'
+    CompanyEntityAdvancedSearchResultDto_SearchView:
+      type: object
+      properties:
+        companyId:
+          type: string
+          example: 11111-11
+        companyName:
+          type: string
+          example: facebook
+        sandbox:
+          type: boolean
+        website:
+          type: string
+          example: www.facebook.com
+    ErrorDto:
+      type: object
+      properties:
+        reason:
+          type: string
+          enum:
+          - 100 CONTINUE
+          - 101 SWITCHING_PROTOCOLS
+          - 102 PROCESSING
+          - 103 EARLY_HINTS
+          - 103 CHECKPOINT
+          - 200 OK
+          - 201 CREATED
+          - 202 ACCEPTED
+          - 203 NON_AUTHORITATIVE_INFORMATION
+          - 204 NO_CONTENT
+          - 205 RESET_CONTENT
+          - 206 PARTIAL_CONTENT
+          - 207 MULTI_STATUS
+          - 208 ALREADY_REPORTED
+          - 226 IM_USED
+          - 300 MULTIPLE_CHOICES
+          - 301 MOVED_PERMANENTLY
+          - 302 FOUND
+          - 302 MOVED_TEMPORARILY
+          - 303 SEE_OTHER
+          - 304 NOT_MODIFIED
+          - 305 USE_PROXY
+          - 307 TEMPORARY_REDIRECT
+          - 308 PERMANENT_REDIRECT
+          - 400 BAD_REQUEST
+          - 401 UNAUTHORIZED
+          - 402 PAYMENT_REQUIRED
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 405 METHOD_NOT_ALLOWED
+          - 406 NOT_ACCEPTABLE
+          - 407 PROXY_AUTHENTICATION_REQUIRED
+          - 408 REQUEST_TIMEOUT
+          - 409 CONFLICT
+          - 410 GONE
+          - 411 LENGTH_REQUIRED
+          - 412 PRECONDITION_FAILED
+          - 413 PAYLOAD_TOO_LARGE
+          - 413 REQUEST_ENTITY_TOO_LARGE
+          - 414 URI_TOO_LONG
+          - 414 REQUEST_URI_TOO_LONG
+          - 415 UNSUPPORTED_MEDIA_TYPE
+          - 416 REQUESTED_RANGE_NOT_SATISFIABLE
+          - 417 EXPECTATION_FAILED
+          - 418 I_AM_A_TEAPOT
+          - 419 INSUFFICIENT_SPACE_ON_RESOURCE
+          - 420 METHOD_FAILURE
+          - 421 DESTINATION_LOCKED
+          - 422 UNPROCESSABLE_ENTITY
+          - 423 LOCKED
+          - 424 FAILED_DEPENDENCY
+          - 425 TOO_EARLY
+          - 426 UPGRADE_REQUIRED
+          - 428 PRECONDITION_REQUIRED
+          - 429 TOO_MANY_REQUESTS
+          - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
+          - 451 UNAVAILABLE_FOR_LEGAL_REASONS
+          - 500 INTERNAL_SERVER_ERROR
+          - 501 NOT_IMPLEMENTED
+          - 502 BAD_GATEWAY
+          - 503 SERVICE_UNAVAILABLE
+          - 504 GATEWAY_TIMEOUT
+          - 505 HTTP_VERSION_NOT_SUPPORTED
+          - 506 VARIANT_ALSO_NEGOTIATES
+          - 507 INSUFFICIENT_STORAGE
+          - 508 LOOP_DETECTED
+          - 509 BANDWIDTH_LIMIT_EXCEEDED
+          - 510 NOT_EXTENDED
+          - 511 NETWORK_AUTHENTICATION_REQUIRED
+        message:
+          type: string
+    EstimateDto:
+      type: object
+      properties:
+        estimationDate:
+          type: string
+          format: date
+          example: '2025-12-31'
+        valuationEstimate:
+          $ref: '#/components/schemas/MoneyDto'
+        estimateRangeLow:
+          $ref: '#/components/schemas/MoneyDto'
+        estimateRangeHigh:
+          $ref: '#/components/schemas/MoneyDto'
+    DriverItemDto:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Revenue Growth
+        value:
+          type: string
+          example: 12.30%
+        contribution:
+          type: number
+          format: double
+          example: 0.35
+    HqLocationDto:
+      type: object
+      properties:
+        city:
+          type: string
+          example: Chicago
+        stateProvince:
+          type: string
+          example: IL
+        postCode:
+          type: string
+          example: '60661'
+        country:
+          type: string
+          example: United States
+    ActiveInvestorDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+          example: 54937-90
+        investorId:
+          type: string
+          example: 111396-97
+        investorName:
+          type: string
+          example: Sequoia Economic Infrastructure Income Fund
+        investorTypes:
+          type: array
+          example:
+            type:
+              code: INFR
+              description: Infrastructure
+            primary: true
+          items:
+            $ref: '#/components/schemas/EntityTypeDto'
+        investorSince:
+          type: string
+          format: date
+          example: '2018-04-08'
+        holding:
+          type: string
+          example: Majority
+    CompanyFinancingNoteDto:
+      type: object
+      properties:
+        note:
+          type: string
+          example: The company was acquired by WeWork for an undisclosed amount on June 7, 2017.
+        asOfDate:
+          type: string
+          format: date
+          example: '2017-06-08'
+    EntityNameDto:
+      type: object
+      properties:
+        formalName:
+          type: string
+        alsoKnownAs:
+          type: string
+        legalName:
+          type: string
+        formerlyKnownAs:
+          type: string
+    MostRecentPrivateCompanyFinancialsDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+          example: 54937-90
+        period:
+          type: integer
+          format: int32
+          example: 2020
+        quarter:
+          type: string
+          example: 2Q 2020
+        endDate:
+          type: string
+          format: date
+          example: '2020-01-01'
+        enterpriseValue:
+          $ref: '#/components/schemas/MoneyDto'
+        revenue:
+          $ref: '#/components/schemas/MoneyDto'
+        netIncome:
+          $ref: '#/components/schemas/MoneyDto'
+        ebitda:
+          $ref: '#/components/schemas/MoneyDto'
+        totalAssets:
+          $ref: '#/components/schemas/MoneyDto'
+        totalDebt:
+          $ref: '#/components/schemas/MoneyDto'
+    CompanyGeneralServiceProvidersDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+          example: 54937-90
+        currentGeneralServices:
+          type: array
+          items:
+            $ref: '#/components/schemas/GeneralServiceProviderDto'
+        formerGeneralServices:
+          type: array
+          items:
+            $ref: '#/components/schemas/GeneralServiceProviderDto'
+    CompanyIndustryDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+          example: 54937-90
+        gecs:
+          type: array
+          description: GECS (Morningstar Global Equity Classification Structure) classifications. Empty when no GECS data is available. Distinct from PitchBook native industry classifications.
+          items:
+            $ref: '#/components/schemas/GecsClassificationDto'
+        industries:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyIndustryInfoDto'
+        verticals:
+          type: array
+          items:
+            $ref: '#/components/schemas/DictionaryDto'
+        keywords:
+          type: array
+          items:
+            type: string
+        emergingSpaces:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmergingSpaceDto'
+    LastDebtFinancingDto:
+      type: object
+      properties:
+        lastDebtFinancingType:
+          $ref: '#/components/schemas/DictionaryDto'
+        lastDebtFinancingAmount:
+          $ref: '#/components/schemas/MoneyDto'
+        seniority:
+          $ref: '#/components/schemas/DictionaryDto'
+        security:
+          $ref: '#/components/schemas/DictionaryDto'
+        subordination:
+          deprecated: true
+          allOf:
+          - $ref: '#/components/schemas/DictionaryDto'
+        term:
+          $ref: '#/components/schemas/DictionaryDto'
+        additionalDebtCharacteristics:
+          $ref: '#/components/schemas/AdditionalDebtCharacteristicsDto'
+        lenders:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityDto'
+    AdvancedSearchPageDtoCompanyEntityAdvancedSearchResultDto_SearchView:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/SearchPageStatsDto_SearchView'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyEntityAdvancedSearchResultDto_SearchView'
+    SearchPageStatsDto_SearchView:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+          example: 1
+        perPage:
+          type: integer
+          format: int32
+          example: 25
+        page:
+          type: integer
+          format: int32
+          example: 1
+        lastPage:
+          type: integer
+          format: int32
+          example: 1
+    PrivateCompanyFinancialsDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+          example: 54937-90
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyFinancialsDto'
+    GecsClassificationDto:
+      type: object
+      properties:
+        gecsSector:
+          $ref: '#/components/schemas/DictionaryDto'
+        gecsIndustryGroup:
+          $ref: '#/components/schemas/DictionaryDto'
+        gecsIndustry:
+          $ref: '#/components/schemas/DictionaryDto'
+      description: GECS (Morningstar Global Equity Classification Structure) classifications. Empty when no GECS data is available. Distinct from PitchBook native industry classifications.
+    BulkResultDtoCompanyIndustryDto:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/BulkStatsDto'
+        matched:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyIndustryDto'
+        noData:
+          type: array
+          items:
+            $ref: '#/components/schemas/NoDataItemDto'
+        unmatched:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailedItemDto'
+        duplicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicatedItemDto'
+    UpdateDto:
+      type: object
+      properties:
+        updates:
+          type: object
+          additionalProperties:
+            type: string
+            example: '{"Endpoint name":"Update Status (true/false)"}'
+          example:
+            Endpoint name: Update Status (true/false)
+    SimilarCompanyDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+          example: 111396-97
+        similarCompanyId:
+          type: string
+          example: 54937-90
+        similarCompanyName:
+          type: string
+          example: FieldLens
+        similarityScore:
+          type: number
+          format: float
+          example: 0.99
+        competitor:
+          type: boolean
+          example: true
+    BulkResultDtoCompanyMostRecentFinancingDto:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/BulkStatsDto'
+        matched:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyMostRecentFinancingDto'
+        noData:
+          type: array
+          items:
+            $ref: '#/components/schemas/NoDataItemDto'
+        unmatched:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailedItemDto'
+        duplicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicatedItemDto'
+    AdditionalDebtCharacteristicsDto:
+      type: object
+      properties:
+        unitranche:
+          type: boolean
+          example: true
+        syndicated:
+          type: boolean
+          example: false
+        mezzanine:
+          type: boolean
+          example: true
+        covLite:
+          type: boolean
+          example: false
+        warrants:
+          type: boolean
+          example: true
+        convertible:
+          type: boolean
+          example: false
+        rate:
+          $ref: '#/components/schemas/DictionaryDto'
+    BulkResultDtoCompanyAllInvestorsDto:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/BulkStatsDto'
+        matched:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyAllInvestorsDto'
+        noData:
+          type: array
+          items:
+            $ref: '#/components/schemas/NoDataItemDto'
+        unmatched:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailedItemDto'
+        duplicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicatedItemDto'
+    DriverCategoryDto:
+      type: object
+      properties:
+        category:
+          type: string
+          example: Market Returns
+        contribution:
+          type: number
+          format: double
+          example: 0.4
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/DriverItemDto'
+    DictionaryDto:
+      type: object
+      properties:
+        code:
+          type: string
+          example: Dictionary code
+        description:
+          type: string
+          example: Dictionary Code Description
+    CompanyDealServiceProviderDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+          example: 54937-90
+        serviceProviderId:
+          type: string
+          example: 11356-75
+        serviceProviderName:
+          type: string
+          example: Wilson Sonsini Goodrich & Rosati
+        serviceProviderTypes:
+          type: array
+          example:
+            type:
+              code: IB
+              description: Investment Bank
+            primary: true
+          items:
+            $ref: '#/components/schemas/EntityTypeDto'
+        serviceProvided:
+          $ref: '#/components/schemas/DictionaryDto'
+        dealIdServiceProvided:
+          type: string
+          example: 13359-95T
+    CompanyFinancialsDto:
+      type: object
+      properties:
+        period:
+          type: string
+          example: Q2 2020
+        endDate:
+          type: string
+          format: date
+          example: '2020-01-01'
+        enterpriseValue:
+          $ref: '#/components/schemas/MoneyDto'
+        revenue:
+          $ref: '#/components/schemas/MoneyDto'
+        netIncome:
+          $ref: '#/components/schemas/MoneyDto'
+        ebitda:
+          $ref: '#/components/schemas/MoneyDto'
+        totalAssets:
+          $ref: '#/components/schemas/MoneyDto'
+        totalDebt:
+          $ref: '#/components/schemas/MoneyDto'
+    EmployeeHistoryDto:
+      type: object
+      properties:
+        asOfDate:
+          type: string
+          format: date
+        employeeCount:
+          type: integer
+          format: int64
+    CompanyDealsDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+          example: 54937-90
+        dealId:
+          type: string
+          example: 109688-14T
+        dealDate:
+          type: string
+          format: date
+          example: '2004-10-02'
+        dealType1:
+          $ref: '#/components/schemas/DictionaryDto'
+        dealType2:
+          $ref: '#/components/schemas/DictionaryDto'
+        dealType3:
+          $ref: '#/components/schemas/DictionaryDto'
+        dealNumber:
+          type: integer
+          format: int32
+          example: 1
+    CompanyMostRecentDebtFinancingDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+          example: 54937-90
+        lastDebtFinancingDealId:
+          type: string
+        lastDebtFinancingDate:
+          type: string
+          format: date
+        lastDebtFinancing:
+          type: array
+          items:
+            $ref: '#/components/schemas/LastDebtFinancingDto'
+    ExitPredictionDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+          example: 481224-88
+        predictionDate:
+          type: string
+          format: date
+          example: '2023-07-25'
+        opportunityScore:
+          type: integer
+          format: int32
+          example: 75
+        successClass:
+          type: string
+          example: Success
+        successProbability:
+          type: integer
+          format: int32
+          example: 71
+        noexitProbability:
+          type: integer
+          format: int32
+          example: 29
+        exitClass:
+          type: string
+          example: M&A
+        ipoProbability:
+          type: integer
+          format: int32
+          example: 1
+        mergeracquisitionProbability:
+          type: integer
+          format: int32
+          example: 70
+        vcDealNumber:
+          type: integer
+          format: int32
+          example: 2
+  securitySchemes:
+    pbToken:
+      type: apiKey
+      name: Authorization
+      in: header
+      scheme: bearer
+      bearerFormat: JWT

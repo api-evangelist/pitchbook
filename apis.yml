@@ -1,23 +1,343 @@
 aid: pitchbook
 name: PitchBook
-description: 'PitchBook is a company surfaced via the API Evangelist harvest backlog (source: data) and
-  added to the network as a stub for full-pipeline profiling.'
+description: PitchBook provides comprehensive data and analysis on private market companies, investors, and deals. It offers a platform for market
+  intelligence, deal sourcing, due diligence, and portfolio management, helping users explore use cases such as market intelligence, deal sourcing,
+  fundraising, and benchmarking. The service includes products like PitchBook Data, Platform, and Luminary, and supports free trials and login
+  for deeper insights.
 url: https://raw.githubusercontent.com/api-evangelist/pitchbook/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:data
-x-tier: stub
-x-tier-reason: harvest
+x-tier: profiled
+x-tier-reason: enrichment pass 2026-09-21 (modular-v1; was harvest)
 specificationVersion: '0.20'
 created: '2026-09-21'
 modified: '2026-09-21'
 tags:
 - Company
-apis: []
+- Data
+- Finance
+- Private-Market
+- Analytics
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: AgenticAccess
+  url: agentic-access/pitchbook-agentic-access.yml
+- type: Spectral
+  url: rules/pitchbook-rules.yml
+- type: JSONLD
+  url: json-ld/pitchbook-context.jsonld
+- type: Vocabulary
+  url: vocabulary/pitchbook-vocabulary.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: DataModel
+  url: data-model/pitchbook-data-model.yml
+- type: ErrorCatalog
+  url: errors/pitchbook-problem-types.yml
+- type: Conformance
+  url: conformance/pitchbook-conformance.yml
+- type: Overlay
+  url: overlays/pitchbook-openapi-overlay.yaml
+- type: Authentication
+  url: authentication/pitchbook-authentication.yml
+- type: DomainSecurity
+  url: security/pitchbook-domain-security.yml
 - type: Website
   url: https://pitchbook.com/
+- type: Documentation
+  url: https://pitchbook.com/developers
+  method: none
+- type: GettingStarted
+  url: https://pitchbook.com/free-trial
+  method: none
+- type: Support
+  url: https://pitchbook.com/contact
+  method: none
+- type: Blog
+  url: https://pitchbook.com/news
+  method: none
+- type: Pricing
+  url: https://pitchbook.com/pricing
+  method: none
+- type: TermsOfService
+  url: https://pitchbook.com/terms
+  method: none
+- type: PrivacyPolicy
+  url: https://pitchbook.com/privacy
+  method: none
+image: https://pitchbook.com/favicon.ico
+apis:
+- aid: pitchbook:pitchbook-account-information-api
+  name: PitchBook Account Information API
+  description: Account Information
+  humanURL: https://pitchbook.com/developers
+  baseURL: https://api.pitchbook.com
+  tags:
+  - Account Information
+  properties:
+  - type: OpenAPI
+    url: openapi/pitchbook-account-information-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/pitchbook-deal-detailed-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-company-bio-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-patent-detailed-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-fund-bio-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-company-social-analytics-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-limited-partner-commitment-aggregates-dto-schema.json
+- aid: pitchbook:pitchbook-companies-api
+  name: PitchBook Companies API
+  description: Companies
+  humanURL: https://pitchbook.com/developers
+  baseURL: https://api.pitchbook.com
+  tags:
+  - Companies
+  properties:
+  - type: OpenAPI
+    url: openapi/pitchbook-companies-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/pitchbook-deal-detailed-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-company-bio-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-patent-detailed-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-fund-bio-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-company-social-analytics-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-limited-partner-commitment-aggregates-dto-schema.json
+- aid: pitchbook:pitchbook-credit-analysis-api
+  name: PitchBook Credit Analysis API
+  description: Credit Analysis
+  humanURL: https://pitchbook.com/developers
+  baseURL: https://api.pitchbook.com
+  tags:
+  - Credit Analysis
+  properties:
+  - type: OpenAPI
+    url: openapi/pitchbook-credit-analysis-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/pitchbook-deal-detailed-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-company-bio-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-patent-detailed-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-fund-bio-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-company-social-analytics-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-limited-partner-commitment-aggregates-dto-schema.json
+- aid: pitchbook:pitchbook-deals-api
+  name: PitchBook Deals API
+  description: Deals
+  humanURL: https://pitchbook.com/developers
+  baseURL: https://api.pitchbook.com
+  tags:
+  - Deals
+  properties:
+  - type: OpenAPI
+    url: openapi/pitchbook-deals-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/pitchbook-deal-detailed-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-company-bio-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-patent-detailed-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-fund-bio-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-company-social-analytics-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-limited-partner-commitment-aggregates-dto-schema.json
+- aid: pitchbook:pitchbook-fundamentals-api
+  name: PitchBook Fundamentals API
+  description: Fundamentals
+  humanURL: https://pitchbook.com/developers
+  baseURL: https://api.pitchbook.com
+  tags:
+  - Fundamentals
+  properties:
+  - type: OpenAPI
+    url: openapi/pitchbook-fundamentals-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/pitchbook-deal-detailed-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-company-bio-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-patent-detailed-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-fund-bio-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-company-social-analytics-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-limited-partner-commitment-aggregates-dto-schema.json
+- aid: pitchbook:pitchbook-funds-api
+  name: PitchBook Funds API
+  description: Funds
+  humanURL: https://pitchbook.com/developers
+  baseURL: https://api.pitchbook.com
+  tags:
+  - Funds
+  properties:
+  - type: OpenAPI
+    url: openapi/pitchbook-funds-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/pitchbook-deal-detailed-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-company-bio-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-patent-detailed-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-fund-bio-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-company-social-analytics-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-limited-partner-commitment-aggregates-dto-schema.json
+- aid: pitchbook:pitchbook-general-api
+  name: PitchBook General API
+  description: General
+  humanURL: https://pitchbook.com/developers
+  baseURL: https://api.pitchbook.com
+  tags:
+  - General
+  properties:
+  - type: OpenAPI
+    url: openapi/pitchbook-general-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/pitchbook-deal-detailed-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-company-bio-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-patent-detailed-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-fund-bio-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-company-social-analytics-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-limited-partner-commitment-aggregates-dto-schema.json
+- aid: pitchbook:pitchbook-investors-api
+  name: PitchBook Investors API
+  description: Investors
+  humanURL: https://pitchbook.com/developers
+  baseURL: https://api.pitchbook.com
+  tags:
+  - Investors
+  properties:
+  - type: OpenAPI
+    url: openapi/pitchbook-investors-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/pitchbook-deal-detailed-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-company-bio-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-patent-detailed-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-fund-bio-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-company-social-analytics-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-limited-partner-commitment-aggregates-dto-schema.json
+- aid: pitchbook:pitchbook-limited-partners-api
+  name: PitchBook Limited Partners API
+  description: Limited Partners
+  humanURL: https://pitchbook.com/developers
+  baseURL: https://api.pitchbook.com
+  tags:
+  - Limited Partners
+  properties:
+  - type: OpenAPI
+    url: openapi/pitchbook-limited-partners-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/pitchbook-deal-detailed-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-company-bio-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-patent-detailed-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-fund-bio-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-company-social-analytics-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-limited-partner-commitment-aggregates-dto-schema.json
+- aid: pitchbook:pitchbook-patents-api
+  name: PitchBook Patents API
+  description: Patents
+  humanURL: https://pitchbook.com/developers
+  baseURL: https://api.pitchbook.com
+  tags:
+  - Patents
+  properties:
+  - type: OpenAPI
+    url: openapi/pitchbook-patents-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/pitchbook-deal-detailed-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-company-bio-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-patent-detailed-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-fund-bio-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-company-social-analytics-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-limited-partner-commitment-aggregates-dto-schema.json
+- aid: pitchbook:pitchbook-people-api
+  name: PitchBook People API
+  description: People
+  humanURL: https://pitchbook.com/developers
+  baseURL: https://api.pitchbook.com
+  tags:
+  - People
+  properties:
+  - type: OpenAPI
+    url: openapi/pitchbook-people-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/pitchbook-deal-detailed-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-company-bio-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-patent-detailed-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-fund-bio-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-company-social-analytics-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-limited-partner-commitment-aggregates-dto-schema.json
+- aid: pitchbook:pitchbook-service-providers-api
+  name: PitchBook Service Providers API
+  description: Service Providers
+  humanURL: https://pitchbook.com/developers
+  baseURL: https://api.pitchbook.com
+  tags:
+  - Service Providers
+  properties:
+  - type: OpenAPI
+    url: openapi/pitchbook-service-providers-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/pitchbook-deal-detailed-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-company-bio-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-patent-detailed-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-fund-bio-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-company-social-analytics-dto-schema.json
+  - type: JSONSchema
+    url: json-schema/pitchbook-limited-partner-commitment-aggregates-dto-schema.json
+x-enrichment:
+  date: '2026-09-21'
+  status: enriched
+  artifacts_added: 16
+  pass: modular-v1
+  engine: identity=local,contract=local,surfaces=local,docs=local
