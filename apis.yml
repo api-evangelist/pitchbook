@@ -187,6 +187,8 @@ apis:
   humanURL: https://pitchbook.com/developers
   baseURL: https://api.pitchbook.com
   tags:
+  - Fund
+  tags_raw:
   - Funds
   properties:
   - type: OpenAPI
@@ -208,7 +210,8 @@ apis:
   description: General
   humanURL: https://pitchbook.com/developers
   baseURL: https://api.pitchbook.com
-  tags:
+  tags: []
+  tags_raw:
   - General
   properties:
   - type: OpenAPI
@@ -231,6 +234,8 @@ apis:
   humanURL: https://pitchbook.com/developers
   baseURL: https://api.pitchbook.com
   tags:
+  - Investor
+  tags_raw:
   - Investors
   properties:
   - type: OpenAPI
