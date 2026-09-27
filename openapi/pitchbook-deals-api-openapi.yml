@@ -1419,70 +1419,6 @@ paths:
       - pbToken: []
 components:
   schemas:
-    DealValuationDto:
-      type: object
-      properties:
-        dealId:
-          type: string
-        dealNumber:
-          type: integer
-          format: int32
-          example: 1
-        companyId:
-          type: string
-          example: 10695-52
-        companyName:
-          type: string
-          example: Facebook
-        preValuation:
-          $ref: '#/components/schemas/MoneyDto'
-        postValuation:
-          $ref: '#/components/schemas/MoneyDto'
-        postValuationStatus:
-          type: string
-          example: Estimated
-    DealExiterDto:
-      type: object
-      properties:
-        exiterId:
-          type: string
-          example: 42257-26
-        exiterName:
-          type: string
-          example: Crossroads Capital Partners
-    AdvancedSearchPageDtoDealAdvancedSearchResultDto_SearchView:
-      type: object
-      properties:
-        stats:
-          $ref: '#/components/schemas/SearchPageStatsDto_SearchView'
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/DealAdvancedSearchResultDto_SearchView'
-    DealInvestorsExitersDto:
-      type: object
-      properties:
-        dealId:
-          type: string
-          example: 108911-98T
-        companyId:
-          type: string
-          example: 10695-52
-        companyName:
-          type: string
-          example: Facebook
-        investors:
-          type: array
-          items:
-            $ref: '#/components/schemas/DealInvestorDto'
-        sellers:
-          type: array
-          items:
-            $ref: '#/components/schemas/DealSellerDto'
-        exiters:
-          type: array
-          items:
-            $ref: '#/components/schemas/DealExiterDto'
     DealCapTableHistoryDto:
       type: object
       properties:
@@ -1528,530 +1464,24 @@ components:
           type: number
           format: double
           example: 0.1
-    EntityDto:
+    LeadPartnerDto:
       type: object
       properties:
-        id:
+        partnerId:
           type: string
-          example: 41349-37
-        name:
+          example: 135150-94P
+        partnerName:
           type: string
-          example: Max Technologies
-      example:
-        id: 25304-77F
-        name: AB Private Credit Investors Corp BDC
-    EntityTypeDto:
+          example: Tom Weedall
+    AdvancedSearchPageDtoDealAdvancedSearchResultDto_SearchView:
       type: object
       properties:
-        type:
-          $ref: '#/components/schemas/DictionaryDto'
-        primary:
-          type: boolean
-          example: false
-      example:
-        type:
-          code: IB
-          description: Investment Bank
-        primary: true
-    BondDetailsDto:
-      type: object
-      properties:
-        lcdBondId:
-          type: integer
-          format: int32
-          example: 10243
-        spread:
-          type: string
-          example: Base Rate + 7.6
-        price:
-          type: number
-          format: double
-          example: 100.0
-        yield:
-          type: number
-          format: double
-          example: 8.5
-        floatingRateEquivalent:
-          type: number
-          format: double
-          example: 31.0
-          deprecated: true
-        priceTalkTight:
-          type: number
-          format: double
-          example: 8.0
-        priceTalkWide:
-          type: number
-          format: double
-          example: 8.25
-        breakYield:
-          type: number
-          format: double
-          example: 0.57
-        settleDate:
-          type: string
-          format: date
-          example: '2019-09-16'
-        settleTDays:
-          type: integer
-          format: int32
-        nonCallYears:
-          type: number
-          format: double
-          example: 3.25
-        callTerms:
-          type: string
-          example: nc3.25
-        firstCallPremiumPercent:
-          type: number
-          format: double
-          example: 0.0
-          deprecated: true
-        firstCallPremium:
-          type: number
-          format: double
-          example: 1.03
-        equityClawback:
-          type: boolean
-          example: true
-        equityClawbackYears:
-          type: number
-          format: double
-          example: 1.5
-        equityClawbackPercent:
-          type: number
-          format: double
-          example: 40.0
-        clawbackValue:
-          type: number
-          format: double
-          example: 300.0
-        marketplace:
-          type: string
-          example: PUB
-        pik:
-          type: boolean
-          example: true
-        cashPik:
-          type: boolean
-          example: false
-        holdco:
-          type: boolean
-          example: false
-        portabilityClause:
-          type: boolean
-          example: false
-    DealSizeBreakdownDto:
-      type: object
-      properties:
-        totalNewMoney:
-          $ref: '#/components/schemas/MoneyDto'
-        usdNewMoney:
-          $ref: '#/components/schemas/MoneyDto'
-        eurNewMoney:
-          $ref: '#/components/schemas/MoneyDto'
-        totalInstitutionalNewMoney:
-          $ref: '#/components/schemas/MoneyDto'
-        usdInstitutionalNewMoney:
-          $ref: '#/components/schemas/MoneyDto'
-        eurInstitutionalNewMoney:
-          $ref: '#/components/schemas/MoneyDto'
-        totalFirstLienNewMoney:
-          $ref: '#/components/schemas/MoneyDto'
-        usdFirstLienNewMoney:
-          $ref: '#/components/schemas/MoneyDto'
-        eurFirstLienNewMoney:
-          $ref: '#/components/schemas/MoneyDto'
-        totalFirstLienInstitutionalNewMoney:
-          $ref: '#/components/schemas/MoneyDto'
-        usdFirstLienInstitutionalNewMoney:
-          $ref: '#/components/schemas/MoneyDto'
-        eurFirstLienInstitutionalNewMoney:
-          $ref: '#/components/schemas/MoneyDto'
-        totalSecondLienNewMoney:
-          $ref: '#/components/schemas/MoneyDto'
-        usdSecondLienNewMoney:
-          $ref: '#/components/schemas/MoneyDto'
-        eurSecondLienNewMoney:
-          $ref: '#/components/schemas/MoneyDto'
-    LenderDto:
-      type: object
-      properties:
-        lenderId:
-          type: string
-          example: 13954-20
-        lenderName:
-          type: string
-          example: Morgan Stanley
-        firmType:
-          type: string
-          example: SERVICE_PROVIDER
-          enum:
-          - GENERAL
-          - COMPANY
-          - INVESTOR
-          - LIMITED_PARTNER
-          - SERVICE_PROVIDER
-          - PERSON
-          - DEAL
-          - FUND
-        serviceProviderType:
-          $ref: '#/components/schemas/DictionaryDto'
-        titles:
-          type: array
-          example: '[Co-agent]'
-          items:
-            type: string
-            example: '[Co-agent]'
-        lenderSize:
-          $ref: '#/components/schemas/MoneyDto'
-        leadPartner:
-          $ref: '#/components/schemas/LeadPartnerDto'
-        funds:
+        stats:
+          $ref: '#/components/schemas/SearchPageStatsDto_SearchView'
+        items:
           type: array
           items:
-            $ref: '#/components/schemas/LenderFundDto'
-    DealTrancheInformationDto:
-      type: object
-      properties:
-        dealId:
-          type: string
-          example: 108911-98T
-        dealNumber:
-          type: integer
-          format: int32
-          example: 1
-        company:
-          $ref: '#/components/schemas/EntityDto'
-        tranches:
-          type: array
-          items:
-            $ref: '#/components/schemas/DealTrancheDto'
-    MoneyDto:
-      type: object
-      properties:
-        amount:
-          type: number
-          example: 17039.27
-        currency:
-          type: string
-          example: USD
-        nativeAmount:
-          type: number
-          example: 15689
-        nativeCurrency:
-          type: string
-          example: EUR
-        estimated:
-          type: boolean
-          example: false
-    DealAdvancedSearchResultDto_SearchView:
-      type: object
-      properties:
-        dealId:
-          type: string
-          example: 109688-14T
-        companyId:
-          type: string
-          example: 164273-95
-        companyName:
-          type: string
-          example: Proxy
-        sandbox:
-          type: boolean
-          example: false
-    ErrorDto:
-      type: object
-      properties:
-        reason:
-          type: string
-          enum:
-          - 100 CONTINUE
-          - 101 SWITCHING_PROTOCOLS
-          - 102 PROCESSING
-          - 103 EARLY_HINTS
-          - 103 CHECKPOINT
-          - 200 OK
-          - 201 CREATED
-          - 202 ACCEPTED
-          - 203 NON_AUTHORITATIVE_INFORMATION
-          - 204 NO_CONTENT
-          - 205 RESET_CONTENT
-          - 206 PARTIAL_CONTENT
-          - 207 MULTI_STATUS
-          - 208 ALREADY_REPORTED
-          - 226 IM_USED
-          - 300 MULTIPLE_CHOICES
-          - 301 MOVED_PERMANENTLY
-          - 302 FOUND
-          - 302 MOVED_TEMPORARILY
-          - 303 SEE_OTHER
-          - 304 NOT_MODIFIED
-          - 305 USE_PROXY
-          - 307 TEMPORARY_REDIRECT
-          - 308 PERMANENT_REDIRECT
-          - 400 BAD_REQUEST
-          - 401 UNAUTHORIZED
-          - 402 PAYMENT_REQUIRED
-          - 403 FORBIDDEN
-          - 404 NOT_FOUND
-          - 405 METHOD_NOT_ALLOWED
-          - 406 NOT_ACCEPTABLE
-          - 407 PROXY_AUTHENTICATION_REQUIRED
-          - 408 REQUEST_TIMEOUT
-          - 409 CONFLICT
-          - 410 GONE
-          - 411 LENGTH_REQUIRED
-          - 412 PRECONDITION_FAILED
-          - 413 PAYLOAD_TOO_LARGE
-          - 413 REQUEST_ENTITY_TOO_LARGE
-          - 414 URI_TOO_LONG
-          - 414 REQUEST_URI_TOO_LONG
-          - 415 UNSUPPORTED_MEDIA_TYPE
-          - 416 REQUESTED_RANGE_NOT_SATISFIABLE
-          - 417 EXPECTATION_FAILED
-          - 418 I_AM_A_TEAPOT
-          - 419 INSUFFICIENT_SPACE_ON_RESOURCE
-          - 420 METHOD_FAILURE
-          - 421 DESTINATION_LOCKED
-          - 422 UNPROCESSABLE_ENTITY
-          - 423 LOCKED
-          - 424 FAILED_DEPENDENCY
-          - 425 TOO_EARLY
-          - 426 UPGRADE_REQUIRED
-          - 428 PRECONDITION_REQUIRED
-          - 429 TOO_MANY_REQUESTS
-          - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
-          - 451 UNAVAILABLE_FOR_LEGAL_REASONS
-          - 500 INTERNAL_SERVER_ERROR
-          - 501 NOT_IMPLEMENTED
-          - 502 BAD_GATEWAY
-          - 503 SERVICE_UNAVAILABLE
-          - 504 GATEWAY_TIMEOUT
-          - 505 HTTP_VERSION_NOT_SUPPORTED
-          - 506 VARIANT_ALSO_NEGOTIATES
-          - 507 INSUFFICIENT_STORAGE
-          - 508 LOOP_DETECTED
-          - 509 BANDWIDTH_LIMIT_EXCEEDED
-          - 510 NOT_EXTENDED
-          - 511 NETWORK_AUTHENTICATION_REQUIRED
-        message:
-          type: string
-    DealSellerDto:
-      type: object
-      properties:
-        sellerId:
-          type: string
-          example: 11317-15
-        sellerName:
-          type: string
-          example: Timberline Venture Partners
-        sellerFunds:
-          type: array
-          items:
-            $ref: '#/components/schemas/FundNameDto'
-    DebtLendersDto:
-      type: object
-      properties:
-        pbId:
-          type: string
-          example: 56072-89D
-        debtSize:
-          $ref: '#/components/schemas/MoneyDto'
-        paymentInKind:
-          type: number
-          format: double
-          example: 12.5
-        debtType:
-          $ref: '#/components/schemas/DictionaryDto'
-        seniority:
-          $ref: '#/components/schemas/DictionaryDto'
-        security:
-          $ref: '#/components/schemas/DictionaryDto'
-        subordination:
-          deprecated: true
-          allOf:
-          - $ref: '#/components/schemas/DictionaryDto'
-        term:
-          $ref: '#/components/schemas/DictionaryDto'
-        floor:
-          type: number
-          format: double
-          example: 2.5
-        ceiling:
-          type: number
-          format: double
-          example: 3.5
-        breakDate:
-          type: string
-          format: date
-          example: '2012-03-19'
-        breakPrice:
-          type: number
-          format: double
-          example: 50.5
-        resetFrequency:
-          type: string
-          example: Monthly
-        coupon:
-          type: number
-          format: double
-          example: 8.5
-        additionalDebtCharacteristics:
-          $ref: '#/components/schemas/AdditionalDebtCharacteristicsDto'
-        maturityDate:
-          type: string
-          format: date
-          example: '2020-03-04'
-        spreadInterestRate:
-          type: number
-          format: double
-          example: 45.0
-        tradeDate:
-          type: string
-          format: date
-          example: '2015-06-12'
-        tenorYears:
-          type: number
-          format: double
-          example: 8.0
-        numberOfShares:
-          type: integer
-          format: int64
-          example: 80
-        pikInterest:
-          type: number
-          format: double
-          example: 2500.0
-        debtCommentary:
-          type: string
-          example: Apollo Investment Corporation provided a senior secured facility.
-        lenders:
-          type: array
-          items:
-            $ref: '#/components/schemas/LenderDto'
-        loanDetails:
-          $ref: '#/components/schemas/LoanDetailsDto'
-        bondDetails:
-          $ref: '#/components/schemas/BondDetailsDto'
-    DealMultiplesDto:
-      type: object
-      properties:
-        dealId:
-          type: string
-          example: 31456-00T
-        dealNumber:
-          type: integer
-          format: int32
-          example: 4
-        companyId:
-          type: string
-          example: 41965-66
-        companyName:
-          type: string
-          example: Caplease
-        dealSizeToCashFlow:
-          type: number
-          example: 0.25
-        dealSizeToEBIT:
-          type: number
-          example: 0.36
-        dealSizeToEBITDA:
-          type: number
-          example: 1.5
-        dealSizeToNetIncome:
-          type: number
-          example: 1.23
-        dealSizeToRevenue:
-          type: number
-          example: 0.56
-        debtRaisedInRoundToEBITDA:
-          type: number
-          example: -1.56
-        debtRaisedInRoundToEquity:
-          type: number
-          example: -1.3
-        impliedEvToCashFlow:
-          type: number
-          example: 0.56
-        impliedEvToEBIT:
-          type: number
-          example: 0.56
-        impliedEvToEBITDA:
-          type: number
-          example: 0.26
-        impliedEvToNetIncome:
-          type: number
-          example: 0.26
-        impliedEvToRevenue:
-          type: number
-          example: 0.27
-        valuationToCashFlow:
-          type: number
-          example: 0.15
-        valuationToEBIT:
-          type: number
-          example: 0.23
-        valuationToEBITDA:
-          type: number
-          example: 1.3
-        valuationToNetIncome:
-          type: number
-          example: 0.56
-        valuationToRevenue:
-          type: number
-          example: 0.45
-    DealBioDto:
-      type: object
-      properties:
-        dealId:
-          type: string
-          example: 108911-98T
-        dealNumber:
-          type: integer
-          format: int32
-          example: 1
-        companyId:
-          type: string
-          example: 10695-52
-        companyName:
-          type: string
-          example: Facebook
-        dealAnnouncedDate:
-          type: string
-          format: date
-          example: '2020-12-05'
-        dealDate:
-          type: string
-          format: date
-          example: '2020-12-05'
-        dealSize:
-          $ref: '#/components/schemas/MoneyDto'
-        dealSizeStatus:
-          type: string
-          example: Actual
-        dealStatus:
-          $ref: '#/components/schemas/DictionaryDto'
-        dealType1:
-          $ref: '#/components/schemas/DictionaryDto'
-        dealType2:
-          $ref: '#/components/schemas/DictionaryDto'
-        dealType3:
-          $ref: '#/components/schemas/DictionaryDto'
-        dealClass:
-          $ref: '#/components/schemas/DictionaryDto'
-        valuationAvailable:
-          type: boolean
-          example: true
-        capTableAvailable:
-          type: boolean
-          example: false
-        trancheInfoAvailable:
-          type: boolean
-          example: true
-        debtLenderInfoAvailable:
-          type: boolean
-          example: true
+            $ref: '#/components/schemas/DealAdvancedSearchResultDto_SearchView'
     SearchPageStatsDto_SearchView:
       type: object
       properties:
@@ -2071,35 +1501,94 @@ components:
           type: integer
           format: int32
           example: 1
-    DealInvestorDto:
+    AdditionalDebtCharacteristicsDto:
       type: object
       properties:
-        investorId:
-          type: string
-          example: 11193-94
-        investorName:
-          type: string
-          example: Franklin Street Equity Partners
-        investmentStatus:
-          type: string
-          example: New Investor
-        leadSoleInvestor:
+        unitranche:
+          type: boolean
+          example: true
+        syndicated:
           type: boolean
           example: false
-        leadPartnerId:
+        mezzanine:
+          type: boolean
+          example: true
+        covLite:
+          type: boolean
+          example: false
+        warrants:
+          type: boolean
+          example: true
+        convertible:
+          type: boolean
+          example: false
+        rate:
+          $ref: '#/components/schemas/DictionaryDto'
+    DealTrancheDto:
+      type: object
+      properties:
+        trancheSize:
+          $ref: '#/components/schemas/MoneyDto'
+        trancheSizeStatus:
           type: string
-          example: 204383-98P
-        leadPartnerName:
+          example: Actual
+        trancheDate:
           type: string
-          example: Luke Bagley
-        investorFunds:
+          format: date
+          example: '2004-04-05'
+        financingType:
+          $ref: '#/components/schemas/DictionaryDto'
+        stockType:
+          $ref: '#/components/schemas/DictionaryDto'
+        stockSeriesType:
+          type: string
+          example: B1
+        conversionStatus:
+          type: string
+          example: 'Yes'
+        conversionDate:
+          type: string
+          format: date
+          example: '2005-03-21'
+        investor:
+          $ref: '#/components/schemas/EntityDto'
+        investor2:
+          $ref: '#/components/schemas/EntityDto'
+        investor3:
+          $ref: '#/components/schemas/EntityDto'
+    DictionaryDto:
+      type: object
+      properties:
+        code:
+          type: string
+          example: Dictionary code
+        description:
+          type: string
+          example: Dictionary Code Description
+    DealInvestorsExitersDto:
+      type: object
+      properties:
+        dealId:
+          type: string
+          example: 108911-98T
+        companyId:
+          type: string
+          example: 10695-52
+        companyName:
+          type: string
+          example: Facebook
+        investors:
           type: array
           items:
-            $ref: '#/components/schemas/FundNameDto'
-        investmentAmount:
-          $ref: '#/components/schemas/MoneyDto'
-        formOfPayment:
-          $ref: '#/components/schemas/DictionaryDto'
+            $ref: '#/components/schemas/DealInvestorDto'
+        sellers:
+          type: array
+          items:
+            $ref: '#/components/schemas/DealSellerDto'
+        exiters:
+          type: array
+          items:
+            $ref: '#/components/schemas/DealExiterDto'
     DealDetailedDto:
       type: object
       properties:
@@ -2226,59 +1715,142 @@ components:
             example: '{"Endpoint name":"Update Status (true/false)"}'
           example:
             Endpoint name: Update Status (true/false)
-    AdditionalDebtCharacteristicsDto:
+    DealAdvancedSearchResultDto_SearchView:
       type: object
       properties:
-        unitranche:
-          type: boolean
-          example: true
-        syndicated:
-          type: boolean
-          example: false
-        mezzanine:
-          type: boolean
-          example: true
-        covLite:
-          type: boolean
-          example: false
-        warrants:
-          type: boolean
-          example: true
-        convertible:
+        dealId:
+          type: string
+          example: 109688-14T
+        companyId:
+          type: string
+          example: 164273-95
+        companyName:
+          type: string
+          example: Proxy
+        sandbox:
           type: boolean
           example: false
-        rate:
-          $ref: '#/components/schemas/DictionaryDto'
-    LeadPartnerDto:
+    ErrorDto:
       type: object
       properties:
-        partnerId:
+        reason:
           type: string
-          example: 135150-94P
-        partnerName:
+          enum:
+          - 100 CONTINUE
+          - 101 SWITCHING_PROTOCOLS
+          - 102 PROCESSING
+          - 103 EARLY_HINTS
+          - 103 CHECKPOINT
+          - 200 OK
+          - 201 CREATED
+          - 202 ACCEPTED
+          - 203 NON_AUTHORITATIVE_INFORMATION
+          - 204 NO_CONTENT
+          - 205 RESET_CONTENT
+          - 206 PARTIAL_CONTENT
+          - 207 MULTI_STATUS
+          - 208 ALREADY_REPORTED
+          - 226 IM_USED
+          - 300 MULTIPLE_CHOICES
+          - 301 MOVED_PERMANENTLY
+          - 302 FOUND
+          - 302 MOVED_TEMPORARILY
+          - 303 SEE_OTHER
+          - 304 NOT_MODIFIED
+          - 305 USE_PROXY
+          - 307 TEMPORARY_REDIRECT
+          - 308 PERMANENT_REDIRECT
+          - 400 BAD_REQUEST
+          - 401 UNAUTHORIZED
+          - 402 PAYMENT_REQUIRED
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 405 METHOD_NOT_ALLOWED
+          - 406 NOT_ACCEPTABLE
+          - 407 PROXY_AUTHENTICATION_REQUIRED
+          - 408 REQUEST_TIMEOUT
+          - 409 CONFLICT
+          - 410 GONE
+          - 411 LENGTH_REQUIRED
+          - 412 PRECONDITION_FAILED
+          - 413 PAYLOAD_TOO_LARGE
+          - 413 REQUEST_ENTITY_TOO_LARGE
+          - 414 URI_TOO_LONG
+          - 414 REQUEST_URI_TOO_LONG
+          - 415 UNSUPPORTED_MEDIA_TYPE
+          - 416 REQUESTED_RANGE_NOT_SATISFIABLE
+          - 417 EXPECTATION_FAILED
+          - 418 I_AM_A_TEAPOT
+          - 419 INSUFFICIENT_SPACE_ON_RESOURCE
+          - 420 METHOD_FAILURE
+          - 421 DESTINATION_LOCKED
+          - 422 UNPROCESSABLE_ENTITY
+          - 423 LOCKED
+          - 424 FAILED_DEPENDENCY
+          - 425 TOO_EARLY
+          - 426 UPGRADE_REQUIRED
+          - 428 PRECONDITION_REQUIRED
+          - 429 TOO_MANY_REQUESTS
+          - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
+          - 451 UNAVAILABLE_FOR_LEGAL_REASONS
+          - 500 INTERNAL_SERVER_ERROR
+          - 501 NOT_IMPLEMENTED
+          - 502 BAD_GATEWAY
+          - 503 SERVICE_UNAVAILABLE
+          - 504 GATEWAY_TIMEOUT
+          - 505 HTTP_VERSION_NOT_SUPPORTED
+          - 506 VARIANT_ALSO_NEGOTIATES
+          - 507 INSUFFICIENT_STORAGE
+          - 508 LOOP_DETECTED
+          - 509 BANDWIDTH_LIMIT_EXCEEDED
+          - 510 NOT_EXTENDED
+          - 511 NETWORK_AUTHENTICATION_REQUIRED
+        message:
           type: string
-          example: Tom Weedall
-    FundNameDto:
+    MoneyDto:
       type: object
       properties:
-        fundId:
+        amount:
+          type: number
+          example: 17039.27
+        currency:
           type: string
-          example: 13328-83F
-        fundName:
+          example: USD
+        nativeAmount:
+          type: number
+          example: 15689
+        nativeCurrency:
+          type: string
+          example: EUR
+        estimated:
+          type: boolean
+          example: false
+    DealDebtLendersDto:
+      type: object
+      properties:
+        dealId:
+          type: string
+          example: 13774-15T
+        dealNumber:
+          type: integer
+          format: int32
+          example: 4
+        company:
+          $ref: '#/components/schemas/EntityDto'
+        debts:
+          type: array
+          items:
+            $ref: '#/components/schemas/DebtLendersDto'
+    DealExiterDto:
+      type: object
+      properties:
+        exiterId:
+          type: string
+          example: 42257-26
+        exiterName:
           type: string
           example: Crossroads Capital Partners
-    LenderFundDto:
-      type: object
-      properties:
-        fundId:
-          type: string
-          example: 15864-85F
-        fundName:
-          type: string
-          example: Farol Fund
-        fundAmount:
-          $ref: '#/components/schemas/MoneyDto'
-    DealStockInfoDto:
+    DealBioDto:
       type: object
       properties:
         dealId:
@@ -2294,90 +1866,111 @@ components:
         companyName:
           type: string
           example: Facebook
-        series:
+        dealAnnouncedDate:
           type: string
-          example: Preferred
-        pricePerShare:
+          format: date
+          example: '2020-12-05'
+        dealDate:
+          type: string
+          format: date
+          example: '2020-12-05'
+        dealSize:
           $ref: '#/components/schemas/MoneyDto'
-        stockType:
-          deprecated: true
-          allOf:
-          - $ref: '#/components/schemas/DictionaryDto'
-        stockTypes:
-          type: array
-          items:
-            $ref: '#/components/schemas/DictionaryDto'
-        numberOfSharesAcquired:
-          type: integer
-          format: int64
-          example: 234554
-        sharesSought:
-          type: integer
-          format: int64
-          example: 15213000
-        conversionRatio:
+        dealSizeStatus:
           type: string
-          example: 0.92:1
-        liquidationPreferences:
-          type: string
-          example: Pari Passu
-        liquidationParticipating:
-          type: string
-          example: Participating
-        dividendRights:
-          type: string
-          example: 'Yes'
-        cumulativeness:
-          type: string
-          example: Non-Cumulative
-        antiDilutionProvisions:
-          type: string
-          example: Weighted Average
-        redemptionRights:
-          type: string
-          example: 'Yes'
-        boardVotingRights:
-          type: string
-          example: 'Yes'
-        generalVotingRights:
-          type: string
-          example: 'No'
-    DealServiceProviderDto:
+          example: Actual
+        dealStatus:
+          $ref: '#/components/schemas/DictionaryDto'
+        dealType1:
+          $ref: '#/components/schemas/DictionaryDto'
+        dealType2:
+          $ref: '#/components/schemas/DictionaryDto'
+        dealType3:
+          $ref: '#/components/schemas/DictionaryDto'
+        dealClass:
+          $ref: '#/components/schemas/DictionaryDto'
+        valuationAvailable:
+          type: boolean
+          example: true
+        capTableAvailable:
+          type: boolean
+          example: false
+        trancheInfoAvailable:
+          type: boolean
+          example: true
+        debtLenderInfoAvailable:
+          type: boolean
+          example: true
+    DealTrancheInformationDto:
       type: object
       properties:
         dealId:
           type: string
           example: 108911-98T
-        companyId:
-          type: string
-          example: 10695-52
-        companyName:
-          type: string
-          example: Facebook
-        serviceProviderId:
-          type: string
-          example: 10108-09
-        serviceProviderName:
-          type: string
-          example: Wilson Sonsini Goodrich & Rosati
-        serviceProviderTypes:
+        dealNumber:
+          type: integer
+          format: int32
+          example: 1
+        company:
+          $ref: '#/components/schemas/EntityDto'
+        tranches:
           type: array
           items:
-            $ref: '#/components/schemas/EntityTypeDto'
-        serviceProvided:
-          $ref: '#/components/schemas/DictionaryDto'
-        serviceProvidedToId:
+            $ref: '#/components/schemas/DealTrancheDto'
+    DealSizeBreakdownDto:
+      type: object
+      properties:
+        totalNewMoney:
+          $ref: '#/components/schemas/MoneyDto'
+        usdNewMoney:
+          $ref: '#/components/schemas/MoneyDto'
+        eurNewMoney:
+          $ref: '#/components/schemas/MoneyDto'
+        totalInstitutionalNewMoney:
+          $ref: '#/components/schemas/MoneyDto'
+        usdInstitutionalNewMoney:
+          $ref: '#/components/schemas/MoneyDto'
+        eurInstitutionalNewMoney:
+          $ref: '#/components/schemas/MoneyDto'
+        totalFirstLienNewMoney:
+          $ref: '#/components/schemas/MoneyDto'
+        usdFirstLienNewMoney:
+          $ref: '#/components/schemas/MoneyDto'
+        eurFirstLienNewMoney:
+          $ref: '#/components/schemas/MoneyDto'
+        totalFirstLienInstitutionalNewMoney:
+          $ref: '#/components/schemas/MoneyDto'
+        usdFirstLienInstitutionalNewMoney:
+          $ref: '#/components/schemas/MoneyDto'
+        eurFirstLienInstitutionalNewMoney:
+          $ref: '#/components/schemas/MoneyDto'
+        totalSecondLienNewMoney:
+          $ref: '#/components/schemas/MoneyDto'
+        usdSecondLienNewMoney:
+          $ref: '#/components/schemas/MoneyDto'
+        eurSecondLienNewMoney:
+          $ref: '#/components/schemas/MoneyDto'
+    EntityDto:
+      type: object
+      properties:
+        id:
           type: string
-          example: 10377-37
-        serviceProvidedToName:
+          example: 41349-37
+        name:
           type: string
-          example: Tesla
-        leadPartnerId:
+          example: Max Technologies
+      example:
+        id: 25304-77F
+        name: AB Private Credit Investors Corp BDC
+    FundNameDto:
+      type: object
+      properties:
+        fundId:
           type: string
-          example: 11441-98P
-        leadPartnerName:
+          example: 13328-83F
+        fundName:
           type: string
-          example: Larry Sonsini
+          example: Crossroads Capital Partners
     LoanDetailsDto:
       type: object
       properties:
@@ -2522,63 +2115,470 @@ components:
         tickingFeeComment:
           type: string
           example: 'Ticking fee: None, 0–60 days; 50% of margin, 61–120; 100%, 121+.'
-    DictionaryDto:
+    EntityTypeDto:
       type: object
       properties:
-        code:
-          type: string
-          example: Dictionary code
-        description:
-          type: string
-          example: Dictionary Code Description
-    DealTrancheDto:
-      type: object
-      properties:
-        trancheSize:
-          $ref: '#/components/schemas/MoneyDto'
-        trancheSizeStatus:
-          type: string
-          example: Actual
-        trancheDate:
-          type: string
-          format: date
-          example: '2004-04-05'
-        financingType:
+        type:
           $ref: '#/components/schemas/DictionaryDto'
-        stockType:
-          $ref: '#/components/schemas/DictionaryDto'
-        stockSeriesType:
-          type: string
-          example: B1
-        conversionStatus:
-          type: string
-          example: 'Yes'
-        conversionDate:
-          type: string
-          format: date
-          example: '2005-03-21'
-        investor:
-          $ref: '#/components/schemas/EntityDto'
-        investor2:
-          $ref: '#/components/schemas/EntityDto'
-        investor3:
-          $ref: '#/components/schemas/EntityDto'
-    DealDebtLendersDto:
+        primary:
+          type: boolean
+          example: false
+      example:
+        type:
+          code: IB
+          description: Investment Bank
+        primary: true
+    DealServiceProviderDto:
       type: object
       properties:
         dealId:
           type: string
-          example: 13774-15T
+          example: 108911-98T
+        companyId:
+          type: string
+          example: 10695-52
+        companyName:
+          type: string
+          example: Facebook
+        serviceProviderId:
+          type: string
+          example: 10108-09
+        serviceProviderName:
+          type: string
+          example: Wilson Sonsini Goodrich & Rosati
+        serviceProviderTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityTypeDto'
+        serviceProvided:
+          $ref: '#/components/schemas/DictionaryDto'
+        serviceProvidedToId:
+          type: string
+          example: 10377-37
+        serviceProvidedToName:
+          type: string
+          example: Tesla
+        leadPartnerId:
+          type: string
+          example: 11441-98P
+        leadPartnerName:
+          type: string
+          example: Larry Sonsini
+    DealMultiplesDto:
+      type: object
+      properties:
+        dealId:
+          type: string
+          example: 31456-00T
         dealNumber:
           type: integer
           format: int32
           example: 4
-        company:
-          $ref: '#/components/schemas/EntityDto'
-        debts:
+        companyId:
+          type: string
+          example: 41965-66
+        companyName:
+          type: string
+          example: Caplease
+        dealSizeToCashFlow:
+          type: number
+          example: 0.25
+        dealSizeToEBIT:
+          type: number
+          example: 0.36
+        dealSizeToEBITDA:
+          type: number
+          example: 1.5
+        dealSizeToNetIncome:
+          type: number
+          example: 1.23
+        dealSizeToRevenue:
+          type: number
+          example: 0.56
+        debtRaisedInRoundToEBITDA:
+          type: number
+          example: -1.56
+        debtRaisedInRoundToEquity:
+          type: number
+          example: -1.3
+        impliedEvToCashFlow:
+          type: number
+          example: 0.56
+        impliedEvToEBIT:
+          type: number
+          example: 0.56
+        impliedEvToEBITDA:
+          type: number
+          example: 0.26
+        impliedEvToNetIncome:
+          type: number
+          example: 0.26
+        impliedEvToRevenue:
+          type: number
+          example: 0.27
+        valuationToCashFlow:
+          type: number
+          example: 0.15
+        valuationToEBIT:
+          type: number
+          example: 0.23
+        valuationToEBITDA:
+          type: number
+          example: 1.3
+        valuationToNetIncome:
+          type: number
+          example: 0.56
+        valuationToRevenue:
+          type: number
+          example: 0.45
+    DealInvestorDto:
+      type: object
+      properties:
+        investorId:
+          type: string
+          example: 11193-94
+        investorName:
+          type: string
+          example: Franklin Street Equity Partners
+        investmentStatus:
+          type: string
+          example: New Investor
+        leadSoleInvestor:
+          type: boolean
+          example: false
+        leadPartnerId:
+          type: string
+          example: 204383-98P
+        leadPartnerName:
+          type: string
+          example: Luke Bagley
+        investorFunds:
           type: array
           items:
-            $ref: '#/components/schemas/DebtLendersDto'
+            $ref: '#/components/schemas/FundNameDto'
+        investmentAmount:
+          $ref: '#/components/schemas/MoneyDto'
+        formOfPayment:
+          $ref: '#/components/schemas/DictionaryDto'
+    BondDetailsDto:
+      type: object
+      properties:
+        lcdBondId:
+          type: integer
+          format: int32
+          example: 10243
+        spread:
+          type: string
+          example: Base Rate + 7.6
+        price:
+          type: number
+          format: double
+          example: 100.0
+        yield:
+          type: number
+          format: double
+          example: 8.5
+        floatingRateEquivalent:
+          type: number
+          format: double
+          example: 31.0
+          deprecated: true
+        priceTalkTight:
+          type: number
+          format: double
+          example: 8.0
+        priceTalkWide:
+          type: number
+          format: double
+          example: 8.25
+        breakYield:
+          type: number
+          format: double
+          example: 0.57
+        settleDate:
+          type: string
+          format: date
+          example: '2019-09-16'
+        settleTDays:
+          type: integer
+          format: int32
+        nonCallYears:
+          type: number
+          format: double
+          example: 3.25
+        callTerms:
+          type: string
+          example: nc3.25
+        firstCallPremiumPercent:
+          type: number
+          format: double
+          example: 0.0
+          deprecated: true
+        firstCallPremium:
+          type: number
+          format: double
+          example: 1.03
+        equityClawback:
+          type: boolean
+          example: true
+        equityClawbackYears:
+          type: number
+          format: double
+          example: 1.5
+        equityClawbackPercent:
+          type: number
+          format: double
+          example: 40.0
+        clawbackValue:
+          type: number
+          format: double
+          example: 300.0
+        marketplace:
+          type: string
+          example: PUB
+        pik:
+          type: boolean
+          example: true
+        cashPik:
+          type: boolean
+          example: false
+        holdco:
+          type: boolean
+          example: false
+        portabilityClause:
+          type: boolean
+          example: false
+    LenderFundDto:
+      type: object
+      properties:
+        fundId:
+          type: string
+          example: 15864-85F
+        fundName:
+          type: string
+          example: Farol Fund
+        fundAmount:
+          $ref: '#/components/schemas/MoneyDto'
+    LenderDto:
+      type: object
+      properties:
+        lenderId:
+          type: string
+          example: 13954-20
+        lenderName:
+          type: string
+          example: Morgan Stanley
+        firmType:
+          type: string
+          example: SERVICE_PROVIDER
+          enum:
+          - GENERAL
+          - COMPANY
+          - INVESTOR
+          - LIMITED_PARTNER
+          - SERVICE_PROVIDER
+          - PERSON
+          - DEAL
+          - FUND
+        serviceProviderType:
+          $ref: '#/components/schemas/DictionaryDto'
+        titles:
+          type: array
+          example: '[Co-agent]'
+          items:
+            type: string
+            example: '[Co-agent]'
+        lenderSize:
+          $ref: '#/components/schemas/MoneyDto'
+        leadPartner:
+          $ref: '#/components/schemas/LeadPartnerDto'
+        funds:
+          type: array
+          items:
+            $ref: '#/components/schemas/LenderFundDto'
+    DealValuationDto:
+      type: object
+      properties:
+        dealId:
+          type: string
+        dealNumber:
+          type: integer
+          format: int32
+          example: 1
+        companyId:
+          type: string
+          example: 10695-52
+        companyName:
+          type: string
+          example: Facebook
+        preValuation:
+          $ref: '#/components/schemas/MoneyDto'
+        postValuation:
+          $ref: '#/components/schemas/MoneyDto'
+        postValuationStatus:
+          type: string
+          example: Estimated
+    DebtLendersDto:
+      type: object
+      properties:
+        pbId:
+          type: string
+          example: 56072-89D
+        debtSize:
+          $ref: '#/components/schemas/MoneyDto'
+        paymentInKind:
+          type: number
+          format: double
+          example: 12.5
+        debtType:
+          $ref: '#/components/schemas/DictionaryDto'
+        seniority:
+          $ref: '#/components/schemas/DictionaryDto'
+        security:
+          $ref: '#/components/schemas/DictionaryDto'
+        subordination:
+          deprecated: true
+          allOf:
+          - $ref: '#/components/schemas/DictionaryDto'
+        term:
+          $ref: '#/components/schemas/DictionaryDto'
+        floor:
+          type: number
+          format: double
+          example: 2.5
+        ceiling:
+          type: number
+          format: double
+          example: 3.5
+        breakDate:
+          type: string
+          format: date
+          example: '2012-03-19'
+        breakPrice:
+          type: number
+          format: double
+          example: 50.5
+        resetFrequency:
+          type: string
+          example: Monthly
+        coupon:
+          type: number
+          format: double
+          example: 8.5
+        additionalDebtCharacteristics:
+          $ref: '#/components/schemas/AdditionalDebtCharacteristicsDto'
+        maturityDate:
+          type: string
+          format: date
+          example: '2020-03-04'
+        spreadInterestRate:
+          type: number
+          format: double
+          example: 45.0
+        tradeDate:
+          type: string
+          format: date
+          example: '2015-06-12'
+        tenorYears:
+          type: number
+          format: double
+          example: 8.0
+        numberOfShares:
+          type: integer
+          format: int64
+          example: 80
+        pikInterest:
+          type: number
+          format: double
+          example: 2500.0
+        debtCommentary:
+          type: string
+          example: Apollo Investment Corporation provided a senior secured facility.
+        lenders:
+          type: array
+          items:
+            $ref: '#/components/schemas/LenderDto'
+        loanDetails:
+          $ref: '#/components/schemas/LoanDetailsDto'
+        bondDetails:
+          $ref: '#/components/schemas/BondDetailsDto'
+    DealStockInfoDto:
+      type: object
+      properties:
+        dealId:
+          type: string
+          example: 108911-98T
+        dealNumber:
+          type: integer
+          format: int32
+          example: 1
+        companyId:
+          type: string
+          example: 10695-52
+        companyName:
+          type: string
+          example: Facebook
+        series:
+          type: string
+          example: Preferred
+        pricePerShare:
+          $ref: '#/components/schemas/MoneyDto'
+        stockType:
+          deprecated: true
+          allOf:
+          - $ref: '#/components/schemas/DictionaryDto'
+        stockTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/DictionaryDto'
+        numberOfSharesAcquired:
+          type: integer
+          format: int64
+          example: 234554
+        sharesSought:
+          type: integer
+          format: int64
+          example: 15213000
+        conversionRatio:
+          type: string
+          example: 0.92:1
+        liquidationPreferences:
+          type: string
+          example: Pari Passu
+        liquidationParticipating:
+          type: string
+          example: Participating
+        dividendRights:
+          type: string
+          example: 'Yes'
+        cumulativeness:
+          type: string
+          example: Non-Cumulative
+        antiDilutionProvisions:
+          type: string
+          example: Weighted Average
+        redemptionRights:
+          type: string
+          example: 'Yes'
+        boardVotingRights:
+          type: string
+          example: 'Yes'
+        generalVotingRights:
+          type: string
+          example: 'No'
+    DealSellerDto:
+      type: object
+      properties:
+        sellerId:
+          type: string
+          example: 11317-15
+        sellerName:
+          type: string
+          example: Timberline Venture Partners
+        sellerFunds:
+          type: array
+          items:
+            $ref: '#/components/schemas/FundNameDto'
   securitySchemes:
     pbToken:
       type: apiKey

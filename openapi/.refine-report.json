@@ -1,7 +1,7 @@
 {
   "provider": "pitchbook",
   "sources": [
-    "pitchbook-openapi.json"
+    "_original/pitchbook-openapi.json"
   ],
   "outputs": [
     "pitchbook-account-information-api-openapi.yml",
@@ -17,14 +17,26 @@
     "pitchbook-people-api-openapi.yml",
     "pitchbook-service-providers-api-openapi.yml"
   ],
-  "archived": [
-    "archived openapi/pitchbook-openapi.json"
-  ],
+  "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "pitchbook-openapi.json: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
-    "apis.yml register: written (+12 apis, 12 total)"
+    "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "pitchbook-account-information-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "pitchbook-companies-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "pitchbook-credit-analysis-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "pitchbook-deals-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "pitchbook-fundamentals-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "pitchbook-funds-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "pitchbook-general-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "pitchbook-investors-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "pitchbook-limited-partners-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "pitchbook-patents-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "pitchbook-people-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "pitchbook-service-providers-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

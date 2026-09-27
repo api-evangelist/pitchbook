@@ -798,6 +798,83 @@ paths:
       - pbToken: []
 components:
   schemas:
+    CreditNewsBulkResponseDto:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/CreditNewsBulkStatsDto'
+        found:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreditNewsDto'
+        notFound:
+          type: array
+          items:
+            type: integer
+            format: int32
+        duplicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicatedCreditNewsItemDto'
+    AuthorDto:
+      type: object
+      properties:
+        authorName:
+          type: string
+          example: Jack Jonson
+    CreditNewsDto:
+      type: object
+      properties:
+        articleId:
+          type: integer
+          format: int32
+          example: 5598589
+        title:
+          type: string
+          example: Angel Investor
+        authors:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthorDto'
+        regions:
+          type: array
+          example:
+          - Europe
+          items:
+            type: string
+            example: '["Europe"]'
+        publishDate:
+          type: string
+          format: date-time
+        assetClasses:
+          type: array
+          example:
+          - Leveraged Loans
+          items:
+            type: string
+            example: '["Leveraged Loans"]'
+        topics:
+          type: array
+          example:
+          - Break
+          items:
+            type: string
+            example: '["Break"]'
+        issuer:
+          $ref: '#/components/schemas/NewsBusinessEntityDto'
+        lender:
+          $ref: '#/components/schemas/NewsBusinessEntityDto'
+        sponsor:
+          $ref: '#/components/schemas/NewsBusinessEntityDto'
+        articleBody:
+          type: string
+          example: Inmar has completed its $950 million term loan B due May 2026 wide of talk at pricing of Sofr+550, with a 0.5% floor and an OID of 96.5 through a Jefferies-led arranger group, according to sources.
+        attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttachmentDto'
+        deal:
+          $ref: '#/components/schemas/DealDto'
     CreditNewsStatsDto:
       type: object
       properties:
@@ -817,15 +894,6 @@ components:
           type: integer
           format: int32
           example: 75442
-    CreditResearchPageDto:
-      type: object
-      properties:
-        stats:
-          $ref: '#/components/schemas/CreditResearchStatsDto'
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResearchReportDto'
     CreditNewsSearchPageDto:
       type: object
       properties:
@@ -842,25 +910,105 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CreditNewsBulkItemDto'
-    CreditNewsBulkStatsDto:
+    CreditNewsItemDto:
       type: object
       properties:
-        total:
+        articleId:
           type: integer
           format: int32
-          example: 1
-        found:
+          example: 5598589
+        title:
+          type: string
+          example: Angel Investor
+        authors:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthorDto'
+        regions:
+          type: array
+          example:
+          - Europe
+          items:
+            type: string
+            example: '["Europe"]'
+        publishDate:
+          type: string
+          format: date-time
+        assetClasses:
+          type: array
+          example:
+          - Leveraged Loans
+          items:
+            type: string
+            example: '["Leveraged Loans"]'
+        topics:
+          type: array
+          example:
+          - Break
+          items:
+            type: string
+            example: '["Break"]'
+        issuer:
+          $ref: '#/components/schemas/NewsBusinessEntityDto'
+        lender:
+          $ref: '#/components/schemas/NewsBusinessEntityDto'
+        sponsor:
+          $ref: '#/components/schemas/NewsBusinessEntityDto'
+        deal:
+          $ref: '#/components/schemas/DealDto'
+    ResearchReportDto:
+      type: object
+      properties:
+        reportId:
           type: integer
           format: int32
-          example: 1
-        notFound:
-          type: integer
-          format: int32
-          example: 0
-        duplicates:
-          type: integer
-          format: int32
-          example: 0
+          example: 324
+        title:
+          type: string
+          example: US High-Yield Bond Daily PlayBook
+        description:
+          type: string
+          example: US High-Yield Bond Daily PlayBook is a daily report that provides a comprehensive overview of the US high-yield bond market.
+        authors:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthorDto'
+        regions:
+          type: array
+          example:
+          - United States
+          items:
+            type: string
+            example: '["United States"]'
+        assetClasses:
+          type: array
+          example:
+          - Bonds
+          items:
+            type: string
+            example: '["Bonds"]'
+        publishDate:
+          type: string
+          format: date
+          example: '2024-01-01'
+        reportType:
+          type: string
+          example: Snapshot
+        companies:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreditResearchCompanyDto'
+        purposes:
+          type: array
+          example:
+          - M&A
+          items:
+            type: string
+            example: '["M&A"]'
+        attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReportFileDto'
     ErrorDto:
       type: object
       properties:
@@ -938,162 +1086,18 @@ components:
           - 511 NETWORK_AUTHENTICATION_REQUIRED
         message:
           type: string
-    CreditNewsBulkResponseDto:
-      type: object
-      properties:
-        stats:
-          $ref: '#/components/schemas/CreditNewsBulkStatsDto'
-        found:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreditNewsDto'
-        notFound:
-          type: array
-          items:
-            type: integer
-            format: int32
-        duplicates:
-          type: array
-          items:
-            $ref: '#/components/schemas/DuplicatedCreditNewsItemDto'
-    MostRecentCreditNewsDto:
-      type: object
-      properties:
-        stats:
-          $ref: '#/components/schemas/CreditNewsStatsDto'
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreditNewsItemDto'
-    CreditNewsDto:
-      type: object
-      properties:
-        articleId:
-          type: integer
-          format: int32
-          example: 5598589
-        title:
-          type: string
-          example: Angel Investor
-        authors:
-          type: array
-          items:
-            $ref: '#/components/schemas/AuthorDto'
-        regions:
-          type: array
-          example:
-          - Europe
-          items:
-            type: string
-            example: '["Europe"]'
-        publishDate:
-          type: string
-          format: date-time
-        assetClasses:
-          type: array
-          example:
-          - Leveraged Loans
-          items:
-            type: string
-            example: '["Leveraged Loans"]'
-        topics:
-          type: array
-          example:
-          - Break
-          items:
-            type: string
-            example: '["Break"]'
-        issuer:
-          $ref: '#/components/schemas/NewsBusinessEntityDto'
-        lender:
-          $ref: '#/components/schemas/NewsBusinessEntityDto'
-        sponsor:
-          $ref: '#/components/schemas/NewsBusinessEntityDto'
-        articleBody:
-          type: string
-          example: Inmar has completed its $950 million term loan B due May 2026 wide of talk at pricing of Sofr+550, with a 0.5% floor and an OID of 96.5 through a Jefferies-led arranger group, according to sources.
-        attachments:
-          type: array
-          items:
-            $ref: '#/components/schemas/AttachmentDto'
-        deal:
-          $ref: '#/components/schemas/DealDto'
-    AttachmentDto:
-      type: object
-      properties:
-        name:
-          type: string
-          example: LCD Research HY Monthly May.pdf
-        url:
-          type: string
-          example: https://api.pitchbook.com/credit-analysis/credit-news/12503248/attachment?name=LCD%20Research%20HY%20Monthly%20May.pdf
-    AuthorDto:
-      type: object
-      properties:
-        authorName:
-          type: string
-          example: Jack Jonson
     DealDto:
       type: object
       properties:
         dealId:
           type: string
           example: 108911-98T
-    CreditResearchCompanyDto:
-      type: object
-      properties:
-        companyId:
-          type: string
-          example: 432919-99
-        companyName:
-          type: string
-          example: Aris Mining
-    CreditNewsItemDto:
+    CreditNewsBulkItemDto:
       type: object
       properties:
         articleId:
           type: integer
           format: int32
-          example: 5598589
-        title:
-          type: string
-          example: Angel Investor
-        authors:
-          type: array
-          items:
-            $ref: '#/components/schemas/AuthorDto'
-        regions:
-          type: array
-          example:
-          - Europe
-          items:
-            type: string
-            example: '["Europe"]'
-        publishDate:
-          type: string
-          format: date-time
-        assetClasses:
-          type: array
-          example:
-          - Leveraged Loans
-          items:
-            type: string
-            example: '["Leveraged Loans"]'
-        topics:
-          type: array
-          example:
-          - Break
-          items:
-            type: string
-            example: '["Break"]'
-        issuer:
-          $ref: '#/components/schemas/NewsBusinessEntityDto'
-        lender:
-          $ref: '#/components/schemas/NewsBusinessEntityDto'
-        sponsor:
-          $ref: '#/components/schemas/NewsBusinessEntityDto'
-        deal:
-          $ref: '#/components/schemas/DealDto'
     DuplicatedCreditNewsItemDto:
       type: object
       properties:
@@ -1105,77 +1109,15 @@ components:
           type: integer
           format: int32
           example: 1
-    CreditNewsBulkItemDto:
+    CreditResearchPageDto:
       type: object
       properties:
-        articleId:
-          type: integer
-          format: int32
-    ResearchReportDto:
-      type: object
-      properties:
-        reportId:
-          type: integer
-          format: int32
-          example: 324
-        title:
-          type: string
-          example: US High-Yield Bond Daily PlayBook
-        description:
-          type: string
-          example: US High-Yield Bond Daily PlayBook is a daily report that provides a comprehensive overview of the US high-yield bond market.
-        authors:
+        stats:
+          $ref: '#/components/schemas/CreditResearchStatsDto'
+        items:
           type: array
           items:
-            $ref: '#/components/schemas/AuthorDto'
-        regions:
-          type: array
-          example:
-          - United States
-          items:
-            type: string
-            example: '["United States"]'
-        assetClasses:
-          type: array
-          example:
-          - Bonds
-          items:
-            type: string
-            example: '["Bonds"]'
-        publishDate:
-          type: string
-          format: date
-          example: '2024-01-01'
-        reportType:
-          type: string
-          example: Snapshot
-        companies:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreditResearchCompanyDto'
-        purposes:
-          type: array
-          example:
-          - M&A
-          items:
-            type: string
-            example: '["M&A"]'
-        attachments:
-          type: array
-          items:
-            $ref: '#/components/schemas/ReportFileDto'
-    ReportFileDto:
-      type: object
-      properties:
-        name:
-          type: string
-          example: September_2023_Global_Loan_Statistics_Report.pdf
-        type:
-          type: string
-          example: PDF
-        url:
-          type: string
-          example: https://api.pitchbook.com/credit-analysis/credit-research/246/download?fileName=September_2023_Global_Loan_Statistics_Report.pdf&fileType=PDF
+            $ref: '#/components/schemas/ResearchReportDto'
     CreditResearchStatsDto:
       type: object
       properties:
@@ -1204,6 +1146,64 @@ components:
         name:
           type: string
           example: Wafra Partners
+    CreditNewsBulkStatsDto:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+          example: 1
+        found:
+          type: integer
+          format: int32
+          example: 1
+        notFound:
+          type: integer
+          format: int32
+          example: 0
+        duplicates:
+          type: integer
+          format: int32
+          example: 0
+    MostRecentCreditNewsDto:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/CreditNewsStatsDto'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreditNewsItemDto'
+    CreditResearchCompanyDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+          example: 432919-99
+        companyName:
+          type: string
+          example: Aris Mining
+    ReportFileDto:
+      type: object
+      properties:
+        name:
+          type: string
+          example: September_2023_Global_Loan_Statistics_Report.pdf
+        type:
+          type: string
+          example: PDF
+        url:
+          type: string
+          example: https://api.pitchbook.com/credit-analysis/credit-research/246/download?fileName=September_2023_Global_Loan_Statistics_Report.pdf&fileType=PDF
+    AttachmentDto:
+      type: object
+      properties:
+        name:
+          type: string
+          example: LCD Research HY Monthly May.pdf
+        url:
+          type: string
+          example: https://api.pitchbook.com/credit-analysis/credit-news/12503248/attachment?name=LCD%20Research%20HY%20Monthly%20May.pdf
   securitySchemes:
     pbToken:
       type: apiKey

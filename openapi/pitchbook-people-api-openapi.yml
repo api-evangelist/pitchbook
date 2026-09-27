@@ -750,82 +750,61 @@ paths:
       - pbToken: []
 components:
   schemas:
-    PersonContactDto:
+    PersonAdvancedSearchResultDto_SearchView:
       type: object
       properties:
         personId:
           type: string
-          example: 195066-01P
-        fullName:
+          example: 11397-61P
+        personName:
           type: string
-          example: John Taylor
-        phone:
+          example: Stephen Neal
+        firmId:
           type: string
-          example: +44 (0)20 7466 2430
-        fax:
-          type: string
-          example: +44 (0)20 7374 0888
-        email:
-          type: string
-          example: john.taylor@hsf.com
-    RequestItemDto:
+          example: 164076-94
+        sandbox:
+          type: boolean
+          example: false
+    BulkResultDtoPersonBioDto:
       type: object
       properties:
-        id:
-          type: string
-    FailedItemDto:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 420962-68
-        reason:
-          type: string
-          example: 429 TOO_MANY_REQUESTS
-          enum:
-          - 400 BAD_REQUEST
-          - 401 UNAUTHORIZED
-          - 402 PAYMENT_REQUIRED
-          - 403 FORBIDDEN
-          - 404 NOT_FOUND
-          - 405 METHOD_NOT_ALLOWED
-          - 415 UNSUPPORTED_MEDIA_TYPE
-          - 429 TOO_MANY_REQUESTS
-          - 500 INTERNAL_SERVER_ERROR
-          - 503 SERVICE_UNAVAILABLE
-        message:
-          type: string
-          example: '{LIMIT_TYPE} rate limit exceeded. Please wait until rate limit period is renewed'
-    BulkStatsDto:
+        stats:
+          $ref: '#/components/schemas/BulkStatsDto'
+        matched:
+          type: array
+          items:
+            $ref: '#/components/schemas/PersonBioDto'
+        noData:
+          type: array
+          items:
+            $ref: '#/components/schemas/NoDataItemDto'
+        unmatched:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailedItemDto'
+        duplicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicatedItemDto'
+    SearchPageStatsDto_SearchView:
       type: object
       properties:
         total:
           type: integer
           format: int32
-        matched:
+          example: 1
+        perPage:
           type: integer
           format: int32
-        noData:
+          example: 25
+        page:
           type: integer
           format: int32
-        unmatched:
+          example: 1
+        lastPage:
           type: integer
           format: int32
-        duplicates:
-          type: integer
-          format: int32
-    NoDataItemDto:
-      type: object
-      properties:
-        id:
-          type: string
-    BulkRequestDto:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/RequestItemDto'
+          example: 1
     DuplicatedItemDto:
       type: object
       properties:
@@ -836,44 +815,11 @@ components:
           type: integer
           format: int32
           example: 1
-    PersonBioDto:
+    RequestItemDto:
       type: object
       properties:
-        personId:
+        id:
           type: string
-          example: 195066-01P
-        personName:
-          $ref: '#/components/schemas/PersonNameDto'
-        yearOfBirth:
-          type: integer
-          format: int32
-          example: 1970
-        biography:
-          type: string
-          example: Mr. John Taylor serves as Partner at Herbert Smith Freehills. He helps clients achieve the best outcome on private equity investments, including private equity real estate, infrastructure and energy. He works with investors, corporates and management teams on significant and high-profile transactions, including UK and international buyouts, mergers, acquisitions, disposals, takeovers, joint ventures, equity financing and management equity incentives. The focus of John's work is acting for private equity funds on investments and disposals. John also brings his investor-side experience to bear in acting for management teams and investee companies in relation to private equity investments.
-        linkedInProfileUrl:
-          type: string
-          example: http://www.linkedin.com/in/john-taylor-b99
-        gender:
-          type: string
-          example: Male
-        primaryEntityId:
-          type: string
-          example: 10352-44
-        primaryEntityName:
-          type: string
-          example: Herbert Smith Freehills
-        primaryEntityType:
-          type: string
-          example: Service Provider
-        primaryEntityWebsite:
-          type: string
-          example: www.herbertsmithfreehills.com
-        primaryPosition:
-          type: string
-          example: Partner
-        primaryOffice:
-          $ref: '#/components/schemas/EntityOfficeDto'
     BoardSeatDto:
       type: object
       properties:
@@ -899,19 +845,64 @@ components:
         boardFinish:
           type: string
           format: date
-    PersonEducationInfoDto:
+    DictionaryDto:
       type: object
       properties:
-        institution:
+        code:
           type: string
-          example: University of Chicago Law School
-        degree:
+          example: Dictionary code
+        description:
           type: string
-          example: Graduate
-        yearOfGraduation:
-          type: integer
-          format: int32
-          example: 2006
+          example: Dictionary Code Description
+    EntityOfficeDto:
+      type: object
+      properties:
+        location:
+          type: string
+          example: Chicago, IL
+        addressLine1:
+          type: string
+          example: 69 West Monroe Street
+        addressLine2:
+          type: string
+          example: Suite 190
+        city:
+          type: string
+          example: Chicago
+        stateProvince:
+          type: string
+          example: IL
+        postCode:
+          type: string
+          example: '60661'
+        country:
+          type: string
+          example: United States
+        phone:
+          type: string
+          example: +1 (312) 902-6655
+        fax:
+          type: string
+          example: +1 (312) 902-5655
+        email:
+          type: string
+          example: office.email@gmail.com
+        globalRegion:
+          type: string
+          example: Americas
+        globalSubRegion:
+          type: string
+          example: North America
+    UpdateDto:
+      type: object
+      properties:
+        updates:
+          type: object
+          additionalProperties:
+            type: string
+            example: '{"Endpoint name":"Update Status (true/false)"}'
+          example:
+            Endpoint name: Update Status (true/false)
     ErrorDto:
       type: object
       properties:
@@ -989,27 +980,196 @@ components:
           - 511 NETWORK_AUTHENTICATION_REQUIRED
         message:
           type: string
-    BulkResultDtoPersonBioDto:
+    BulkRequestDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RequestItemDto'
+    CurrentAdvisoryRoleDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+          example: 164076-94
+        companyName:
+          type: string
+          example: Spacemob
+        companyType:
+          $ref: '#/components/schemas/DictionaryDto'
+        position:
+          type: string
+          example: Advisor
+        positionStart:
+          type: string
+          format: date
+          example: '2014-08-23'
+    DealRoleDto:
+      type: object
+      properties:
+        dealId:
+          type: string
+          example: 120048-04T
+        dealDate:
+          type: string
+          format: date
+          example: '2019-01-08'
+        companyId:
+          type: string
+          example: 12774-34
+        companyName:
+          type: string
+          example: Synamedia
+        representingId:
+          type: string
+          example: 10352-44
+        representingName:
+          type: string
+          example: Herbert Smith Freehills
+    FailedItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 420962-68
+        reason:
+          type: string
+          example: 429 TOO_MANY_REQUESTS
+          enum:
+          - 400 BAD_REQUEST
+          - 401 UNAUTHORIZED
+          - 402 PAYMENT_REQUIRED
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 405 METHOD_NOT_ALLOWED
+          - 415 UNSUPPORTED_MEDIA_TYPE
+          - 429 TOO_MANY_REQUESTS
+          - 500 INTERNAL_SERVER_ERROR
+          - 503 SERVICE_UNAVAILABLE
+        message:
+          type: string
+          example: '{LIMIT_TYPE} rate limit exceeded. Please wait until rate limit period is renewed'
+    FundRoleDto:
+      type: object
+      properties:
+        fundId:
+          type: string
+          example: 15021-28F
+        fundName:
+          type: string
+          example: Crossroads Capital II
+        investorId:
+          type: string
+          example: 62181-28
+        investorName:
+          type: string
+          example: The We Company
+        representingId:
+          type: string
+          example: 172739-35
+        representingName:
+          type: string
+          example: DocuTouch
+    PersonContactDto:
+      type: object
+      properties:
+        personId:
+          type: string
+          example: 195066-01P
+        fullName:
+          type: string
+          example: John Taylor
+        phone:
+          type: string
+          example: +44 (0)20 7466 2430
+        fax:
+          type: string
+          example: +44 (0)20 7374 0888
+        email:
+          type: string
+          example: john.taylor@hsf.com
+    PersonEducationInfoDto:
+      type: object
+      properties:
+        institution:
+          type: string
+          example: University of Chicago Law School
+        degree:
+          type: string
+          example: Graduate
+        yearOfGraduation:
+          type: integer
+          format: int32
+          example: 2006
+    PersonBioDto:
+      type: object
+      properties:
+        personId:
+          type: string
+          example: 195066-01P
+        personName:
+          $ref: '#/components/schemas/PersonNameDto'
+        yearOfBirth:
+          type: integer
+          format: int32
+          example: 1970
+        biography:
+          type: string
+          example: Mr. John Taylor serves as Partner at Herbert Smith Freehills. He helps clients achieve the best outcome on private equity investments, including private equity real estate, infrastructure and energy. He works with investors, corporates and management teams on significant and high-profile transactions, including UK and international buyouts, mergers, acquisitions, disposals, takeovers, joint ventures, equity financing and management equity incentives. The focus of John's work is acting for private equity funds on investments and disposals. John also brings his investor-side experience to bear in acting for management teams and investee companies in relation to private equity investments.
+        linkedInProfileUrl:
+          type: string
+          example: http://www.linkedin.com/in/john-taylor-b99
+        gender:
+          type: string
+          example: Male
+        primaryEntityId:
+          type: string
+          example: 10352-44
+        primaryEntityName:
+          type: string
+          example: Herbert Smith Freehills
+        primaryEntityType:
+          type: string
+          example: Service Provider
+        primaryEntityWebsite:
+          type: string
+          example: www.herbertsmithfreehills.com
+        primaryPosition:
+          type: string
+          example: Partner
+        primaryOffice:
+          $ref: '#/components/schemas/EntityOfficeDto'
+    PersonNameDto:
+      type: object
+      properties:
+        full:
+          type: string
+          example: John Taylor
+        first:
+          type: string
+          example: John
+        last:
+          type: string
+          example: Taylor
+        middle:
+          type: string
+          example: M.
+        prefix:
+          type: string
+          example: Mr.
+        suffix:
+          type: string
+          example: JD
+    AdvancedSearchPageDtoPersonAdvancedSearchResultDto_SearchView:
       type: object
       properties:
         stats:
-          $ref: '#/components/schemas/BulkStatsDto'
-        matched:
+          $ref: '#/components/schemas/SearchPageStatsDto_SearchView'
+        items:
           type: array
           items:
-            $ref: '#/components/schemas/PersonBioDto'
-        noData:
-          type: array
-          items:
-            $ref: '#/components/schemas/NoDataItemDto'
-        unmatched:
-          type: array
-          items:
-            $ref: '#/components/schemas/FailedItemDto'
-        duplicates:
-          type: array
-          items:
-            $ref: '#/components/schemas/DuplicatedItemDto'
+            $ref: '#/components/schemas/PersonAdvancedSearchResultDto_SearchView'
     PersonEducationWorkDto:
       type: object
       properties:
@@ -1043,45 +1203,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/FundRoleDto'
-    EntityOfficeDto:
+    NoDataItemDto:
       type: object
       properties:
-        location:
+        id:
           type: string
-          example: Chicago, IL
-        addressLine1:
-          type: string
-          example: 69 West Monroe Street
-        addressLine2:
-          type: string
-          example: Suite 190
-        city:
-          type: string
-          example: Chicago
-        stateProvince:
-          type: string
-          example: IL
-        postCode:
-          type: string
-          example: '60661'
-        country:
-          type: string
-          example: United States
-        phone:
-          type: string
-          example: +1 (312) 902-6655
-        fax:
-          type: string
-          example: +1 (312) 902-5655
-        email:
-          type: string
-          example: office.email@gmail.com
-        globalRegion:
-          type: string
-          example: Americas
-        globalSubRegion:
-          type: string
-          example: North America
+    BulkStatsDto:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+        matched:
+          type: integer
+          format: int32
+        noData:
+          type: integer
+          format: int32
+        unmatched:
+          type: integer
+          format: int32
+        duplicates:
+          type: integer
+          format: int32
     CompanyRoleDto:
       type: object
       properties:
@@ -1108,150 +1252,6 @@ components:
           type: string
           format: date
           example: '2015-05-01'
-    FundRoleDto:
-      type: object
-      properties:
-        fundId:
-          type: string
-          example: 15021-28F
-        fundName:
-          type: string
-          example: Crossroads Capital II
-        investorId:
-          type: string
-          example: 62181-28
-        investorName:
-          type: string
-          example: The We Company
-        representingId:
-          type: string
-          example: 172739-35
-        representingName:
-          type: string
-          example: DocuTouch
-    SearchPageStatsDto_SearchView:
-      type: object
-      properties:
-        total:
-          type: integer
-          format: int32
-          example: 1
-        perPage:
-          type: integer
-          format: int32
-          example: 25
-        page:
-          type: integer
-          format: int32
-          example: 1
-        lastPage:
-          type: integer
-          format: int32
-          example: 1
-    PersonNameDto:
-      type: object
-      properties:
-        full:
-          type: string
-          example: John Taylor
-        first:
-          type: string
-          example: John
-        last:
-          type: string
-          example: Taylor
-        middle:
-          type: string
-          example: M.
-        prefix:
-          type: string
-          example: Mr.
-        suffix:
-          type: string
-          example: JD
-    UpdateDto:
-      type: object
-      properties:
-        updates:
-          type: object
-          additionalProperties:
-            type: string
-            example: '{"Endpoint name":"Update Status (true/false)"}'
-          example:
-            Endpoint name: Update Status (true/false)
-    AdvancedSearchPageDtoPersonAdvancedSearchResultDto_SearchView:
-      type: object
-      properties:
-        stats:
-          $ref: '#/components/schemas/SearchPageStatsDto_SearchView'
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/PersonAdvancedSearchResultDto_SearchView'
-    PersonAdvancedSearchResultDto_SearchView:
-      type: object
-      properties:
-        personId:
-          type: string
-          example: 11397-61P
-        personName:
-          type: string
-          example: Stephen Neal
-        firmId:
-          type: string
-          example: 164076-94
-        sandbox:
-          type: boolean
-          example: false
-    DictionaryDto:
-      type: object
-      properties:
-        code:
-          type: string
-          example: Dictionary code
-        description:
-          type: string
-          example: Dictionary Code Description
-    DealRoleDto:
-      type: object
-      properties:
-        dealId:
-          type: string
-          example: 120048-04T
-        dealDate:
-          type: string
-          format: date
-          example: '2019-01-08'
-        companyId:
-          type: string
-          example: 12774-34
-        companyName:
-          type: string
-          example: Synamedia
-        representingId:
-          type: string
-          example: 10352-44
-        representingName:
-          type: string
-          example: Herbert Smith Freehills
-    CurrentAdvisoryRoleDto:
-      type: object
-      properties:
-        companyId:
-          type: string
-          example: 164076-94
-        companyName:
-          type: string
-          example: Spacemob
-        companyType:
-          $ref: '#/components/schemas/DictionaryDto'
-        position:
-          type: string
-          example: Advisor
-        positionStart:
-          type: string
-          format: date
-          example: '2014-08-23'
   securitySchemes:
     pbToken:
       type: apiKey

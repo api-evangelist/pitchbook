@@ -397,121 +397,6 @@ paths:
       - pbToken: []
 components:
   schemas:
-    LimitUsageInfoDto:
-      type: object
-      properties:
-        limitType:
-          type: string
-          example: Search & Update
-        perMinute:
-          $ref: '#/components/schemas/LimitUsageStatsDto'
-        perHour:
-          $ref: '#/components/schemas/LimitUsageStatsDto'
-        perDay:
-          $ref: '#/components/schemas/LimitUsageStatsDto'
-        perMonth:
-          $ref: '#/components/schemas/LimitUsageStatsDto'
-    EndpointUsageInfoDto:
-      type: object
-      properties:
-        contractNumber:
-          type: string
-          example: NS234PD
-        request:
-          type: string
-          example: https://api.pitchbook.com/companies/279838-27/investors
-        requestDate:
-          type: string
-          format: date-time
-        responseStatus:
-          type: string
-          example: '200'
-        endpointType:
-          type: string
-          example: Company All Investors
-        chargedCredits:
-          type: integer
-          format: int32
-          example: 5
-    ContractHistoryDto:
-      type: object
-      properties:
-        contractNumber:
-          type: string
-          example: NUMBER123
-        activeContract:
-          type: boolean
-          example: true
-        pricingModel:
-          type: string
-          example: Subscription
-        startDate:
-          type: string
-          format: date
-          example: '2023-01-01'
-        endDate:
-          type: string
-          format: date
-          example: '2025-01-01'
-        creditsUsed:
-          type: integer
-          format: int32
-          example: 9888
-        creditsChanged:
-          type: integer
-          format: int32
-          example: -100
-        creditsExpired:
-          type: integer
-          format: int32
-          example: 0
-        creditsRemaining:
-          type: integer
-          format: int32
-          example: 1222
-        overageUsed:
-          type: integer
-          format: int32
-          example: 0
-    LimitStatisticsDto:
-      type: object
-      properties:
-        limits:
-          type: array
-          items:
-            $ref: '#/components/schemas/LimitUsageInfoDto'
-        lastUpdatedDate:
-          type: string
-          format: date
-        overageChargesAvailable:
-          type: boolean
-    EndpointUsageReportDto:
-      type: object
-      properties:
-        stats:
-          $ref: '#/components/schemas/EndpointUsageStatsDto'
-        rawData:
-          type: array
-          items:
-            $ref: '#/components/schemas/EndpointUsageInfoDto'
-    EndpointUsageStatsDto:
-      type: object
-      properties:
-        endpoints:
-          type: array
-          example:
-          - Company All Investors
-          items:
-            type: string
-            example: '["Company All Investors"]'
-        totalCountOfCalls:
-          type: integer
-          format: int32
-          example: 1
-        totalChargedCredits:
-          type: integer
-          format: int32
-          example: 5
     ErrorDto:
       type: object
       properties:
@@ -589,6 +474,79 @@ components:
           - 511 NETWORK_AUTHENTICATION_REQUIRED
         message:
           type: string
+    EndpointUsageInfoDto:
+      type: object
+      properties:
+        contractNumber:
+          type: string
+          example: NS234PD
+        request:
+          type: string
+          example: https://api.pitchbook.com/companies/279838-27/investors
+        requestDate:
+          type: string
+          format: date-time
+        responseStatus:
+          type: string
+          example: '200'
+        endpointType:
+          type: string
+          example: Company All Investors
+        chargedCredits:
+          type: integer
+          format: int32
+          example: 5
+    LimitUsageInfoDto:
+      type: object
+      properties:
+        limitType:
+          type: string
+          example: Search & Update
+        perMinute:
+          $ref: '#/components/schemas/LimitUsageStatsDto'
+        perHour:
+          $ref: '#/components/schemas/LimitUsageStatsDto'
+        perDay:
+          $ref: '#/components/schemas/LimitUsageStatsDto'
+        perMonth:
+          $ref: '#/components/schemas/LimitUsageStatsDto'
+    CallInfoDto:
+      type: object
+      properties:
+        group:
+          type: string
+          example: Companies
+        endpoint:
+          type: string
+          example: Company Deals
+        initialCost:
+          type: integer
+          format: int32
+          example: 1
+        refreshCost:
+          type: integer
+          format: int32
+          example: 1
+    LimitUsageStatsDto:
+      type: object
+      properties:
+        limit:
+          type: integer
+          format: int32
+          example: 200
+        remainingLimit:
+          type: integer
+          format: int32
+          example: 50
+    EndpointUsageReportDto:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/EndpointUsageStatsDto'
+        rawData:
+          type: array
+          items:
+            $ref: '#/components/schemas/EndpointUsageInfoDto'
     CreditHistoryDto:
       type: object
       properties:
@@ -621,34 +579,76 @@ components:
           type: integer
           format: int32
           example: 0
-    CallInfoDto:
+    LimitStatisticsDto:
       type: object
       properties:
-        group:
+        limits:
+          type: array
+          items:
+            $ref: '#/components/schemas/LimitUsageInfoDto'
+        lastUpdatedDate:
           type: string
-          example: Companies
-        endpoint:
+          format: date
+        overageChargesAvailable:
+          type: boolean
+    ContractHistoryDto:
+      type: object
+      properties:
+        contractNumber:
           type: string
-          example: Company Deals
-        initialCost:
+          example: NUMBER123
+        activeContract:
+          type: boolean
+          example: true
+        pricingModel:
+          type: string
+          example: Subscription
+        startDate:
+          type: string
+          format: date
+          example: '2023-01-01'
+        endDate:
+          type: string
+          format: date
+          example: '2025-01-01'
+        creditsUsed:
+          type: integer
+          format: int32
+          example: 9888
+        creditsChanged:
+          type: integer
+          format: int32
+          example: -100
+        creditsExpired:
+          type: integer
+          format: int32
+          example: 0
+        creditsRemaining:
+          type: integer
+          format: int32
+          example: 1222
+        overageUsed:
+          type: integer
+          format: int32
+          example: 0
+    EndpointUsageStatsDto:
+      type: object
+      properties:
+        endpoints:
+          type: array
+          example:
+          - Company All Investors
+          items:
+            type: string
+            example: '["Company All Investors"]'
+        totalCountOfCalls:
           type: integer
           format: int32
           example: 1
-        refreshCost:
+        totalChargedCredits:
           type: integer
           format: int32
-          example: 1
-    LimitUsageStatsDto:
-      type: object
-      properties:
-        limit:
-          type: integer
-          format: int32
-          example: 200
-        remainingLimit:
-          type: integer
-          format: int32
-          example: 50
+          example: 5
   securitySchemes:
     pbToken:
       type: apiKey

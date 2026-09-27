@@ -1885,169 +1885,117 @@ paths:
       - pbToken: []
 components:
   schemas:
-    FundReturnsAvailabilityDto:
+    FundAdvancedSearchResultDto_SearchView:
       type: object
       properties:
-        periodEnding:
+        fundId:
           type: string
-          example: 4Q2011
-        irr:
+          example: 11119-69F
+        fundName:
+          type: string
+          example: Franklin Street Equity Fund
+        investors:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvestorFundAdvancedSearchResultDto_SearchView'
+        sandbox:
           type: boolean
           example: false
-        cashFlowsAndMultiples:
-          type: boolean
-          example: true
-    RequestItemDto:
+    InvestorActivityDto:
       type: object
       properties:
-        id:
-          type: string
-    RangeDtoInteger:
+        sales:
+          type: number
+          format: double
+        redemptions:
+          type: number
+          format: double
+        reinvestedDividends:
+          type: number
+          format: double
+        netCashFlow:
+          type: number
+          format: double
+    BulkResultDtoFundBioDto:
       type: object
       properties:
-        min:
-          type: integer
-          format: int32
-        max:
-          type: integer
-          format: int32
-      example:
-        min: 25
-        max: 50
-    FundBioDto:
+        stats:
+          $ref: '#/components/schemas/BulkStatsDto'
+        matched:
+          type: array
+          items:
+            $ref: '#/components/schemas/FundBioDto'
+        noData:
+          type: array
+          items:
+            $ref: '#/components/schemas/NoDataItemDto'
+        unmatched:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailedItemDto'
+        duplicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicatedItemDto'
+    FundServiceProviderDto:
       type: object
       properties:
         fundId:
           type: string
           example: 13328-83F
-        name:
+        serviceProviderId:
           type: string
-          example: Crossroads Capital Partners
-        fundInvestors:
+          example: 10024-75
+        serviceProviderName:
+          type: string
+          example: Citigroup
+        serviceProviderTypes:
           type: array
           items:
-            $ref: '#/components/schemas/FundManagerInfoDto'
-        vintage:
-          type: integer
-          format: int32
-          example: 1997
-        fundStatus:
-          type: string
-          example: Fully Invested
-        fundType:
-          type: string
-          description: Deprecated. Always empty
-          deprecated: true
-        fundStrategy:
-          type: string
-          example: Growth/Expansion
-        additionalFundStrategy:
-          type: array
-          example:
-          - Debt - General
-          - Hedge Fund
-          items:
-            type: string
-            example: '["Debt - General","Hedge Fund"]'
-        fundStructure:
-          type: array
-          example:
-          - ELTIF
-          - Drawdown
-          items:
-            type: string
-            example: '["ELTIF","Drawdown"]'
-        fundLifespan:
-          type: string
-          example: Finite-Life
-        exchangeStatus:
-          type: string
-          example: Non-Listed
-        targetsPrivateWealthInvestors:
-          type: boolean
-          example: false
-        sustainableFinanceDisclosureRegulation:
-          type: string
-          example: Article 6
-        accessPoint:
-          type: string
-          example: Primary Fund
-        additionalAccessPoint:
-          type: string
-          example: Co-Investment, Secondary Fund
-        fundSize:
-          $ref: '#/components/schemas/MoneyDto'
-        fundTerms:
-          $ref: '#/components/schemas/FundTermsDto'
-        location:
-          $ref: '#/components/schemas/EntityOfficeDto'
-        fundTeam:
+            $ref: '#/components/schemas/EntityTypeDto'
+        serviceProvided:
+          $ref: '#/components/schemas/DictionaryDto'
+        serviceTo:
           type: array
           items:
-            $ref: '#/components/schemas/FundTeamDto'
-        openDate:
-          type: string
-          format: date
-          example: '1997-01-01'
-        closeDate:
-          type: string
-          format: date
-          example: '1997-03-01'
-        fundTargetSize:
-          $ref: '#/components/schemas/RangeDtoMoneyDto'
-        sbic:
-          type: boolean
-          example: true
-        returnsInfoAvailable:
-          type: array
-          items:
-            $ref: '#/components/schemas/FundReturnsAvailabilityDto'
-    FailedItemDto:
+            $ref: '#/components/schemas/ServicedEntityDto'
+    FundTermsDto:
       type: object
       properties:
-        id:
-          type: string
-          example: 420962-68
-        reason:
-          type: string
-          example: 429 TOO_MANY_REQUESTS
-          enum:
-          - 400 BAD_REQUEST
-          - 401 UNAUTHORIZED
-          - 402 PAYMENT_REQUIRED
-          - 403 FORBIDDEN
-          - 404 NOT_FOUND
-          - 405 METHOD_NOT_ALLOWED
-          - 415 UNSUPPORTED_MEDIA_TYPE
-          - 429 TOO_MANY_REQUESTS
-          - 500 INTERNAL_SERVER_ERROR
-          - 503 SERVICE_UNAVAILABLE
-        message:
-          type: string
-          example: '{LIMIT_TYPE} rate limit exceeded. Please wait until rate limit period is renewed'
-    BulkStatsDto:
+        subscriptionFrequency:
+          $ref: '#/components/schemas/DictionaryDto'
+        redemptionFrequency:
+          $ref: '#/components/schemas/DictionaryDto'
+      description: Fund terms including subscription and redemption frequency for Interval Funds and Tender Offer funds; null if not applicable
+    SearchPageStatsDto_SearchView:
       type: object
       properties:
         total:
           type: integer
           format: int32
-        matched:
+          example: 1
+        perPage:
           type: integer
           format: int32
-        noData:
+          example: 25
+        page:
           type: integer
           format: int32
-        unmatched:
+          example: 1
+        lastPage:
           type: integer
           format: int32
-        duplicates:
-          type: integer
-          format: int32
-    NoDataItemDto:
+          example: 1
+    DuplicatedItemDto:
       type: object
       properties:
         id:
           type: string
+          example: 420962-68
+        occurrence:
+          type: integer
+          format: int32
+          example: 1
     FundInvestmentPreferenceDto:
       type: object
       properties:
@@ -2100,28 +2048,151 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AssetPreferencesDto'
-    FundServiceProviderDto:
+    RequestItemDto:
       type: object
       properties:
-        fundId:
+        id:
           type: string
-          example: 13328-83F
-        serviceProviderId:
-          type: string
-          example: 10024-75
-        serviceProviderName:
-          type: string
-          example: Citigroup
-        serviceProviderTypes:
-          type: array
-          items:
-            $ref: '#/components/schemas/EntityTypeDto'
-        serviceProvided:
+    AssetPreferencesDto:
+      type: object
+      properties:
+        assetClass:
           $ref: '#/components/schemas/DictionaryDto'
-        serviceTo:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServicedEntityDto'
+        subcategory:
+          $ref: '#/components/schemas/DictionaryDto'
+    RangeDtoInteger:
+      type: object
+      properties:
+        min:
+          type: integer
+          format: int32
+        max:
+          type: integer
+          format: int32
+      example:
+        min: 25
+        max: 50
+    CapitalActivityDto:
+      type: object
+      properties:
+        remainingValue:
+          type: number
+          format: double
+        contributed:
+          type: number
+          format: double
+        percentCalledDown:
+          type: number
+          format: double
+        dryPowder:
+          type: number
+          format: double
+        percentDryPowder:
+          type: number
+          format: double
+        distributed:
+          type: number
+          format: double
+        distributedRemaining:
+          type: number
+          format: double
+    DictionaryDto:
+      type: object
+      properties:
+        code:
+          type: string
+          example: Dictionary code
+        description:
+          type: string
+          example: Dictionary Code Description
+    EntityOfficeDto:
+      type: object
+      properties:
+        location:
+          type: string
+          example: Chicago, IL
+        addressLine1:
+          type: string
+          example: 69 West Monroe Street
+        addressLine2:
+          type: string
+          example: Suite 190
+        city:
+          type: string
+          example: Chicago
+        stateProvince:
+          type: string
+          example: IL
+        postCode:
+          type: string
+          example: '60661'
+        country:
+          type: string
+          example: United States
+        phone:
+          type: string
+          example: +1 (312) 902-6655
+        fax:
+          type: string
+          example: +1 (312) 902-5655
+        email:
+          type: string
+          example: office.email@gmail.com
+        globalRegion:
+          type: string
+          example: Americas
+        globalSubRegion:
+          type: string
+          example: North America
+    FundTeamDto:
+      type: object
+      properties:
+        personId:
+          type: string
+          example: 204383-98P
+        personFullName:
+          type: string
+          example: Luke Bagley
+    FundShareClassTotalReturnDto:
+      type: object
+      properties:
+        oneMonth:
+          type: number
+          format: double
+        threeMonth:
+          type: number
+          format: double
+        yearToDate:
+          type: number
+          format: double
+        oneYear:
+          type: number
+          format: double
+        threeYear:
+          type: number
+          format: double
+        fiveYear:
+          type: number
+          format: double
+        sevenYear:
+          type: number
+          format: double
+        tenYear:
+          type: number
+          format: double
+        sinceInception:
+          type: number
+          format: double
+    UpdateDto:
+      type: object
+      properties:
+        updates:
+          type: object
+          additionalProperties:
+            type: string
+            example: '{"Endpoint name":"Update Status (true/false)"}'
+          example:
+            Endpoint name: Update Status (true/false)
     GeographicalPreferenceDto:
       type: object
       properties:
@@ -2133,6 +2204,107 @@ components:
           $ref: '#/components/schemas/DictionaryDto'
         regionState:
           $ref: '#/components/schemas/DictionaryDto'
+    ErrorDto:
+      type: object
+      properties:
+        reason:
+          type: string
+          enum:
+          - 100 CONTINUE
+          - 101 SWITCHING_PROTOCOLS
+          - 102 PROCESSING
+          - 103 EARLY_HINTS
+          - 103 CHECKPOINT
+          - 200 OK
+          - 201 CREATED
+          - 202 ACCEPTED
+          - 203 NON_AUTHORITATIVE_INFORMATION
+          - 204 NO_CONTENT
+          - 205 RESET_CONTENT
+          - 206 PARTIAL_CONTENT
+          - 207 MULTI_STATUS
+          - 208 ALREADY_REPORTED
+          - 226 IM_USED
+          - 300 MULTIPLE_CHOICES
+          - 301 MOVED_PERMANENTLY
+          - 302 FOUND
+          - 302 MOVED_TEMPORARILY
+          - 303 SEE_OTHER
+          - 304 NOT_MODIFIED
+          - 305 USE_PROXY
+          - 307 TEMPORARY_REDIRECT
+          - 308 PERMANENT_REDIRECT
+          - 400 BAD_REQUEST
+          - 401 UNAUTHORIZED
+          - 402 PAYMENT_REQUIRED
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 405 METHOD_NOT_ALLOWED
+          - 406 NOT_ACCEPTABLE
+          - 407 PROXY_AUTHENTICATION_REQUIRED
+          - 408 REQUEST_TIMEOUT
+          - 409 CONFLICT
+          - 410 GONE
+          - 411 LENGTH_REQUIRED
+          - 412 PRECONDITION_FAILED
+          - 413 PAYLOAD_TOO_LARGE
+          - 413 REQUEST_ENTITY_TOO_LARGE
+          - 414 URI_TOO_LONG
+          - 414 REQUEST_URI_TOO_LONG
+          - 415 UNSUPPORTED_MEDIA_TYPE
+          - 416 REQUESTED_RANGE_NOT_SATISFIABLE
+          - 417 EXPECTATION_FAILED
+          - 418 I_AM_A_TEAPOT
+          - 419 INSUFFICIENT_SPACE_ON_RESOURCE
+          - 420 METHOD_FAILURE
+          - 421 DESTINATION_LOCKED
+          - 422 UNPROCESSABLE_ENTITY
+          - 423 LOCKED
+          - 424 FAILED_DEPENDENCY
+          - 425 TOO_EARLY
+          - 426 UPGRADE_REQUIRED
+          - 428 PRECONDITION_REQUIRED
+          - 429 TOO_MANY_REQUESTS
+          - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
+          - 451 UNAVAILABLE_FOR_LEGAL_REASONS
+          - 500 INTERNAL_SERVER_ERROR
+          - 501 NOT_IMPLEMENTED
+          - 502 BAD_GATEWAY
+          - 503 SERVICE_UNAVAILABLE
+          - 504 GATEWAY_TIMEOUT
+          - 505 HTTP_VERSION_NOT_SUPPORTED
+          - 506 VARIANT_ALSO_NEGOTIATES
+          - 507 INSUFFICIENT_STORAGE
+          - 508 LOOP_DETECTED
+          - 509 BANDWIDTH_LIMIT_EXCEEDED
+          - 510 NOT_EXTENDED
+          - 511 NETWORK_AUTHENTICATION_REQUIRED
+        message:
+          type: string
+    DealDto:
+      type: object
+      properties:
+        dealId:
+          type: string
+          example: 108911-98T
+    MoneyDto:
+      type: object
+      properties:
+        amount:
+          type: number
+          example: 17039.27
+        currency:
+          type: string
+          example: USD
+        nativeAmount:
+          type: number
+          example: 15689
+        nativeCurrency:
+          type: string
+          example: EUR
+        estimated:
+          type: boolean
+          example: false
     BulkRequestDto:
       type: object
       properties:
@@ -2140,6 +2312,75 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/RequestItemDto'
+    FundReturnsAvailabilityDto:
+      type: object
+      properties:
+        periodEnding:
+          type: string
+          example: 4Q2011
+        irr:
+          type: boolean
+          example: false
+        cashFlowsAndMultiples:
+          type: boolean
+          example: true
+    FundShareClassPerformanceDto:
+      type: object
+      properties:
+        fundId:
+          type: string
+        fundName:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/FundShareClassPerformanceItemDto'
+    ServicedEntityDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 10041-94
+        name:
+          type: string
+          example: Bunker Hill Capital
+        entityType:
+          type: string
+          example: Investor
+    FailedItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 420962-68
+        reason:
+          type: string
+          example: 429 TOO_MANY_REQUESTS
+          enum:
+          - 400 BAD_REQUEST
+          - 401 UNAUTHORIZED
+          - 402 PAYMENT_REQUIRED
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 405 METHOD_NOT_ALLOWED
+          - 415 UNSUPPORTED_MEDIA_TYPE
+          - 429 TOO_MANY_REQUESTS
+          - 500 INTERNAL_SERVER_ERROR
+          - 503 SERVICE_UNAVAILABLE
+        message:
+          type: string
+          example: '{LIMIT_TYPE} rate limit exceeded. Please wait until rate limit period is renewed'
+    FundShareClassesDto:
+      type: object
+      properties:
+        fundId:
+          type: string
+        fundName:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/FundShareClassItemDto'
     EntityDto:
       type: object
       properties:
@@ -2152,110 +2393,50 @@ components:
       example:
         id: 25304-77F
         name: AB Private Credit Investors Corp BDC
-    DuplicatedItemDto:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 420962-68
-        occurrence:
-          type: integer
-          format: int32
-          example: 1
-    InvestmentsInfoDto:
-      type: object
-      properties:
-        targetCompanyId:
-          type: string
-          example: 164273-95
-        targetCompanyName:
-          type: string
-          example: Proxy
-        investmentStatus:
-          type: string
-          example: Active Investor
-        targetCompanyInvestmentDate:
-          type: string
-          format: date
-          example: '2005-04-03'
-        investmentDealId:
-          type: string
-          example: 111009-52T
-        targetCompanyExitDate:
-          type: string
-          format: date
-          example: 20010-12-05
-        exitDealId:
-          type: string
-          example: 118126-90T
-    IndustryDto:
-      type: object
-      properties:
-        reportedIndustry:
-          type: string
-          example: Cable and Other Subscription Programming
-        industrySector:
-          type: string
-          example: Consumer Products and Services (B2C)
-        industryGroup:
-          type: string
-          example: Media
-        industryCode:
-          type: string
-          example: Broadcasting, Radio and Television
-    FundCashflowsDto:
+    FundNameDto:
       type: object
       properties:
         fundId:
           type: string
+          example: 13328-83F
         fundName:
           type: string
-        fundStructure:
-          type: string
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/FundCashflowItemDto'
-    EntityTypeDto:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/DictionaryDto'
-        primary:
-          type: boolean
-          example: false
-      example:
-        type:
-          code: IB
-          description: Investment Bank
-        primary: true
-    FundShareClassesDto:
+          example: Crossroads Capital Partners
+    FundCashFlowDto:
       type: object
       properties:
         fundId:
           type: string
+          example: 13328-83F
         fundName:
           type: string
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/FundShareClassItemDto'
-    FundManagerInfoDto:
-      type: object
-      properties:
-        investorId:
-          type: string
-          example: 11193-94
-        investorName:
-          type: string
-          example: Franklin Street Equity Partners
-        fundNo:
+          example: Crossroads Capital Partners
+        asOfQuarter:
           type: integer
           format: int32
-          example: 1
-        firstFund:
-          type: boolean
-          example: false
+          example: 4
+        asOfYear:
+          type: integer
+          format: int32
+          example: 2005
+        contributed:
+          $ref: '#/components/schemas/MoneyDto'
+        percentCalledDown:
+          type: number
+          format: double
+          example: 17.26
+        dryPowder:
+          $ref: '#/components/schemas/MoneyDto'
+        percentDryPowder:
+          type: number
+          format: double
+          example: 82.73
+        distributed:
+          $ref: '#/components/schemas/MoneyDto'
+        remainingValue:
+          $ref: '#/components/schemas/MoneyDto'
+        distributedRemaining:
+          $ref: '#/components/schemas/MoneyDto'
     FundShareClassPerformanceItemDto:
       type: object
       properties:
@@ -2345,240 +2526,120 @@ components:
           example: Q2 2024
         deal:
           $ref: '#/components/schemas/DealDto'
-    MoneyDto:
+    IssuerDto:
       type: object
       properties:
-        amount:
-          type: number
-          example: 17039.27
-        currency:
+        issuerId:
           type: string
-          example: USD
-        nativeAmount:
-          type: number
-          example: 15689
-        nativeCurrency:
+          example: 111874-96
+        issuerName:
           type: string
-          example: EUR
-        estimated:
-          type: boolean
-          example: false
-    FundPerformanceDto:
+          example: Allen Media Group
+        issuerType:
+          type: string
+          example: COMPANY
+          enum:
+          - COMPANY
+          - FUND
+    FundShareClassPerformanceSnapshotDto:
+      type: object
+      properties:
+        asOfDate:
+          type: string
+          format: date
+        twelveMonthYield:
+          type: number
+          format: double
+        totalReturn:
+          $ref: '#/components/schemas/FundShareClassTotalReturnDto'
+    FundBioDto:
       type: object
       properties:
         fundId:
           type: string
           example: 13328-83F
-        fundName:
+        name:
           type: string
           example: Crossroads Capital Partners
-        asOfQuarter:
-          type: integer
-          format: int32
-          example: 4
-        asOfYear:
+        fundInvestors:
+          type: array
+          items:
+            $ref: '#/components/schemas/FundManagerInfoDto'
+        vintage:
           type: integer
           format: int32
           example: 1997
-        irr:
-          type: number
-          format: double
-          example: 9.4
-        dpi:
-          type: number
-          format: double
-          example: 0.08
-        rvpi:
-          type: number
-          format: double
-          example: 1.19
-        tvpi:
-          type: number
-          format: double
-          example: 1.27
-        nav:
-          type: number
-          format: double
-          example: 5.5
-        quartile:
-          type: integer
-          format: int32
-          example: 4
-        numberOfFundsInBenchmark:
-          type: integer
-          format: int32
-          example: 5
-        historicalPerformance:
+        fundStatus:
+          type: string
+          example: Fully Invested
+        fundType:
+          type: string
+          description: Deprecated. Always empty
+          deprecated: true
+        fundStrategy:
+          type: string
+          example: Growth/Expansion
+        additionalFundStrategy:
+          type: array
+          example:
+          - Debt - General
+          - Hedge Fund
+          items:
+            type: string
+            example: '["Debt - General","Hedge Fund"]'
+        fundStructure:
+          type: array
+          example:
+          - ELTIF
+          - Drawdown
+          items:
+            type: string
+            example: '["ELTIF","Drawdown"]'
+        fundLifespan:
+          type: string
+          example: Finite-Life
+        exchangeStatus:
+          type: string
+          example: Non-Listed
+        targetsPrivateWealthInvestors:
+          type: boolean
+          example: false
+        sustainableFinanceDisclosureRegulation:
+          type: string
+          example: Article 6
+        accessPoint:
+          type: string
+          example: Primary Fund
+        additionalAccessPoint:
+          type: string
+          example: Co-Investment, Secondary Fund
+        fundSize:
+          $ref: '#/components/schemas/MoneyDto'
+        fundTerms:
+          $ref: '#/components/schemas/FundTermsDto'
+        location:
+          $ref: '#/components/schemas/EntityOfficeDto'
+        fundTeam:
           type: array
           items:
-            $ref: '#/components/schemas/FundPerformanceHistoricalDto'
-    RangeDtoMoneyDto:
-      type: object
-      properties:
-        min:
-          $ref: '#/components/schemas/MoneyDto'
-        max:
-          $ref: '#/components/schemas/MoneyDto'
-    FundCashFlowDto:
-      type: object
-      properties:
-        fundId:
+            $ref: '#/components/schemas/FundTeamDto'
+        openDate:
           type: string
-          example: 13328-83F
-        fundName:
+          format: date
+          example: '1997-01-01'
+        closeDate:
           type: string
-          example: Crossroads Capital Partners
-        asOfQuarter:
-          type: integer
-          format: int32
-          example: 4
-        asOfYear:
-          type: integer
-          format: int32
-          example: 2005
-        contributed:
-          $ref: '#/components/schemas/MoneyDto'
-        percentCalledDown:
-          type: number
-          format: double
-          example: 17.26
-        dryPowder:
-          $ref: '#/components/schemas/MoneyDto'
-        percentDryPowder:
-          type: number
-          format: double
-          example: 82.73
-        distributed:
-          $ref: '#/components/schemas/MoneyDto'
-        remainingValue:
-          $ref: '#/components/schemas/MoneyDto'
-        distributedRemaining:
-          $ref: '#/components/schemas/MoneyDto'
-    InvestorFundAdvancedSearchResultDto_SearchView:
-      type: object
-      properties:
-        investorId:
-          type: string
-          example: 11193-94
-        investorName:
-          type: string
-          example: Franklin Street Equity Partners
-    EntityOfficeDto:
-      type: object
-      properties:
-        location:
-          type: string
-          example: Chicago, IL
-        addressLine1:
-          type: string
-          example: 69 West Monroe Street
-        addressLine2:
-          type: string
-          example: Suite 190
-        city:
-          type: string
-          example: Chicago
-        stateProvince:
-          type: string
-          example: IL
-        postCode:
-          type: string
-          example: '60661'
-        country:
-          type: string
-          example: United States
-        phone:
-          type: string
-          example: +1 (312) 902-6655
-        fax:
-          type: string
-          example: +1 (312) 902-5655
-        email:
-          type: string
-          example: office.email@gmail.com
-        globalRegion:
-          type: string
-          example: Americas
-        globalSubRegion:
-          type: string
-          example: North America
-    ErrorDto:
-      type: object
-      properties:
-        reason:
-          type: string
-          enum:
-          - 100 CONTINUE
-          - 101 SWITCHING_PROTOCOLS
-          - 102 PROCESSING
-          - 103 EARLY_HINTS
-          - 103 CHECKPOINT
-          - 200 OK
-          - 201 CREATED
-          - 202 ACCEPTED
-          - 203 NON_AUTHORITATIVE_INFORMATION
-          - 204 NO_CONTENT
-          - 205 RESET_CONTENT
-          - 206 PARTIAL_CONTENT
-          - 207 MULTI_STATUS
-          - 208 ALREADY_REPORTED
-          - 226 IM_USED
-          - 300 MULTIPLE_CHOICES
-          - 301 MOVED_PERMANENTLY
-          - 302 FOUND
-          - 302 MOVED_TEMPORARILY
-          - 303 SEE_OTHER
-          - 304 NOT_MODIFIED
-          - 305 USE_PROXY
-          - 307 TEMPORARY_REDIRECT
-          - 308 PERMANENT_REDIRECT
-          - 400 BAD_REQUEST
-          - 401 UNAUTHORIZED
-          - 402 PAYMENT_REQUIRED
-          - 403 FORBIDDEN
-          - 404 NOT_FOUND
-          - 405 METHOD_NOT_ALLOWED
-          - 406 NOT_ACCEPTABLE
-          - 407 PROXY_AUTHENTICATION_REQUIRED
-          - 408 REQUEST_TIMEOUT
-          - 409 CONFLICT
-          - 410 GONE
-          - 411 LENGTH_REQUIRED
-          - 412 PRECONDITION_FAILED
-          - 413 PAYLOAD_TOO_LARGE
-          - 413 REQUEST_ENTITY_TOO_LARGE
-          - 414 URI_TOO_LONG
-          - 414 REQUEST_URI_TOO_LONG
-          - 415 UNSUPPORTED_MEDIA_TYPE
-          - 416 REQUESTED_RANGE_NOT_SATISFIABLE
-          - 417 EXPECTATION_FAILED
-          - 418 I_AM_A_TEAPOT
-          - 419 INSUFFICIENT_SPACE_ON_RESOURCE
-          - 420 METHOD_FAILURE
-          - 421 DESTINATION_LOCKED
-          - 422 UNPROCESSABLE_ENTITY
-          - 423 LOCKED
-          - 424 FAILED_DEPENDENCY
-          - 425 TOO_EARLY
-          - 426 UPGRADE_REQUIRED
-          - 428 PRECONDITION_REQUIRED
-          - 429 TOO_MANY_REQUESTS
-          - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
-          - 451 UNAVAILABLE_FOR_LEGAL_REASONS
-          - 500 INTERNAL_SERVER_ERROR
-          - 501 NOT_IMPLEMENTED
-          - 502 BAD_GATEWAY
-          - 503 SERVICE_UNAVAILABLE
-          - 504 GATEWAY_TIMEOUT
-          - 505 HTTP_VERSION_NOT_SUPPORTED
-          - 506 VARIANT_ALSO_NEGOTIATES
-          - 507 INSUFFICIENT_STORAGE
-          - 508 LOOP_DETECTED
-          - 509 BANDWIDTH_LIMIT_EXCEEDED
-          - 510 NOT_EXTENDED
-          - 511 NETWORK_AUTHENTICATION_REQUIRED
-        message:
-          type: string
+          format: date
+          example: '1997-03-01'
+        fundTargetSize:
+          $ref: '#/components/schemas/RangeDtoMoneyDto'
+        sbic:
+          type: boolean
+          example: true
+        returnsInfoAvailable:
+          type: array
+          items:
+            $ref: '#/components/schemas/FundReturnsAvailabilityDto'
     FundInvestmentsDto:
       type: object
       properties:
@@ -2592,38 +2653,40 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/InvestmentsInfoDto'
-    IndustryPreferenceDto:
+    FundShareClassLoadsDto:
       type: object
       properties:
-        industryCode:
-          $ref: '#/components/schemas/DictionaryDto'
-        industrySector:
-          $ref: '#/components/schemas/DictionaryDto'
-        industryGroup:
+        frontLoad:
+          type: number
+          format: double
+        deferredLoad:
+          type: number
+          format: double
+        redemptionLoad:
+          type: number
+          format: double
+    InvestorFundAdvancedSearchResultDto_SearchView:
+      type: object
+      properties:
+        investorId:
+          type: string
+          example: 11193-94
+        investorName:
+          type: string
+          example: Franklin Street Equity Partners
+    EntityTypeDto:
+      type: object
+      properties:
+        type:
           $ref: '#/components/schemas/DictionaryDto'
         primary:
           type: boolean
-    BulkResultDtoFundBioDto:
-      type: object
-      properties:
-        stats:
-          $ref: '#/components/schemas/BulkStatsDto'
-        matched:
-          type: array
-          items:
-            $ref: '#/components/schemas/FundBioDto'
-        noData:
-          type: array
-          items:
-            $ref: '#/components/schemas/NoDataItemDto'
-        unmatched:
-          type: array
-          items:
-            $ref: '#/components/schemas/FailedItemDto'
-        duplicates:
-          type: array
-          items:
-            $ref: '#/components/schemas/DuplicatedItemDto'
+          example: false
+      example:
+        type:
+          code: IB
+          description: Investment Bank
+        primary: true
     FundPerformanceHistoricalDto:
       type: object
       properties:
@@ -2655,79 +2718,6 @@ components:
           type: number
           format: double
           example: 5.5
-    FundShareClassTotalReturnDto:
-      type: object
-      properties:
-        oneMonth:
-          type: number
-          format: double
-        threeMonth:
-          type: number
-          format: double
-        yearToDate:
-          type: number
-          format: double
-        oneYear:
-          type: number
-          format: double
-        threeYear:
-          type: number
-          format: double
-        fiveYear:
-          type: number
-          format: double
-        sevenYear:
-          type: number
-          format: double
-        tenYear:
-          type: number
-          format: double
-        sinceInception:
-          type: number
-          format: double
-    FundPeopleDto:
-      type: object
-      properties:
-        fundId:
-          type: string
-          example: 13328-83F
-        investorIds:
-          type: array
-          example: ' 11193-94,11317-15,42257-26'
-          items:
-            type: string
-            example: ' 11193-94,11317-15,42257-26'
-        countActiveTeam:
-          type: integer
-          format: int32
-          example: 1
-        active:
-          type: array
-          items:
-            $ref: '#/components/schemas/TeamMemberDto'
-        former:
-          type: array
-          items:
-            $ref: '#/components/schemas/TeamMemberDto'
-    SearchPageStatsDto_SearchView:
-      type: object
-      properties:
-        total:
-          type: integer
-          format: int32
-          example: 1
-        perPage:
-          type: integer
-          format: int32
-          example: 25
-        page:
-          type: integer
-          format: int32
-          example: 1
-        lastPage:
-          type: integer
-          format: int32
-          example: 1
     TeamMemberDto:
       type: object
       properties:
@@ -2751,58 +2741,32 @@ components:
         infoAvailable:
           type: boolean
           example: true
-    FundShareClassItemDto:
-      type: object
-      properties:
-        shareClassId:
-          type: string
-        shareClassName:
-          type: string
-        shareClassTicker:
-          type: string
-        snapshots:
-          type: array
-          items:
-            $ref: '#/components/schemas/FundShareClassSnapshotDto'
-    FundShareClassPerformanceDto:
-      type: object
-      properties:
-        fundId:
-          type: string
-        fundName:
-          type: string
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/FundShareClassPerformanceItemDto'
-    DealDto:
-      type: object
-      properties:
-        dealId:
-          type: string
-          example: 108911-98T
-    FundCommitmentDto:
+    FundActiveInvestmentDto:
       type: object
       properties:
         fundId:
           type: string
           example: 13328-83F
-        limitedPartnerId:
+        targetCompanyId:
           type: string
-          example: 59007-79
-        limitedPartnerName:
+          example: 164273-95
+        targetCompanyName:
           type: string
-          example: Pension Benefit Guaranty
-        commitmentDate:
+          example: Proxy
+        targetCompanyInvestmentDate:
           type: string
           format: date
-          example: '2015-10-08'
-        commitmentSize:
+          example: '2005-04-03'
+        investmentDealId:
+          type: string
+          example: 111009-52T
+    RangeDtoMoneyDto:
+      type: object
+      properties:
+        min:
           $ref: '#/components/schemas/MoneyDto'
-        commitmentStatus:
-          $ref: '#/components/schemas/DictionaryDto'
-        commitmentType:
-          $ref: '#/components/schemas/DictionaryDto'
+        max:
+          $ref: '#/components/schemas/MoneyDto'
     FundBenchmarkDto:
       type: object
       properties:
@@ -2854,94 +2818,31 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/FundNameDto'
-    InvestorActivityDto:
-      type: object
-      properties:
-        sales:
-          type: number
-          format: double
-        redemptions:
-          type: number
-          format: double
-        reinvestedDividends:
-          type: number
-          format: double
-        netCashFlow:
-          type: number
-          format: double
-    FundShareClassPerformanceSnapshotDto:
-      type: object
-      properties:
-        asOfDate:
-          type: string
-          format: date
-        twelveMonthYield:
-          type: number
-          format: double
-        totalReturn:
-          $ref: '#/components/schemas/FundShareClassTotalReturnDto'
-    UpdateDto:
-      type: object
-      properties:
-        updates:
-          type: object
-          additionalProperties:
-            type: string
-            example: '{"Endpoint name":"Update Status (true/false)"}'
-          example:
-            Endpoint name: Update Status (true/false)
-    FundTermsDto:
-      type: object
-      properties:
-        subscriptionFrequency:
-          $ref: '#/components/schemas/DictionaryDto'
-        redemptionFrequency:
-          $ref: '#/components/schemas/DictionaryDto'
-      description: Fund terms including subscription and redemption frequency for Interval Funds and Tender Offer funds; null if not applicable
-    CapitalActivityDto:
-      type: object
-      properties:
-        remainingValue:
-          type: number
-          format: double
-        contributed:
-          type: number
-          format: double
-        percentCalledDown:
-          type: number
-          format: double
-        dryPowder:
-          type: number
-          format: double
-        percentDryPowder:
-          type: number
-          format: double
-        distributed:
-          type: number
-          format: double
-        distributedRemaining:
-          type: number
-          format: double
-    FundActiveInvestmentDto:
+    FundPeopleDto:
       type: object
       properties:
         fundId:
           type: string
           example: 13328-83F
-        targetCompanyId:
-          type: string
-          example: 164273-95
-        targetCompanyName:
-          type: string
-          example: Proxy
-        targetCompanyInvestmentDate:
-          type: string
-          format: date
-          example: '2005-04-03'
-        investmentDealId:
-          type: string
-          example: 111009-52T
-    FundNameDto:
+        investorIds:
+          type: array
+          example: ' 11193-94,11317-15,42257-26'
+          items:
+            type: string
+            example: ' 11193-94,11317-15,42257-26'
+        countActiveTeam:
+          type: integer
+          format: int32
+          example: 1
+        active:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamMemberDto'
+        former:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamMemberDto'
+    FundPerformanceDto:
       type: object
       properties:
         fundId:
@@ -2950,80 +2851,69 @@ components:
         fundName:
           type: string
           example: Crossroads Capital Partners
-    FundShareClassLoadsDto:
-      type: object
-      properties:
-        frontLoad:
+        asOfQuarter:
+          type: integer
+          format: int32
+          example: 4
+        asOfYear:
+          type: integer
+          format: int32
+          example: 1997
+        irr:
           type: number
           format: double
-        deferredLoad:
+          example: 9.4
+        dpi:
           type: number
           format: double
-        redemptionLoad:
+          example: 0.08
+        rvpi:
           type: number
           format: double
-    AssetPreferencesDto:
-      type: object
-      properties:
-        assetClass:
-          $ref: '#/components/schemas/DictionaryDto'
-        subcategory:
-          $ref: '#/components/schemas/DictionaryDto'
-    DictionaryDto:
-      type: object
-      properties:
-        code:
-          type: string
-          example: Dictionary code
-        description:
-          type: string
-          example: Dictionary Code Description
-    FundCashflowItemDto:
-      type: object
-      properties:
-        period:
-          type: string
-        endDate:
-          type: string
-          format: date
-        capitalActivity:
-          $ref: '#/components/schemas/CapitalActivityDto'
-        investorActivity:
-          $ref: '#/components/schemas/InvestorActivityDto'
-    FundTeamDto:
-      type: object
-      properties:
-        personId:
-          type: string
-          example: 204383-98P
-        personFullName:
-          type: string
-          example: Luke Bagley
-    FundAdvancedSearchResultDto_SearchView:
-      type: object
-      properties:
-        fundId:
-          type: string
-          example: 11119-69F
-        fundName:
-          type: string
-          example: Franklin Street Equity Fund
-        investors:
+          example: 1.19
+        tvpi:
+          type: number
+          format: double
+          example: 1.27
+        nav:
+          type: number
+          format: double
+          example: 5.5
+        quartile:
+          type: integer
+          format: int32
+          example: 4
+        numberOfFundsInBenchmark:
+          type: integer
+          format: int32
+          example: 5
+        historicalPerformance:
           type: array
           items:
-            $ref: '#/components/schemas/InvestorFundAdvancedSearchResultDto_SearchView'
-        sandbox:
-          type: boolean
-          example: false
-    AdvancedSearchPageDtoFundAdvancedSearchResultDto_SearchView:
+            $ref: '#/components/schemas/FundPerformanceHistoricalDto'
+    BulkStatsDto:
       type: object
       properties:
-        stats:
-          $ref: '#/components/schemas/SearchPageStatsDto_SearchView'
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/FundAdvancedSearchResultDto_SearchView'
+        total:
+          type: integer
+          format: int32
+        matched:
+          type: integer
+          format: int32
+        noData:
+          type: integer
+          format: int32
+        unmatched:
+          type: integer
+          format: int32
+        duplicates:
+          type: integer
+          format: int32
+    NoDataItemDto:
+      type: object
+      properties:
+        id:
+          type: string
     PortfolioHoldingsDto:
       type: object
       properties:
@@ -3036,18 +2926,54 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/BdcHoldingDto'
-    ServicedEntityDto:
+    FundCashflowsDto:
       type: object
       properties:
-        id:
+        fundId:
           type: string
-          example: 10041-94
-        name:
+        fundName:
           type: string
-          example: Bunker Hill Capital
-        entityType:
+        fundStructure:
           type: string
-          example: Investor
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/FundCashflowItemDto'
+    InvestmentsInfoDto:
+      type: object
+      properties:
+        targetCompanyId:
+          type: string
+          example: 164273-95
+        targetCompanyName:
+          type: string
+          example: Proxy
+        investmentStatus:
+          type: string
+          example: Active Investor
+        targetCompanyInvestmentDate:
+          type: string
+          format: date
+          example: '2005-04-03'
+        investmentDealId:
+          type: string
+          example: 111009-52T
+        targetCompanyExitDate:
+          type: string
+          format: date
+          example: 20010-12-05
+        exitDealId:
+          type: string
+          example: 118126-90T
+    AdvancedSearchPageDtoFundAdvancedSearchResultDto_SearchView:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/SearchPageStatsDto_SearchView'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/FundAdvancedSearchResultDto_SearchView'
     FundShareClassSnapshotDto:
       type: object
       properties:
@@ -3086,21 +3012,95 @@ components:
           format: double
         loads:
           $ref: '#/components/schemas/FundShareClassLoadsDto'
-    IssuerDto:
+    FundManagerInfoDto:
       type: object
       properties:
-        issuerId:
+        investorId:
           type: string
-          example: 111874-96
-        issuerName:
+          example: 11193-94
+        investorName:
           type: string
-          example: Allen Media Group
-        issuerType:
+          example: Franklin Street Equity Partners
+        fundNo:
+          type: integer
+          format: int32
+          example: 1
+        firstFund:
+          type: boolean
+          example: false
+    IndustryPreferenceDto:
+      type: object
+      properties:
+        industryCode:
+          $ref: '#/components/schemas/DictionaryDto'
+        industrySector:
+          $ref: '#/components/schemas/DictionaryDto'
+        industryGroup:
+          $ref: '#/components/schemas/DictionaryDto'
+        primary:
+          type: boolean
+    FundCashflowItemDto:
+      type: object
+      properties:
+        period:
           type: string
-          example: COMPANY
-          enum:
-          - COMPANY
-          - FUND
+        endDate:
+          type: string
+          format: date
+        capitalActivity:
+          $ref: '#/components/schemas/CapitalActivityDto'
+        investorActivity:
+          $ref: '#/components/schemas/InvestorActivityDto'
+    FundShareClassItemDto:
+      type: object
+      properties:
+        shareClassId:
+          type: string
+        shareClassName:
+          type: string
+        shareClassTicker:
+          type: string
+        snapshots:
+          type: array
+          items:
+            $ref: '#/components/schemas/FundShareClassSnapshotDto'
+    FundCommitmentDto:
+      type: object
+      properties:
+        fundId:
+          type: string
+          example: 13328-83F
+        limitedPartnerId:
+          type: string
+          example: 59007-79
+        limitedPartnerName:
+          type: string
+          example: Pension Benefit Guaranty
+        commitmentDate:
+          type: string
+          format: date
+          example: '2015-10-08'
+        commitmentSize:
+          $ref: '#/components/schemas/MoneyDto'
+        commitmentStatus:
+          $ref: '#/components/schemas/DictionaryDto'
+        commitmentType:
+          $ref: '#/components/schemas/DictionaryDto'
+    IndustryDto:
+      type: object
+      properties:
+        reportedIndustry:
+          type: string
+          example: Cable and Other Subscription Programming
+        industrySector:
+          type: string
+          example: Consumer Products and Services (B2C)
+        industryGroup:
+          type: string
+          example: Media
+        industryCode:
+          type: string
+          example: Broadcasting, Radio and Television
   securitySchemes:
     pbToken:
       type: apiKey
