@@ -1557,169 +1557,6 @@ paths:
       - pbToken: []
 components:
   schemas:
-    BulkResultDtoLimitedPartnerTargetAllocationsDto:
-      type: object
-      properties:
-        stats:
-          $ref: '#/components/schemas/BulkStatsDto'
-        matched:
-          type: array
-          items:
-            $ref: '#/components/schemas/LimitedPartnerTargetAllocationsDto'
-        noData:
-          type: array
-          items:
-            $ref: '#/components/schemas/NoDataItemDto'
-        unmatched:
-          type: array
-          items:
-            $ref: '#/components/schemas/FailedItemDto'
-        duplicates:
-          type: array
-          items:
-            $ref: '#/components/schemas/DuplicatedItemDto'
-    SearchPageStatsDto_SearchView:
-      type: object
-      properties:
-        total:
-          type: integer
-          format: int32
-          example: 1
-        perPage:
-          type: integer
-          format: int32
-          example: 25
-        page:
-          type: integer
-          format: int32
-          example: 1
-        lastPage:
-          type: integer
-          format: int32
-          example: 1
-    DuplicatedItemDto:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 420962-68
-        occurrence:
-          type: integer
-          format: int32
-          example: 1
-    RequestItemDto:
-      type: object
-      properties:
-        id:
-          type: string
-    DictionaryDto:
-      type: object
-      properties:
-        code:
-          type: string
-          example: Dictionary code
-        description:
-          type: string
-          example: Dictionary Code Description
-    LimitedPartnerDto:
-      type: object
-      properties:
-        limitedPartnerId:
-          type: string
-          example: 11231-47
-        limitedPartnerBio:
-          $ref: '#/components/schemas/LimitedPartnerBioDto'
-        limitedPartnerTargetAllocations:
-          $ref: '#/components/schemas/LimitedPartnerTargetAllocationsDto'
-        limitedPartnerCommitmentAggregates:
-          $ref: '#/components/schemas/LimitedPartnerCommitmentAggregatesDto'
-    UpdateDto:
-      type: object
-      properties:
-        updates:
-          type: object
-          additionalProperties:
-            type: string
-            example: '{"Endpoint name":"Update Status (true/false)"}'
-          example:
-            Endpoint name: Update Status (true/false)
-    ErrorDto:
-      type: object
-      properties:
-        reason:
-          type: string
-          enum:
-          - 100 CONTINUE
-          - 101 SWITCHING_PROTOCOLS
-          - 102 PROCESSING
-          - 103 EARLY_HINTS
-          - 103 CHECKPOINT
-          - 200 OK
-          - 201 CREATED
-          - 202 ACCEPTED
-          - 203 NON_AUTHORITATIVE_INFORMATION
-          - 204 NO_CONTENT
-          - 205 RESET_CONTENT
-          - 206 PARTIAL_CONTENT
-          - 207 MULTI_STATUS
-          - 208 ALREADY_REPORTED
-          - 226 IM_USED
-          - 300 MULTIPLE_CHOICES
-          - 301 MOVED_PERMANENTLY
-          - 302 FOUND
-          - 302 MOVED_TEMPORARILY
-          - 303 SEE_OTHER
-          - 304 NOT_MODIFIED
-          - 305 USE_PROXY
-          - 307 TEMPORARY_REDIRECT
-          - 308 PERMANENT_REDIRECT
-          - 400 BAD_REQUEST
-          - 401 UNAUTHORIZED
-          - 402 PAYMENT_REQUIRED
-          - 403 FORBIDDEN
-          - 404 NOT_FOUND
-          - 405 METHOD_NOT_ALLOWED
-          - 406 NOT_ACCEPTABLE
-          - 407 PROXY_AUTHENTICATION_REQUIRED
-          - 408 REQUEST_TIMEOUT
-          - 409 CONFLICT
-          - 410 GONE
-          - 411 LENGTH_REQUIRED
-          - 412 PRECONDITION_FAILED
-          - 413 PAYLOAD_TOO_LARGE
-          - 413 REQUEST_ENTITY_TOO_LARGE
-          - 414 URI_TOO_LONG
-          - 414 REQUEST_URI_TOO_LONG
-          - 415 UNSUPPORTED_MEDIA_TYPE
-          - 416 REQUESTED_RANGE_NOT_SATISFIABLE
-          - 417 EXPECTATION_FAILED
-          - 418 I_AM_A_TEAPOT
-          - 419 INSUFFICIENT_SPACE_ON_RESOURCE
-          - 420 METHOD_FAILURE
-          - 421 DESTINATION_LOCKED
-          - 422 UNPROCESSABLE_ENTITY
-          - 423 LOCKED
-          - 424 FAILED_DEPENDENCY
-          - 425 TOO_EARLY
-          - 426 UPGRADE_REQUIRED
-          - 428 PRECONDITION_REQUIRED
-          - 429 TOO_MANY_REQUESTS
-          - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
-          - 451 UNAVAILABLE_FOR_LEGAL_REASONS
-          - 500 INTERNAL_SERVER_ERROR
-          - 501 NOT_IMPLEMENTED
-          - 502 BAD_GATEWAY
-          - 503 SERVICE_UNAVAILABLE
-          - 504 GATEWAY_TIMEOUT
-          - 505 HTTP_VERSION_NOT_SUPPORTED
-          - 506 VARIANT_ALSO_NEGOTIATES
-          - 507 INSUFFICIENT_STORAGE
-          - 508 LOOP_DETECTED
-          - 509 BANDWIDTH_LIMIT_EXCEEDED
-          - 510 NOT_EXTENDED
-          - 511 NETWORK_AUTHENTICATION_REQUIRED
-        message:
-          type: string
     LimitedPartnerBioDto:
       type: object
       properties:
@@ -1754,27 +1591,6 @@ components:
         managementStaff:
           type: integer
           format: int32
-    BulkResultDtoLimitedPartnerBioDto:
-      type: object
-      properties:
-        stats:
-          $ref: '#/components/schemas/BulkStatsDto'
-        matched:
-          type: array
-          items:
-            $ref: '#/components/schemas/LimitedPartnerBioDto'
-        noData:
-          type: array
-          items:
-            $ref: '#/components/schemas/NoDataItemDto'
-        unmatched:
-          type: array
-          items:
-            $ref: '#/components/schemas/FailedItemDto'
-        duplicates:
-          type: array
-          items:
-            $ref: '#/components/schemas/DuplicatedItemDto'
     MoneyDto:
       type: object
       properties:
@@ -1793,24 +1609,131 @@ components:
         estimated:
           type: boolean
           example: false
-    BulkRequestDto:
+    FailedItemDto:
       type: object
       properties:
-        items:
+        id:
+          type: string
+          example: 420962-68
+        reason:
+          type: string
+          example: 429 TOO_MANY_REQUESTS
+          enum:
+          - 400 BAD_REQUEST
+          - 401 UNAUTHORIZED
+          - 402 PAYMENT_REQUIRED
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 405 METHOD_NOT_ALLOWED
+          - 415 UNSUPPORTED_MEDIA_TYPE
+          - 429 TOO_MANY_REQUESTS
+          - 500 INTERNAL_SERVER_ERROR
+          - 503 SERVICE_UNAVAILABLE
+        message:
+          type: string
+          example: '{LIMIT_TYPE} rate limit exceeded. Please wait until rate limit period is renewed'
+    LimitedPartnerCommitmentDetailedDto:
+      type: object
+      properties:
+        limitedPartnerId:
+          type: string
+          example: 11231-47
+        committedFundId:
+          type: string
+          example: 59007-79F
+        committedFundName:
+          type: string
+          example: Pension Benefit Guaranty
+        committedInvestors:
           type: array
           items:
-            $ref: '#/components/schemas/RequestItemDto'
-    EntityNameDto:
+            $ref: '#/components/schemas/CommittedInvestorDto'
+        commitmentDate:
+          type: string
+          format: date
+          example: '2015-10-08'
+        commitmentSize:
+          $ref: '#/components/schemas/MoneyDto'
+        commitmentStatus:
+          $ref: '#/components/schemas/DictionaryDto'
+        commitmentType:
+          $ref: '#/components/schemas/DictionaryDto'
+    BulkResultDtoLimitedPartnerTargetAllocationsDto:
       type: object
       properties:
-        formalName:
+        stats:
+          $ref: '#/components/schemas/BulkStatsDto'
+        matched:
+          type: array
+          items:
+            $ref: '#/components/schemas/LimitedPartnerTargetAllocationsDto'
+        noData:
+          type: array
+          items:
+            $ref: '#/components/schemas/NoDataItemDto'
+        unmatched:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailedItemDto'
+        duplicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicatedItemDto'
+    LimitedPartnerActualAllocationsDto:
+      type: object
+      properties:
+        limitedPartnerId:
           type: string
-        alsoKnownAs:
+          example: 11231-47
+        limitedPartnerName:
           type: string
-        legalName:
+          example: Cooley
+        affiliatedFunds:
+          type: integer
+          format: int32
+          example: 10
+        affiliatedInvestors:
+          type: integer
+          format: int32
+          example: 15
+        allocations:
+          type: array
+          items:
+            $ref: '#/components/schemas/AllocationDto'
+    NoDataItemDto:
+      type: object
+      properties:
+        id:
           type: string
-        formerlyKnownAs:
+    DuplicatedItemDto:
+      type: object
+      properties:
+        id:
           type: string
+          example: 420962-68
+        occurrence:
+          type: integer
+          format: int32
+          example: 1
+    RangeDtoMoneyDto:
+      type: object
+      properties:
+        min:
+          $ref: '#/components/schemas/MoneyDto'
+        max:
+          $ref: '#/components/schemas/MoneyDto'
+    LimitedPartnerDto:
+      type: object
+      properties:
+        limitedPartnerId:
+          type: string
+          example: 11231-47
+        limitedPartnerBio:
+          $ref: '#/components/schemas/LimitedPartnerBioDto'
+        limitedPartnerTargetAllocations:
+          $ref: '#/components/schemas/LimitedPartnerTargetAllocationsDto'
+        limitedPartnerCommitmentAggregates:
+          $ref: '#/components/schemas/LimitedPartnerCommitmentAggregatesDto'
     BulkResultDtoLimitedPartnerDto:
       type: object
       properties:
@@ -1832,6 +1755,237 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DuplicatedItemDto'
+    BulkResultDtoLimitedPartnerCommitmentAggregatesDto:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/BulkStatsDto'
+        matched:
+          type: array
+          items:
+            $ref: '#/components/schemas/LimitedPartnerCommitmentAggregatesDto'
+        noData:
+          type: array
+          items:
+            $ref: '#/components/schemas/NoDataItemDto'
+        unmatched:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailedItemDto'
+        duplicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicatedItemDto'
+    EntityNameDto:
+      type: object
+      properties:
+        formalName:
+          type: string
+        alsoKnownAs:
+          type: string
+        legalName:
+          type: string
+        formerlyKnownAs:
+          type: string
+    EntityTypeDto:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/DictionaryDto'
+        primary:
+          type: boolean
+          example: false
+      example:
+        type:
+          code: IB
+          description: Investment Bank
+        primary: true
+    LimitedPartnerCommitmentPreferencesDto:
+      type: object
+      properties:
+        limitedPartnerId:
+          type: string
+          example: 11596-33
+        limitedPartnerName:
+          type: string
+          example: Pennsylvania Public School Employees Retirement System
+        preferredCommitmentSize:
+          $ref: '#/components/schemas/RangeDtoMoneyDto'
+        preferredGeography:
+          type: array
+          items:
+            $ref: '#/components/schemas/DictionaryDto'
+        preferredFundTypes:
+          type: array
+          description: Deprecated. Always empty
+          deprecated: true
+          items:
+            $ref: '#/components/schemas/DictionaryDto'
+        fundStrategyPreferences:
+          type: array
+          items:
+            type: string
+        preferredDirectInvestmentSize:
+          $ref: '#/components/schemas/RangeDtoMoneyDto'
+        otherInvestmentPreferences:
+          type: array
+          items:
+            $ref: '#/components/schemas/DictionaryDto'
+    AllocationDto:
+      type: object
+      properties:
+        alternativeInvestments:
+          $ref: '#/components/schemas/MoneyDto'
+        alternativeInvestmentsPercent:
+          type: number
+          format: double
+          example: 90.5
+        privateEquity:
+          $ref: '#/components/schemas/MoneyDto'
+        privateEquityPercent:
+          type: number
+          format: double
+          example: 7.5
+        realEstate:
+          $ref: '#/components/schemas/MoneyDto'
+        realEstatePercent:
+          type: number
+          format: double
+          example: 81.5
+        specialOpportunities:
+          $ref: '#/components/schemas/MoneyDto'
+        specialOpportunitiePercent:
+          type: number
+          format: double
+          example: 96.9
+        hedgeFunds:
+          $ref: '#/components/schemas/MoneyDto'
+        hedgeFundsPercent:
+          type: number
+          format: double
+          example: 10.3
+        equities:
+          $ref: '#/components/schemas/MoneyDto'
+        equitiesPercent:
+          type: number
+          format: double
+          example: 45.6
+        fixedIncome:
+          $ref: '#/components/schemas/MoneyDto'
+        fixedIncomePercent:
+          type: number
+          format: double
+          example: 5.4
+        cash:
+          $ref: '#/components/schemas/MoneyDto'
+        cashPercent:
+          type: number
+          format: double
+          example: 21.1
+    LimitedPartnerGeneralServiceProvidersDto:
+      type: object
+      properties:
+        limitedPartnerId:
+          type: string
+          example: 11231-47
+        currentGeneralServices:
+          type: array
+          items:
+            $ref: '#/components/schemas/GeneralServiceProviderDto'
+        formerGeneralServices:
+          type: array
+          items:
+            $ref: '#/components/schemas/GeneralServiceProviderDto'
+    LimitedPartnerAdvancedSearchResultDto_SearchView:
+      type: object
+      properties:
+        limitedPartnerId:
+          type: string
+          example: 11079-46
+        limitedPartnerName:
+          type: string
+          example: California Public Employees
+        sandbox:
+          type: boolean
+          example: false
+        website:
+          type: string
+          example: www.calpers.ca.gov
+    LimitedPartnerTargetAllocationsDto:
+      type: object
+      properties:
+        limitedPartnerId:
+          type: string
+          example: 11231-47
+        limitedPartnerName:
+          type: string
+          example: Cooley
+        targetAllocations:
+          type: array
+          items:
+            $ref: '#/components/schemas/TargetAllocationDto'
+    SearchPageStatsDto_SearchView:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+          example: 1
+        perPage:
+          type: integer
+          format: int32
+          example: 25
+        page:
+          type: integer
+          format: int32
+          example: 1
+        lastPage:
+          type: integer
+          format: int32
+          example: 1
+    CommittedInvestorDto:
+      type: object
+      properties:
+        committedInvestorId:
+          type: string
+        committedInvestorName:
+          type: string
+    GeneralServiceProviderDto:
+      type: object
+      properties:
+        serviceProviderId:
+          type: string
+          example: 11356-75
+        serviceProviderName:
+          type: string
+          example: Wilson Sonsini Goodrich & Rosati
+        serviceProviderTypes:
+          type: array
+          example:
+            type:
+              code: IB
+              description: Investment Bank
+            primary: true
+          items:
+            $ref: '#/components/schemas/EntityTypeDto'
+        serviceProvided:
+          $ref: '#/components/schemas/DictionaryDto'
+    BulkRequestDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RequestItemDto'
+    AdvancedSearchPageDtoLimitedPartnerAdvancedSearchResultDto_SearchView:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/SearchPageStatsDto_SearchView'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/LimitedPartnerAdvancedSearchResultDto_SearchView'
     TargetAllocationDto:
       type: object
       properties:
@@ -1933,42 +2087,110 @@ components:
           type: number
           format: double
           example: 15.8
-    FailedItemDto:
+    DictionaryDto:
       type: object
       properties:
-        id:
+        code:
           type: string
-          example: 420962-68
+          example: Dictionary code
+        description:
+          type: string
+          example: Dictionary Code Description
+    ErrorDto:
+      type: object
+      properties:
         reason:
           type: string
-          example: 429 TOO_MANY_REQUESTS
           enum:
+          - 100 CONTINUE
+          - 101 SWITCHING_PROTOCOLS
+          - 102 PROCESSING
+          - 103 EARLY_HINTS
+          - 103 CHECKPOINT
+          - 200 OK
+          - 201 CREATED
+          - 202 ACCEPTED
+          - 203 NON_AUTHORITATIVE_INFORMATION
+          - 204 NO_CONTENT
+          - 205 RESET_CONTENT
+          - 206 PARTIAL_CONTENT
+          - 207 MULTI_STATUS
+          - 208 ALREADY_REPORTED
+          - 226 IM_USED
+          - 300 MULTIPLE_CHOICES
+          - 301 MOVED_PERMANENTLY
+          - 302 FOUND
+          - 302 MOVED_TEMPORARILY
+          - 303 SEE_OTHER
+          - 304 NOT_MODIFIED
+          - 305 USE_PROXY
+          - 307 TEMPORARY_REDIRECT
+          - 308 PERMANENT_REDIRECT
           - 400 BAD_REQUEST
           - 401 UNAUTHORIZED
           - 402 PAYMENT_REQUIRED
           - 403 FORBIDDEN
           - 404 NOT_FOUND
           - 405 METHOD_NOT_ALLOWED
+          - 406 NOT_ACCEPTABLE
+          - 407 PROXY_AUTHENTICATION_REQUIRED
+          - 408 REQUEST_TIMEOUT
+          - 409 CONFLICT
+          - 410 GONE
+          - 411 LENGTH_REQUIRED
+          - 412 PRECONDITION_FAILED
+          - 413 PAYLOAD_TOO_LARGE
+          - 413 REQUEST_ENTITY_TOO_LARGE
+          - 414 URI_TOO_LONG
+          - 414 REQUEST_URI_TOO_LONG
           - 415 UNSUPPORTED_MEDIA_TYPE
+          - 416 REQUESTED_RANGE_NOT_SATISFIABLE
+          - 417 EXPECTATION_FAILED
+          - 418 I_AM_A_TEAPOT
+          - 419 INSUFFICIENT_SPACE_ON_RESOURCE
+          - 420 METHOD_FAILURE
+          - 421 DESTINATION_LOCKED
+          - 422 UNPROCESSABLE_ENTITY
+          - 423 LOCKED
+          - 424 FAILED_DEPENDENCY
+          - 425 TOO_EARLY
+          - 426 UPGRADE_REQUIRED
+          - 428 PRECONDITION_REQUIRED
           - 429 TOO_MANY_REQUESTS
+          - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
+          - 451 UNAVAILABLE_FOR_LEGAL_REASONS
           - 500 INTERNAL_SERVER_ERROR
+          - 501 NOT_IMPLEMENTED
+          - 502 BAD_GATEWAY
           - 503 SERVICE_UNAVAILABLE
+          - 504 GATEWAY_TIMEOUT
+          - 505 HTTP_VERSION_NOT_SUPPORTED
+          - 506 VARIANT_ALSO_NEGOTIATES
+          - 507 INSUFFICIENT_STORAGE
+          - 508 LOOP_DETECTED
+          - 509 BANDWIDTH_LIMIT_EXCEEDED
+          - 510 NOT_EXTENDED
+          - 511 NETWORK_AUTHENTICATION_REQUIRED
         message:
           type: string
-          example: '{LIMIT_TYPE} rate limit exceeded. Please wait until rate limit period is renewed'
-    LimitedPartnerTargetAllocationsDto:
+    BulkStatsDto:
       type: object
       properties:
-        limitedPartnerId:
-          type: string
-          example: 11231-47
-        limitedPartnerName:
-          type: string
-          example: Cooley
-        targetAllocations:
-          type: array
-          items:
-            $ref: '#/components/schemas/TargetAllocationDto'
+        total:
+          type: integer
+          format: int32
+        matched:
+          type: integer
+          format: int32
+        noData:
+          type: integer
+          format: int32
+        unmatched:
+          type: integer
+          format: int32
+        duplicates:
+          type: integer
+          format: int32
     LimitedPartnerCommitmentAggregatesDto:
       type: object
       properties:
@@ -2050,67 +2272,17 @@ components:
           type: integer
           format: int32
           example: 60
-    LimitedPartnerAdvancedSearchResultDto_SearchView:
+    UpdateDto:
       type: object
       properties:
-        limitedPartnerId:
-          type: string
-          example: 11079-46
-        limitedPartnerName:
-          type: string
-          example: California Public Employees
-        sandbox:
-          type: boolean
-          example: false
-        website:
-          type: string
-          example: www.calpers.ca.gov
-    LimitedPartnerCommitmentPreferencesDto:
-      type: object
-      properties:
-        limitedPartnerId:
-          type: string
-          example: 11596-33
-        limitedPartnerName:
-          type: string
-          example: Pennsylvania Public School Employees Retirement System
-        preferredCommitmentSize:
-          $ref: '#/components/schemas/RangeDtoMoneyDto'
-        preferredGeography:
-          type: array
-          items:
-            $ref: '#/components/schemas/DictionaryDto'
-        preferredFundTypes:
-          type: array
-          description: Deprecated. Always empty
-          deprecated: true
-          items:
-            $ref: '#/components/schemas/DictionaryDto'
-        fundStrategyPreferences:
-          type: array
-          items:
+        updates:
+          type: object
+          additionalProperties:
             type: string
-        preferredDirectInvestmentSize:
-          $ref: '#/components/schemas/RangeDtoMoneyDto'
-        otherInvestmentPreferences:
-          type: array
-          items:
-            $ref: '#/components/schemas/DictionaryDto'
-    LimitedPartnerGeneralServiceProvidersDto:
-      type: object
-      properties:
-        limitedPartnerId:
-          type: string
-          example: 11231-47
-        currentGeneralServices:
-          type: array
-          items:
-            $ref: '#/components/schemas/GeneralServiceProviderDto'
-        formerGeneralServices:
-          type: array
-          items:
-            $ref: '#/components/schemas/GeneralServiceProviderDto'
-    BulkResultDtoLimitedPartnerCommitmentAggregatesDto:
+            example: '{"Endpoint name":"Update Status (true/false)"}'
+          example:
+            Endpoint name: Update Status (true/false)
+    BulkResultDtoLimitedPartnerBioDto:
       type: object
       properties:
         stats:
@@ -2118,7 +2290,7 @@ components:
         matched:
           type: array
           items:
-            $ref: '#/components/schemas/LimitedPartnerCommitmentAggregatesDto'
+            $ref: '#/components/schemas/LimitedPartnerBioDto'
         noData:
           type: array
           items:
@@ -2131,114 +2303,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DuplicatedItemDto'
-    EntityTypeDto:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/DictionaryDto'
-        primary:
-          type: boolean
-          example: false
-      example:
-        type:
-          code: IB
-          description: Investment Bank
-        primary: true
-    CommittedInvestorDto:
-      type: object
-      properties:
-        committedInvestorId:
-          type: string
-        committedInvestorName:
-          type: string
-    AllocationDto:
-      type: object
-      properties:
-        alternativeInvestments:
-          $ref: '#/components/schemas/MoneyDto'
-        alternativeInvestmentsPercent:
-          type: number
-          format: double
-          example: 90.5
-        privateEquity:
-          $ref: '#/components/schemas/MoneyDto'
-        privateEquityPercent:
-          type: number
-          format: double
-          example: 7.5
-        realEstate:
-          $ref: '#/components/schemas/MoneyDto'
-        realEstatePercent:
-          type: number
-          format: double
-          example: 81.5
-        specialOpportunities:
-          $ref: '#/components/schemas/MoneyDto'
-        specialOpportunitiePercent:
-          type: number
-          format: double
-          example: 96.9
-        hedgeFunds:
-          $ref: '#/components/schemas/MoneyDto'
-        hedgeFundsPercent:
-          type: number
-          format: double
-          example: 10.3
-        equities:
-          $ref: '#/components/schemas/MoneyDto'
-        equitiesPercent:
-          type: number
-          format: double
-          example: 45.6
-        fixedIncome:
-          $ref: '#/components/schemas/MoneyDto'
-        fixedIncomePercent:
-          type: number
-          format: double
-          example: 5.4
-        cash:
-          $ref: '#/components/schemas/MoneyDto'
-        cashPercent:
-          type: number
-          format: double
-          example: 21.1
-    LimitedPartnerActualAllocationsDto:
-      type: object
-      properties:
-        limitedPartnerId:
-          type: string
-          example: 11231-47
-        limitedPartnerName:
-          type: string
-          example: Cooley
-        affiliatedFunds:
-          type: integer
-          format: int32
-          example: 10
-        affiliatedInvestors:
-          type: integer
-          format: int32
-          example: 15
-        allocations:
-          type: array
-          items:
-            $ref: '#/components/schemas/AllocationDto'
-    RangeDtoMoneyDto:
-      type: object
-      properties:
-        min:
-          $ref: '#/components/schemas/MoneyDto'
-        max:
-          $ref: '#/components/schemas/MoneyDto'
-    AdvancedSearchPageDtoLimitedPartnerAdvancedSearchResultDto_SearchView:
-      type: object
-      properties:
-        stats:
-          $ref: '#/components/schemas/SearchPageStatsDto_SearchView'
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/LimitedPartnerAdvancedSearchResultDto_SearchView'
     HqLocationDto:
       type: object
       properties:
@@ -2254,75 +2318,11 @@ components:
         country:
           type: string
           example: United States
-    GeneralServiceProviderDto:
-      type: object
-      properties:
-        serviceProviderId:
-          type: string
-          example: 11356-75
-        serviceProviderName:
-          type: string
-          example: Wilson Sonsini Goodrich & Rosati
-        serviceProviderTypes:
-          type: array
-          example:
-            type:
-              code: IB
-              description: Investment Bank
-            primary: true
-          items:
-            $ref: '#/components/schemas/EntityTypeDto'
-        serviceProvided:
-          $ref: '#/components/schemas/DictionaryDto'
-    NoDataItemDto:
+    RequestItemDto:
       type: object
       properties:
         id:
           type: string
-    BulkStatsDto:
-      type: object
-      properties:
-        total:
-          type: integer
-          format: int32
-        matched:
-          type: integer
-          format: int32
-        noData:
-          type: integer
-          format: int32
-        unmatched:
-          type: integer
-          format: int32
-        duplicates:
-          type: integer
-          format: int32
-    LimitedPartnerCommitmentDetailedDto:
-      type: object
-      properties:
-        limitedPartnerId:
-          type: string
-          example: 11231-47
-        committedFundId:
-          type: string
-          example: 59007-79F
-        committedFundName:
-          type: string
-          example: Pension Benefit Guaranty
-        committedInvestors:
-          type: array
-          items:
-            $ref: '#/components/schemas/CommittedInvestorDto'
-        commitmentDate:
-          type: string
-          format: date
-          example: '2015-10-08'
-        commitmentSize:
-          $ref: '#/components/schemas/MoneyDto'
-        commitmentStatus:
-          $ref: '#/components/schemas/DictionaryDto'
-        commitmentType:
-          $ref: '#/components/schemas/DictionaryDto'
   securitySchemes:
     pbToken:
       type: apiKey

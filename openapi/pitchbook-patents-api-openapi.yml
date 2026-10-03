@@ -381,25 +381,60 @@ paths:
       - pbToken: []
 components:
   schemas:
-    SearchPageStatsDto:
+    PatentDto:
       type: object
       properties:
-        total:
-          type: integer
-          format: int32
-          example: 1
-        perPage:
-          type: integer
-          format: int32
-          example: 25
-        page:
-          type: integer
-          format: int32
-          example: 1
-        lastPage:
-          type: integer
-          format: int32
-          example: 1
+        patentId:
+          type: string
+          example: EP-0197552-A2
+        patentTitle:
+          type: string
+          example: Method of processing interrupts in a digital computer system
+        status:
+          type: string
+          example: Active
+        publicationDate:
+          type: string
+          format: date
+          example: '1986-10-15'
+        firstFilingDate:
+          type: string
+          format: date
+          example: '1985-04-10'
+        expirationDate:
+          type: string
+          format: date
+          example: '2006-04-09'
+        filingAuthorityLocation:
+          type: string
+          example: EP
+        cpcSection:
+          $ref: '#/components/schemas/DictionaryDto'
+        cpcClass:
+          $ref: '#/components/schemas/DictionaryDto'
+        cpcSubclass:
+          $ref: '#/components/schemas/DictionaryDto'
+    PatentsPageDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+          example: 11026-45
+        stats:
+          $ref: '#/components/schemas/SearchPageStatsDto'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PatentDto'
+    DictionaryDto:
+      type: object
+      properties:
+        code:
+          type: string
+          example: Dictionary code
+        description:
+          type: string
+          example: Dictionary Code Description
     ErrorDto:
       type: object
       properties:
@@ -477,6 +512,25 @@ components:
           - 511 NETWORK_AUTHENTICATION_REQUIRED
         message:
           type: string
+    SearchPageStatsDto:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+          example: 1
+        perPage:
+          type: integer
+          format: int32
+          example: 25
+        page:
+          type: integer
+          format: int32
+          example: 1
+        lastPage:
+          type: integer
+          format: int32
+          example: 1
     PatentDetailedDto:
       type: object
       properties:
@@ -568,60 +622,6 @@ components:
         patentDownloadUrl:
           type: string
           example: https://api.pitchbook.com/companies/patents/AU-1072201-A/download
-    PatentDto:
-      type: object
-      properties:
-        patentId:
-          type: string
-          example: EP-0197552-A2
-        patentTitle:
-          type: string
-          example: Method of processing interrupts in a digital computer system
-        status:
-          type: string
-          example: Active
-        publicationDate:
-          type: string
-          format: date
-          example: '1986-10-15'
-        firstFilingDate:
-          type: string
-          format: date
-          example: '1985-04-10'
-        expirationDate:
-          type: string
-          format: date
-          example: '2006-04-09'
-        filingAuthorityLocation:
-          type: string
-          example: EP
-        cpcSection:
-          $ref: '#/components/schemas/DictionaryDto'
-        cpcClass:
-          $ref: '#/components/schemas/DictionaryDto'
-        cpcSubclass:
-          $ref: '#/components/schemas/DictionaryDto'
-    PatentsPageDto:
-      type: object
-      properties:
-        companyId:
-          type: string
-          example: 11026-45
-        stats:
-          $ref: '#/components/schemas/SearchPageStatsDto'
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/PatentDto'
-    DictionaryDto:
-      type: object
-      properties:
-        code:
-          type: string
-          example: Dictionary code
-        description:
-          type: string
-          example: Dictionary Code Description
   securitySchemes:
     pbToken:
       type: apiKey

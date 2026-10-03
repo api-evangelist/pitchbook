@@ -1044,6 +1044,57 @@ paths:
       - pbToken: []
 components:
   schemas:
+    FailedItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 420962-68
+        reason:
+          type: string
+          example: 429 TOO_MANY_REQUESTS
+          enum:
+          - 400 BAD_REQUEST
+          - 401 UNAUTHORIZED
+          - 402 PAYMENT_REQUIRED
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 405 METHOD_NOT_ALLOWED
+          - 415 UNSUPPORTED_MEDIA_TYPE
+          - 429 TOO_MANY_REQUESTS
+          - 500 INTERNAL_SERVER_ERROR
+          - 503 SERVICE_UNAVAILABLE
+        message:
+          type: string
+          example: '{LIMIT_TYPE} rate limit exceeded. Please wait until rate limit period is renewed'
+    ServicedDealsDto:
+      type: object
+      properties:
+        serviceProviderId:
+          type: string
+          example: 11356-75
+        serviceProviderName:
+          type: string
+          example: Wilson Sonsini Goodrich & Rosati
+        servicedDealInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServicedDealInfoDto'
+    ServiceProviderAdvancedSearchResultDto_SearchView:
+      type: object
+      properties:
+        serviceProviderId:
+          type: string
+          example: 55545-67
+        serviceProviderName:
+          type: string
+          example: JP Morgan Chase
+        sandbox:
+          type: boolean
+          example: false
+        website:
+          type: string
+          example: www.sp.com
     BulkResultDtoServiceProviderBioDto:
       type: object
       properties:
@@ -1065,6 +1116,65 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DuplicatedItemDto'
+    NoDataItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+    DuplicatedItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 420962-68
+        occurrence:
+          type: integer
+          format: int32
+          example: 1
+    GeneralServiceDto:
+      type: object
+      properties:
+        entityId:
+          type: string
+          example: 11356-75
+        entityName:
+          type: string
+          example: Franklin Street Equity Partners
+        serviceProvided:
+          $ref: '#/components/schemas/DictionaryDto'
+    AdvancedSearchPageDtoServiceProviderAdvancedSearchResultDto_SearchView:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/SearchPageStatsDto_SearchView'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceProviderAdvancedSearchResultDto_SearchView'
+    EntityNameDto:
+      type: object
+      properties:
+        formalName:
+          type: string
+        alsoKnownAs:
+          type: string
+        legalName:
+          type: string
+        formerlyKnownAs:
+          type: string
+    EntityTypeDto:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/DictionaryDto'
+        primary:
+          type: boolean
+          example: false
+      example:
+        type:
+          code: IB
+          description: Investment Bank
+        primary: true
     SearchPageStatsDto_SearchView:
       type: object
       properties:
@@ -1084,71 +1194,13 @@ components:
           type: integer
           format: int32
           example: 1
-    DuplicatedItemDto:
+    BulkRequestDto:
       type: object
       properties:
-        id:
-          type: string
-          example: 420962-68
-        occurrence:
-          type: integer
-          format: int32
-          example: 1
-    RequestItemDto:
-      type: object
-      properties:
-        id:
-          type: string
-    ServiceProviderAdvancedSearchResultDto_SearchView:
-      type: object
-      properties:
-        serviceProviderId:
-          type: string
-          example: 55545-67
-        serviceProviderName:
-          type: string
-          example: JP Morgan Chase
-        sandbox:
-          type: boolean
-          example: false
-        website:
-          type: string
-          example: www.sp.com
-    ServicedDealInfoDto:
-      type: object
-      properties:
-        companyId:
-          type: string
-          example: 10695-52
-        companyName:
-          type: string
-          example: Facebook
-        serviceProvided:
-          $ref: '#/components/schemas/DictionaryDto'
-        dealId:
-          type: string
-          example: 108911-98T
-        dealNumber:
-          type: integer
-          format: int32
-          example: 4
-        dealDate:
-          type: string
-          format: date
-          example: '2020-01-03'
-    FundServiceDto:
-      type: object
-      properties:
-        fundId:
-          type: string
-          example: 17475-23F
-        fundName:
-          type: string
-          example: Gerken Capital Associates
-        serviceProvided:
-          $ref: '#/components/schemas/DictionaryDto'
-        servicedEntityType:
-          $ref: '#/components/schemas/DictionaryDto'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RequestItemDto'
     ServiceProviderBioDto:
       type: object
       properties:
@@ -1198,6 +1250,36 @@ components:
           type: integer
           format: int32
           example: 0
+    FundServiceDto:
+      type: object
+      properties:
+        fundId:
+          type: string
+          example: 17475-23F
+        fundName:
+          type: string
+          example: Gerken Capital Associates
+        serviceProvided:
+          $ref: '#/components/schemas/DictionaryDto'
+        servicedEntityType:
+          $ref: '#/components/schemas/DictionaryDto'
+    ServicedEntitiesDto:
+      type: object
+      properties:
+        serviceProviderId:
+          type: string
+          example: 11356-75
+        serviceProviderName:
+          type: string
+          example: Wilson Sonsini Goodrich & Rosati
+        currentGeneralServices:
+          type: array
+          items:
+            $ref: '#/components/schemas/GeneralServiceDto'
+        formerGeneralServices:
+          type: array
+          items:
+            $ref: '#/components/schemas/GeneralServiceDto'
     DictionaryDto:
       type: object
       properties:
@@ -1207,29 +1289,6 @@ components:
         description:
           type: string
           example: Dictionary Code Description
-    ServicedFundsDto:
-      type: object
-      properties:
-        serviceProviderId:
-          type: string
-          example: 11356-75
-        serviceProviderName:
-          type: string
-          example: Wilson Sonsini Goodrich & Rosati
-        fundServices:
-          type: array
-          items:
-            $ref: '#/components/schemas/FundServiceDto'
-    UpdateDto:
-      type: object
-      properties:
-        updates:
-          type: object
-          additionalProperties:
-            type: string
-            example: '{"Endpoint name":"Update Status (true/false)"}'
-          example:
-            Endpoint name: Update Status (true/false)
     ErrorDto:
       type: object
       properties:
@@ -1307,100 +1366,19 @@ components:
           - 511 NETWORK_AUTHENTICATION_REQUIRED
         message:
           type: string
-    BulkRequestDto:
+    ServicedFundsDto:
       type: object
       properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/RequestItemDto'
-    EntityNameDto:
-      type: object
-      properties:
-        formalName:
-          type: string
-        alsoKnownAs:
-          type: string
-        legalName:
-          type: string
-        formerlyKnownAs:
-          type: string
-    GeneralServiceDto:
-      type: object
-      properties:
-        entityId:
+        serviceProviderId:
           type: string
           example: 11356-75
-        entityName:
+        serviceProviderName:
           type: string
-          example: Franklin Street Equity Partners
-        serviceProvided:
-          $ref: '#/components/schemas/DictionaryDto'
-    FailedItemDto:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 420962-68
-        reason:
-          type: string
-          example: 429 TOO_MANY_REQUESTS
-          enum:
-          - 400 BAD_REQUEST
-          - 401 UNAUTHORIZED
-          - 402 PAYMENT_REQUIRED
-          - 403 FORBIDDEN
-          - 404 NOT_FOUND
-          - 405 METHOD_NOT_ALLOWED
-          - 415 UNSUPPORTED_MEDIA_TYPE
-          - 429 TOO_MANY_REQUESTS
-          - 500 INTERNAL_SERVER_ERROR
-          - 503 SERVICE_UNAVAILABLE
-        message:
-          type: string
-          example: '{LIMIT_TYPE} rate limit exceeded. Please wait until rate limit period is renewed'
-    AdvancedSearchPageDtoServiceProviderAdvancedSearchResultDto_SearchView:
-      type: object
-      properties:
-        stats:
-          $ref: '#/components/schemas/SearchPageStatsDto_SearchView'
-        items:
+          example: Wilson Sonsini Goodrich & Rosati
+        fundServices:
           type: array
           items:
-            $ref: '#/components/schemas/ServiceProviderAdvancedSearchResultDto_SearchView'
-    EntityTypeDto:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/DictionaryDto'
-        primary:
-          type: boolean
-          example: false
-      example:
-        type:
-          code: IB
-          description: Investment Bank
-        primary: true
-    HqLocationDto:
-      type: object
-      properties:
-        city:
-          type: string
-          example: Chicago
-        stateProvince:
-          type: string
-          example: IL
-        postCode:
-          type: string
-          example: '60661'
-        country:
-          type: string
-          example: United States
-    NoDataItemDto:
-      type: object
-      properties:
-        id:
-          type: string
+            $ref: '#/components/schemas/FundServiceDto'
     BulkStatsDto:
       type: object
       properties:
@@ -1419,36 +1397,58 @@ components:
         duplicates:
           type: integer
           format: int32
-    ServicedDealsDto:
+    ServicedDealInfoDto:
       type: object
       properties:
-        serviceProviderId:
+        companyId:
           type: string
-          example: 11356-75
-        serviceProviderName:
+          example: 10695-52
+        companyName:
           type: string
-          example: Wilson Sonsini Goodrich & Rosati
-        servicedDealInfo:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServicedDealInfoDto'
-    ServicedEntitiesDto:
+          example: Facebook
+        serviceProvided:
+          $ref: '#/components/schemas/DictionaryDto'
+        dealId:
+          type: string
+          example: 108911-98T
+        dealNumber:
+          type: integer
+          format: int32
+          example: 4
+        dealDate:
+          type: string
+          format: date
+          example: '2020-01-03'
+    UpdateDto:
       type: object
       properties:
-        serviceProviderId:
+        updates:
+          type: object
+          additionalProperties:
+            type: string
+            example: '{"Endpoint name":"Update Status (true/false)"}'
+          example:
+            Endpoint name: Update Status (true/false)
+    HqLocationDto:
+      type: object
+      properties:
+        city:
           type: string
-          example: 11356-75
-        serviceProviderName:
+          example: Chicago
+        stateProvince:
           type: string
-          example: Wilson Sonsini Goodrich & Rosati
-        currentGeneralServices:
-          type: array
-          items:
-            $ref: '#/components/schemas/GeneralServiceDto'
-        formerGeneralServices:
-          type: array
-          items:
-            $ref: '#/components/schemas/GeneralServiceDto'
+          example: IL
+        postCode:
+          type: string
+          example: '60661'
+        country:
+          type: string
+          example: United States
+    RequestItemDto:
+      type: object
+      properties:
+        id:
+          type: string
   securitySchemes:
     pbToken:
       type: apiKey
