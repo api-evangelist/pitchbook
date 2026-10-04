@@ -236,58 +236,6 @@ paths:
       - pbToken: []
 components:
   schemas:
-    SandboxInvestorDto:
-      type: object
-      properties:
-        investorId:
-          type: string
-          example: 11193-94
-        investorName:
-          type: string
-          example: Franklin Street Equity Partners
-    SandboxFundDto:
-      type: object
-      properties:
-        fundId:
-          type: string
-          example: 22091-59F
-        fundName:
-          type: string
-          example: Wework Property Investors Operating Partnership III
-    LookupTablesDto:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/LookupTableDto'
-    SandboxLimitedPartnerDto:
-      type: object
-      properties:
-        limitedPartnerId:
-          type: string
-          example: 11603-71
-        limitedPartnerName:
-          type: string
-          example: an Francisco Employees' Retirement System
-    SandboxPersonDto:
-      type: object
-      properties:
-        personId:
-          type: string
-          example: 195066-01P
-        personName:
-          type: string
-          example: John Taylor
-    SandboxServiceProviderDto:
-      type: object
-      properties:
-        serviceProviderId:
-          type: string
-          example: 10015-03
-        serviceProviderName:
-          type: string
-          example: EY
     DictionaryDto:
       type: object
       properties:
@@ -297,6 +245,49 @@ components:
         description:
           type: string
           example: Dictionary Code Description
+    SandboxCreditNewsDto:
+      type: object
+      properties:
+        articleId:
+          type: integer
+          format: int32
+          example: 118074
+        articleTitle:
+          type: string
+          example: WeWork Property Investors Operating Partnership III Announces $1.5 Billion Credit Facility
+    SandboxFundDto:
+      type: object
+      properties:
+        fundId:
+          type: string
+          example: 22091-59F
+        fundName:
+          type: string
+          example: Wework Property Investors Operating Partnership III
+    SandboxServiceProviderDto:
+      type: object
+      properties:
+        serviceProviderId:
+          type: string
+          example: 10015-03
+        serviceProviderName:
+          type: string
+          example: EY
+    SandboxDealDto:
+      type: object
+      properties:
+        dealId:
+          type: string
+          example: 118074-52T
+    SandboxLimitedPartnerDto:
+      type: object
+      properties:
+        limitedPartnerId:
+          type: string
+          example: 11603-71
+        limitedPartnerName:
+          type: string
+          example: an Francisco Employees' Retirement System
     ErrorDto:
       type: object
       properties:
@@ -374,15 +365,6 @@ components:
           - 511 NETWORK_AUTHENTICATION_REQUIRED
         message:
           type: string
-    LookupTableInfoDto:
-      type: object
-      properties:
-        tableName:
-          type: string
-          example: INDUSTRY
-        tableDescription:
-          type: string
-          example: Industries
     SandboxCompanyDto:
       type: object
       properties:
@@ -392,6 +374,66 @@ components:
         companyName:
           type: string
           example: Raymond Loewy International
+    LookupTableInfoDto:
+      type: object
+      properties:
+        tableName:
+          type: string
+          example: INDUSTRY
+        tableDescription:
+          type: string
+          example: Industries
+    EntityTypeCountsDto:
+      type: object
+      properties:
+        companies:
+          type: integer
+          format: int32
+          example: 1
+        deals:
+          type: integer
+          format: int32
+          example: 1
+        investors:
+          type: integer
+          format: int32
+          example: 1
+        people:
+          type: integer
+          format: int32
+          example: 1
+        funds:
+          type: integer
+          format: int32
+          example: 1
+        limitedPartners:
+          type: integer
+          format: int32
+          example: 1
+        serviceProviders:
+          type: integer
+          format: int32
+          example: 1
+        creditNews:
+          type: integer
+          format: int32
+          example: 1
+    LookupTablesDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/LookupTableDto'
+    SandboxInvestorDto:
+      type: object
+      properties:
+        investorId:
+          type: string
+          example: 11193-94
+        investorName:
+          type: string
+          example: Franklin Street Equity Partners
     LookupTableDto:
       type: object
       properties:
@@ -442,57 +484,15 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SandboxCreditNewsDto'
-    SandboxCreditNewsDto:
+    SandboxPersonDto:
       type: object
       properties:
-        articleId:
-          type: integer
-          format: int32
-          example: 118074
-        articleTitle:
+        personId:
           type: string
-          example: WeWork Property Investors Operating Partnership III Announces $1.5 Billion Credit Facility
-    EntityTypeCountsDto:
-      type: object
-      properties:
-        companies:
-          type: integer
-          format: int32
-          example: 1
-        deals:
-          type: integer
-          format: int32
-          example: 1
-        investors:
-          type: integer
-          format: int32
-          example: 1
-        people:
-          type: integer
-          format: int32
-          example: 1
-        funds:
-          type: integer
-          format: int32
-          example: 1
-        limitedPartners:
-          type: integer
-          format: int32
-          example: 1
-        serviceProviders:
-          type: integer
-          format: int32
-          example: 1
-        creditNews:
-          type: integer
-          format: int32
-          example: 1
-    SandboxDealDto:
-      type: object
-      properties:
-        dealId:
+          example: 195066-01P
+        personName:
           type: string
-          example: 118074-52T
+          example: John Taylor
   securitySchemes:
     pbToken:
       type: apiKey

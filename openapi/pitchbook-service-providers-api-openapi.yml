@@ -1044,6 +1044,87 @@ paths:
       - pbToken: []
 components:
   schemas:
+    BulkResultDtoServiceProviderBioDto:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/BulkStatsDto'
+        matched:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceProviderBioDto'
+        noData:
+          type: array
+          items:
+            $ref: '#/components/schemas/NoDataItemDto'
+        unmatched:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailedItemDto'
+        duplicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicatedItemDto'
+    ServiceProviderAdvancedSearchResultDto_SearchView:
+      type: object
+      properties:
+        serviceProviderId:
+          type: string
+          example: 55545-67
+        serviceProviderName:
+          type: string
+          example: JP Morgan Chase
+        sandbox:
+          type: boolean
+          example: false
+        website:
+          type: string
+          example: www.sp.com
+    GeneralServiceDto:
+      type: object
+      properties:
+        entityId:
+          type: string
+          example: 11356-75
+        entityName:
+          type: string
+          example: Franklin Street Equity Partners
+        serviceProvided:
+          $ref: '#/components/schemas/DictionaryDto'
+    EntityNameDto:
+      type: object
+      properties:
+        formalName:
+          type: string
+        alsoKnownAs:
+          type: string
+        legalName:
+          type: string
+        formerlyKnownAs:
+          type: string
+    FundServiceDto:
+      type: object
+      properties:
+        fundId:
+          type: string
+          example: 17475-23F
+        fundName:
+          type: string
+          example: Gerken Capital Associates
+        serviceProvided:
+          $ref: '#/components/schemas/DictionaryDto'
+        servicedEntityType:
+          $ref: '#/components/schemas/DictionaryDto'
+    DuplicatedItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 420962-68
+        occurrence:
+          type: integer
+          format: int32
+          example: 1
     FailedItemDto:
       type: object
       properties:
@@ -1067,101 +1148,67 @@ components:
         message:
           type: string
           example: '{LIMIT_TYPE} rate limit exceeded. Please wait until rate limit period is renewed'
-    ServicedDealsDto:
+    DictionaryDto:
       type: object
       properties:
-        serviceProviderId:
+        code:
           type: string
-          example: 11356-75
-        serviceProviderName:
+          example: Dictionary code
+        description:
           type: string
-          example: Wilson Sonsini Goodrich & Rosati
-        servicedDealInfo:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServicedDealInfoDto'
-    ServiceProviderAdvancedSearchResultDto_SearchView:
+          example: Dictionary Code Description
+    BulkRequestDto:
       type: object
       properties:
-        serviceProviderId:
-          type: string
-          example: 55545-67
-        serviceProviderName:
-          type: string
-          example: JP Morgan Chase
-        sandbox:
-          type: boolean
-          example: false
-        website:
-          type: string
-          example: www.sp.com
-    BulkResultDtoServiceProviderBioDto:
-      type: object
-      properties:
-        stats:
-          $ref: '#/components/schemas/BulkStatsDto'
-        matched:
+        items:
           type: array
           items:
-            $ref: '#/components/schemas/ServiceProviderBioDto'
-        noData:
-          type: array
-          items:
-            $ref: '#/components/schemas/NoDataItemDto'
-        unmatched:
-          type: array
-          items:
-            $ref: '#/components/schemas/FailedItemDto'
-        duplicates:
-          type: array
-          items:
-            $ref: '#/components/schemas/DuplicatedItemDto'
+            $ref: '#/components/schemas/RequestItemDto'
     NoDataItemDto:
       type: object
       properties:
         id:
           type: string
-    DuplicatedItemDto:
+    BulkStatsDto:
       type: object
       properties:
-        id:
-          type: string
-          example: 420962-68
-        occurrence:
+        total:
           type: integer
           format: int32
-          example: 1
-    GeneralServiceDto:
+        matched:
+          type: integer
+          format: int32
+        noData:
+          type: integer
+          format: int32
+        unmatched:
+          type: integer
+          format: int32
+        duplicates:
+          type: integer
+          format: int32
+    ServicedDealInfoDto:
       type: object
       properties:
-        entityId:
+        companyId:
           type: string
-          example: 11356-75
-        entityName:
+          example: 10695-52
+        companyName:
           type: string
-          example: Franklin Street Equity Partners
+          example: Facebook
         serviceProvided:
           $ref: '#/components/schemas/DictionaryDto'
-    AdvancedSearchPageDtoServiceProviderAdvancedSearchResultDto_SearchView:
-      type: object
-      properties:
-        stats:
-          $ref: '#/components/schemas/SearchPageStatsDto_SearchView'
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceProviderAdvancedSearchResultDto_SearchView'
-    EntityNameDto:
-      type: object
-      properties:
-        formalName:
+        dealId:
           type: string
-        alsoKnownAs:
+          example: 108911-98T
+        dealNumber:
+          type: integer
+          format: int32
+          example: 4
+        dealDate:
           type: string
-        legalName:
-          type: string
-        formerlyKnownAs:
-          type: string
+          format: date
+          example: '2020-01-03'
     EntityTypeDto:
       type: object
       properties:
@@ -1175,95 +1222,32 @@ components:
           code: IB
           description: Investment Bank
         primary: true
-    SearchPageStatsDto_SearchView:
+    UpdateDto:
       type: object
       properties:
-        total:
-          type: integer
-          format: int32
-          example: 1
-        perPage:
-          type: integer
-          format: int32
-          example: 25
-        page:
-          type: integer
-          format: int32
-          example: 1
-        lastPage:
-          type: integer
-          format: int32
-          example: 1
-    BulkRequestDto:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/RequestItemDto'
-    ServiceProviderBioDto:
-      type: object
-      properties:
-        serviceProviderId:
-          type: string
-          example: 11356-75
-        serviceProviderName:
-          $ref: '#/components/schemas/EntityNameDto'
-        serviceProviderTypes:
-          type: array
+        updates:
+          type: object
+          additionalProperties:
+            type: string
+            example: '{"Endpoint name":"Update Status (true/false)"}'
           example:
-            type:
-              code: IB
-              description: Investment Bank
-            primary: true
-          items:
-            $ref: '#/components/schemas/EntityTypeDto'
-        hqLocation:
-          $ref: '#/components/schemas/HqLocationDto'
-        description:
-          type: string
-          example: Collins Stewart was an independent investment banking group with offices in London, New York, Jersey, Guernsey, Isle of Man, Dublin, Paris, Geneva, Singapore, Tel Aviv, Mumbai, and Tokyo. The company was a fundraiser on London's Alternative, Investment Market. the firm's services included fixed income credit trading, corporate broking, corporate finance advisory services, debt capital markets advice, restructuring and debt advisory services. The firm was founded in 1991 and was based in London, England.
-        website:
-          type: string
-          example: www.collins-stewart.com
-        employees:
-          type: integer
-          format: int32
-          example: 68
-        servicedCompanies:
-          type: integer
-          format: int32
-          example: 36
-        servicedDeals:
-          type: integer
-          format: int32
-          example: 38
-        servicedInvestors:
-          type: integer
-          format: int32
-          example: 14
-        servicedFunds:
-          type: integer
-          format: int32
-          example: 0
-        servicedLimitedPartners:
-          type: integer
-          format: int32
-          example: 0
-    FundServiceDto:
+            Endpoint name: Update Status (true/false)
+    HqLocationDto:
       type: object
       properties:
-        fundId:
+        city:
           type: string
-          example: 17475-23F
-        fundName:
+          example: Chicago
+        stateProvince:
           type: string
-          example: Gerken Capital Associates
-        serviceProvided:
-          $ref: '#/components/schemas/DictionaryDto'
-        servicedEntityType:
-          $ref: '#/components/schemas/DictionaryDto'
-    ServicedEntitiesDto:
+          example: IL
+        postCode:
+          type: string
+          example: '60661'
+        country:
+          type: string
+          example: United States
+    ServicedFundsDto:
       type: object
       properties:
         serviceProviderId:
@@ -1272,23 +1256,10 @@ components:
         serviceProviderName:
           type: string
           example: Wilson Sonsini Goodrich & Rosati
-        currentGeneralServices:
+        fundServices:
           type: array
           items:
-            $ref: '#/components/schemas/GeneralServiceDto'
-        formerGeneralServices:
-          type: array
-          items:
-            $ref: '#/components/schemas/GeneralServiceDto'
-    DictionaryDto:
-      type: object
-      properties:
-        code:
-          type: string
-          example: Dictionary code
-        description:
-          type: string
-          example: Dictionary Code Description
+            $ref: '#/components/schemas/FundServiceDto'
     ErrorDto:
       type: object
       properties:
@@ -1366,7 +1337,89 @@ components:
           - 511 NETWORK_AUTHENTICATION_REQUIRED
         message:
           type: string
-    ServicedFundsDto:
+    SearchPageStatsDto_SearchView:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+          example: 1
+        perPage:
+          type: integer
+          format: int32
+          example: 25
+        page:
+          type: integer
+          format: int32
+          example: 1
+        lastPage:
+          type: integer
+          format: int32
+          example: 1
+    RequestItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+    ServiceProviderBioDto:
+      type: object
+      properties:
+        serviceProviderId:
+          type: string
+          example: 11356-75
+        serviceProviderName:
+          $ref: '#/components/schemas/EntityNameDto'
+        serviceProviderTypes:
+          type: array
+          example:
+            type:
+              code: IB
+              description: Investment Bank
+            primary: true
+          items:
+            $ref: '#/components/schemas/EntityTypeDto'
+        hqLocation:
+          $ref: '#/components/schemas/HqLocationDto'
+        description:
+          type: string
+          example: Collins Stewart was an independent investment banking group with offices in London, New York, Jersey, Guernsey, Isle of Man, Dublin, Paris, Geneva, Singapore, Tel Aviv, Mumbai, and Tokyo. The company was a fundraiser on London's Alternative, Investment Market. the firm's services included fixed income credit trading, corporate broking, corporate finance advisory services, debt capital markets advice, restructuring and debt advisory services. The firm was founded in 1991 and was based in London, England.
+        website:
+          type: string
+          example: www.collins-stewart.com
+        employees:
+          type: integer
+          format: int32
+          example: 68
+        servicedCompanies:
+          type: integer
+          format: int32
+          example: 36
+        servicedDeals:
+          type: integer
+          format: int32
+          example: 38
+        servicedInvestors:
+          type: integer
+          format: int32
+          example: 14
+        servicedFunds:
+          type: integer
+          format: int32
+          example: 0
+        servicedLimitedPartners:
+          type: integer
+          format: int32
+          example: 0
+    AdvancedSearchPageDtoServiceProviderAdvancedSearchResultDto_SearchView:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/SearchPageStatsDto_SearchView'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceProviderAdvancedSearchResultDto_SearchView'
+    ServicedEntitiesDto:
       type: object
       properties:
         serviceProviderId:
@@ -1375,80 +1428,27 @@ components:
         serviceProviderName:
           type: string
           example: Wilson Sonsini Goodrich & Rosati
-        fundServices:
+        currentGeneralServices:
           type: array
           items:
-            $ref: '#/components/schemas/FundServiceDto'
-    BulkStatsDto:
+            $ref: '#/components/schemas/GeneralServiceDto'
+        formerGeneralServices:
+          type: array
+          items:
+            $ref: '#/components/schemas/GeneralServiceDto'
+    ServicedDealsDto:
       type: object
       properties:
-        total:
-          type: integer
-          format: int32
-        matched:
-          type: integer
-          format: int32
-        noData:
-          type: integer
-          format: int32
-        unmatched:
-          type: integer
-          format: int32
-        duplicates:
-          type: integer
-          format: int32
-    ServicedDealInfoDto:
-      type: object
-      properties:
-        companyId:
+        serviceProviderId:
           type: string
-          example: 10695-52
-        companyName:
+          example: 11356-75
+        serviceProviderName:
           type: string
-          example: Facebook
-        serviceProvided:
-          $ref: '#/components/schemas/DictionaryDto'
-        dealId:
-          type: string
-          example: 108911-98T
-        dealNumber:
-          type: integer
-          format: int32
-          example: 4
-        dealDate:
-          type: string
-          format: date
-          example: '2020-01-03'
-    UpdateDto:
-      type: object
-      properties:
-        updates:
-          type: object
-          additionalProperties:
-            type: string
-            example: '{"Endpoint name":"Update Status (true/false)"}'
-          example:
-            Endpoint name: Update Status (true/false)
-    HqLocationDto:
-      type: object
-      properties:
-        city:
-          type: string
-          example: Chicago
-        stateProvince:
-          type: string
-          example: IL
-        postCode:
-          type: string
-          example: '60661'
-        country:
-          type: string
-          example: United States
-    RequestItemDto:
-      type: object
-      properties:
-        id:
-          type: string
+          example: Wilson Sonsini Goodrich & Rosati
+        servicedDealInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServicedDealInfoDto'
   securitySchemes:
     pbToken:
       type: apiKey

@@ -1823,53 +1823,73 @@ paths:
       - pbToken: []
 components:
   schemas:
-    MoneyDto:
+    EntityNameDto:
       type: object
       properties:
-        amount:
-          type: number
-          example: 17039.27
-        currency:
+        formalName:
           type: string
-          example: USD
-        nativeAmount:
-          type: number
-          example: 15689
-        nativeCurrency:
+        alsoKnownAs:
           type: string
-          example: EUR
-        estimated:
-          type: boolean
-          example: false
-    FailedItemDto:
-      type: object
-      properties:
-        id:
+        legalName:
           type: string
-          example: 420962-68
-        reason:
+        formerlyKnownAs:
           type: string
-          example: 429 TOO_MANY_REQUESTS
-          enum:
-          - 400 BAD_REQUEST
-          - 401 UNAUTHORIZED
-          - 402 PAYMENT_REQUIRED
-          - 403 FORBIDDEN
-          - 404 NOT_FOUND
-          - 405 METHOD_NOT_ALLOWED
-          - 415 UNSUPPORTED_MEDIA_TYPE
-          - 429 TOO_MANY_REQUESTS
-          - 500 INTERNAL_SERVER_ERROR
-          - 503 SERVICE_UNAVAILABLE
-        message:
-          type: string
-          example: '{LIMIT_TYPE} rate limit exceeded. Please wait until rate limit period is renewed'
-    InvestorDealServiceProviderDto:
+    ActiveInvestmentDto:
       type: object
       properties:
         investorId:
           type: string
-          example: 54937-90
+          example: 11193-94
+        companyId:
+          type: string
+          example: 164273-95
+        companyName:
+          type: string
+          example: Proxy
+        investorSince:
+          type: string
+          format: date
+          example: '2005-04-03'
+        investmentDealId:
+          type: string
+          example: 111009-52T
+        investmentDate:
+          type: string
+          format: date
+          example: '2005-04-03'
+    InvestorDto:
+      type: object
+      properties:
+        investorId:
+          type: string
+          example: 11193-94
+        investorBio:
+          $ref: '#/components/schemas/InvestorBioDto'
+        activeInvestments:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActiveInvestmentDto'
+        investmentPreference:
+          $ref: '#/components/schemas/InvestorInvestmentPreferenceDto'
+        investorFunds:
+          $ref: '#/components/schemas/InvestorFundsDto'
+    InvestorBoardSeatsDto:
+      type: object
+      properties:
+        investorId:
+          type: string
+          example: 11193-94
+        current:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvestorBoardSeatDto'
+        former:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvestorBoardSeatDto'
+    GeneralServiceProviderDto:
+      type: object
+      properties:
         serviceProviderId:
           type: string
           example: 11356-75
@@ -1887,30 +1907,6 @@ components:
             $ref: '#/components/schemas/EntityTypeDto'
         serviceProvided:
           $ref: '#/components/schemas/DictionaryDto'
-        dealIdServiceProvided:
-          type: string
-          example: 13359-95T
-    BulkResultDtoInvestorDto:
-      type: object
-      properties:
-        stats:
-          $ref: '#/components/schemas/BulkStatsDto'
-        matched:
-          type: array
-          items:
-            $ref: '#/components/schemas/InvestorDto'
-        noData:
-          type: array
-          items:
-            $ref: '#/components/schemas/NoDataItemDto'
-        unmatched:
-          type: array
-          items:
-            $ref: '#/components/schemas/FailedItemDto'
-        duplicates:
-          type: array
-          items:
-            $ref: '#/components/schemas/DuplicatedItemDto'
     AssetPreferencesDto:
       type: object
       properties:
@@ -1918,61 +1914,6 @@ components:
           $ref: '#/components/schemas/DictionaryDto'
         subcategory:
           $ref: '#/components/schemas/DictionaryDto'
-    InvestorTradeAssociationDto:
-      type: object
-      properties:
-        name:
-          type: string
-          example: Evergreen Venture Capital Association
-    InvestorFundsDto:
-      type: object
-      properties:
-        investorId:
-          type: string
-          example: 11193-94
-        stats:
-          $ref: '#/components/schemas/FundStatsDto'
-        minFundSize:
-          $ref: '#/components/schemas/MoneyDto'
-        medianFundSize:
-          $ref: '#/components/schemas/MoneyDto'
-        maxFundSize:
-          $ref: '#/components/schemas/MoneyDto'
-        fundInfo:
-          type: array
-          items:
-            $ref: '#/components/schemas/FundInfoDto'
-    NoDataItemDto:
-      type: object
-      properties:
-        id:
-          type: string
-    DuplicatedItemDto:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 420962-68
-        occurrence:
-          type: integer
-          format: int32
-          example: 1
-    RangeDtoMoneyDto:
-      type: object
-      properties:
-        min:
-          $ref: '#/components/schemas/MoneyDto'
-        max:
-          $ref: '#/components/schemas/MoneyDto'
-    AdvancedSearchPageDtoInvestorEntityAdvancedSearchResultDto_SearchView:
-      type: object
-      properties:
-        stats:
-          $ref: '#/components/schemas/SearchPageStatsDto_SearchView'
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/InvestorEntityAdvancedSearchResultDto_SearchView'
     InvestorInvestmentPreferenceDto:
       type: object
       properties:
@@ -2020,43 +1961,96 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AssetPreferencesDto'
-    ActiveInvestmentDto:
+    DuplicatedItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 420962-68
+        occurrence:
+          type: integer
+          format: int32
+          example: 1
+    FailedItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 420962-68
+        reason:
+          type: string
+          example: 429 TOO_MANY_REQUESTS
+          enum:
+          - 400 BAD_REQUEST
+          - 401 UNAUTHORIZED
+          - 402 PAYMENT_REQUIRED
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 405 METHOD_NOT_ALLOWED
+          - 415 UNSUPPORTED_MEDIA_TYPE
+          - 429 TOO_MANY_REQUESTS
+          - 500 INTERNAL_SERVER_ERROR
+          - 503 SERVICE_UNAVAILABLE
+        message:
+          type: string
+          example: '{LIMIT_TYPE} rate limit exceeded. Please wait until rate limit period is renewed'
+    DictionaryDto:
+      type: object
+      properties:
+        code:
+          type: string
+          example: Dictionary code
+        description:
+          type: string
+          example: Dictionary Code Description
+    AdvancedSearchPageDtoInvestorEntityAdvancedSearchResultDto_SearchView:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/SearchPageStatsDto_SearchView'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvestorEntityAdvancedSearchResultDto_SearchView'
+    InvestorFundsDto:
       type: object
       properties:
         investorId:
           type: string
           example: 11193-94
-        companyId:
-          type: string
-          example: 164273-95
-        companyName:
-          type: string
-          example: Proxy
-        investorSince:
-          type: string
-          format: date
-          example: '2005-04-03'
-        investmentDealId:
-          type: string
-          example: 111009-52T
-        investmentDate:
-          type: string
-          format: date
-          example: '2005-04-03'
-    InvestorGeneralServiceProvidersDto:
+        stats:
+          $ref: '#/components/schemas/FundStatsDto'
+        minFundSize:
+          $ref: '#/components/schemas/MoneyDto'
+        medianFundSize:
+          $ref: '#/components/schemas/MoneyDto'
+        maxFundSize:
+          $ref: '#/components/schemas/MoneyDto'
+        fundInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/FundInfoDto'
+    BulkResultDtoInvestorDto:
       type: object
       properties:
-        investorId:
-          type: string
-          example: 54937-90
-        currentGeneralServices:
+        stats:
+          $ref: '#/components/schemas/BulkStatsDto'
+        matched:
           type: array
           items:
-            $ref: '#/components/schemas/GeneralServiceProviderDto'
-        formerGeneralServices:
+            $ref: '#/components/schemas/InvestorDto'
+        noData:
           type: array
           items:
-            $ref: '#/components/schemas/GeneralServiceProviderDto'
+            $ref: '#/components/schemas/NoDataItemDto'
+        unmatched:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailedItemDto'
+        duplicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicatedItemDto'
     RangeDtoInteger:
       type: object
       properties:
@@ -2069,186 +2063,6 @@ components:
       example:
         min: 25
         max: 50
-    InvestorBoardSeatsDto:
-      type: object
-      properties:
-        investorId:
-          type: string
-          example: 11193-94
-        current:
-          type: array
-          items:
-            $ref: '#/components/schemas/InvestorBoardSeatDto'
-        former:
-          type: array
-          items:
-            $ref: '#/components/schemas/InvestorBoardSeatDto'
-    FundStatsDto:
-      type: object
-      properties:
-        totalFundsOpen:
-          type: integer
-          format: int32
-          example: 5
-        totalFundsClosed:
-          type: integer
-          format: int32
-          example: 7
-    GeographicalPreferenceDto:
-      type: object
-      properties:
-        regionGroup:
-          $ref: '#/components/schemas/DictionaryDto'
-        regionSegment:
-          $ref: '#/components/schemas/DictionaryDto'
-        regionCode:
-          $ref: '#/components/schemas/DictionaryDto'
-        regionState:
-          $ref: '#/components/schemas/DictionaryDto'
-    EntityNameDto:
-      type: object
-      properties:
-        formalName:
-          type: string
-        alsoKnownAs:
-          type: string
-        legalName:
-          type: string
-        formerlyKnownAs:
-          type: string
-    EntityTypeDto:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/DictionaryDto'
-        primary:
-          type: boolean
-          example: false
-      example:
-        type:
-          code: IB
-          description: Investment Bank
-        primary: true
-    InvestorEntityAdvancedSearchResultDto_SearchView:
-      type: object
-      properties:
-        investorId:
-          type: string
-          example: 52385-14
-        investorName:
-          type: string
-          example: TriGate Capital
-        sandbox:
-          type: boolean
-          example: false
-        website:
-          type: string
-          example: www.trigate.com
-    InvestorBoardSeatDto:
-      type: object
-      properties:
-        personId:
-          type: string
-          example: 35524-99P
-        personName:
-          type: string
-          example: David McClure
-        boardCompanyId:
-          type: string
-          example: 54960-67
-        boardCompanyName:
-          type: string
-          example: Keen Systems
-        onBoard:
-          type: boolean
-          example: false
-        boardStartDate:
-          type: string
-          format: date
-          example: '2012-08-09'
-        boardEndDate:
-          type: string
-          format: date
-          example: '2015-09-14'
-        role:
-          type: string
-          example: Board Member
-    BulkResultDtoListActiveInvestmentDto:
-      type: object
-      properties:
-        stats:
-          $ref: '#/components/schemas/BulkStatsDto'
-        matched:
-          type: array
-          items:
-            type: array
-            items:
-              $ref: '#/components/schemas/ActiveInvestmentDto'
-        noData:
-          type: array
-          items:
-            $ref: '#/components/schemas/NoDataItemDto'
-        unmatched:
-          type: array
-          items:
-            $ref: '#/components/schemas/FailedItemDto'
-        duplicates:
-          type: array
-          items:
-            $ref: '#/components/schemas/DuplicatedItemDto'
-    IndustryPreferenceDto:
-      type: object
-      properties:
-        industryCode:
-          $ref: '#/components/schemas/DictionaryDto'
-        industrySector:
-          $ref: '#/components/schemas/DictionaryDto'
-        industryGroup:
-          $ref: '#/components/schemas/DictionaryDto'
-        primary:
-          type: boolean
-    BulkResultDtoInvestorInvestmentPreferenceDto:
-      type: object
-      properties:
-        stats:
-          $ref: '#/components/schemas/BulkStatsDto'
-        matched:
-          type: array
-          items:
-            $ref: '#/components/schemas/InvestorInvestmentPreferenceDto'
-        noData:
-          type: array
-          items:
-            $ref: '#/components/schemas/NoDataItemDto'
-        unmatched:
-          type: array
-          items:
-            $ref: '#/components/schemas/FailedItemDto'
-        duplicates:
-          type: array
-          items:
-            $ref: '#/components/schemas/DuplicatedItemDto'
-    BulkResultDtoInvestorBioDto:
-      type: object
-      properties:
-        stats:
-          $ref: '#/components/schemas/BulkStatsDto'
-        matched:
-          type: array
-          items:
-            $ref: '#/components/schemas/InvestorBioDto'
-        noData:
-          type: array
-          items:
-            $ref: '#/components/schemas/NoDataItemDto'
-        unmatched:
-          type: array
-          items:
-            $ref: '#/components/schemas/FailedItemDto'
-        duplicates:
-          type: array
-          items:
-            $ref: '#/components/schemas/DuplicatedItemDto'
     EntityDescriptionDto:
       type: object
       properties:
@@ -2258,61 +2072,11 @@ components:
         full:
           type: string
           example: Franklin Street Equity Partners is a private equity firm investing in middle market companies across a wide range of industries. FSEP was founded by the principals of Ablum, Brown & Company, a Chicago-based investment banking boutique specializing in leveraged acquisitions. The firm was founded in 1997 and is based in Chicago, Illinois.
-    InvestorDto:
+    NoDataItemDto:
       type: object
       properties:
-        investorId:
+        id:
           type: string
-          example: 11193-94
-        investorBio:
-          $ref: '#/components/schemas/InvestorBioDto'
-        activeInvestments:
-          type: array
-          items:
-            $ref: '#/components/schemas/ActiveInvestmentDto'
-        investmentPreference:
-          $ref: '#/components/schemas/InvestorInvestmentPreferenceDto'
-        investorFunds:
-          $ref: '#/components/schemas/InvestorFundsDto'
-    GeneralServiceProviderDto:
-      type: object
-      properties:
-        serviceProviderId:
-          type: string
-          example: 11356-75
-        serviceProviderName:
-          type: string
-          example: Wilson Sonsini Goodrich & Rosati
-        serviceProviderTypes:
-          type: array
-          example:
-            type:
-              code: IB
-              description: Investment Bank
-            primary: true
-          items:
-            $ref: '#/components/schemas/EntityTypeDto'
-        serviceProvided:
-          $ref: '#/components/schemas/DictionaryDto'
-    SearchPageStatsDto_SearchView:
-      type: object
-      properties:
-        total:
-          type: integer
-          format: int32
-          example: 1
-        perPage:
-          type: integer
-          format: int32
-          example: 25
-        page:
-          type: integer
-          format: int32
-          example: 1
-        lastPage:
-          type: integer
-          format: int32
-          example: 1
     BulkRequestDto:
       type: object
       properties:
@@ -2320,27 +2084,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/RequestItemDto'
-    BulkResultDtoInvestorFundsDto:
+    RangeDtoMoneyDto:
       type: object
       properties:
-        stats:
-          $ref: '#/components/schemas/BulkStatsDto'
-        matched:
-          type: array
-          items:
-            $ref: '#/components/schemas/InvestorFundsDto'
-        noData:
-          type: array
-          items:
-            $ref: '#/components/schemas/NoDataItemDto'
-        unmatched:
-          type: array
-          items:
-            $ref: '#/components/schemas/FailedItemDto'
-        duplicates:
-          type: array
-          items:
-            $ref: '#/components/schemas/DuplicatedItemDto'
+        min:
+          $ref: '#/components/schemas/MoneyDto'
+        max:
+          $ref: '#/components/schemas/MoneyDto'
     InvestorBioDto:
       type: object
       properties:
@@ -2378,55 +2128,76 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/InvestorTradeAssociationDto'
-    HqLocationDto:
+    BulkStatsDto:
       type: object
       properties:
-        city:
-          type: string
-          example: Chicago
-        stateProvince:
-          type: string
-          example: IL
-        postCode:
-          type: string
-          example: '60661'
-        country:
-          type: string
-          example: United States
-    LastClosedFundDto:
-      type: object
-      properties:
-        investorId:
-          type: string
-          example: 11193-94
-        fundId:
-          type: string
-          example: 11119-69F
-        fundName:
-          type: string
-          example: Franklin Street Equity Fund
-        fundVintage:
+        total:
           type: integer
           format: int32
-          example: 2020
-        fundSize:
-          $ref: '#/components/schemas/MoneyDto'
-        fundType:
-          description: Deprecated. Always empty
-          deprecated: true
-          allOf:
-          - $ref: '#/components/schemas/DictionaryDto'
-        fundStrategy:
+        matched:
+          type: integer
+          format: int32
+        noData:
+          type: integer
+          format: int32
+        unmatched:
+          type: integer
+          format: int32
+        duplicates:
+          type: integer
+          format: int32
+    InvestorBoardSeatDto:
+      type: object
+      properties:
+        personId:
           type: string
-          example: Buyout
-        fundCloseDate:
+          example: 35524-99P
+        personName:
+          type: string
+          example: David McClure
+        boardCompanyId:
+          type: string
+          example: 54960-67
+        boardCompanyName:
+          type: string
+          example: Keen Systems
+        onBoard:
+          type: boolean
+          example: false
+        boardStartDate:
           type: string
           format: date
-          example: '2020-05-04'
-        fundOpenDate:
+          example: '2012-08-09'
+        boardEndDate:
           type: string
           format: date
-          example: '2020-01-01'
+          example: '2015-09-14'
+        role:
+          type: string
+          example: Board Member
+    EntityTypeDto:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/DictionaryDto'
+        primary:
+          type: boolean
+          example: false
+      example:
+        type:
+          code: IB
+          description: Investment Bank
+        primary: true
+    UpdateDto:
+      type: object
+      properties:
+        updates:
+          type: object
+          additionalProperties:
+            type: string
+            example: '{"Endpoint name":"Update Status (true/false)"}'
+          example:
+            Endpoint name: Update Status (true/false)
     AllInvestmentsDto:
       type: object
       properties:
@@ -2456,6 +2227,50 @@ components:
         exitDealId:
           type: string
           example: 118126-90T
+    GeographicalPreferenceDto:
+      type: object
+      properties:
+        regionGroup:
+          $ref: '#/components/schemas/DictionaryDto'
+        regionSegment:
+          $ref: '#/components/schemas/DictionaryDto'
+        regionCode:
+          $ref: '#/components/schemas/DictionaryDto'
+        regionState:
+          $ref: '#/components/schemas/DictionaryDto'
+    HqLocationDto:
+      type: object
+      properties:
+        city:
+          type: string
+          example: Chicago
+        stateProvince:
+          type: string
+          example: IL
+        postCode:
+          type: string
+          example: '60661'
+        country:
+          type: string
+          example: United States
+    MoneyDto:
+      type: object
+      properties:
+        amount:
+          type: number
+          example: 17039.27
+        currency:
+          type: string
+          example: USD
+        nativeAmount:
+          type: number
+          example: 15689
+        nativeCurrency:
+          type: string
+          example: EUR
+        estimated:
+          type: boolean
+          example: false
     ErrorDto:
       type: object
       properties:
@@ -2533,43 +2348,82 @@ components:
           - 511 NETWORK_AUTHENTICATION_REQUIRED
         message:
           type: string
-    DictionaryDto:
-      type: object
-      properties:
-        code:
-          type: string
-          example: Dictionary code
-        description:
-          type: string
-          example: Dictionary Code Description
-    BulkStatsDto:
+    SearchPageStatsDto_SearchView:
       type: object
       properties:
         total:
           type: integer
           format: int32
-        matched:
+          example: 1
+        perPage:
           type: integer
           format: int32
-        noData:
+          example: 25
+        page:
           type: integer
           format: int32
-        unmatched:
+          example: 1
+        lastPage:
           type: integer
           format: int32
-        duplicates:
-          type: integer
-          format: int32
-    UpdateDto:
+          example: 1
+    InvestorGeneralServiceProvidersDto:
       type: object
       properties:
-        updates:
-          type: object
-          additionalProperties:
-            type: string
-            example: '{"Endpoint name":"Update Status (true/false)"}'
-          example:
-            Endpoint name: Update Status (true/false)
+        investorId:
+          type: string
+          example: 54937-90
+        currentGeneralServices:
+          type: array
+          items:
+            $ref: '#/components/schemas/GeneralServiceProviderDto'
+        formerGeneralServices:
+          type: array
+          items:
+            $ref: '#/components/schemas/GeneralServiceProviderDto'
+    BulkResultDtoListActiveInvestmentDto:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/BulkStatsDto'
+        matched:
+          type: array
+          items:
+            type: array
+            items:
+              $ref: '#/components/schemas/ActiveInvestmentDto'
+        noData:
+          type: array
+          items:
+            $ref: '#/components/schemas/NoDataItemDto'
+        unmatched:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailedItemDto'
+        duplicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicatedItemDto'
+    RequestItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+    InvestorEntityAdvancedSearchResultDto_SearchView:
+      type: object
+      properties:
+        investorId:
+          type: string
+          example: 52385-14
+        investorName:
+          type: string
+          example: TriGate Capital
+        sandbox:
+          type: boolean
+          example: false
+        website:
+          type: string
+          example: www.trigate.com
     FundInfoDto:
       type: object
       properties:
@@ -2587,11 +2441,157 @@ components:
         fundStrategy:
           type: string
           example: Buyout
-    RequestItemDto:
+    FundStatsDto:
       type: object
       properties:
-        id:
+        totalFundsOpen:
+          type: integer
+          format: int32
+          example: 5
+        totalFundsClosed:
+          type: integer
+          format: int32
+          example: 7
+    BulkResultDtoInvestorBioDto:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/BulkStatsDto'
+        matched:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvestorBioDto'
+        noData:
+          type: array
+          items:
+            $ref: '#/components/schemas/NoDataItemDto'
+        unmatched:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailedItemDto'
+        duplicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicatedItemDto'
+    LastClosedFundDto:
+      type: object
+      properties:
+        investorId:
           type: string
+          example: 11193-94
+        fundId:
+          type: string
+          example: 11119-69F
+        fundName:
+          type: string
+          example: Franklin Street Equity Fund
+        fundVintage:
+          type: integer
+          format: int32
+          example: 2020
+        fundSize:
+          $ref: '#/components/schemas/MoneyDto'
+        fundType:
+          description: Deprecated. Always empty
+          deprecated: true
+          allOf:
+          - $ref: '#/components/schemas/DictionaryDto'
+        fundStrategy:
+          type: string
+          example: Buyout
+        fundCloseDate:
+          type: string
+          format: date
+          example: '2020-05-04'
+        fundOpenDate:
+          type: string
+          format: date
+          example: '2020-01-01'
+    IndustryPreferenceDto:
+      type: object
+      properties:
+        industryCode:
+          $ref: '#/components/schemas/DictionaryDto'
+        industrySector:
+          $ref: '#/components/schemas/DictionaryDto'
+        industryGroup:
+          $ref: '#/components/schemas/DictionaryDto'
+        primary:
+          type: boolean
+    InvestorDealServiceProviderDto:
+      type: object
+      properties:
+        investorId:
+          type: string
+          example: 54937-90
+        serviceProviderId:
+          type: string
+          example: 11356-75
+        serviceProviderName:
+          type: string
+          example: Wilson Sonsini Goodrich & Rosati
+        serviceProviderTypes:
+          type: array
+          example:
+            type:
+              code: IB
+              description: Investment Bank
+            primary: true
+          items:
+            $ref: '#/components/schemas/EntityTypeDto'
+        serviceProvided:
+          $ref: '#/components/schemas/DictionaryDto'
+        dealIdServiceProvided:
+          type: string
+          example: 13359-95T
+    InvestorTradeAssociationDto:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Evergreen Venture Capital Association
+    BulkResultDtoInvestorFundsDto:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/BulkStatsDto'
+        matched:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvestorFundsDto'
+        noData:
+          type: array
+          items:
+            $ref: '#/components/schemas/NoDataItemDto'
+        unmatched:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailedItemDto'
+        duplicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicatedItemDto'
+    BulkResultDtoInvestorInvestmentPreferenceDto:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/BulkStatsDto'
+        matched:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvestorInvestmentPreferenceDto'
+        noData:
+          type: array
+          items:
+            $ref: '#/components/schemas/NoDataItemDto'
+        unmatched:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailedItemDto'
+        duplicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicatedItemDto'
   securitySchemes:
     pbToken:
       type: apiKey

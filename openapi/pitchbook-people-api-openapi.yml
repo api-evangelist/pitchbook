@@ -750,27 +750,85 @@ paths:
       - pbToken: []
 components:
   schemas:
-    BulkResultDtoPersonBioDto:
+    CompanyRoleDto:
       type: object
       properties:
-        stats:
-          $ref: '#/components/schemas/BulkStatsDto'
-        matched:
-          type: array
-          items:
-            $ref: '#/components/schemas/PersonBioDto'
-        noData:
-          type: array
-          items:
-            $ref: '#/components/schemas/NoDataItemDto'
-        unmatched:
-          type: array
-          items:
-            $ref: '#/components/schemas/FailedItemDto'
-        duplicates:
-          type: array
-          items:
-            $ref: '#/components/schemas/DuplicatedItemDto'
+        companyId:
+          type: string
+          example: 10352-44
+        companyName:
+          type: string
+          example: Herbert Smith Freehills
+        position:
+          type: string
+          example: Partner
+        positionType:
+          type: string
+          example: Employee
+        positionStatus:
+          type: string
+          example: Current
+        positionStart:
+          type: string
+          format: date
+          example: '2011-05-01'
+        positionFinish:
+          type: string
+          format: date
+          example: '2015-05-01'
+    PersonNameDto:
+      type: object
+      properties:
+        full:
+          type: string
+          example: John Taylor
+        first:
+          type: string
+          example: John
+        last:
+          type: string
+          example: Taylor
+        middle:
+          type: string
+          example: M.
+        prefix:
+          type: string
+          example: Mr.
+        suffix:
+          type: string
+          example: JD
+    DealRoleDto:
+      type: object
+      properties:
+        dealId:
+          type: string
+          example: 120048-04T
+        dealDate:
+          type: string
+          format: date
+          example: '2019-01-08'
+        companyId:
+          type: string
+          example: 12774-34
+        companyName:
+          type: string
+          example: Synamedia
+        representingId:
+          type: string
+          example: 10352-44
+        representingName:
+          type: string
+          example: Herbert Smith Freehills
+    DuplicatedItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 420962-68
+        occurrence:
+          type: integer
+          format: int32
+          example: 1
     FailedItemDto:
       type: object
       properties:
@@ -794,28 +852,99 @@ components:
         message:
           type: string
           example: '{LIMIT_TYPE} rate limit exceeded. Please wait until rate limit period is renewed'
-    DealRoleDto:
+    DictionaryDto:
       type: object
       properties:
-        dealId:
+        code:
           type: string
-          example: 120048-04T
-        dealDate:
+          example: Dictionary code
+        description:
           type: string
-          format: date
-          example: '2019-01-08'
-        companyId:
+          example: Dictionary Code Description
+    BulkRequestDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RequestItemDto'
+    BulkResultDtoPersonBioDto:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/BulkStatsDto'
+        matched:
+          type: array
+          items:
+            $ref: '#/components/schemas/PersonBioDto'
+        noData:
+          type: array
+          items:
+            $ref: '#/components/schemas/NoDataItemDto'
+        unmatched:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailedItemDto'
+        duplicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicatedItemDto'
+    NoDataItemDto:
+      type: object
+      properties:
+        id:
           type: string
-          example: 12774-34
-        companyName:
+    BulkStatsDto:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+        matched:
+          type: integer
+          format: int32
+        noData:
+          type: integer
+          format: int32
+        unmatched:
+          type: integer
+          format: int32
+        duplicates:
+          type: integer
+          format: int32
+    PersonEducationWorkDto:
+      type: object
+      properties:
+        personId:
           type: string
-          example: Synamedia
-        representingId:
+          example: 195066-01P
+        fullName:
           type: string
-          example: 10352-44
-        representingName:
-          type: string
-          example: Herbert Smith Freehills
+          example: John Taylor
+        education:
+          type: array
+          items:
+            $ref: '#/components/schemas/PersonEducationInfoDto'
+        companyRoles:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyRoleDto'
+        boardSeats:
+          type: array
+          items:
+            $ref: '#/components/schemas/BoardSeatDto'
+        currentAdvisoryRoles:
+          type: array
+          items:
+            $ref: '#/components/schemas/CurrentAdvisoryRoleDto'
+        dealRoles:
+          type: array
+          items:
+            $ref: '#/components/schemas/DealRoleDto'
+        fundRoles:
+          type: array
+          items:
+            $ref: '#/components/schemas/FundRoleDto'
     PersonEducationInfoDto:
       type: object
       properties:
@@ -829,21 +958,16 @@ components:
           type: integer
           format: int32
           example: 2006
-    NoDataItemDto:
+    UpdateDto:
       type: object
       properties:
-        id:
-          type: string
-    DuplicatedItemDto:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 420962-68
-        occurrence:
-          type: integer
-          format: int32
-          example: 1
+        updates:
+          type: object
+          additionalProperties:
+            type: string
+            example: '{"Endpoint name":"Update Status (true/false)"}'
+          example:
+            Endpoint name: Update Status (true/false)
     PersonBioDto:
       type: object
       properties:
@@ -882,218 +1006,15 @@ components:
           example: Partner
         primaryOffice:
           $ref: '#/components/schemas/EntityOfficeDto'
-    BoardSeatDto:
+    AdvancedSearchPageDtoPersonAdvancedSearchResultDto_SearchView:
       type: object
       properties:
-        boardCompanyId:
-          type: string
-          example: 41161-24
-        boardCompanyName:
-          type: string
-          example: Nvidia
-        boardRepresentingId:
-          type: string
-          example: 10067-86
-        boardRepresentingName:
-          type: string
-          example: Cooley
-        positionStatus:
-          type: string
-          example: Current
-        boardStart:
-          type: string
-          format: date
-          example: '2009-01-01'
-        boardFinish:
-          type: string
-          format: date
-    CompanyRoleDto:
-      type: object
-      properties:
-        companyId:
-          type: string
-          example: 10352-44
-        companyName:
-          type: string
-          example: Herbert Smith Freehills
-        position:
-          type: string
-          example: Partner
-        positionType:
-          type: string
-          example: Employee
-        positionStatus:
-          type: string
-          example: Current
-        positionStart:
-          type: string
-          format: date
-          example: '2011-05-01'
-        positionFinish:
-          type: string
-          format: date
-          example: '2015-05-01'
-    PersonEducationWorkDto:
-      type: object
-      properties:
-        personId:
-          type: string
-          example: 195066-01P
-        fullName:
-          type: string
-          example: John Taylor
-        education:
-          type: array
-          items:
-            $ref: '#/components/schemas/PersonEducationInfoDto'
-        companyRoles:
-          type: array
-          items:
-            $ref: '#/components/schemas/CompanyRoleDto'
-        boardSeats:
-          type: array
-          items:
-            $ref: '#/components/schemas/BoardSeatDto'
-        currentAdvisoryRoles:
-          type: array
-          items:
-            $ref: '#/components/schemas/CurrentAdvisoryRoleDto'
-        dealRoles:
-          type: array
-          items:
-            $ref: '#/components/schemas/DealRoleDto'
-        fundRoles:
-          type: array
-          items:
-            $ref: '#/components/schemas/FundRoleDto'
-    CurrentAdvisoryRoleDto:
-      type: object
-      properties:
-        companyId:
-          type: string
-          example: 164076-94
-        companyName:
-          type: string
-          example: Spacemob
-        companyType:
-          $ref: '#/components/schemas/DictionaryDto'
-        position:
-          type: string
-          example: Advisor
-        positionStart:
-          type: string
-          format: date
-          example: '2014-08-23'
-    FundRoleDto:
-      type: object
-      properties:
-        fundId:
-          type: string
-          example: 15021-28F
-        fundName:
-          type: string
-          example: Crossroads Capital II
-        investorId:
-          type: string
-          example: 62181-28
-        investorName:
-          type: string
-          example: The We Company
-        representingId:
-          type: string
-          example: 172739-35
-        representingName:
-          type: string
-          example: DocuTouch
-    SearchPageStatsDto_SearchView:
-      type: object
-      properties:
-        total:
-          type: integer
-          format: int32
-          example: 1
-        perPage:
-          type: integer
-          format: int32
-          example: 25
-        page:
-          type: integer
-          format: int32
-          example: 1
-        lastPage:
-          type: integer
-          format: int32
-          example: 1
-    BulkRequestDto:
-      type: object
-      properties:
+        stats:
+          $ref: '#/components/schemas/SearchPageStatsDto_SearchView'
         items:
           type: array
           items:
-            $ref: '#/components/schemas/RequestItemDto'
-    EntityOfficeDto:
-      type: object
-      properties:
-        location:
-          type: string
-          example: Chicago, IL
-        addressLine1:
-          type: string
-          example: 69 West Monroe Street
-        addressLine2:
-          type: string
-          example: Suite 190
-        city:
-          type: string
-          example: Chicago
-        stateProvince:
-          type: string
-          example: IL
-        postCode:
-          type: string
-          example: '60661'
-        country:
-          type: string
-          example: United States
-        phone:
-          type: string
-          example: +1 (312) 902-6655
-        fax:
-          type: string
-          example: +1 (312) 902-5655
-        email:
-          type: string
-          example: office.email@gmail.com
-        globalRegion:
-          type: string
-          example: Americas
-        globalSubRegion:
-          type: string
-          example: North America
-    PersonAdvancedSearchResultDto_SearchView:
-      type: object
-      properties:
-        personId:
-          type: string
-          example: 11397-61P
-        personName:
-          type: string
-          example: Stephen Neal
-        firmId:
-          type: string
-          example: 164076-94
-        sandbox:
-          type: boolean
-          example: false
-    DictionaryDto:
-      type: object
-      properties:
-        code:
-          type: string
-          example: Dictionary code
-        description:
-          type: string
-          example: Dictionary Code Description
+            $ref: '#/components/schemas/PersonAdvancedSearchResultDto_SearchView'
     ErrorDto:
       type: object
       properties:
@@ -1171,64 +1092,148 @@ components:
           - 511 NETWORK_AUTHENTICATION_REQUIRED
         message:
           type: string
-    PersonNameDto:
-      type: object
-      properties:
-        full:
-          type: string
-          example: John Taylor
-        first:
-          type: string
-          example: John
-        last:
-          type: string
-          example: Taylor
-        middle:
-          type: string
-          example: M.
-        prefix:
-          type: string
-          example: Mr.
-        suffix:
-          type: string
-          example: JD
-    BulkStatsDto:
+    SearchPageStatsDto_SearchView:
       type: object
       properties:
         total:
           type: integer
           format: int32
-        matched:
+          example: 1
+        perPage:
           type: integer
           format: int32
-        noData:
+          example: 25
+        page:
           type: integer
           format: int32
-        unmatched:
+          example: 1
+        lastPage:
           type: integer
           format: int32
-        duplicates:
-          type: integer
-          format: int32
-    AdvancedSearchPageDtoPersonAdvancedSearchResultDto_SearchView:
+          example: 1
+    RequestItemDto:
       type: object
       properties:
-        stats:
-          $ref: '#/components/schemas/SearchPageStatsDto_SearchView'
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/PersonAdvancedSearchResultDto_SearchView'
-    UpdateDto:
+        id:
+          type: string
+    PersonAdvancedSearchResultDto_SearchView:
       type: object
       properties:
-        updates:
-          type: object
-          additionalProperties:
-            type: string
-            example: '{"Endpoint name":"Update Status (true/false)"}'
-          example:
-            Endpoint name: Update Status (true/false)
+        personId:
+          type: string
+          example: 11397-61P
+        personName:
+          type: string
+          example: Stephen Neal
+        firmId:
+          type: string
+          example: 164076-94
+        sandbox:
+          type: boolean
+          example: false
+    EntityOfficeDto:
+      type: object
+      properties:
+        location:
+          type: string
+          example: Chicago, IL
+        addressLine1:
+          type: string
+          example: 69 West Monroe Street
+        addressLine2:
+          type: string
+          example: Suite 190
+        city:
+          type: string
+          example: Chicago
+        stateProvince:
+          type: string
+          example: IL
+        postCode:
+          type: string
+          example: '60661'
+        country:
+          type: string
+          example: United States
+        phone:
+          type: string
+          example: +1 (312) 902-6655
+        fax:
+          type: string
+          example: +1 (312) 902-5655
+        email:
+          type: string
+          example: office.email@gmail.com
+        globalRegion:
+          type: string
+          example: Americas
+        globalSubRegion:
+          type: string
+          example: North America
+    BoardSeatDto:
+      type: object
+      properties:
+        boardCompanyId:
+          type: string
+          example: 41161-24
+        boardCompanyName:
+          type: string
+          example: Nvidia
+        boardRepresentingId:
+          type: string
+          example: 10067-86
+        boardRepresentingName:
+          type: string
+          example: Cooley
+        positionStatus:
+          type: string
+          example: Current
+        boardStart:
+          type: string
+          format: date
+          example: '2009-01-01'
+        boardFinish:
+          type: string
+          format: date
+    CurrentAdvisoryRoleDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+          example: 164076-94
+        companyName:
+          type: string
+          example: Spacemob
+        companyType:
+          $ref: '#/components/schemas/DictionaryDto'
+        position:
+          type: string
+          example: Advisor
+        positionStart:
+          type: string
+          format: date
+          example: '2014-08-23'
+    FundRoleDto:
+      type: object
+      properties:
+        fundId:
+          type: string
+          example: 15021-28F
+        fundName:
+          type: string
+          example: Crossroads Capital II
+        investorId:
+          type: string
+          example: 62181-28
+        investorName:
+          type: string
+          example: The We Company
+        representingId:
+          type: string
+          example: 172739-35
+        representingName:
+          type: string
+          example: DocuTouch
     PersonContactDto:
       type: object
       properties:
@@ -1247,11 +1252,6 @@ components:
         email:
           type: string
           example: john.taylor@hsf.com
-    RequestItemDto:
-      type: object
-      properties:
-        id:
-          type: string
   securitySchemes:
     pbToken:
       type: apiKey

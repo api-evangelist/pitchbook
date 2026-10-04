@@ -798,25 +798,73 @@ paths:
       - pbToken: []
 components:
   schemas:
-    DealDto:
+    CreditNewsBulkResponseDto:
       type: object
       properties:
-        dealId:
-          type: string
-          example: 108911-98T
-    ResearchReportDto:
+        stats:
+          $ref: '#/components/schemas/CreditNewsBulkStatsDto'
+        found:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreditNewsDto'
+        notFound:
+          type: array
+          items:
+            type: integer
+            format: int32
+        duplicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicatedCreditNewsItemDto'
+    CreditNewsBulkStatsDto:
       type: object
       properties:
-        reportId:
+        total:
           type: integer
           format: int32
-          example: 324
+          example: 1
+        found:
+          type: integer
+          format: int32
+          example: 1
+        notFound:
+          type: integer
+          format: int32
+          example: 0
+        duplicates:
+          type: integer
+          format: int32
+          example: 0
+    DuplicatedCreditNewsItemDto:
+      type: object
+      properties:
+        articleId:
+          type: integer
+          format: int32
+          example: 42096268
+        occurrence:
+          type: integer
+          format: int32
+          example: 1
+    CreditNewsSearchPageDto:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/CreditNewsStatsDto'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreditNewsItemDto'
+    CreditNewsItemDto:
+      type: object
+      properties:
+        articleId:
+          type: integer
+          format: int32
+          example: 5598589
         title:
           type: string
-          example: US High-Yield Bond Daily PlayBook
-        description:
-          type: string
-          example: US High-Yield Bond Daily PlayBook is a daily report that provides a comprehensive overview of the US high-yield bond market.
+          example: Angel Investor
         authors:
           type: array
           items:
@@ -824,39 +872,79 @@ components:
         regions:
           type: array
           example:
-          - United States
+          - Europe
           items:
             type: string
-            example: '["United States"]'
+            example: '["Europe"]'
+        publishDate:
+          type: string
+          format: date-time
         assetClasses:
           type: array
           example:
-          - Bonds
+          - Leveraged Loans
           items:
             type: string
-            example: '["Bonds"]'
-        publishDate:
-          type: string
-          format: date
-          example: '2024-01-01'
-        reportType:
-          type: string
-          example: Snapshot
-        companies:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreditResearchCompanyDto'
-        purposes:
+            example: '["Leveraged Loans"]'
+        topics:
           type: array
           example:
-          - M&A
+          - Break
           items:
             type: string
-            example: '["M&A"]'
-        attachments:
+            example: '["Break"]'
+        issuer:
+          $ref: '#/components/schemas/NewsBusinessEntityDto'
+        lender:
+          $ref: '#/components/schemas/NewsBusinessEntityDto'
+        sponsor:
+          $ref: '#/components/schemas/NewsBusinessEntityDto'
+        deal:
+          $ref: '#/components/schemas/DealDto'
+    CreditNewsBulkRequestDto:
+      type: object
+      properties:
+        items:
           type: array
           items:
-            $ref: '#/components/schemas/ReportFileDto'
+            $ref: '#/components/schemas/CreditNewsBulkItemDto'
+    AttachmentDto:
+      type: object
+      properties:
+        name:
+          type: string
+          example: LCD Research HY Monthly May.pdf
+        url:
+          type: string
+          example: https://api.pitchbook.com/credit-analysis/credit-news/12503248/attachment?name=LCD%20Research%20HY%20Monthly%20May.pdf
+    CreditResearchCompanyDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+          example: 432919-99
+        companyName:
+          type: string
+          example: Aris Mining
+    CreditResearchStatsDto:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+          example: 226326
+        perPage:
+          type: integer
+          format: int32
+          example: 25
+        page:
+          type: integer
+          format: int32
+          example: 1
+        lastPage:
+          type: integer
+          format: int32
+          example: 75442
     NewsBusinessEntityDto:
       type: object
       properties:
@@ -866,6 +954,25 @@ components:
         name:
           type: string
           example: Wafra Partners
+    CreditNewsStatsDto:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+          example: 226326
+        perPage:
+          type: integer
+          format: int32
+          example: 25
+        page:
+          type: integer
+          format: int32
+          example: 1
+        lastPage:
+          type: integer
+          format: int32
+          example: 75442
     CreditNewsDto:
       type: object
       properties:
@@ -919,181 +1026,12 @@ components:
             $ref: '#/components/schemas/AttachmentDto'
         deal:
           $ref: '#/components/schemas/DealDto'
-    CreditNewsBulkStatsDto:
-      type: object
-      properties:
-        total:
-          type: integer
-          format: int32
-          example: 1
-        found:
-          type: integer
-          format: int32
-          example: 1
-        notFound:
-          type: integer
-          format: int32
-          example: 0
-        duplicates:
-          type: integer
-          format: int32
-          example: 0
-    CreditResearchPageDto:
-      type: object
-      properties:
-        stats:
-          $ref: '#/components/schemas/CreditResearchStatsDto'
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResearchReportDto'
     AuthorDto:
       type: object
       properties:
         authorName:
           type: string
           example: Jack Jonson
-    CreditNewsStatsDto:
-      type: object
-      properties:
-        total:
-          type: integer
-          format: int32
-          example: 226326
-        perPage:
-          type: integer
-          format: int32
-          example: 25
-        page:
-          type: integer
-          format: int32
-          example: 1
-        lastPage:
-          type: integer
-          format: int32
-          example: 75442
-    CreditResearchStatsDto:
-      type: object
-      properties:
-        total:
-          type: integer
-          format: int32
-          example: 226326
-        perPage:
-          type: integer
-          format: int32
-          example: 25
-        page:
-          type: integer
-          format: int32
-          example: 1
-        lastPage:
-          type: integer
-          format: int32
-          example: 75442
-    CreditNewsItemDto:
-      type: object
-      properties:
-        articleId:
-          type: integer
-          format: int32
-          example: 5598589
-        title:
-          type: string
-          example: Angel Investor
-        authors:
-          type: array
-          items:
-            $ref: '#/components/schemas/AuthorDto'
-        regions:
-          type: array
-          example:
-          - Europe
-          items:
-            type: string
-            example: '["Europe"]'
-        publishDate:
-          type: string
-          format: date-time
-        assetClasses:
-          type: array
-          example:
-          - Leveraged Loans
-          items:
-            type: string
-            example: '["Leveraged Loans"]'
-        topics:
-          type: array
-          example:
-          - Break
-          items:
-            type: string
-            example: '["Break"]'
-        issuer:
-          $ref: '#/components/schemas/NewsBusinessEntityDto'
-        lender:
-          $ref: '#/components/schemas/NewsBusinessEntityDto'
-        sponsor:
-          $ref: '#/components/schemas/NewsBusinessEntityDto'
-        deal:
-          $ref: '#/components/schemas/DealDto'
-    DuplicatedCreditNewsItemDto:
-      type: object
-      properties:
-        articleId:
-          type: integer
-          format: int32
-          example: 42096268
-        occurrence:
-          type: integer
-          format: int32
-          example: 1
-    CreditNewsSearchPageDto:
-      type: object
-      properties:
-        stats:
-          $ref: '#/components/schemas/CreditNewsStatsDto'
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreditNewsItemDto'
-    AttachmentDto:
-      type: object
-      properties:
-        name:
-          type: string
-          example: LCD Research HY Monthly May.pdf
-        url:
-          type: string
-          example: https://api.pitchbook.com/credit-analysis/credit-news/12503248/attachment?name=LCD%20Research%20HY%20Monthly%20May.pdf
-    CreditNewsBulkRequestDto:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreditNewsBulkItemDto'
-    CreditResearchCompanyDto:
-      type: object
-      properties:
-        companyId:
-          type: string
-          example: 432919-99
-        companyName:
-          type: string
-          example: Aris Mining
-    ReportFileDto:
-      type: object
-      properties:
-        name:
-          type: string
-          example: September_2023_Global_Loan_Statistics_Report.pdf
-        type:
-          type: string
-          example: PDF
-        url:
-          type: string
-          example: https://api.pitchbook.com/credit-analysis/credit-research/246/download?fileName=September_2023_Global_Loan_Statistics_Report.pdf&fileType=PDF
     ErrorDto:
       type: object
       properties:
@@ -1171,24 +1109,92 @@ components:
           - 511 NETWORK_AUTHENTICATION_REQUIRED
         message:
           type: string
-    CreditNewsBulkResponseDto:
+    CreditResearchPageDto:
       type: object
       properties:
         stats:
-          $ref: '#/components/schemas/CreditNewsBulkStatsDto'
-        found:
+          $ref: '#/components/schemas/CreditResearchStatsDto'
+        items:
           type: array
           items:
-            $ref: '#/components/schemas/CreditNewsDto'
-        notFound:
+            $ref: '#/components/schemas/ResearchReportDto'
+    DealDto:
+      type: object
+      properties:
+        dealId:
+          type: string
+          example: 108911-98T
+    ReportFileDto:
+      type: object
+      properties:
+        name:
+          type: string
+          example: September_2023_Global_Loan_Statistics_Report.pdf
+        type:
+          type: string
+          example: PDF
+        url:
+          type: string
+          example: https://api.pitchbook.com/credit-analysis/credit-research/246/download?fileName=September_2023_Global_Loan_Statistics_Report.pdf&fileType=PDF
+    ResearchReportDto:
+      type: object
+      properties:
+        reportId:
+          type: integer
+          format: int32
+          example: 324
+        title:
+          type: string
+          example: US High-Yield Bond Daily PlayBook
+        description:
+          type: string
+          example: US High-Yield Bond Daily PlayBook is a daily report that provides a comprehensive overview of the US high-yield bond market.
+        authors:
           type: array
           items:
-            type: integer
-            format: int32
-        duplicates:
+            $ref: '#/components/schemas/AuthorDto'
+        regions:
+          type: array
+          example:
+          - United States
+          items:
+            type: string
+            example: '["United States"]'
+        assetClasses:
+          type: array
+          example:
+          - Bonds
+          items:
+            type: string
+            example: '["Bonds"]'
+        publishDate:
+          type: string
+          format: date
+          example: '2024-01-01'
+        reportType:
+          type: string
+          example: Snapshot
+        companies:
           type: array
           items:
-            $ref: '#/components/schemas/DuplicatedCreditNewsItemDto'
+            $ref: '#/components/schemas/CreditResearchCompanyDto'
+        purposes:
+          type: array
+          example:
+          - M&A
+          items:
+            type: string
+            example: '["M&A"]'
+        attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReportFileDto'
+    CreditNewsBulkItemDto:
+      type: object
+      properties:
+        articleId:
+          type: integer
+          format: int32
     MostRecentCreditNewsDto:
       type: object
       properties:
@@ -1198,12 +1204,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CreditNewsItemDto'
-    CreditNewsBulkItemDto:
-      type: object
-      properties:
-        articleId:
-          type: integer
-          format: int32
   securitySchemes:
     pbToken:
       type: apiKey
