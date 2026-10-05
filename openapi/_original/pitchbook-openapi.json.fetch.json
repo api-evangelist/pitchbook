@@ -1,0 +1,12 @@
+{
+ "url": "https://api.pitchbook.com/api-docs",
+ "requested_url": "https://api.pitchbook.com/api-docs",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 451426,
+ "sha256": "87a01564def8606e1da413cf18fa0bee0e587a0e585ff7db9c12bc612c369969",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
