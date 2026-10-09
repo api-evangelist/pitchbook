@@ -1,19 +1,71 @@
-generated: '2026-09-21'
+generated: '2026-09-23'
 method: generated
-source: openapi/pitchbook-openapi.json
+source: openapi/pitchbook-account-information-api-openapi.yml, openapi/pitchbook-companies-api-openapi.yml,
+  openapi/pitchbook-credit-analysis-api-openapi.yml, openapi/pitchbook-deals-api-openapi.yml,
+  openapi/pitchbook-fundamentals-api-openapi.yml, openapi/pitchbook-funds-api-openapi.yml, openapi/pitchbook-general-api-openapi.yml,
+  openapi/pitchbook-investors-api-openapi.yml, openapi/pitchbook-limited-partners-api-openapi.yml,
+  openapi/pitchbook-patents-api-openapi.yml, openapi/pitchbook-people-api-openapi.yml, openapi/pitchbook-service-providers-api-openapi.yml
 description: Recommended x-agentic-access execution contracts, classified heuristically from
   the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
   audience per deployment. See research/curity/agentic-governance/.
 summary:
   operations: 130
   by_action_class:
-    connected: 107
-    acting: 23
+    connected: 130
   by_consequence:
-    read: 107
-    write: 23
+    read: 130
   human_in_the_loop_required: 0
 operations:
+- path: /contracts/history
+  method: get
+  operationId: getContractsHistory
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /credits/history
+  method: get
+  operationId: getCreditsBalanceStateByPeriod
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /calls/history
+  method: get
+  operationId: getEndpointUsageReport
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /calls/costs
+  method: get
+  operationId: getEnabledCallsInfo
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /limits
+  method: get
+  operationId: getLimitUsageReports
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
 - path: /companies/search
   method: get
   operationId: companySearch
@@ -38,18 +90,12 @@ operations:
   method: post
   operationId: getCompanyBulk
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /companies/{pbId}/bio
   method: get
   operationId: getCompanyBio
@@ -64,18 +110,12 @@ operations:
   method: post
   operationId: getBulkCompanyBio
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /companies/{pbId}/industries
   method: get
   operationId: getCompanyIndustry
@@ -90,18 +130,12 @@ operations:
   method: post
   operationId: getCompanyIndustryBulk
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /companies/{pbId}/active-investors
   method: get
   operationId: getCompanyActiveInvestors
@@ -116,18 +150,12 @@ operations:
   method: post
   operationId: getBulkCompanyActiveInvestor
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /companies/{pbId}/investors
   method: get
   operationId: getAllCompanyInvestors
@@ -142,18 +170,12 @@ operations:
   method: post
   operationId: getBulkAllCompanyInvestors
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /companies/{pbId}/general-service-providers
   method: get
   operationId: getCompanyGeneralServiceProviders
@@ -188,18 +210,12 @@ operations:
   method: post
   operationId: getCompanyMostRecentFinancingBulk
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /companies/{pbId}/most-recent-debt-financing
   method: get
   operationId: getCompanyLastRecentDebtFinancing
@@ -290,9 +306,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /companies/{pbId}/patents/search
+- path: /credit-analysis/credit-news/search
   method: get
-  operationId: patentSearch
+  operationId: creditNewsSearch
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -300,9 +316,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /companies/patents/{patentId}/detailed
+- path: /credit-analysis/credit-news/most-recent
   method: get
-  operationId: getPatentDetailed
+  operationId: getMostRecentCreditNews
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -310,9 +326,49 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /companies/patents/{patentId}/download
+- path: /credit-analysis/credit-news/{articleId}
   method: get
-  operationId: downloadPatent
+  operationId: getCreditNewsById
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /credit-analysis/credit-news
+  method: post
+  operationId: getBatchCreditNews
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /credit-analysis/credit-news/{articleId}/attachment
+  method: get
+  operationId: downloadAttachment
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /credit-analysis/credit-research/search
+  method: get
+  operationId: creditResearchSearch
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /credit-analysis/credit-research/{reportId}/download
+  method: get
+  operationId: creditResearchDownload
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -440,9 +496,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /search
+- path: /sandbox-entities
   method: get
-  operationId: generalSearch
+  operationId: getSandboxEntities
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -450,9 +506,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /{entityType}/search
+- path: /lookup-tables
   method: get
-  operationId: sharedSearch
+  operationId: getLookupTables
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -460,133 +516,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /entities/{pbId}/bio
+- path: /lookup-tables/structure
   method: get
-  operationId: getEntityBio
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /entities/bio
-  method: post
-  operationId: getBulkEntityBio
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /entities/{pbId}/people
-  method: get
-  operationId: getEntityPeople
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /entities/people
-  method: post
-  operationId: getBulkEntityPeople
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /entities/{pbId}/locations
-  method: get
-  operationId: getEntityLocations
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /entities/locations
-  method: post
-  operationId: getBulkEntityLocations
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /entities/{pbId}/affiliates
-  method: get
-  operationId: getEntityAffiliates
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /entities/affiliates
-  method: post
-  operationId: getBulkEntityAffiliate
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /entities/{pbId}/news
-  method: get
-  operationId: entityNews
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /entities/{pbId}/profile-download
-  method: get
-  operationId: downloadEntityProfile
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /entities/{pbId}/updates
-  method: get
-  operationId: getEntityUpdates
+  operationId: getLookupTablesStructure
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -618,18 +550,12 @@ operations:
   method: post
   operationId: getBulkFundBio
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /funds/{pbId}/benchmark
   method: get
   operationId: getFundBenchmark
@@ -770,6 +696,136 @@ operations:
     token:
       max-ttl: 3600
     audit: none
+- path: /search
+  method: get
+  operationId: generalSearch
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /{entityType}/search
+  method: get
+  operationId: sharedSearch
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /entities/{pbId}/bio
+  method: get
+  operationId: getEntityBio
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /entities/bio
+  method: post
+  operationId: getBulkEntityBio
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /entities/{pbId}/people
+  method: get
+  operationId: getEntityPeople
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /entities/people
+  method: post
+  operationId: getBulkEntityPeople
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /entities/{pbId}/locations
+  method: get
+  operationId: getEntityLocations
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /entities/locations
+  method: post
+  operationId: getBulkEntityLocations
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /entities/{pbId}/affiliates
+  method: get
+  operationId: getEntityAffiliates
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /entities/affiliates
+  method: post
+  operationId: getBulkEntityAffiliate
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /entities/{pbId}/news
+  method: get
+  operationId: entityNews
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /entities/{pbId}/profile-download
+  method: get
+  operationId: downloadEntityProfile
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /entities/{pbId}/updates
+  method: get
+  operationId: getEntityUpdates
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
 - path: /investors/search
   method: get
   operationId: investorSearch
@@ -794,18 +850,12 @@ operations:
   method: post
   operationId: getBulkInvestor
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /investors/{pbId}/bio
   method: get
   operationId: getInvestorBio
@@ -820,18 +870,12 @@ operations:
   method: post
   operationId: getBulkInvestorBio
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /investors/{pbId}/active-investments
   method: get
   operationId: getActiveInvestments
@@ -846,18 +890,12 @@ operations:
   method: post
   operationId: getBulkActiveInvestments
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /investors/{pbId}/investments
   method: get
   operationId: getAllInvestments
@@ -882,18 +920,12 @@ operations:
   method: post
   operationId: getBulkInvestmentPreferences
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /investors/{pbId}/funds
   method: get
   operationId: getInvestorFunds
@@ -908,18 +940,12 @@ operations:
   method: post
   operationId: getBulkInvestorFunds
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /investors/{pbId}/last-closed-fund
   method: get
   operationId: getInvestorLastClosedFund
@@ -994,18 +1020,12 @@ operations:
   method: post
   operationId: getBulkLimitedPartner
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /limited-partners/{pbId}/bio
   method: get
   operationId: getLpBio
@@ -1020,18 +1040,12 @@ operations:
   method: post
   operationId: getBulkLPBio
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /limited-partners/{pbId}/service-providers
   method: get
   operationId: getLpServiceProviders
@@ -1076,18 +1090,12 @@ operations:
   method: post
   operationId: getBulkLimitedPartnerTargetAllocations
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /limited-partners/{pbId}/commitments-detailed
   method: get
   operationId: getLpCommitmentsDetailed
@@ -1112,21 +1120,45 @@ operations:
   method: post
   operationId: getBulkLpCommitmentAggregates
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /limited-partners/{pbId}/updates
   method: get
   operationId: getCompanyUpdates_1
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /companies/{pbId}/patents/search
+  method: get
+  operationId: patentSearch
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /companies/patents/{patentId}/detailed
+  method: get
+  operationId: getPatentDetailed
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /companies/patents/{patentId}/download
+  method: get
+  operationId: downloadPatent
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -1158,18 +1190,12 @@ operations:
   method: post
   operationId: getBulkPersonBio
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /people/{pbId}/education-work
   method: get
   operationId: getPersonEducationWork
@@ -1224,18 +1250,12 @@ operations:
   method: post
   operationId: getBulkServiceProviderBio
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /service-providers/{pbId}/serviced-companies
   method: get
   operationId: getServicedCompanies
@@ -1289,162 +1309,6 @@ operations:
 - path: /service-providers/{pbId}/updates
   method: get
   operationId: getInvestorUpdates_1
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /credit-analysis/credit-news/search
-  method: get
-  operationId: creditNewsSearch
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /credit-analysis/credit-news/most-recent
-  method: get
-  operationId: getMostRecentCreditNews
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /credit-analysis/credit-news/{articleId}
-  method: get
-  operationId: getCreditNewsById
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /credit-analysis/credit-news
-  method: post
-  operationId: getBatchCreditNews
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /credit-analysis/credit-news/{articleId}/attachment
-  method: get
-  operationId: downloadAttachment
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /credit-analysis/credit-research/search
-  method: get
-  operationId: creditResearchSearch
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /credit-analysis/credit-research/{reportId}/download
-  method: get
-  operationId: creditResearchDownload
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /contracts/history
-  method: get
-  operationId: getContractsHistory
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /credits/history
-  method: get
-  operationId: getCreditsBalanceStateByPeriod
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /calls/history
-  method: get
-  operationId: getEndpointUsageReport
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /calls/costs
-  method: get
-  operationId: getEnabledCallsInfo
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /limits
-  method: get
-  operationId: getLimitUsageReports
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /sandbox-entities
-  method: get
-  operationId: getSandboxEntities
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /lookup-tables
-  method: get
-  operationId: getLookupTables
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /lookup-tables/structure
-  method: get
-  operationId: getLookupTablesStructure
   x-agentic-access:
     action-class: connected
     consequence: read
