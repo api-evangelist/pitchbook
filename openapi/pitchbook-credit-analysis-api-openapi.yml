@@ -798,63 +798,43 @@ paths:
       - pbToken: []
 components:
   schemas:
-    CreditNewsBulkResponseDto:
-      type: object
-      properties:
-        stats:
-          $ref: '#/components/schemas/CreditNewsBulkStatsDto'
-        found:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreditNewsDto'
-        notFound:
-          type: array
-          items:
-            type: integer
-            format: int32
-        duplicates:
-          type: array
-          items:
-            $ref: '#/components/schemas/DuplicatedCreditNewsItemDto'
-    CreditNewsBulkStatsDto:
+    CreditNewsStatsDto:
       type: object
       properties:
         total:
           type: integer
           format: int32
-          example: 1
-        found:
+          example: 226326
+        perPage:
+          type: integer
+          format: int32
+          example: 25
+        page:
           type: integer
           format: int32
           example: 1
-        notFound:
+        lastPage:
           type: integer
           format: int32
-          example: 0
-        duplicates:
-          type: integer
-          format: int32
-          example: 0
-    DuplicatedCreditNewsItemDto:
-      type: object
-      properties:
-        articleId:
-          type: integer
-          format: int32
-          example: 42096268
-        occurrence:
-          type: integer
-          format: int32
-          example: 1
-    CreditNewsSearchPageDto:
+          example: 75442
+    CreditResearchPageDto:
       type: object
       properties:
         stats:
-          $ref: '#/components/schemas/CreditNewsStatsDto'
+          $ref: '#/components/schemas/CreditResearchStatsDto'
         items:
           type: array
           items:
-            $ref: '#/components/schemas/CreditNewsItemDto'
+            $ref: '#/components/schemas/ResearchReportDto'
+    AttachmentDto:
+      type: object
+      properties:
+        name:
+          type: string
+          example: LCD Research HY Monthly May.pdf
+        url:
+          type: string
+          example: https://api.pitchbook.com/credit-analysis/credit-news/12503248/attachment?name=LCD%20Research%20HY%20Monthly%20May.pdf
     CreditNewsItemDto:
       type: object
       properties:
@@ -901,31 +881,15 @@ components:
           $ref: '#/components/schemas/NewsBusinessEntityDto'
         deal:
           $ref: '#/components/schemas/DealDto'
-    CreditNewsBulkRequestDto:
+    MostRecentCreditNewsDto:
       type: object
       properties:
+        stats:
+          $ref: '#/components/schemas/CreditNewsStatsDto'
         items:
           type: array
           items:
-            $ref: '#/components/schemas/CreditNewsBulkItemDto'
-    AttachmentDto:
-      type: object
-      properties:
-        name:
-          type: string
-          example: LCD Research HY Monthly May.pdf
-        url:
-          type: string
-          example: https://api.pitchbook.com/credit-analysis/credit-news/12503248/attachment?name=LCD%20Research%20HY%20Monthly%20May.pdf
-    CreditResearchCompanyDto:
-      type: object
-      properties:
-        companyId:
-          type: string
-          example: 432919-99
-        companyName:
-          type: string
-          example: Aris Mining
+            $ref: '#/components/schemas/CreditNewsItemDto'
     CreditResearchStatsDto:
       type: object
       properties:
@@ -954,25 +918,17 @@ components:
         name:
           type: string
           example: Wafra Partners
-    CreditNewsStatsDto:
+    DuplicatedCreditNewsItemDto:
       type: object
       properties:
-        total:
+        articleId:
           type: integer
           format: int32
-          example: 226326
-        perPage:
-          type: integer
-          format: int32
-          example: 25
-        page:
+          example: 42096268
+        occurrence:
           type: integer
           format: int32
           example: 1
-        lastPage:
-          type: integer
-          format: int32
-          example: 75442
     CreditNewsDto:
       type: object
       properties:
@@ -1032,6 +988,40 @@ components:
         authorName:
           type: string
           example: Jack Jonson
+    DealDto:
+      type: object
+      properties:
+        dealId:
+          type: string
+          example: 108911-98T
+    CreditNewsBulkRequestDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreditNewsBulkItemDto'
+    CreditResearchCompanyDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+          example: 432919-99
+        companyName:
+          type: string
+          example: Aris Mining
+    ReportFileDto:
+      type: object
+      properties:
+        name:
+          type: string
+          example: September_2023_Global_Loan_Statistics_Report.pdf
+        type:
+          type: string
+          example: PDF
+        url:
+          type: string
+          example: https://api.pitchbook.com/credit-analysis/credit-research/246/download?fileName=September_2023_Global_Loan_Statistics_Report.pdf&fileType=PDF
     ErrorDto:
       type: object
       properties:
@@ -1109,33 +1099,6 @@ components:
           - 511 NETWORK_AUTHENTICATION_REQUIRED
         message:
           type: string
-    CreditResearchPageDto:
-      type: object
-      properties:
-        stats:
-          $ref: '#/components/schemas/CreditResearchStatsDto'
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResearchReportDto'
-    DealDto:
-      type: object
-      properties:
-        dealId:
-          type: string
-          example: 108911-98T
-    ReportFileDto:
-      type: object
-      properties:
-        name:
-          type: string
-          example: September_2023_Global_Loan_Statistics_Report.pdf
-        type:
-          type: string
-          example: PDF
-        url:
-          type: string
-          example: https://api.pitchbook.com/credit-analysis/credit-research/246/download?fileName=September_2023_Global_Loan_Statistics_Report.pdf&fileType=PDF
     ResearchReportDto:
       type: object
       properties:
@@ -1189,13 +1152,44 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ReportFileDto'
-    CreditNewsBulkItemDto:
+    CreditNewsBulkResponseDto:
       type: object
       properties:
-        articleId:
+        stats:
+          $ref: '#/components/schemas/CreditNewsBulkStatsDto'
+        found:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreditNewsDto'
+        notFound:
+          type: array
+          items:
+            type: integer
+            format: int32
+        duplicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicatedCreditNewsItemDto'
+    CreditNewsBulkStatsDto:
+      type: object
+      properties:
+        total:
           type: integer
           format: int32
-    MostRecentCreditNewsDto:
+          example: 1
+        found:
+          type: integer
+          format: int32
+          example: 1
+        notFound:
+          type: integer
+          format: int32
+          example: 0
+        duplicates:
+          type: integer
+          format: int32
+          example: 0
+    CreditNewsSearchPageDto:
       type: object
       properties:
         stats:
@@ -1204,6 +1198,12 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CreditNewsItemDto'
+    CreditNewsBulkItemDto:
+      type: object
+      properties:
+        articleId:
+          type: integer
+          format: int32
   securitySchemes:
     pbToken:
       type: apiKey

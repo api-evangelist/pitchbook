@@ -2542,96 +2542,35 @@ paths:
       - pbToken: []
 components:
   schemas:
-    EmployeeHistoryDto:
-      type: object
-      properties:
-        asOfDate:
-          type: string
-          format: date
-        employeeCount:
-          type: integer
-          format: int64
-    CompanyBioDto:
+    MostRecentPrivateCompanyFinancialsDto:
       type: object
       properties:
         companyId:
           type: string
           example: 54937-90
-        companyName:
-          $ref: '#/components/schemas/EntityNameDto'
-        parentCompanyId:
-          type: string
-          example: 62181-28
-        parentCompanyName:
-          type: string
-          example: The We Company
-        hqLocation:
-          $ref: '#/components/schemas/HqLocationDto'
-        description:
-          type: string
-          example: Provider of a mobile collaboration platform created to turn simple field updates into game-changing insights. The company's mobile collaboration platform contains a Web/tablet component, providing all stakeholders on a construction job mobile access to job-site data and also issues automated daily reports, job-site tasks and tracks field progress in real time, enabling professionals in the construction industry with a bird's-eye view of every project without stepping on-site.
-        financingStatus:
-          $ref: '#/components/schemas/DictionaryDto'
-        businessStatus:
-          $ref: '#/components/schemas/DictionaryDto'
-        ownershipStatus:
-          $ref: '#/components/schemas/DictionaryDto'
-        universe:
-          type: array
-          items:
-            $ref: '#/components/schemas/DictionaryDto'
-        website:
-          type: string
-          example: www.fieldlens.com
-        employees:
-          type: integer
-          format: int64
-          example: 25
-        employeeHistory:
-          type: array
-          items:
-            $ref: '#/components/schemas/EmployeeHistoryDto'
-        exchange:
-          type: string
-          example: PINX
-        ticker:
-          type: string
-          example: BASX
-        yearFounded:
+        period:
           type: integer
           format: int32
-          example: 2010
-        financingStatusNote:
-          $ref: '#/components/schemas/CompanyFinancingNoteDto'
-        totalMoneyRaised:
+          example: 2020
+        quarter:
+          type: string
+          example: 2Q 2020
+        endDate:
+          type: string
+          format: date
+          example: '2020-01-01'
+        enterpriseValue:
           $ref: '#/components/schemas/MoneyDto'
-        sicCodes:
-          type: array
-          items:
-            $ref: '#/components/schemas/DictionaryDto'
-        morningstarCode:
-          description: Deprecated. Always empty.
-          deprecated: true
-          allOf:
-          - $ref: '#/components/schemas/DictionaryDto'
-        cikCode:
-          type: string
-          example: '1554436'
-        companySocialURLs:
-          $ref: '#/components/schemas/CompanySocialDto'
-        pitchBookProfileLink:
-          type: string
-    EntityNameDto:
-      type: object
-      properties:
-        formalName:
-          type: string
-        alsoKnownAs:
-          type: string
-        legalName:
-          type: string
-        formerlyKnownAs:
-          type: string
+        revenue:
+          $ref: '#/components/schemas/MoneyDto'
+        netIncome:
+          $ref: '#/components/schemas/MoneyDto'
+        ebitda:
+          $ref: '#/components/schemas/MoneyDto'
+        totalAssets:
+          $ref: '#/components/schemas/MoneyDto'
+        totalDebt:
+          $ref: '#/components/schemas/MoneyDto'
     GeneralServiceProviderDto:
       type: object
       properties:
@@ -2652,6 +2591,284 @@ components:
             $ref: '#/components/schemas/EntityTypeDto'
         serviceProvided:
           $ref: '#/components/schemas/DictionaryDto'
+    MoneyDto:
+      type: object
+      properties:
+        amount:
+          type: number
+          example: 17039.27
+        currency:
+          type: string
+          example: USD
+        nativeAmount:
+          type: number
+          example: 15689
+        nativeCurrency:
+          type: string
+          example: EUR
+        estimated:
+          type: boolean
+          example: false
+    EntityNameDto:
+      type: object
+      properties:
+        formalName:
+          type: string
+        alsoKnownAs:
+          type: string
+        legalName:
+          type: string
+        formerlyKnownAs:
+          type: string
+    CompanySocialDto:
+      type: object
+      properties:
+        facebookProfileUrl:
+          type: string
+        twitterProfileUrl:
+          type: string
+        linkedInProfileUrl:
+          type: string
+    PredictionDriversDto:
+      type: object
+      properties:
+        marketReturns:
+          $ref: '#/components/schemas/DriverCategoryDto'
+        comparablePerformance:
+          $ref: '#/components/schemas/DriverCategoryDto'
+        companySpecificSignals:
+          $ref: '#/components/schemas/DriverCategoryDto'
+    EstimateDto:
+      type: object
+      properties:
+        estimationDate:
+          type: string
+          format: date
+          example: '2025-12-31'
+        valuationEstimate:
+          $ref: '#/components/schemas/MoneyDto'
+        estimateRangeLow:
+          $ref: '#/components/schemas/MoneyDto'
+        estimateRangeHigh:
+          $ref: '#/components/schemas/MoneyDto'
+    BulkResultDtoCompanyMostRecentFinancingDto:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/BulkStatsDto'
+        matched:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyMostRecentFinancingDto'
+        noData:
+          type: array
+          items:
+            $ref: '#/components/schemas/NoDataItemDto'
+        unmatched:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailedItemDto'
+        duplicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicatedItemDto'
+    ValuationEstimatesDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+          example: 54937-90
+        companyName:
+          type: string
+          example: FieldLens
+        estimationDate:
+          type: string
+          format: date
+          example: '2020-01-01'
+        valuationEstimate:
+          $ref: '#/components/schemas/MoneyDto'
+        confidenceScore:
+          type: string
+          example: MEDIUM
+        estimateGrowthRate:
+          type: number
+          format: double
+          example: 0.025
+        lastKnownValuationDate:
+          type: string
+          format: date
+          example: '2020-01-01'
+        estimateRangeLow:
+          $ref: '#/components/schemas/MoneyDto'
+        estimateRangeHigh:
+          $ref: '#/components/schemas/MoneyDto'
+        predictionDrivers:
+          $ref: '#/components/schemas/PredictionDriversDto'
+        historicalEstimates:
+          type: array
+          items:
+            $ref: '#/components/schemas/EstimateDto'
+    BulkStatsDto:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+        matched:
+          type: integer
+          format: int32
+        noData:
+          type: integer
+          format: int32
+        unmatched:
+          type: integer
+          format: int32
+        duplicates:
+          type: integer
+          format: int32
+    DuplicatedItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 420962-68
+        occurrence:
+          type: integer
+          format: int32
+          example: 1
+    EntityTypeDto:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/DictionaryDto'
+        primary:
+          type: boolean
+          example: false
+      example:
+        type:
+          code: IB
+          description: Investment Bank
+        primary: true
+    BulkResultDtoCompanyAllInvestorsDto:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/BulkStatsDto'
+        matched:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyAllInvestorsDto'
+        noData:
+          type: array
+          items:
+            $ref: '#/components/schemas/NoDataItemDto'
+        unmatched:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailedItemDto'
+        duplicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicatedItemDto'
+    LastDebtFinancingDto:
+      type: object
+      properties:
+        lastDebtFinancingType:
+          $ref: '#/components/schemas/DictionaryDto'
+        lastDebtFinancingAmount:
+          $ref: '#/components/schemas/MoneyDto'
+        seniority:
+          $ref: '#/components/schemas/DictionaryDto'
+        security:
+          $ref: '#/components/schemas/DictionaryDto'
+        subordination:
+          deprecated: true
+          allOf:
+          - $ref: '#/components/schemas/DictionaryDto'
+        term:
+          $ref: '#/components/schemas/DictionaryDto'
+        additionalDebtCharacteristics:
+          $ref: '#/components/schemas/AdditionalDebtCharacteristicsDto'
+        lenders:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityDto'
+    EntityDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 41349-37
+        name:
+          type: string
+          example: Max Technologies
+      example:
+        id: 25304-77F
+        name: AB Private Credit Investors Corp BDC
+    PrivateCompanyFinancialsDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+          example: 54937-90
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyFinancialsDto'
+    CompanyMostRecentDebtFinancingDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+          example: 54937-90
+        lastDebtFinancingDealId:
+          type: string
+        lastDebtFinancingDate:
+          type: string
+          format: date
+        lastDebtFinancing:
+          type: array
+          items:
+            $ref: '#/components/schemas/LastDebtFinancingDto'
+    SearchPageStatsDto_SearchView:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+          example: 1
+        perPage:
+          type: integer
+          format: int32
+          example: 25
+        page:
+          type: integer
+          format: int32
+          example: 1
+        lastPage:
+          type: integer
+          format: int32
+          example: 1
+    CompanyFinancingNoteDto:
+      type: object
+      properties:
+        note:
+          type: string
+          example: The company was acquired by WeWork for an undisclosed amount on June 7, 2017.
+        asOfDate:
+          type: string
+          format: date
+          example: '2017-06-08'
+    GecsClassificationDto:
+      type: object
+      properties:
+        gecsSector:
+          $ref: '#/components/schemas/DictionaryDto'
+        gecsIndustryGroup:
+          $ref: '#/components/schemas/DictionaryDto'
+        gecsIndustry:
+          $ref: '#/components/schemas/DictionaryDto'
+      description: GECS (Morningstar Global Equity Classification Structure) classifications. Empty when no GECS data is available. Distinct from PitchBook native industry classifications.
     AdditionalDebtCharacteristicsDto:
       type: object
       properties:
@@ -2675,48 +2892,68 @@ components:
           example: false
         rate:
           $ref: '#/components/schemas/DictionaryDto'
-    CompanyMostRecentFinancingDto:
+    CompanyDto:
       type: object
       properties:
         companyId:
           type: string
           example: 54937-90
-        lastFinancingDealId:
+        companyBio:
+          $ref: '#/components/schemas/CompanyBioDto'
+        companyIndustry:
+          $ref: '#/components/schemas/CompanyIndustryDto'
+        companyActiveInvestors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActiveInvestorDto'
+        companyAllInvestors:
+          $ref: '#/components/schemas/CompanyAllInvestorsDto'
+        companyMostRecentFinancing:
+          $ref: '#/components/schemas/CompanyMostRecentFinancingDto'
+    BulkRequestDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RequestItemDto'
+    CompanyFinancialsDto:
+      type: object
+      properties:
+        period:
           type: string
-          example: 92610-37T
-        lastFinancingDate:
-          type: string
-          format: date
-          example: '2017-08-11'
-        lastFinancingStatus:
-          $ref: '#/components/schemas/DictionaryDto'
-        lastFinancingSize:
-          $ref: '#/components/schemas/MoneyDto'
-        lastFinancingSizeStatus:
-          type: string
-          example: Estimated
-        lastFinancingValuation:
-          $ref: '#/components/schemas/MoneyDto'
-        lastFinancingValuationStatus:
-          type: string
-          example: Actual
-        lastFinancingDealType:
-          $ref: '#/components/schemas/DictionaryDto'
-        lastFinancingDealType2:
-          $ref: '#/components/schemas/DictionaryDto'
-        lastFinancingDealType3:
-          $ref: '#/components/schemas/DictionaryDto'
-        lastFinancingDealClass:
-          $ref: '#/components/schemas/DictionaryDto'
-        lastKnownValuation:
-          $ref: '#/components/schemas/MoneyDto'
-        lastKnownValuationDate:
+          example: Q2 2020
+        endDate:
           type: string
           format: date
-          example: '2017-08-11'
-        lastKnownValuationDealType:
-          $ref: '#/components/schemas/DictionaryDto'
-    BulkResultDtoCompanyAllInvestorsDto:
+          example: '2020-01-01'
+        enterpriseValue:
+          $ref: '#/components/schemas/MoneyDto'
+        revenue:
+          $ref: '#/components/schemas/MoneyDto'
+        netIncome:
+          $ref: '#/components/schemas/MoneyDto'
+        ebitda:
+          $ref: '#/components/schemas/MoneyDto'
+        totalAssets:
+          $ref: '#/components/schemas/MoneyDto'
+        totalDebt:
+          $ref: '#/components/schemas/MoneyDto'
+    CompanyEntityAdvancedSearchResultDto_SearchView:
+      type: object
+      properties:
+        companyId:
+          type: string
+          example: 11111-11
+        companyName:
+          type: string
+          example: facebook
+        sandbox:
+          type: boolean
+        website:
+          type: string
+          example: www.facebook.com
+    BulkResultDtoCompanyIndustryDto:
       type: object
       properties:
         stats:
@@ -2724,7 +2961,7 @@ components:
         matched:
           type: array
           items:
-            $ref: '#/components/schemas/CompanyAllInvestorsDto'
+            $ref: '#/components/schemas/CompanyIndustryDto'
         noData:
           type: array
           items:
@@ -2737,7 +2974,207 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DuplicatedItemDto'
-    BulkResultDtoCompanyDto:
+    AdvancedSearchPageDtoCompanyEntityAdvancedSearchResultDto_SearchView:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/SearchPageStatsDto_SearchView'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyEntityAdvancedSearchResultDto_SearchView'
+    CompanyAllInvestorsDto:
+      type: object
+      properties:
+        countAllInvestors:
+          type: integer
+          format: int32
+          example: 1
+        investors:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyInvestorDto'
+    EmergingSpaceDto:
+      type: object
+      properties:
+        spaceCode:
+          type: string
+          example: '327'
+        spaceName:
+          type: string
+          example: '2021 Emerging Space Brief: Clean Meat'
+        spaceDescription:
+          type: string
+          example: Emerging Space Briefs provide primers on emerging technologies or investment trends as identified by our emerging tech analysts
+    CompanyDealsDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+          example: 54937-90
+        dealId:
+          type: string
+          example: 109688-14T
+        dealDate:
+          type: string
+          format: date
+          example: '2004-10-02'
+        dealType1:
+          $ref: '#/components/schemas/DictionaryDto'
+        dealType2:
+          $ref: '#/components/schemas/DictionaryDto'
+        dealType3:
+          $ref: '#/components/schemas/DictionaryDto'
+        dealNumber:
+          type: integer
+          format: int32
+          example: 1
+    CompanyGeneralServiceProvidersDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+          example: 54937-90
+        currentGeneralServices:
+          type: array
+          items:
+            $ref: '#/components/schemas/GeneralServiceProviderDto'
+        formerGeneralServices:
+          type: array
+          items:
+            $ref: '#/components/schemas/GeneralServiceProviderDto'
+    CompanyInvestorDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+          example: 54937-90
+        investorId:
+          type: string
+          example: 111396-97
+        investorName:
+          type: string
+          example: Sequoia Economic Infrastructure Income Fund
+        investorTypes:
+          type: array
+          example:
+            type:
+              code: INFR
+              description: Infrastructure
+            primary: true
+          items:
+            $ref: '#/components/schemas/EntityTypeDto'
+        investorSince:
+          type: string
+          format: date
+          example: '2018-04-08'
+        investorExit:
+          type: string
+          format: date
+        investorStatus:
+          $ref: '#/components/schemas/DictionaryDto'
+    FailedItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 420962-68
+        reason:
+          type: string
+          example: 429 TOO_MANY_REQUESTS
+          enum:
+          - 400 BAD_REQUEST
+          - 401 UNAUTHORIZED
+          - 402 PAYMENT_REQUIRED
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 405 METHOD_NOT_ALLOWED
+          - 415 UNSUPPORTED_MEDIA_TYPE
+          - 429 TOO_MANY_REQUESTS
+          - 500 INTERNAL_SERVER_ERROR
+          - 503 SERVICE_UNAVAILABLE
+        message:
+          type: string
+          example: '{LIMIT_TYPE} rate limit exceeded. Please wait until rate limit period is renewed'
+    DictionaryDto:
+      type: object
+      properties:
+        code:
+          type: string
+          example: Dictionary code
+        description:
+          type: string
+          example: Dictionary Code Description
+    ExitPredictionDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+          example: 481224-88
+        predictionDate:
+          type: string
+          format: date
+          example: '2023-07-25'
+        opportunityScore:
+          type: integer
+          format: int32
+          example: 75
+        successClass:
+          type: string
+          example: Success
+        successProbability:
+          type: integer
+          format: int32
+          example: 71
+        noexitProbability:
+          type: integer
+          format: int32
+          example: 29
+        exitClass:
+          type: string
+          example: M&A
+        ipoProbability:
+          type: integer
+          format: int32
+          example: 1
+        mergeracquisitionProbability:
+          type: integer
+          format: int32
+          example: 70
+        vcDealNumber:
+          type: integer
+          format: int32
+          example: 2
+    UpdateDto:
+      type: object
+      properties:
+        updates:
+          type: object
+          additionalProperties:
+            type: string
+            example: '{"Endpoint name":"Update Status (true/false)"}'
+          example:
+            Endpoint name: Update Status (true/false)
+    NoDataItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+    DriverCategoryDto:
+      type: object
+      properties:
+        category:
+          type: string
+          example: Market Returns
+        contribution:
+          type: number
+          format: double
+          example: 0.4
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/DriverItemDto'
+    BulkResultDtoListActiveInvestorDto:
       type: object
       properties:
         stats:
@@ -2745,7 +3182,9 @@ components:
         matched:
           type: array
           items:
-            $ref: '#/components/schemas/CompanyDto'
+            type: array
+            items:
+              $ref: '#/components/schemas/ActiveInvestorDto'
         noData:
           type: array
           items:
@@ -2758,6 +3197,83 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DuplicatedItemDto'
+    ErrorDto:
+      type: object
+      properties:
+        reason:
+          type: string
+          enum:
+          - 100 CONTINUE
+          - 101 SWITCHING_PROTOCOLS
+          - 102 PROCESSING
+          - 103 EARLY_HINTS
+          - 103 CHECKPOINT
+          - 200 OK
+          - 201 CREATED
+          - 202 ACCEPTED
+          - 203 NON_AUTHORITATIVE_INFORMATION
+          - 204 NO_CONTENT
+          - 205 RESET_CONTENT
+          - 206 PARTIAL_CONTENT
+          - 207 MULTI_STATUS
+          - 208 ALREADY_REPORTED
+          - 226 IM_USED
+          - 300 MULTIPLE_CHOICES
+          - 301 MOVED_PERMANENTLY
+          - 302 FOUND
+          - 302 MOVED_TEMPORARILY
+          - 303 SEE_OTHER
+          - 304 NOT_MODIFIED
+          - 305 USE_PROXY
+          - 307 TEMPORARY_REDIRECT
+          - 308 PERMANENT_REDIRECT
+          - 400 BAD_REQUEST
+          - 401 UNAUTHORIZED
+          - 402 PAYMENT_REQUIRED
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 405 METHOD_NOT_ALLOWED
+          - 406 NOT_ACCEPTABLE
+          - 407 PROXY_AUTHENTICATION_REQUIRED
+          - 408 REQUEST_TIMEOUT
+          - 409 CONFLICT
+          - 410 GONE
+          - 411 LENGTH_REQUIRED
+          - 412 PRECONDITION_FAILED
+          - 413 PAYLOAD_TOO_LARGE
+          - 413 REQUEST_ENTITY_TOO_LARGE
+          - 414 URI_TOO_LONG
+          - 414 REQUEST_URI_TOO_LONG
+          - 415 UNSUPPORTED_MEDIA_TYPE
+          - 416 REQUESTED_RANGE_NOT_SATISFIABLE
+          - 417 EXPECTATION_FAILED
+          - 418 I_AM_A_TEAPOT
+          - 419 INSUFFICIENT_SPACE_ON_RESOURCE
+          - 420 METHOD_FAILURE
+          - 421 DESTINATION_LOCKED
+          - 422 UNPROCESSABLE_ENTITY
+          - 423 LOCKED
+          - 424 FAILED_DEPENDENCY
+          - 425 TOO_EARLY
+          - 426 UPGRADE_REQUIRED
+          - 428 PRECONDITION_REQUIRED
+          - 429 TOO_MANY_REQUESTS
+          - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
+          - 451 UNAVAILABLE_FOR_LEGAL_REASONS
+          - 500 INTERNAL_SERVER_ERROR
+          - 501 NOT_IMPLEMENTED
+          - 502 BAD_GATEWAY
+          - 503 SERVICE_UNAVAILABLE
+          - 504 GATEWAY_TIMEOUT
+          - 505 HTTP_VERSION_NOT_SUPPORTED
+          - 506 VARIANT_ALSO_NEGOTIATES
+          - 507 INSUFFICIENT_STORAGE
+          - 508 LOOP_DETECTED
+          - 509 BANDWIDTH_LIMIT_EXCEEDED
+          - 510 NOT_EXTENDED
+          - 511 NETWORK_AUTHENTICATION_REQUIRED
+        message:
+          type: string
     CompanySocialAnalyticsDto:
       type: object
       properties:
@@ -2846,36 +3362,209 @@ components:
           format: double
           example: 0.43
           deprecated: true
-    MostRecentPrivateCompanyFinancialsDto:
+    HqLocationDto:
+      type: object
+      properties:
+        city:
+          type: string
+          example: Chicago
+        stateProvince:
+          type: string
+          example: IL
+        postCode:
+          type: string
+          example: '60661'
+        country:
+          type: string
+          example: United States
+    CompanyBioDto:
       type: object
       properties:
         companyId:
           type: string
           example: 54937-90
-        period:
+        companyName:
+          $ref: '#/components/schemas/EntityNameDto'
+        parentCompanyId:
+          type: string
+          example: 62181-28
+        parentCompanyName:
+          type: string
+          example: The We Company
+        hqLocation:
+          $ref: '#/components/schemas/HqLocationDto'
+        description:
+          type: string
+          example: Provider of a mobile collaboration platform created to turn simple field updates into game-changing insights. The company's mobile collaboration platform contains a Web/tablet component, providing all stakeholders on a construction job mobile access to job-site data and also issues automated daily reports, job-site tasks and tracks field progress in real time, enabling professionals in the construction industry with a bird's-eye view of every project without stepping on-site.
+        financingStatus:
+          $ref: '#/components/schemas/DictionaryDto'
+        businessStatus:
+          $ref: '#/components/schemas/DictionaryDto'
+        ownershipStatus:
+          $ref: '#/components/schemas/DictionaryDto'
+        universe:
+          type: array
+          items:
+            $ref: '#/components/schemas/DictionaryDto'
+        website:
+          type: string
+          example: www.fieldlens.com
+        employees:
+          type: integer
+          format: int64
+          example: 25
+        employeeHistory:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmployeeHistoryDto'
+        exchange:
+          type: string
+          example: PINX
+        ticker:
+          type: string
+          example: BASX
+        yearFounded:
           type: integer
           format: int32
-          example: 2020
-        quarter:
+          example: 2010
+        financingStatusNote:
+          $ref: '#/components/schemas/CompanyFinancingNoteDto'
+        totalMoneyRaised:
+          $ref: '#/components/schemas/MoneyDto'
+        sicCodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/DictionaryDto'
+        morningstarCode:
+          description: Deprecated. Always empty.
+          deprecated: true
+          allOf:
+          - $ref: '#/components/schemas/DictionaryDto'
+        cikCode:
           type: string
-          example: 2Q 2020
-        endDate:
+          example: '1554436'
+        companySocialURLs:
+          $ref: '#/components/schemas/CompanySocialDto'
+        pitchBookProfileLink:
+          type: string
+    CompanyMostRecentFinancingDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+          example: 54937-90
+        lastFinancingDealId:
+          type: string
+          example: 92610-37T
+        lastFinancingDate:
           type: string
           format: date
-          example: '2020-01-01'
-        enterpriseValue:
+          example: '2017-08-11'
+        lastFinancingStatus:
+          $ref: '#/components/schemas/DictionaryDto'
+        lastFinancingSize:
           $ref: '#/components/schemas/MoneyDto'
-        revenue:
+        lastFinancingSizeStatus:
+          type: string
+          example: Estimated
+        lastFinancingValuation:
           $ref: '#/components/schemas/MoneyDto'
-        netIncome:
+        lastFinancingValuationStatus:
+          type: string
+          example: Actual
+        lastFinancingDealType:
+          $ref: '#/components/schemas/DictionaryDto'
+        lastFinancingDealType2:
+          $ref: '#/components/schemas/DictionaryDto'
+        lastFinancingDealType3:
+          $ref: '#/components/schemas/DictionaryDto'
+        lastFinancingDealClass:
+          $ref: '#/components/schemas/DictionaryDto'
+        lastKnownValuation:
           $ref: '#/components/schemas/MoneyDto'
-        ebitda:
-          $ref: '#/components/schemas/MoneyDto'
-        totalAssets:
-          $ref: '#/components/schemas/MoneyDto'
-        totalDebt:
-          $ref: '#/components/schemas/MoneyDto'
-    BulkResultDtoCompanyMostRecentFinancingDto:
+        lastKnownValuationDate:
+          type: string
+          format: date
+          example: '2017-08-11'
+        lastKnownValuationDealType:
+          $ref: '#/components/schemas/DictionaryDto'
+    ActiveInvestorDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+          example: 54937-90
+        investorId:
+          type: string
+          example: 111396-97
+        investorName:
+          type: string
+          example: Sequoia Economic Infrastructure Income Fund
+        investorTypes:
+          type: array
+          example:
+            type:
+              code: INFR
+              description: Infrastructure
+            primary: true
+          items:
+            $ref: '#/components/schemas/EntityTypeDto'
+        investorSince:
+          type: string
+          format: date
+          example: '2018-04-08'
+        holding:
+          type: string
+          example: Majority
+    EmployeeHistoryDto:
+      type: object
+      properties:
+        asOfDate:
+          type: string
+          format: date
+        employeeCount:
+          type: integer
+          format: int64
+    CompanyIndustryDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+          example: 54937-90
+        gecs:
+          type: array
+          description: GECS (Morningstar Global Equity Classification Structure) classifications. Empty when no GECS data is available. Distinct from PitchBook native industry classifications.
+          items:
+            $ref: '#/components/schemas/GecsClassificationDto'
+        industries:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyIndustryInfoDto'
+        verticals:
+          type: array
+          items:
+            $ref: '#/components/schemas/DictionaryDto'
+        keywords:
+          type: array
+          items:
+            type: string
+        emergingSpaces:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmergingSpaceDto'
+    CompanyIndustryInfoDto:
+      type: object
+      properties:
+        industrySector:
+          $ref: '#/components/schemas/DictionaryDto'
+        industryGroup:
+          $ref: '#/components/schemas/DictionaryDto'
+        industryCode:
+          $ref: '#/components/schemas/DictionaryDto'
+        primary:
+          type: boolean
+          example: true
+    BulkResultDtoCompanyBioDto:
       type: object
       properties:
         stats:
@@ -2883,7 +3572,7 @@ components:
         matched:
           type: array
           items:
-            $ref: '#/components/schemas/CompanyMostRecentFinancingDto'
+            $ref: '#/components/schemas/CompanyBioDto'
         noData:
           type: array
           items:
@@ -2896,48 +3585,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DuplicatedItemDto'
-    DuplicatedItemDto:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 420962-68
-        occurrence:
-          type: integer
-          format: int32
-          example: 1
-    FailedItemDto:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 420962-68
-        reason:
-          type: string
-          example: 429 TOO_MANY_REQUESTS
-          enum:
-          - 400 BAD_REQUEST
-          - 401 UNAUTHORIZED
-          - 402 PAYMENT_REQUIRED
-          - 403 FORBIDDEN
-          - 404 NOT_FOUND
-          - 405 METHOD_NOT_ALLOWED
-          - 415 UNSUPPORTED_MEDIA_TYPE
-          - 429 TOO_MANY_REQUESTS
-          - 500 INTERNAL_SERVER_ERROR
-          - 503 SERVICE_UNAVAILABLE
-        message:
-          type: string
-          example: '{LIMIT_TYPE} rate limit exceeded. Please wait until rate limit period is renewed'
-    DictionaryDto:
-      type: object
-      properties:
-        code:
-          type: string
-          example: Dictionary code
-        description:
-          type: string
-          example: Dictionary Code Description
     SimilarCompanyDto:
       type: object
       properties:
@@ -2983,658 +3630,11 @@ components:
         dealIdServiceProvided:
           type: string
           example: 13359-95T
-    CompanyDealsDto:
-      type: object
-      properties:
-        companyId:
-          type: string
-          example: 54937-90
-        dealId:
-          type: string
-          example: 109688-14T
-        dealDate:
-          type: string
-          format: date
-          example: '2004-10-02'
-        dealType1:
-          $ref: '#/components/schemas/DictionaryDto'
-        dealType2:
-          $ref: '#/components/schemas/DictionaryDto'
-        dealType3:
-          $ref: '#/components/schemas/DictionaryDto'
-        dealNumber:
-          type: integer
-          format: int32
-          example: 1
-    BulkResultDtoCompanyIndustryDto:
-      type: object
-      properties:
-        stats:
-          $ref: '#/components/schemas/BulkStatsDto'
-        matched:
-          type: array
-          items:
-            $ref: '#/components/schemas/CompanyIndustryDto'
-        noData:
-          type: array
-          items:
-            $ref: '#/components/schemas/NoDataItemDto'
-        unmatched:
-          type: array
-          items:
-            $ref: '#/components/schemas/FailedItemDto'
-        duplicates:
-          type: array
-          items:
-            $ref: '#/components/schemas/DuplicatedItemDto'
-    CompanyIndustryInfoDto:
-      type: object
-      properties:
-        industrySector:
-          $ref: '#/components/schemas/DictionaryDto'
-        industryGroup:
-          $ref: '#/components/schemas/DictionaryDto'
-        industryCode:
-          $ref: '#/components/schemas/DictionaryDto'
-        primary:
-          type: boolean
-          example: true
-    EstimateDto:
-      type: object
-      properties:
-        estimationDate:
-          type: string
-          format: date
-          example: '2025-12-31'
-        valuationEstimate:
-          $ref: '#/components/schemas/MoneyDto'
-        estimateRangeLow:
-          $ref: '#/components/schemas/MoneyDto'
-        estimateRangeHigh:
-          $ref: '#/components/schemas/MoneyDto'
-    CompanyMostRecentDebtFinancingDto:
-      type: object
-      properties:
-        companyId:
-          type: string
-          example: 54937-90
-        lastDebtFinancingDealId:
-          type: string
-        lastDebtFinancingDate:
-          type: string
-          format: date
-        lastDebtFinancing:
-          type: array
-          items:
-            $ref: '#/components/schemas/LastDebtFinancingDto'
-    BulkRequestDto:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/RequestItemDto'
-    NoDataItemDto:
-      type: object
-      properties:
-        id:
-          type: string
-    DriverCategoryDto:
-      type: object
-      properties:
-        category:
-          type: string
-          example: Market Returns
-        contribution:
-          type: number
-          format: double
-          example: 0.4
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/DriverItemDto'
-    PredictionDriversDto:
-      type: object
-      properties:
-        marketReturns:
-          $ref: '#/components/schemas/DriverCategoryDto'
-        comparablePerformance:
-          $ref: '#/components/schemas/DriverCategoryDto'
-        companySpecificSignals:
-          $ref: '#/components/schemas/DriverCategoryDto'
-    BulkStatsDto:
-      type: object
-      properties:
-        total:
-          type: integer
-          format: int32
-        matched:
-          type: integer
-          format: int32
-        noData:
-          type: integer
-          format: int32
-        unmatched:
-          type: integer
-          format: int32
-        duplicates:
-          type: integer
-          format: int32
-    CompanyAllInvestorsDto:
-      type: object
-      properties:
-        countAllInvestors:
-          type: integer
-          format: int32
-          example: 1
-        investors:
-          type: array
-          items:
-            $ref: '#/components/schemas/CompanyInvestorDto'
-    EntityTypeDto:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/DictionaryDto'
-        primary:
-          type: boolean
-          example: false
-      example:
-        type:
-          code: IB
-          description: Investment Bank
-        primary: true
-    UpdateDto:
-      type: object
-      properties:
-        updates:
-          type: object
-          additionalProperties:
-            type: string
-            example: '{"Endpoint name":"Update Status (true/false)"}'
-          example:
-            Endpoint name: Update Status (true/false)
-    ActiveInvestorDto:
-      type: object
-      properties:
-        companyId:
-          type: string
-          example: 54937-90
-        investorId:
-          type: string
-          example: 111396-97
-        investorName:
-          type: string
-          example: Sequoia Economic Infrastructure Income Fund
-        investorTypes:
-          type: array
-          example:
-            type:
-              code: INFR
-              description: Infrastructure
-            primary: true
-          items:
-            $ref: '#/components/schemas/EntityTypeDto'
-        investorSince:
-          type: string
-          format: date
-          example: '2018-04-08'
-        holding:
-          type: string
-          example: Majority
-    ValuationEstimatesDto:
-      type: object
-      properties:
-        companyId:
-          type: string
-          example: 54937-90
-        companyName:
-          type: string
-          example: FieldLens
-        estimationDate:
-          type: string
-          format: date
-          example: '2020-01-01'
-        valuationEstimate:
-          $ref: '#/components/schemas/MoneyDto'
-        confidenceScore:
-          type: string
-          example: MEDIUM
-        estimateGrowthRate:
-          type: number
-          format: double
-          example: 0.025
-        lastKnownValuationDate:
-          type: string
-          format: date
-          example: '2020-01-01'
-        estimateRangeLow:
-          $ref: '#/components/schemas/MoneyDto'
-        estimateRangeHigh:
-          $ref: '#/components/schemas/MoneyDto'
-        predictionDrivers:
-          $ref: '#/components/schemas/PredictionDriversDto'
-        historicalEstimates:
-          type: array
-          items:
-            $ref: '#/components/schemas/EstimateDto'
-    HqLocationDto:
-      type: object
-      properties:
-        city:
-          type: string
-          example: Chicago
-        stateProvince:
-          type: string
-          example: IL
-        postCode:
-          type: string
-          example: '60661'
-        country:
-          type: string
-          example: United States
-    MoneyDto:
-      type: object
-      properties:
-        amount:
-          type: number
-          example: 17039.27
-        currency:
-          type: string
-          example: USD
-        nativeAmount:
-          type: number
-          example: 15689
-        nativeCurrency:
-          type: string
-          example: EUR
-        estimated:
-          type: boolean
-          example: false
-    CompanyEntityAdvancedSearchResultDto_SearchView:
-      type: object
-      properties:
-        companyId:
-          type: string
-          example: 11111-11
-        companyName:
-          type: string
-          example: facebook
-        sandbox:
-          type: boolean
-        website:
-          type: string
-          example: www.facebook.com
-    ErrorDto:
-      type: object
-      properties:
-        reason:
-          type: string
-          enum:
-          - 100 CONTINUE
-          - 101 SWITCHING_PROTOCOLS
-          - 102 PROCESSING
-          - 103 EARLY_HINTS
-          - 103 CHECKPOINT
-          - 200 OK
-          - 201 CREATED
-          - 202 ACCEPTED
-          - 203 NON_AUTHORITATIVE_INFORMATION
-          - 204 NO_CONTENT
-          - 205 RESET_CONTENT
-          - 206 PARTIAL_CONTENT
-          - 207 MULTI_STATUS
-          - 208 ALREADY_REPORTED
-          - 226 IM_USED
-          - 300 MULTIPLE_CHOICES
-          - 301 MOVED_PERMANENTLY
-          - 302 FOUND
-          - 302 MOVED_TEMPORARILY
-          - 303 SEE_OTHER
-          - 304 NOT_MODIFIED
-          - 305 USE_PROXY
-          - 307 TEMPORARY_REDIRECT
-          - 308 PERMANENT_REDIRECT
-          - 400 BAD_REQUEST
-          - 401 UNAUTHORIZED
-          - 402 PAYMENT_REQUIRED
-          - 403 FORBIDDEN
-          - 404 NOT_FOUND
-          - 405 METHOD_NOT_ALLOWED
-          - 406 NOT_ACCEPTABLE
-          - 407 PROXY_AUTHENTICATION_REQUIRED
-          - 408 REQUEST_TIMEOUT
-          - 409 CONFLICT
-          - 410 GONE
-          - 411 LENGTH_REQUIRED
-          - 412 PRECONDITION_FAILED
-          - 413 PAYLOAD_TOO_LARGE
-          - 413 REQUEST_ENTITY_TOO_LARGE
-          - 414 URI_TOO_LONG
-          - 414 REQUEST_URI_TOO_LONG
-          - 415 UNSUPPORTED_MEDIA_TYPE
-          - 416 REQUESTED_RANGE_NOT_SATISFIABLE
-          - 417 EXPECTATION_FAILED
-          - 418 I_AM_A_TEAPOT
-          - 419 INSUFFICIENT_SPACE_ON_RESOURCE
-          - 420 METHOD_FAILURE
-          - 421 DESTINATION_LOCKED
-          - 422 UNPROCESSABLE_ENTITY
-          - 423 LOCKED
-          - 424 FAILED_DEPENDENCY
-          - 425 TOO_EARLY
-          - 426 UPGRADE_REQUIRED
-          - 428 PRECONDITION_REQUIRED
-          - 429 TOO_MANY_REQUESTS
-          - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
-          - 451 UNAVAILABLE_FOR_LEGAL_REASONS
-          - 500 INTERNAL_SERVER_ERROR
-          - 501 NOT_IMPLEMENTED
-          - 502 BAD_GATEWAY
-          - 503 SERVICE_UNAVAILABLE
-          - 504 GATEWAY_TIMEOUT
-          - 505 HTTP_VERSION_NOT_SUPPORTED
-          - 506 VARIANT_ALSO_NEGOTIATES
-          - 507 INSUFFICIENT_STORAGE
-          - 508 LOOP_DETECTED
-          - 509 BANDWIDTH_LIMIT_EXCEEDED
-          - 510 NOT_EXTENDED
-          - 511 NETWORK_AUTHENTICATION_REQUIRED
-        message:
-          type: string
-    CompanyGeneralServiceProvidersDto:
-      type: object
-      properties:
-        companyId:
-          type: string
-          example: 54937-90
-        currentGeneralServices:
-          type: array
-          items:
-            $ref: '#/components/schemas/GeneralServiceProviderDto'
-        formerGeneralServices:
-          type: array
-          items:
-            $ref: '#/components/schemas/GeneralServiceProviderDto'
-    LastDebtFinancingDto:
-      type: object
-      properties:
-        lastDebtFinancingType:
-          $ref: '#/components/schemas/DictionaryDto'
-        lastDebtFinancingAmount:
-          $ref: '#/components/schemas/MoneyDto'
-        seniority:
-          $ref: '#/components/schemas/DictionaryDto'
-        security:
-          $ref: '#/components/schemas/DictionaryDto'
-        subordination:
-          deprecated: true
-          allOf:
-          - $ref: '#/components/schemas/DictionaryDto'
-        term:
-          $ref: '#/components/schemas/DictionaryDto'
-        additionalDebtCharacteristics:
-          $ref: '#/components/schemas/AdditionalDebtCharacteristicsDto'
-        lenders:
-          type: array
-          items:
-            $ref: '#/components/schemas/EntityDto'
-    SearchPageStatsDto_SearchView:
-      type: object
-      properties:
-        total:
-          type: integer
-          format: int32
-          example: 1
-        perPage:
-          type: integer
-          format: int32
-          example: 25
-        page:
-          type: integer
-          format: int32
-          example: 1
-        lastPage:
-          type: integer
-          format: int32
-          example: 1
-    CompanyFinancingNoteDto:
-      type: object
-      properties:
-        note:
-          type: string
-          example: The company was acquired by WeWork for an undisclosed amount on June 7, 2017.
-        asOfDate:
-          type: string
-          format: date
-          example: '2017-06-08'
-    CompanySocialDto:
-      type: object
-      properties:
-        facebookProfileUrl:
-          type: string
-        twitterProfileUrl:
-          type: string
-        linkedInProfileUrl:
-          type: string
-    CompanyDto:
-      type: object
-      properties:
-        companyId:
-          type: string
-          example: 54937-90
-        companyBio:
-          $ref: '#/components/schemas/CompanyBioDto'
-        companyIndustry:
-          $ref: '#/components/schemas/CompanyIndustryDto'
-        companyActiveInvestors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ActiveInvestorDto'
-        companyAllInvestors:
-          $ref: '#/components/schemas/CompanyAllInvestorsDto'
-        companyMostRecentFinancing:
-          $ref: '#/components/schemas/CompanyMostRecentFinancingDto'
-    PrivateCompanyFinancialsDto:
-      type: object
-      properties:
-        companyId:
-          type: string
-          example: 54937-90
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/CompanyFinancialsDto'
     RequestItemDto:
       type: object
       properties:
         id:
           type: string
-    GecsClassificationDto:
-      type: object
-      properties:
-        gecsSector:
-          $ref: '#/components/schemas/DictionaryDto'
-        gecsIndustryGroup:
-          $ref: '#/components/schemas/DictionaryDto'
-        gecsIndustry:
-          $ref: '#/components/schemas/DictionaryDto'
-      description: GECS (Morningstar Global Equity Classification Structure) classifications. Empty when no GECS data is available. Distinct from PitchBook native industry classifications.
-    EntityDto:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 41349-37
-        name:
-          type: string
-          example: Max Technologies
-      example:
-        id: 25304-77F
-        name: AB Private Credit Investors Corp BDC
-    CompanyFinancialsDto:
-      type: object
-      properties:
-        period:
-          type: string
-          example: Q2 2020
-        endDate:
-          type: string
-          format: date
-          example: '2020-01-01'
-        enterpriseValue:
-          $ref: '#/components/schemas/MoneyDto'
-        revenue:
-          $ref: '#/components/schemas/MoneyDto'
-        netIncome:
-          $ref: '#/components/schemas/MoneyDto'
-        ebitda:
-          $ref: '#/components/schemas/MoneyDto'
-        totalAssets:
-          $ref: '#/components/schemas/MoneyDto'
-        totalDebt:
-          $ref: '#/components/schemas/MoneyDto'
-    AdvancedSearchPageDtoCompanyEntityAdvancedSearchResultDto_SearchView:
-      type: object
-      properties:
-        stats:
-          $ref: '#/components/schemas/SearchPageStatsDto_SearchView'
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/CompanyEntityAdvancedSearchResultDto_SearchView'
-    CompanyIndustryDto:
-      type: object
-      properties:
-        companyId:
-          type: string
-          example: 54937-90
-        gecs:
-          type: array
-          description: GECS (Morningstar Global Equity Classification Structure) classifications. Empty when no GECS data is available. Distinct from PitchBook native industry classifications.
-          items:
-            $ref: '#/components/schemas/GecsClassificationDto'
-        industries:
-          type: array
-          items:
-            $ref: '#/components/schemas/CompanyIndustryInfoDto'
-        verticals:
-          type: array
-          items:
-            $ref: '#/components/schemas/DictionaryDto'
-        keywords:
-          type: array
-          items:
-            type: string
-        emergingSpaces:
-          type: array
-          items:
-            $ref: '#/components/schemas/EmergingSpaceDto'
-    ExitPredictionDto:
-      type: object
-      properties:
-        companyId:
-          type: string
-          example: 481224-88
-        predictionDate:
-          type: string
-          format: date
-          example: '2023-07-25'
-        opportunityScore:
-          type: integer
-          format: int32
-          example: 75
-        successClass:
-          type: string
-          example: Success
-        successProbability:
-          type: integer
-          format: int32
-          example: 71
-        noexitProbability:
-          type: integer
-          format: int32
-          example: 29
-        exitClass:
-          type: string
-          example: M&A
-        ipoProbability:
-          type: integer
-          format: int32
-          example: 1
-        mergeracquisitionProbability:
-          type: integer
-          format: int32
-          example: 70
-        vcDealNumber:
-          type: integer
-          format: int32
-          example: 2
-    EmergingSpaceDto:
-      type: object
-      properties:
-        spaceCode:
-          type: string
-          example: '327'
-        spaceName:
-          type: string
-          example: '2021 Emerging Space Brief: Clean Meat'
-        spaceDescription:
-          type: string
-          example: Emerging Space Briefs provide primers on emerging technologies or investment trends as identified by our emerging tech analysts
-    BulkResultDtoListActiveInvestorDto:
-      type: object
-      properties:
-        stats:
-          $ref: '#/components/schemas/BulkStatsDto'
-        matched:
-          type: array
-          items:
-            type: array
-            items:
-              $ref: '#/components/schemas/ActiveInvestorDto'
-        noData:
-          type: array
-          items:
-            $ref: '#/components/schemas/NoDataItemDto'
-        unmatched:
-          type: array
-          items:
-            $ref: '#/components/schemas/FailedItemDto'
-        duplicates:
-          type: array
-          items:
-            $ref: '#/components/schemas/DuplicatedItemDto'
-    CompanyInvestorDto:
-      type: object
-      properties:
-        companyId:
-          type: string
-          example: 54937-90
-        investorId:
-          type: string
-          example: 111396-97
-        investorName:
-          type: string
-          example: Sequoia Economic Infrastructure Income Fund
-        investorTypes:
-          type: array
-          example:
-            type:
-              code: INFR
-              description: Infrastructure
-            primary: true
-          items:
-            $ref: '#/components/schemas/EntityTypeDto'
-        investorSince:
-          type: string
-          format: date
-          example: '2018-04-08'
-        investorExit:
-          type: string
-          format: date
-        investorStatus:
-          $ref: '#/components/schemas/DictionaryDto'
     DriverItemDto:
       type: object
       properties:
@@ -3648,7 +3648,7 @@ components:
           type: number
           format: double
           example: 0.35
-    BulkResultDtoCompanyBioDto:
+    BulkResultDtoCompanyDto:
       type: object
       properties:
         stats:
@@ -3656,7 +3656,7 @@ components:
         matched:
           type: array
           items:
-            $ref: '#/components/schemas/CompanyBioDto'
+            $ref: '#/components/schemas/CompanyDto'
         noData:
           type: array
           items:

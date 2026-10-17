@@ -1355,15 +1355,276 @@ paths:
       - pbToken: []
 components:
   schemas:
-    EmployeeHistoryDto:
+    ServiceProviderBioDto:
       type: object
       properties:
-        asOfDate:
+        serviceProviderId:
+          type: string
+          example: 11356-75
+        serviceProviderName:
+          $ref: '#/components/schemas/EntityNameDto'
+        serviceProviderTypes:
+          type: array
+          example:
+            type:
+              code: IB
+              description: Investment Bank
+            primary: true
+          items:
+            $ref: '#/components/schemas/EntityTypeDto'
+        hqLocation:
+          $ref: '#/components/schemas/HqLocationDto'
+        description:
+          type: string
+          example: Collins Stewart was an independent investment banking group with offices in London, New York, Jersey, Guernsey, Isle of Man, Dublin, Paris, Geneva, Singapore, Tel Aviv, Mumbai, and Tokyo. The company was a fundraiser on London's Alternative, Investment Market. the firm's services included fixed income credit trading, corporate broking, corporate finance advisory services, debt capital markets advice, restructuring and debt advisory services. The firm was founded in 1991 and was based in London, England.
+        website:
+          type: string
+          example: www.collins-stewart.com
+        employees:
+          type: integer
+          format: int32
+          example: 68
+        servicedCompanies:
+          type: integer
+          format: int32
+          example: 36
+        servicedDeals:
+          type: integer
+          format: int32
+          example: 38
+        servicedInvestors:
+          type: integer
+          format: int32
+          example: 14
+        servicedFunds:
+          type: integer
+          format: int32
+          example: 0
+        servicedLimitedPartners:
+          type: integer
+          format: int32
+          example: 0
+    GeneralSearchPageDto_SearchView:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/SearchPageStatsDto_SearchView'
+        items:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/GeneralSearchResultDto_SearchView'
+            - $ref: '#/components/schemas/EntityGeneralSearchResultDto_SearchView'
+            - $ref: '#/components/schemas/FundGeneralSearchResultDto_SearchView'
+            - $ref: '#/components/schemas/PersonGeneralSearchResultDto_SearchView'
+    MoneyDto:
+      type: object
+      properties:
+        amount:
+          type: number
+          example: 17039.27
+        currency:
+          type: string
+          example: USD
+        nativeAmount:
+          type: number
+          example: 15689
+        nativeCurrency:
+          type: string
+          example: EUR
+        estimated:
+          type: boolean
+          example: false
+    InvestorTradeAssociationDto:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Evergreen Venture Capital Association
+    GeneralSearchResultDto_SearchView:
+      required:
+      - discriminator
+      type: object
+      properties:
+        sandbox:
+          type: boolean
+        pbId:
+          type: string
+        name:
+          type: string
+        discriminator:
+          type: string
+      discriminator:
+        propertyName: discriminator
+    EntityNameDto:
+      type: object
+      properties:
+        formalName:
+          type: string
+        alsoKnownAs:
+          type: string
+        legalName:
+          type: string
+        formerlyKnownAs:
+          type: string
+    CompanySocialDto:
+      type: object
+      properties:
+        facebookProfileUrl:
+          type: string
+        twitterProfileUrl:
+          type: string
+        linkedInProfileUrl:
+          type: string
+    BulkResultDtoListEntityAffiliateDto:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/BulkStatsDto'
+        matched:
+          type: array
+          items:
+            type: array
+            items:
+              $ref: '#/components/schemas/EntityAffiliateDto'
+        noData:
+          type: array
+          items:
+            $ref: '#/components/schemas/NoDataItemDto'
+        unmatched:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailedItemDto'
+        duplicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicatedItemDto'
+    EntityBioDto:
+      type: object
+      properties:
+        primaryFirmType:
+          type: string
+        companyBio:
+          $ref: '#/components/schemas/CompanyBioDto'
+        investorBio:
+          $ref: '#/components/schemas/InvestorBioDto'
+        limitedPartnerBio:
+          $ref: '#/components/schemas/LimitedPartnerBioDto'
+        serviceProviderBio:
+          $ref: '#/components/schemas/ServiceProviderBioDto'
+    BulkStatsDto:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+        matched:
+          type: integer
+          format: int32
+        noData:
+          type: integer
+          format: int32
+        unmatched:
+          type: integer
+          format: int32
+        duplicates:
+          type: integer
+          format: int32
+    DuplicatedItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 420962-68
+        occurrence:
+          type: integer
+          format: int32
+          example: 1
+    PersonGeneralSearchResultDto_SearchView:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/GeneralSearchResultDto_SearchView'
+      - type: object
+        properties:
+          primaryCompanyId:
+            type: string
+            example: 10377-37
+          primaryCompanyName:
+            type: string
+            example: Tesla
+    TeamMemberDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 204383-98P
+        name:
+          type: string
+          example: Luke Bagley
+        title:
+          type: string
+          example: Board Member
+        positionStart:
           type: string
           format: date
-        employeeCount:
+          example: '2005-07-29'
+        positionFinish:
+          type: string
+          format: date
+          example: '2020-05-09'
+        infoAvailable:
+          type: boolean
+          example: true
+    EntityTypeDto:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/DictionaryDto'
+        primary:
+          type: boolean
+          example: false
+      example:
+        type:
+          code: IB
+          description: Investment Bank
+        primary: true
+    InvestorBioDto:
+      type: object
+      properties:
+        investorId:
+          type: string
+          example: 11193-94
+        investorName:
+          $ref: '#/components/schemas/EntityNameDto'
+        hqLocation:
+          $ref: '#/components/schemas/HqLocationDto'
+        description:
+          $ref: '#/components/schemas/EntityDescriptionDto'
+        investorStatus:
+          $ref: '#/components/schemas/DictionaryDto'
+        investorType:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityTypeDto'
+        assetsUnderManagement:
+          $ref: '#/components/schemas/MoneyDto'
+        dryPowder:
+          $ref: '#/components/schemas/MoneyDto'
+        yearFounded:
           type: integer
-          format: int64
+          format: int32
+          example: 1997
+        website:
+          type: string
+          example: www.franklinstreetequity.com
+        countInvestmentProfessionals:
+          type: integer
+          format: int32
+          example: 1
+        tradeAssociations:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvestorTradeAssociationDto'
     EntityBoardMemberDto:
       type: object
       properties:
@@ -1396,6 +1657,249 @@ components:
         contactInfoAvailable:
           type: boolean
           example: true
+    FirmTypeDto_SearchView:
+      type: object
+      properties:
+        pbId:
+          type: string
+          example: 10377-37
+        type:
+          type: string
+          enum:
+          - GENERAL
+          - COMPANY
+          - INVESTOR
+          - LIMITED_PARTNER
+          - SERVICE_PROVIDER
+          - PERSON
+          - DEAL
+          - FUND
+    LimitedPartnerBioDto:
+      type: object
+      properties:
+        limitedPartnerId:
+          type: string
+          example: 11231-47
+        limitedPartnerName:
+          $ref: '#/components/schemas/EntityNameDto'
+        hqLocation:
+          $ref: '#/components/schemas/HqLocationDto'
+        description:
+          type: string
+          example: Landmark Partners is a private equity, real estate and infrastructure investment company specializing in secondary funds. The firm invests primarily as a fund of funds, purchasing interests in various investment funds, typically structured as limited partnerships. Landmark acquires limited partnership interests and direct investments in real asset, venture, mezzanine, and buyout assets. Founded in 1989, Landmark is headquartered in Simsbury, Connecticut, and has offices in Boston, Dallas, New York, and London.
+        limitedPartnerTypes:
+          type: array
+          example:
+            type:
+              code: F
+              description: Founded
+            primary: true
+          items:
+            $ref: '#/components/schemas/EntityTypeDto'
+        assetsUnderManagement:
+          $ref: '#/components/schemas/MoneyDto'
+        yearFounded:
+          type: integer
+          format: int32
+          example: 1989
+        website:
+          type: string
+          example: www.landmarkpartners.com
+        managementStaff:
+          type: integer
+          format: int32
+    SearchPageStatsDto_SearchView:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+          example: 1
+        perPage:
+          type: integer
+          format: int32
+          example: 25
+        page:
+          type: integer
+          format: int32
+          example: 1
+        lastPage:
+          type: integer
+          format: int32
+          example: 1
+    CompanyFinancingNoteDto:
+      type: object
+      properties:
+        note:
+          type: string
+          example: The company was acquired by WeWork for an undisclosed amount on June 7, 2017.
+        asOfDate:
+          type: string
+          format: date
+          example: '2017-06-08'
+    SharedSearchPageDtoObject_SearchView:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/SearchPageStatsDto_SearchView'
+        searchCriteria:
+          type: string
+        items:
+          type: array
+          items:
+            type: object
+    EntityLocationsDto:
+      type: object
+      properties:
+        entityId:
+          type: string
+          example: 54937-90
+        hqOffice:
+          $ref: '#/components/schemas/EntityOfficeDto'
+        alternateOffices:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityOfficeDto'
+        alternateOfficesCount:
+          type: integer
+          format: int32
+          example: 1
+    EntityGeneralSearchResultDto_SearchView:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/GeneralSearchResultDto_SearchView'
+      - type: object
+        properties:
+          website:
+            type: string
+          pitchBookProfileLink:
+            type: string
+          primaryFirmType:
+            $ref: '#/components/schemas/FirmTypeDto_SearchView'
+          otherFirmTypes:
+            type: array
+            items:
+              $ref: '#/components/schemas/FirmTypeDto_SearchView'
+          stockTicker:
+            type: string
+    BulkRequestDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RequestItemDto'
+    EntityOfficeDto:
+      type: object
+      properties:
+        location:
+          type: string
+          example: Chicago, IL
+        addressLine1:
+          type: string
+          example: 69 West Monroe Street
+        addressLine2:
+          type: string
+          example: Suite 190
+        city:
+          type: string
+          example: Chicago
+        stateProvince:
+          type: string
+          example: IL
+        postCode:
+          type: string
+          example: '60661'
+        country:
+          type: string
+          example: United States
+        phone:
+          type: string
+          example: +1 (312) 902-6655
+        fax:
+          type: string
+          example: +1 (312) 902-5655
+        email:
+          type: string
+          example: office.email@gmail.com
+        globalRegion:
+          type: string
+          example: Americas
+        globalSubRegion:
+          type: string
+          example: North America
+    EntityDescriptionDto:
+      type: object
+      properties:
+        brief:
+          type: string
+          example: Franklin Street Equity Partners is a private equity firm investing in middle market companies across a wide range of industries.
+        full:
+          type: string
+          example: Franklin Street Equity Partners is a private equity firm investing in middle market companies across a wide range of industries. FSEP was founded by the principals of Ablum, Brown & Company, a Chicago-based investment banking boutique specializing in leveraged acquisitions. The firm was founded in 1997 and is based in Chicago, Illinois.
+    PrimaryContactDto:
+      type: object
+      properties:
+        personId:
+          type: string
+          example: 195066-01P
+        fullName:
+          type: string
+          example: John Taylor
+        title:
+          type: string
+          example: Board Member
+        phone:
+          type: string
+          example: +44 (0)20 7466 2430
+        fax:
+          type: string
+          example: +44 (0)20 7374 0888
+        email:
+          type: string
+          example: john.taylor@hsf.com
+    FundGeneralSearchResultDto_SearchView:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/GeneralSearchResultDto_SearchView'
+      - type: object
+        properties:
+          fundId:
+            type: string
+          fundName:
+            type: string
+    FailedItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 420962-68
+        reason:
+          type: string
+          example: 429 TOO_MANY_REQUESTS
+          enum:
+          - 400 BAD_REQUEST
+          - 401 UNAUTHORIZED
+          - 402 PAYMENT_REQUIRED
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 405 METHOD_NOT_ALLOWED
+          - 415 UNSUPPORTED_MEDIA_TYPE
+          - 429 TOO_MANY_REQUESTS
+          - 500 INTERNAL_SERVER_ERROR
+          - 503 SERVICE_UNAVAILABLE
+        message:
+          type: string
+          example: '{LIMIT_TYPE} rate limit exceeded. Please wait until rate limit period is renewed'
+    DictionaryDto:
+      type: object
+      properties:
+        code:
+          type: string
+          example: Dictionary code
+        description:
+          type: string
+          example: Dictionary Code Description
     EntityNewsDto:
       type: object
       properties:
@@ -1438,419 +1942,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DuplicatedItemDto'
-    CompanyBioDto:
-      type: object
-      properties:
-        companyId:
-          type: string
-          example: 54937-90
-        companyName:
-          $ref: '#/components/schemas/EntityNameDto'
-        parentCompanyId:
-          type: string
-          example: 62181-28
-        parentCompanyName:
-          type: string
-          example: The We Company
-        hqLocation:
-          $ref: '#/components/schemas/HqLocationDto'
-        description:
-          type: string
-          example: Provider of a mobile collaboration platform created to turn simple field updates into game-changing insights. The company's mobile collaboration platform contains a Web/tablet component, providing all stakeholders on a construction job mobile access to job-site data and also issues automated daily reports, job-site tasks and tracks field progress in real time, enabling professionals in the construction industry with a bird's-eye view of every project without stepping on-site.
-        financingStatus:
-          $ref: '#/components/schemas/DictionaryDto'
-        businessStatus:
-          $ref: '#/components/schemas/DictionaryDto'
-        ownershipStatus:
-          $ref: '#/components/schemas/DictionaryDto'
-        universe:
-          type: array
-          items:
-            $ref: '#/components/schemas/DictionaryDto'
-        website:
-          type: string
-          example: www.fieldlens.com
-        employees:
-          type: integer
-          format: int64
-          example: 25
-        employeeHistory:
-          type: array
-          items:
-            $ref: '#/components/schemas/EmployeeHistoryDto'
-        exchange:
-          type: string
-          example: PINX
-        ticker:
-          type: string
-          example: BASX
-        yearFounded:
-          type: integer
-          format: int32
-          example: 2010
-        financingStatusNote:
-          $ref: '#/components/schemas/CompanyFinancingNoteDto'
-        totalMoneyRaised:
-          $ref: '#/components/schemas/MoneyDto'
-        sicCodes:
-          type: array
-          items:
-            $ref: '#/components/schemas/DictionaryDto'
-        morningstarCode:
-          description: Deprecated. Always empty.
-          deprecated: true
-          allOf:
-          - $ref: '#/components/schemas/DictionaryDto'
-        cikCode:
-          type: string
-          example: '1554436'
-        companySocialURLs:
-          $ref: '#/components/schemas/CompanySocialDto'
-        pitchBookProfileLink:
-          type: string
-    GeneralSearchPageDto_SearchView:
-      type: object
-      properties:
-        stats:
-          $ref: '#/components/schemas/SearchPageStatsDto_SearchView'
-        items:
-          type: array
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/GeneralSearchResultDto_SearchView'
-            - $ref: '#/components/schemas/EntityGeneralSearchResultDto_SearchView'
-            - $ref: '#/components/schemas/FundGeneralSearchResultDto_SearchView'
-            - $ref: '#/components/schemas/PersonGeneralSearchResultDto_SearchView'
-    EntityNameDto:
-      type: object
-      properties:
-        formalName:
-          type: string
-        alsoKnownAs:
-          type: string
-        legalName:
-          type: string
-        formerlyKnownAs:
-          type: string
-    BulkResultDtoListEntityAffiliateDto:
-      type: object
-      properties:
-        stats:
-          $ref: '#/components/schemas/BulkStatsDto'
-        matched:
-          type: array
-          items:
-            type: array
-            items:
-              $ref: '#/components/schemas/EntityAffiliateDto'
-        noData:
-          type: array
-          items:
-            $ref: '#/components/schemas/NoDataItemDto'
-        unmatched:
-          type: array
-          items:
-            $ref: '#/components/schemas/FailedItemDto'
-        duplicates:
-          type: array
-          items:
-            $ref: '#/components/schemas/DuplicatedItemDto'
-    BulkResultDtoEntityPeopleDto:
-      type: object
-      properties:
-        stats:
-          $ref: '#/components/schemas/BulkStatsDto'
-        matched:
-          type: array
-          items:
-            $ref: '#/components/schemas/EntityPeopleDto'
-        noData:
-          type: array
-          items:
-            $ref: '#/components/schemas/NoDataItemDto'
-        unmatched:
-          type: array
-          items:
-            $ref: '#/components/schemas/FailedItemDto'
-        duplicates:
-          type: array
-          items:
-            $ref: '#/components/schemas/DuplicatedItemDto'
-    DuplicatedItemDto:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 420962-68
-        occurrence:
-          type: integer
-          format: int32
-          example: 1
-    FailedItemDto:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 420962-68
-        reason:
-          type: string
-          example: 429 TOO_MANY_REQUESTS
-          enum:
-          - 400 BAD_REQUEST
-          - 401 UNAUTHORIZED
-          - 402 PAYMENT_REQUIRED
-          - 403 FORBIDDEN
-          - 404 NOT_FOUND
-          - 405 METHOD_NOT_ALLOWED
-          - 415 UNSUPPORTED_MEDIA_TYPE
-          - 429 TOO_MANY_REQUESTS
-          - 500 INTERNAL_SERVER_ERROR
-          - 503 SERVICE_UNAVAILABLE
-        message:
-          type: string
-          example: '{LIMIT_TYPE} rate limit exceeded. Please wait until rate limit period is renewed'
-    DictionaryDto:
-      type: object
-      properties:
-        code:
-          type: string
-          example: Dictionary code
-        description:
-          type: string
-          example: Dictionary Code Description
-    PrimaryContactDto:
-      type: object
-      properties:
-        personId:
-          type: string
-          example: 195066-01P
-        fullName:
-          type: string
-          example: John Taylor
-        title:
-          type: string
-          example: Board Member
-        phone:
-          type: string
-          example: +44 (0)20 7466 2430
-        fax:
-          type: string
-          example: +44 (0)20 7374 0888
-        email:
-          type: string
-          example: john.taylor@hsf.com
-    SharedSearchPageDtoObject_SearchView:
-      type: object
-      properties:
-        stats:
-          $ref: '#/components/schemas/SearchPageStatsDto_SearchView'
-        searchCriteria:
-          type: string
-        items:
-          type: array
-          items:
-            type: object
-    BulkResultDtoEntityLocationsDto:
-      type: object
-      properties:
-        stats:
-          $ref: '#/components/schemas/BulkStatsDto'
-        matched:
-          type: array
-          items:
-            $ref: '#/components/schemas/EntityLocationsDto'
-        noData:
-          type: array
-          items:
-            $ref: '#/components/schemas/NoDataItemDto'
-        unmatched:
-          type: array
-          items:
-            $ref: '#/components/schemas/FailedItemDto'
-        duplicates:
-          type: array
-          items:
-            $ref: '#/components/schemas/DuplicatedItemDto'
-    EntityBioDto:
-      type: object
-      properties:
-        primaryFirmType:
-          type: string
-        companyBio:
-          $ref: '#/components/schemas/CompanyBioDto'
-        investorBio:
-          $ref: '#/components/schemas/InvestorBioDto'
-        limitedPartnerBio:
-          $ref: '#/components/schemas/LimitedPartnerBioDto'
-        serviceProviderBio:
-          $ref: '#/components/schemas/ServiceProviderBioDto'
-    BulkRequestDto:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/RequestItemDto'
-    NoDataItemDto:
-      type: object
-      properties:
-        id:
-          type: string
-    EntityDescriptionDto:
-      type: object
-      properties:
-        brief:
-          type: string
-          example: Franklin Street Equity Partners is a private equity firm investing in middle market companies across a wide range of industries.
-        full:
-          type: string
-          example: Franklin Street Equity Partners is a private equity firm investing in middle market companies across a wide range of industries. FSEP was founded by the principals of Ablum, Brown & Company, a Chicago-based investment banking boutique specializing in leveraged acquisitions. The firm was founded in 1997 and is based in Chicago, Illinois.
-    InvestorBioDto:
-      type: object
-      properties:
-        investorId:
-          type: string
-          example: 11193-94
-        investorName:
-          $ref: '#/components/schemas/EntityNameDto'
-        hqLocation:
-          $ref: '#/components/schemas/HqLocationDto'
-        description:
-          $ref: '#/components/schemas/EntityDescriptionDto'
-        investorStatus:
-          $ref: '#/components/schemas/DictionaryDto'
-        investorType:
-          type: array
-          items:
-            $ref: '#/components/schemas/EntityTypeDto'
-        assetsUnderManagement:
-          $ref: '#/components/schemas/MoneyDto'
-        dryPowder:
-          $ref: '#/components/schemas/MoneyDto'
-        yearFounded:
-          type: integer
-          format: int32
-          example: 1997
-        website:
-          type: string
-          example: www.franklinstreetequity.com
-        countInvestmentProfessionals:
-          type: integer
-          format: int32
-          example: 1
-        tradeAssociations:
-          type: array
-          items:
-            $ref: '#/components/schemas/InvestorTradeAssociationDto'
-    BulkStatsDto:
-      type: object
-      properties:
-        total:
-          type: integer
-          format: int32
-        matched:
-          type: integer
-          format: int32
-        noData:
-          type: integer
-          format: int32
-        unmatched:
-          type: integer
-          format: int32
-        duplicates:
-          type: integer
-          format: int32
-    EntityTypeDto:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/DictionaryDto'
-        primary:
-          type: boolean
-          example: false
-      example:
-        type:
-          code: IB
-          description: Investment Bank
-        primary: true
-    EntityLocationsDto:
-      type: object
-      properties:
-        entityId:
-          type: string
-          example: 54937-90
-        hqOffice:
-          $ref: '#/components/schemas/EntityOfficeDto'
-        alternateOffices:
-          type: array
-          items:
-            $ref: '#/components/schemas/EntityOfficeDto'
-        alternateOfficesCount:
-          type: integer
-          format: int32
-          example: 1
-    TeamMemberDto:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 204383-98P
-        name:
-          type: string
-          example: Luke Bagley
-        title:
-          type: string
-          example: Board Member
-        positionStart:
-          type: string
-          format: date
-          example: '2005-07-29'
-        positionFinish:
-          type: string
-          format: date
-          example: '2020-05-09'
-        infoAvailable:
-          type: boolean
-          example: true
-    EntityPeopleDto:
-      type: object
-      properties:
-        entityId:
-          type: string
-          example: 54937-90
-        primaryContact:
-          $ref: '#/components/schemas/PrimaryContactDto'
-        currentTeam:
-          type: array
-          items:
-            $ref: '#/components/schemas/TeamMemberDto'
-        formerTeam:
-          type: array
-          items:
-            $ref: '#/components/schemas/TeamMemberDto'
-        currentBoardMembersAndObservers:
-          type: array
-          items:
-            $ref: '#/components/schemas/EntityBoardMemberDto'
-        formerBoardMembersAndObservers:
-          type: array
-          items:
-            $ref: '#/components/schemas/EntityBoardMemberDto'
-    GeneralSearchResultDto_SearchView:
-      required:
-      - discriminator
-      type: object
-      properties:
-        sandbox:
-          type: boolean
-        pbId:
-          type: string
-        name:
-          type: string
-        discriminator:
-          type: string
-      discriminator:
-        propertyName: discriminator
     UpdateDto:
       type: object
       properties:
@@ -1861,39 +1952,11 @@ components:
             example: '{"Endpoint name":"Update Status (true/false)"}'
           example:
             Endpoint name: Update Status (true/false)
-    HqLocationDto:
+    NoDataItemDto:
       type: object
       properties:
-        city:
+        id:
           type: string
-          example: Chicago
-        stateProvince:
-          type: string
-          example: IL
-        postCode:
-          type: string
-          example: '60661'
-        country:
-          type: string
-          example: United States
-    MoneyDto:
-      type: object
-      properties:
-        amount:
-          type: number
-          example: 17039.27
-        currency:
-          type: string
-          example: USD
-        nativeAmount:
-          type: number
-          example: 15689
-        nativeCurrency:
-          type: string
-          example: EUR
-        estimated:
-          type: boolean
-          example: false
     ErrorDto:
       type: object
       properties:
@@ -1971,113 +2034,54 @@ components:
           - 511 NETWORK_AUTHENTICATION_REQUIRED
         message:
           type: string
-    SearchPageStatsDto_SearchView:
+    BulkResultDtoEntityPeopleDto:
       type: object
       properties:
-        total:
-          type: integer
-          format: int32
-          example: 1
-        perPage:
-          type: integer
-          format: int32
-          example: 25
-        page:
-          type: integer
-          format: int32
-          example: 1
-        lastPage:
-          type: integer
-          format: int32
-          example: 1
-    EntityGeneralSearchResultDto_SearchView:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/GeneralSearchResultDto_SearchView'
-      - type: object
-        properties:
-          website:
-            type: string
-          pitchBookProfileLink:
-            type: string
-          primaryFirmType:
-            $ref: '#/components/schemas/FirmTypeDto_SearchView'
-          otherFirmTypes:
-            type: array
-            items:
-              $ref: '#/components/schemas/FirmTypeDto_SearchView'
-          stockTicker:
-            type: string
-    CompanyFinancingNoteDto:
-      type: object
-      properties:
-        note:
-          type: string
-          example: The company was acquired by WeWork for an undisclosed amount on June 7, 2017.
-        asOfDate:
-          type: string
-          format: date
-          example: '2017-06-08'
-    LimitedPartnerBioDto:
-      type: object
-      properties:
-        limitedPartnerId:
-          type: string
-          example: 11231-47
-        limitedPartnerName:
-          $ref: '#/components/schemas/EntityNameDto'
-        hqLocation:
-          $ref: '#/components/schemas/HqLocationDto'
-        description:
-          type: string
-          example: Landmark Partners is a private equity, real estate and infrastructure investment company specializing in secondary funds. The firm invests primarily as a fund of funds, purchasing interests in various investment funds, typically structured as limited partnerships. Landmark acquires limited partnership interests and direct investments in real asset, venture, mezzanine, and buyout assets. Founded in 1989, Landmark is headquartered in Simsbury, Connecticut, and has offices in Boston, Dallas, New York, and London.
-        limitedPartnerTypes:
+        stats:
+          $ref: '#/components/schemas/BulkStatsDto'
+        matched:
           type: array
-          example:
-            type:
-              code: F
-              description: Founded
-            primary: true
           items:
-            $ref: '#/components/schemas/EntityTypeDto'
-        assetsUnderManagement:
-          $ref: '#/components/schemas/MoneyDto'
-        yearFounded:
-          type: integer
-          format: int32
-          example: 1989
-        website:
-          type: string
-          example: www.landmarkpartners.com
-        managementStaff:
-          type: integer
-          format: int32
-    CompanySocialDto:
+            $ref: '#/components/schemas/EntityPeopleDto'
+        noData:
+          type: array
+          items:
+            $ref: '#/components/schemas/NoDataItemDto'
+        unmatched:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailedItemDto'
+        duplicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicatedItemDto'
+    EntityPeopleDto:
       type: object
       properties:
-        facebookProfileUrl:
+        entityId:
           type: string
-        twitterProfileUrl:
-          type: string
-        linkedInProfileUrl:
-          type: string
-    RequestItemDto:
+          example: 54937-90
+        primaryContact:
+          $ref: '#/components/schemas/PrimaryContactDto'
+        currentTeam:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamMemberDto'
+        formerTeam:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamMemberDto'
+        currentBoardMembersAndObservers:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityBoardMemberDto'
+        formerBoardMembersAndObservers:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityBoardMemberDto'
+    HqLocationDto:
       type: object
       properties:
-        id:
-          type: string
-    EntityOfficeDto:
-      type: object
-      properties:
-        location:
-          type: string
-          example: Chicago, IL
-        addressLine1:
-          type: string
-          example: 69 West Monroe Street
-        addressLine2:
-          type: string
-          example: Suite 190
         city:
           type: string
           example: Chicago
@@ -2090,109 +2094,111 @@ components:
         country:
           type: string
           example: United States
-        phone:
-          type: string
-          example: +1 (312) 902-6655
-        fax:
-          type: string
-          example: +1 (312) 902-5655
-        email:
-          type: string
-          example: office.email@gmail.com
-        globalRegion:
-          type: string
-          example: Americas
-        globalSubRegion:
-          type: string
-          example: North America
-    PersonGeneralSearchResultDto_SearchView:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/GeneralSearchResultDto_SearchView'
-      - type: object
-        properties:
-          primaryCompanyId:
-            type: string
-            example: 10377-37
-          primaryCompanyName:
-            type: string
-            example: Tesla
-    ServiceProviderBioDto:
+    CompanyBioDto:
       type: object
       properties:
-        serviceProviderId:
+        companyId:
           type: string
-          example: 11356-75
-        serviceProviderName:
+          example: 54937-90
+        companyName:
           $ref: '#/components/schemas/EntityNameDto'
-        serviceProviderTypes:
-          type: array
-          example:
-            type:
-              code: IB
-              description: Investment Bank
-            primary: true
-          items:
-            $ref: '#/components/schemas/EntityTypeDto'
+        parentCompanyId:
+          type: string
+          example: 62181-28
+        parentCompanyName:
+          type: string
+          example: The We Company
         hqLocation:
           $ref: '#/components/schemas/HqLocationDto'
         description:
           type: string
-          example: Collins Stewart was an independent investment banking group with offices in London, New York, Jersey, Guernsey, Isle of Man, Dublin, Paris, Geneva, Singapore, Tel Aviv, Mumbai, and Tokyo. The company was a fundraiser on London's Alternative, Investment Market. the firm's services included fixed income credit trading, corporate broking, corporate finance advisory services, debt capital markets advice, restructuring and debt advisory services. The firm was founded in 1991 and was based in London, England.
+          example: Provider of a mobile collaboration platform created to turn simple field updates into game-changing insights. The company's mobile collaboration platform contains a Web/tablet component, providing all stakeholders on a construction job mobile access to job-site data and also issues automated daily reports, job-site tasks and tracks field progress in real time, enabling professionals in the construction industry with a bird's-eye view of every project without stepping on-site.
+        financingStatus:
+          $ref: '#/components/schemas/DictionaryDto'
+        businessStatus:
+          $ref: '#/components/schemas/DictionaryDto'
+        ownershipStatus:
+          $ref: '#/components/schemas/DictionaryDto'
+        universe:
+          type: array
+          items:
+            $ref: '#/components/schemas/DictionaryDto'
         website:
           type: string
-          example: www.collins-stewart.com
+          example: www.fieldlens.com
         employees:
           type: integer
-          format: int32
-          example: 68
-        servicedCompanies:
+          format: int64
+          example: 25
+        employeeHistory:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmployeeHistoryDto'
+        exchange:
+          type: string
+          example: PINX
+        ticker:
+          type: string
+          example: BASX
+        yearFounded:
           type: integer
           format: int32
-          example: 36
-        servicedDeals:
-          type: integer
-          format: int32
-          example: 38
-        servicedInvestors:
-          type: integer
-          format: int32
-          example: 14
-        servicedFunds:
-          type: integer
-          format: int32
-          example: 0
-        servicedLimitedPartners:
-          type: integer
-          format: int32
-          example: 0
-    FirmTypeDto_SearchView:
+          example: 2010
+        financingStatusNote:
+          $ref: '#/components/schemas/CompanyFinancingNoteDto'
+        totalMoneyRaised:
+          $ref: '#/components/schemas/MoneyDto'
+        sicCodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/DictionaryDto'
+        morningstarCode:
+          description: Deprecated. Always empty.
+          deprecated: true
+          allOf:
+          - $ref: '#/components/schemas/DictionaryDto'
+        cikCode:
+          type: string
+          example: '1554436'
+        companySocialURLs:
+          $ref: '#/components/schemas/CompanySocialDto'
+        pitchBookProfileLink:
+          type: string
+    EmployeeHistoryDto:
       type: object
       properties:
-        pbId:
+        asOfDate:
           type: string
-          example: 10377-37
-        type:
-          type: string
-          enum:
-          - GENERAL
-          - COMPANY
-          - INVESTOR
-          - LIMITED_PARTNER
-          - SERVICE_PROVIDER
-          - PERSON
-          - DEAL
-          - FUND
-    FundGeneralSearchResultDto_SearchView:
+          format: date
+        employeeCount:
+          type: integer
+          format: int64
+    RequestItemDto:
       type: object
-      allOf:
-      - $ref: '#/components/schemas/GeneralSearchResultDto_SearchView'
-      - type: object
-        properties:
-          fundId:
-            type: string
-          fundName:
-            type: string
+      properties:
+        id:
+          type: string
+    BulkResultDtoEntityLocationsDto:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/BulkStatsDto'
+        matched:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityLocationsDto'
+        noData:
+          type: array
+          items:
+            $ref: '#/components/schemas/NoDataItemDto'
+        unmatched:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailedItemDto'
+        duplicates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicatedItemDto'
     EntityAffiliateDto:
       type: object
       properties:
@@ -2208,12 +2214,6 @@ components:
         affiliateType:
           type: string
           example: Subsidiary
-    InvestorTradeAssociationDto:
-      type: object
-      properties:
-        name:
-          type: string
-          example: Evergreen Venture Capital Association
   securitySchemes:
     pbToken:
       type: apiKey
