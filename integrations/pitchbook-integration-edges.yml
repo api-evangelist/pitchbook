@@ -1,0 +1,67 @@
+edges:
+- partner_name: AWS Data Exchange
+  partner: amazon-data-exchange
+  partner_match: aggregator
+  type: marketplace
+  marketplace: amazon-data-exchange-marketplace
+  channel: distribution
+  relationship: distribution-channel
+  direction: third-party
+  evidence: https://aws.amazon.com/marketplace/seller-profile?id=aebddeb3-4d2a-4c49-9283-f31b2fc1c325
+  category: data product listing
+  contract_reference:
+    register: AWS Data Exchange (AWS Marketplace discovery search, FULFILLMENT_OPTION_TYPE=DATA_EXCHANGE + seller-profile
+      sellerWebsiteUrl)
+    spec_file: null
+    role: data-marketplace-seller
+    registered_name: PitchBook Data
+    matched_domain: pitchbook.com
+    matched_by: domain
+    listings: 4
+    sample_listings:
+    - PitchBook Benchmarking Data
+    - PitchBook Companies & Deals Data Sample
+    - PitchBook Fund Data
+    - PitchBook Investor Profiles Data
+    signal_note: 'participation: the provider lists data products on this marketplace; counts are context'
+    detected_by: sweep-data-marketplaces.py
+    detected: '2026-10-20'
+  detected_by: sweep-data-marketplaces.py
+  detected: '2026-10-20'
+  publisher_verified:
+  - Deployed on AWS
+- partner_name: Snowflake Marketplace
+  partner: snowflake
+  partner_match: aggregator
+  type: marketplace
+  marketplace: snowflake-marketplace
+  channel: distribution
+  relationship: distribution-channel
+  direction: third-party
+  evidence: https://app.snowflake.com/marketplace/providers/GZSTZQRUBT7
+  category: data product listing
+  contract_reference:
+    register: Snowflake Marketplace providers (app.snowflake.com/marketplace/providers, rendered; names only, Wikidata
+      P856 identity step)
+    spec_file: null
+    role: data-marketplace-seller
+    registered_name: PitchBook Data
+    matched_domain: pitchbook.com
+    matched_by: domain
+    listings: 49
+    sample_listings: []
+    signal_note: 'participation: the provider lists data products on this marketplace; counts are context'
+    detected_by: sweep-data-marketplaces.py
+    detected: '2026-10-20'
+    identity_source: wikidata
+    identity_note: wikidata P856 pitchbook.com for 'PitchBook Data' (labelled identity step)
+  detected_by: sweep-data-marketplaces.py
+  detected: '2026-10-20'
+generated: '2026-10-20'
+method: searched
+source:
+- https://app.snowflake.com/marketplace/providers
+- https://aws.amazon.com/marketplace/search/results?FULFILLMENT_OPTION_TYPE=DATA_EXCHANGE
+checked:
+- https://app.snowflake.com/marketplace/providers
+- https://aws.amazon.com/marketplace/search/results?FULFILLMENT_OPTION_TYPE=DATA_EXCHANGE
