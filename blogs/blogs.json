@@ -5,18 +5,17 @@
       "source": "https://pitchbook.com/news.rss",
       "feed_url": "https://pitchbook.com/news.rss",
       "title": "",
-      "saved": 8,
+      "saved": 0,
       "method": "feed"
     },
     {
       "source": "https://pitchbook.com/news",
-      "error": "HTTPError"
-    },
-    {
-      "source": "https://pitchbook.com/contact.rss",
-      "error": "HTTPError"
+      "feed_url": "https://pitchbook.com/news.rss",
+      "title": "",
+      "saved": 0,
+      "method": "discovered"
     }
   ],
-  "post_count": 8,
-  "fetched": "2026-10-10T13:15:00Z"
+  "post_count": 18,
+  "fetched": "2026-10-17T14:53:57Z"
 }
