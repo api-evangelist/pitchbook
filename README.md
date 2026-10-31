@@ -64,5 +64,145 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-PitchBook is a company surfaced via the API Evangelist harvest backlog (source: data) and added to the network as a stub for full-pipeline profiling.
-- https://pitchbook.com/
+PitchBook provides comprehensive data and analysis on private market companies, investors, and deals. It offers a platform for market intelligence, deal sourcing, due diligence, and portfolio management, helping users explore use cases such as market intelligence, deal sourcing, fundraising, and benchmarking. The service includes products like PitchBook Data, Platform, and Luminary, and supports free trials and login for deeper insights.
+
+**Areas:** Company · Data · Finance · Private-Market · Analytics · Startups
+
+## PitchBook on APIs.io
+
+Everything profiled for PitchBook is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/pitchbook/](https://apis.io/providers/pitchbook/)** — or go straight to one of the APIs or properties below.
+
+### APIs (12)
+
+- [PitchBook Account Information API](https://apis.io/apis/pitchbook/pitchbook-account-information-api/) — Account Information
+- [PitchBook Companies API](https://apis.io/apis/pitchbook/pitchbook-companies-api/) — Companies
+- [PitchBook Credit Analysis API](https://apis.io/apis/pitchbook/pitchbook-credit-analysis-api/) — Credit Analysis
+- [PitchBook Deals API](https://apis.io/apis/pitchbook/pitchbook-deals-api/) — Deals
+- [PitchBook Fundamentals API](https://apis.io/apis/pitchbook/pitchbook-fundamentals-api/) — Fundamentals
+- [PitchBook Funds API](https://apis.io/apis/pitchbook/pitchbook-funds-api/) — Funds
+- [PitchBook General API](https://apis.io/apis/pitchbook/pitchbook-general-api/) — General
+- [PitchBook Investors API](https://apis.io/apis/pitchbook/pitchbook-investors-api/) — Investors
+- [PitchBook Limited Partners API](https://apis.io/apis/pitchbook/pitchbook-limited-partners-api/) — Limited Partners
+- [PitchBook Patents API](https://apis.io/apis/pitchbook/pitchbook-patents-api/) — Patents
+- [PitchBook People API](https://apis.io/apis/pitchbook/pitchbook-people-api/) — People
+- [PitchBook Service Providers API](https://apis.io/apis/pitchbook/pitchbook-service-providers-api/) — Service Providers
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [pitchbook-mcp.yml](https://apis.io/servers/pitchbook/pitchbook-mcp-yml/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Pitchbook Agentic Access](https://apis.io/agentic-access/pitchbook/pitchbook-agentic-access/)
+
+#### JSON Schema (6)
+
+The data models the API reads and writes.
+
+- [CompanyBioDto](https://apis.io/schemas/pitchbook/pitchbook-company-bio-dto/)
+- [CompanySocialAnalyticsDto](https://apis.io/schemas/pitchbook/pitchbook-company-social-analytics-dto/)
+- [DealDetailedDto](https://apis.io/schemas/pitchbook/pitchbook-deal-detailed-dto/)
+- [FundBioDto](https://apis.io/schemas/pitchbook/pitchbook-fund-bio-dto/)
+- [LimitedPartnerCommitmentAggregatesDto](https://apis.io/schemas/pitchbook/pitchbook-limited-partner-commitment-aggregates-dto/)
+- [PatentDetailedDto](https://apis.io/schemas/pitchbook/pitchbook-patent-detailed-dto/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Pitchbook Context](https://apis.io/jsonld/pitchbook/pitchbook-context/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Pitchbook Openapi Overlay](https://apis.io/overlays/pitchbook/pitchbook-openapi-overlay/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [PitchBook API Rules](https://apis.io/rules/pitchbook/pitchbook-rules/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Pitchbook Authentication](https://apis.io/security/pitchbook/pitchbook-authentication/)
+- [Pitchbook Domain Security](https://apis.io/security/pitchbook/pitchbook-domain-security/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://pitchbook.com/)
+- [Documentation](https://pitchbook.com/developers)
+- [Getting started](https://pitchbook.com/free-trial)
+- [Pricing](https://pitchbook.com/pricing)
+- [Support](https://pitchbook.com/contact)
+- [Blog](https://pitchbook.com/news)
+- [Terms of service](https://pitchbook.com/terms)
+- [Privacy policy](https://pitchbook.com/privacy)
+
+## API Evangelist rating
+
+**Kin Score 40.9** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 64.7 |
+| Contract governance | 22.0 |
+| Operational transparency | 0.0 |
+| Developer ergonomics | 42.3 |
+| Access clarity | 31.6 |
+
+**Agent readiness 29.4** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 24.5** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/pitchbook/](https://apis.io/providers/pitchbook/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for PitchBook: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/pitchbook/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
